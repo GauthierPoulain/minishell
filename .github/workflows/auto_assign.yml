@@ -1,0 +1,17 @@
+name: Auto Assign to Project(s)
+on:
+    issues:
+        types: [opened, labeled]
+    pull_request_target:
+        types: [opened, labeled]
+env:
+    GITHUB_TOKEN: ${{ secrets.MY_GITHUB_TOKEN }}
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Assign to One Project
+              uses: srggrs/assign-one-project-github-action@1.2.1
+              with:
+                  project: "https://github.com/GauthierPoulain/sandbox/projects/2"
+                  column_name: "To do"
