@@ -26,16 +26,29 @@ CC = clang
 
 CFLAGS = -Wall -Wextra -Werror -g
 # CFLAGS += -O3 -fno-builtin
-# CFLAGS += -fsanitize=address
+CFLAGS += -fsanitize=address
 
 MAKE = make --no-print-directory
 
 HEADERS = \
 	./includes/minishell.h
 
+SRCS_LIB = \
+	./lib/ft_lstadd_back.c \
+	./lib/ft_lstadd_front.c \
+	./lib/ft_lstclear.c \
+	./lib/ft_lstdelone.c \
+	./lib/ft_lstnew.c \
+	./lib/ft_lstsize.c \
+	./lib/ft_strdup.c \
+	./lib/ft_strlen.c \
+
+SRCS_MS = \
+	./src/minishell.c \
+
+SRCS = $(SRCS_LIB) $(SRCS_MS)
+
 OBJS = $(SRCS:%.c=%.o)
-SRCS = \
-	./src/minishell.c
 
 %.o: %.c $(HEADERS)
 	@printf "[ $(_GREEN)$(_BOLD)compiling$(_END) ] $(_BLUE)$(_BOLD)$<$(_END)\n"
@@ -44,25 +57,26 @@ SRCS = \
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	@printf "[ $(_GREEN)$(_BOLD)building$(_END) ] $(_BLUE)$(_BOLD)$(NAME)$(_END)\n"
+	@printf "[ $(_YELLOW)$(_BOLD)building$(_END) ]$(_BLUE)$(_BOLD)$(NAME)$(_END)\n"
 	@$(CC) $(CFLAGS) -o $(NAME) $(OBJS)
-	@printf "[ $(_BLUE)$(_BOLD)done$(_END) ]\n"
+	@printf "[ $(_PURPLE)$(_BOLD)done$(_END) ]\n"
 
 clean:
-	@printf "[ $(_RED)$(_BOLD)removing$(_END) ] $(_BLUE)$(_BOLD)objs $(_END)\n"
+	@printf "[ $(_RED)$(_BOLD)removing$(_END) ] $(_BLUE)$(_BOLD)objs$(_END)\n"
 	@$(RM) $(OBJS)
 
 fclean: clean
-	@printf "[ $(_RED)$(_BOLD)removing$(_END) ] $(_BLUE)$(_BOLD)$(NAME) $(_END)\n"
+	@printf "[ $(_RED)$(_BOLD)removing$(_END) ] $(_BLUE)$(_BOLD)$(NAME)$(_END)\n"
 	@$(RM) $(NAME)
 
 re: fclean
 	@$(MAKE) all
 
-test: all
+run: all
+	@printf "[ $(_PURPLE)$(_BOLD)running$(_END) ] $(_BLUE)$(_BOLD)$(NAME)...$(_END)\n"
 	@./$(NAME)
 
 norm:
-	norminette
+	@norminette
 
-.PHONY: all clean fclean re test norm
+.PHONY: all clean fclean re run norm

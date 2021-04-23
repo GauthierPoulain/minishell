@@ -1,20 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   ft_lstadd_back.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gapoulai <gapoulai@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/23 16:58:41 by gapoulai          #+#    #+#             */
-/*   Updated: 2021/04/24 00:24:11 by gapoulai         ###   ########lyon.fr   */
+/*   Created: 2021/04/24 00:26:13 by gapoulai          #+#    #+#             */
+/*   Updated: 2021/04/24 00:26:32 by gapoulai         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	main(void)
+void	ft_lstadd_back(t_list **alst, t_list *new)
 {
-	printf("salut je suis minishell\n");
-	printf("%zu\n", ft_strlen("salut"));
-	return (0);
+	t_list	*last;
+
+	if (!*alst)
+		*alst = new;
+	else
+	{
+		last = *alst;
+		while (last->next)
+			last = last->next;
+		last->next = new;
+	}
 }

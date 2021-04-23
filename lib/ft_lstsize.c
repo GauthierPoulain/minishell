@@ -1,20 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   ft_lstsize.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gapoulai <gapoulai@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/23 16:58:41 by gapoulai          #+#    #+#             */
-/*   Updated: 2021/04/24 00:24:11 by gapoulai         ###   ########lyon.fr   */
+/*   Created: 2021/04/24 00:32:17 by gapoulai          #+#    #+#             */
+/*   Updated: 2021/04/24 00:32:39 by gapoulai         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	main(void)
+size_t	ft_lstsize(t_list *lst)
 {
-	printf("salut je suis minishell\n");
-	printf("%zu\n", ft_strlen("salut"));
-	return (0);
+	size_t	count;
+	t_list	*next;
+
+	count = 0;
+	next = lst;
+	while (next)
+	{
+		next = next->next;
+		count++;
+	}
+	return (count);
 }
