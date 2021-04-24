@@ -1,28 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   gc_malloc.c                                        :+:      :+:    :+:   */
+/*   ft_strjoinc.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gapoulai <gapoulai@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/24 12:04:46 by gapoulai          #+#    #+#             */
-/*   Updated: 2021/04/24 19:43:05 by gapoulai         ###   ########lyon.fr   */
+/*   Created: 2021/04/24 18:37:34 by gapoulai          #+#    #+#             */
+/*   Updated: 2021/04/24 19:47:45 by gapoulai         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	*gc_malloc(size_t size, t_minishell *shell)
+char	*ft_strjoinc(char *s1, char c, t_minishell *shell)
 {
-	void	*alloc;
-	t_list	*lst;
-
-	alloc = malloc(size);
-	lst = malloc(sizeof(t_list));
-	if (!alloc || !lst)
-		close_shell(shell, 2);
-	lst->content = alloc;
-	lst->next = NULL;
-	ft_lstadd_front(&shell->gc, lst);
-	return (alloc);
+	int		i;
+	int		tlen;
+	char	*res;
+	
+	i = 0;
+	if (!s1)
+	{
+		res = gc_malloc(sizeof(char) * 2, shell);
+		res[0] = c;
+		res[1] = 0;
+		return (res);
+	}
+	tlen = ft_strlen(s1) + 2;
+	res = gc_malloc(sizeof(char) * tlen, shell);
+	while (s1[i])
+	{
+		res[i] = s1[i];
+		i++;
+	}
+	res[i] = c;
+	res[i + 1] = 0;
+	gc_free(s1, shell);
+	return (res);
 }

@@ -1,28 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   gc_malloc.c                                        :+:      :+:    :+:   */
+/*   ft_putstr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gapoulai <gapoulai@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/24 12:04:46 by gapoulai          #+#    #+#             */
-/*   Updated: 2021/04/24 19:43:05 by gapoulai         ###   ########lyon.fr   */
+/*   Created: 2021/04/24 18:45:34 by gapoulai          #+#    #+#             */
+/*   Updated: 2021/04/24 18:46:53 by gapoulai         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	*gc_malloc(size_t size, t_minishell *shell)
+void	ft_putstr_fd(int fd, char *str)
 {
-	void	*alloc;
-	t_list	*lst;
+	write(fd, str, ft_strlen(str));
+}
 
-	alloc = malloc(size);
-	lst = malloc(sizeof(t_list));
-	if (!alloc || !lst)
-		close_shell(shell, 2);
-	lst->content = alloc;
-	lst->next = NULL;
-	ft_lstadd_front(&shell->gc, lst);
-	return (alloc);
+void	ft_putstr(char *str)
+{
+	ft_putstr_fd(1, str);
 }

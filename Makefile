@@ -34,16 +34,21 @@ HEADERS = \
 	./includes/minishell.h
 
 SRCS_LIB = \
+	./lib/ft_gnl.c \
 	./lib/ft_lstadd_back.c \
 	./lib/ft_lstadd_front.c \
 	./lib/ft_lstnew.c \
+	./lib/ft_putstr.c \
 	./lib/ft_strdup.c \
+	./lib/ft_strjoinc.c \
 	./lib/ft_strlen.c \
 	./lib/gc_clean.c \
+	./lib/gc_free.c \
 	./lib/gc_malloc.c \
 
 SRCS_MS = \
 	./src/minishell.c \
+	./src/close_handler.c \
 
 SRCS = $(SRCS_LIB) $(SRCS_MS)
 

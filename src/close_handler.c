@@ -1,28 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   gc_malloc.c                                        :+:      :+:    :+:   */
+/*   close_handler.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gapoulai <gapoulai@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/24 12:04:46 by gapoulai          #+#    #+#             */
-/*   Updated: 2021/04/24 19:43:05 by gapoulai         ###   ########lyon.fr   */
+/*   Created: 2021/04/24 18:44:12 by gapoulai          #+#    #+#             */
+/*   Updated: 2021/04/24 19:50:55 by gapoulai         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	*gc_malloc(size_t size, t_minishell *shell)
+void	print_err(int code)
 {
-	void	*alloc;
-	t_list	*lst;
+	ft_putstr_fd(2, "Error:\n");
+	if (code == 1)
+		ft_putstr_fd(2, "Unexpexted Error\n");
+	else if (code == 2)
+		ft_putstr_fd(2, "Malloc error\n");
+	else if (code == 2)
+		ft_putstr_fd(3, "gnl failure\n");
+}
 
-	alloc = malloc(size);
-	lst = malloc(sizeof(t_list));
-	if (!alloc || !lst)
-		close_shell(shell, 2);
-	lst->content = alloc;
-	lst->next = NULL;
-	ft_lstadd_front(&shell->gc, lst);
-	return (alloc);
+void	close_shell(t_minishell *shell, int code)
+{
+	if (code)
+		print_err(code);
+	gc_clean(shell);
+	if (code != 0)
+		exit(EXIT_FAILURE);
+	else
+		exit(EXIT_SUCCESS);
 }
