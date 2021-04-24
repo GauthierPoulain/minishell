@@ -25,7 +25,7 @@ NAME = minishell
 CC = clang
 
 CFLAGS = -Wall -Wextra -Werror -g
-# CFLAGS += -O3 -fno-builtin
+CFLAGS += -O3 -fno-builtin
 # CFLAGS += -fsanitize=address
 
 MAKE = make --no-print-directory
@@ -63,7 +63,7 @@ OBJS = $(SRCS:%.c=%.o)
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	@printf "[ $(_YELLOW)$(_BOLD)building$(_END) ]$(_BLUE)$(_BOLD)$(NAME)$(_END)\n"
+	@printf "[ $(_YELLOW)$(_BOLD)building$(_END) ] $(_BLUE)$(_BOLD)$(NAME)$(_END)\n"
 	@$(CC) $(CFLAGS) -o $(NAME) $(OBJS)
 	@printf "[ $(_PURPLE)$(_BOLD)done$(_END) ]\n"
 

@@ -13,5 +13,5 @@ jobs:
             - name: Assign to One Project
               uses: srggrs/assign-one-project-github-action@1.2.1
               with:
-                  project: "https://github.com/GauthierPoulain/sandbox/projects/2"
+                  project: "https://github.com/GauthierPoulain/minishell/projects/1"
                   column_name: "To do"
