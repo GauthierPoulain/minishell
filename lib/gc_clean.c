@@ -1,28 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstclear.c                                      :+:      :+:    :+:   */
+/*   gc_clean.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gapoulai <gapoulai@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/24 00:29:08 by gapoulai          #+#    #+#             */
-/*   Updated: 2021/04/24 00:38:42 by gapoulai         ###   ########lyon.fr   */
+/*   Created: 2021/04/24 13:47:42 by gapoulai          #+#    #+#             */
+/*   Updated: 2021/04/24 14:22:58 by gapoulai         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	ft_lstclear(t_list **lst)
+void	gc_clean(t_list **gc)
 {
 	t_list	*tmp;
 
-	if (*lst)
+	while (*gc)
 	{
-		while (*lst)
-		{
-			tmp = (*lst)->next;
-			free(*lst);
-			*lst = tmp;
-		}
+		tmp = (*gc)->next;
+		if ((*gc)->content)
+			free((*gc)->content);
+		free(*gc);
+		*gc = tmp;
 	}
 }

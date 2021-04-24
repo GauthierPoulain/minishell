@@ -26,7 +26,7 @@ CC = clang
 
 CFLAGS = -Wall -Wextra -Werror -g
 # CFLAGS += -O3 -fno-builtin
-CFLAGS += -fsanitize=address
+# CFLAGS += -fsanitize=address
 
 MAKE = make --no-print-directory
 
@@ -36,12 +36,11 @@ HEADERS = \
 SRCS_LIB = \
 	./lib/ft_lstadd_back.c \
 	./lib/ft_lstadd_front.c \
-	./lib/ft_lstclear.c \
-	./lib/ft_lstdelone.c \
 	./lib/ft_lstnew.c \
-	./lib/ft_lstsize.c \
 	./lib/ft_strdup.c \
 	./lib/ft_strlen.c \
+	./lib/gc_clean.c \
+	./lib/gc_malloc.c \
 
 SRCS_MS = \
 	./src/minishell.c \
@@ -50,7 +49,7 @@ SRCS = $(SRCS_LIB) $(SRCS_MS)
 
 OBJS = $(SRCS:%.c=%.o)
 
-%.o: %.c $(HEADERS)
+%.o: %.c $(HEADERS) Makefile
 	@printf "[ $(_GREEN)$(_BOLD)compiling$(_END) ] $(_BLUE)$(_BOLD)$<$(_END)\n"
 	@$(CC) $(CFLAGS) -c $< -o $@
 
@@ -79,4 +78,11 @@ run: all
 norm:
 	@norminette
 
-.PHONY: all clean fclean re run norm
+valgrind: all
+ifneq (,$(findstring fsanitize,$(CFLAGS)))
+	@echo "please use without fsanitize"
+else
+	@valgrind --leak-check=full --show-reachable=yes ./$(NAME)
+endif
+
+.PHONY: all clean fclean re run norm valgrind

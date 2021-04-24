@@ -6,17 +6,17 @@
 /*   By: gapoulai <gapoulai@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/24 00:31:36 by gapoulai          #+#    #+#             */
-/*   Updated: 2021/04/24 00:34:51 by gapoulai         ###   ########lyon.fr   */
+/*   Updated: 2021/04/24 13:23:52 by gapoulai         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-t_list	*ft_lstnew(void *content)
+t_list	*ft_lstnew(void *content, t_minishell *shell)
 {
 	t_list	*lst;
 
-	lst = malloc(sizeof(t_list));
+	lst = gc_malloc(sizeof(t_list), shell);
 	if (!lst)
 		return (NULL);
 	lst->content = content;
