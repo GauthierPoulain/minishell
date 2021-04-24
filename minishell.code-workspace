@@ -6,7 +6,8 @@
 	],
 	"settings": {
 		"files.associations": {
-			"minishell.h": "c"
+			"minishell.h": "c",
+			"stdio.h": "c"
 		}
 	}
 }

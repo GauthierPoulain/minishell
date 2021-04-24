@@ -6,24 +6,24 @@
 /*   By: gapoulai <gapoulai@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/24 13:47:42 by gapoulai          #+#    #+#             */
-/*   Updated: 2021/04/24 19:11:11 by gapoulai         ###   ########lyon.fr   */
+/*   Updated: 2021/04/24 20:56:38 by gapoulai         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	gc_clean(t_minishell *shell)
+void	gc_clean(void)
 {
 	t_list	*gc;
 	t_list	*tmp;
 
-	gc = shell->gc;
+	gc = g_shell.gc;
 	while (gc)
 	{
 		tmp = gc->next;
 		if (gc->content)
-			gc_free(gc->content, shell);
-		gc_free(gc, shell);
+			free(gc->content);
+		free(gc);
 		gc = tmp;
 	}
 }

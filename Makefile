@@ -39,6 +39,7 @@ SRCS_LIB = \
 	./lib/ft_lstadd_front.c \
 	./lib/ft_lstnew.c \
 	./lib/ft_putstr.c \
+	./lib/ft_strcmp.c \
 	./lib/ft_strdup.c \
 	./lib/ft_strjoinc.c \
 	./lib/ft_strlen.c \
@@ -47,8 +48,9 @@ SRCS_LIB = \
 	./lib/gc_malloc.c \
 
 SRCS_MS = \
-	./src/minishell.c \
+	./src/catch_signals.c \
 	./src/close_handler.c \
+	./src/minishell.c \
 
 SRCS = $(SRCS_LIB) $(SRCS_MS)
 
@@ -87,7 +89,7 @@ valgrind: all
 ifneq (,$(findstring fsanitize,$(CFLAGS)))
 	@echo "please use without fsanitize"
 else
-	@valgrind --leak-check=full --show-reachable=yes ./$(NAME)
+	@valgrind -s --leak-check=full --show-reachable=yes ./$(NAME)
 endif
 
 .PHONY: all clean fclean re run norm valgrind

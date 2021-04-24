@@ -6,7 +6,7 @@
 /*   By: gapoulai <gapoulai@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/24 18:36:06 by gapoulai          #+#    #+#             */
-/*   Updated: 2021/04/24 19:47:35 by gapoulai         ###   ########lyon.fr   */
+/*   Updated: 2021/04/24 20:19:04 by gapoulai         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static bool	custom_read(int fd, char *buffer, int *readvalue)
 	return (*readvalue != 0);
 }
 
-int	ft_gnl(int fd, char **line, t_minishell *shell)
+int	ft_gnl(int fd, char **line)
 {
 	char	buffer;
 	int		ret;
@@ -27,14 +27,14 @@ int	ft_gnl(int fd, char **line, t_minishell *shell)
 	ret = 0;
 	if (!line)
 		return (-1);
-	*line = gc_malloc(sizeof(char), shell);
+	*line = gc_malloc(sizeof(char));
 	if (!*line)
 		return (-1);
 	*line[0] = 0;
 	while (custom_read(fd, &buffer, &readvalue) && buffer != '\n')
-		*line = ft_strjoinc(*line, buffer, shell);
+		*line = ft_strjoinc(*line, buffer);
 	if (!*line)
-		*line = ft_strjoinc(*line, 0, shell);
+		*line = ft_strjoinc(*line, 0);
 	if (readvalue > 0)
 		ret = 1;
 	return (ret);

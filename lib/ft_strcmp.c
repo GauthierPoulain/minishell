@@ -1,31 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gapoulai <gapoulai@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/24 00:44:40 by gapoulai          #+#    #+#             */
-/*   Updated: 2021/04/24 20:19:25 by gapoulai         ###   ########lyon.fr   */
+/*   Created: 2021/04/24 21:16:58 by gapoulai          #+#    #+#             */
+/*   Updated: 2021/04/24 21:17:47 by gapoulai         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-char	*ft_strdup(char *s1)
+int	ft_strcmp(const char *s1, const char *s2)
 {
-	char	*str;
-	int		len;
-	int		i;
-
-	len = ft_strlen(s1);
-	str = gc_malloc(sizeof(char) * (len + 1));
-	i = 0;
-	while (i < len)
-	{
-		str[i] = s1[i];
-		i++;
-	}
-	str[i] = 0;
-	return (str);
+	while (*s1 == *s2++)
+		if (*s1++ == 0)
+			return (0);
+	return (*(const unsigned char *)s1 - *(const unsigned char *)(s2 - 1));
 }

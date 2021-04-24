@@ -6,13 +6,13 @@
 /*   By: gapoulai <gapoulai@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/24 12:04:46 by gapoulai          #+#    #+#             */
-/*   Updated: 2021/04/24 19:43:05 by gapoulai         ###   ########lyon.fr   */
+/*   Updated: 2021/04/24 21:11:19 by gapoulai         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	*gc_malloc(size_t size, t_minishell *shell)
+void	*gc_malloc(size_t size)
 {
 	void	*alloc;
 	t_list	*lst;
@@ -20,9 +20,9 @@ void	*gc_malloc(size_t size, t_minishell *shell)
 	alloc = malloc(size);
 	lst = malloc(sizeof(t_list));
 	if (!alloc || !lst)
-		close_shell(shell, 2);
+		close_shell(EXITMSG_MALLOC);
 	lst->content = alloc;
 	lst->next = NULL;
-	ft_lstadd_front(&shell->gc, lst);
+	ft_lstadd_front(&g_shell.gc, lst);
 	return (alloc);
 }
