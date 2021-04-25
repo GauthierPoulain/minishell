@@ -25,8 +25,8 @@ NAME = minishell
 CC = clang
 
 CFLAGS = -Wall -Wextra -Werror -g
-CFLAGS += -O3 -fno-builtin
-# CFLAGS += -fsanitize=address
+# CFLAGS += -O3 -fno-builtin
+CFLAGS += -fsanitize=address
 
 MAKE = make --no-print-directory
 
@@ -38,6 +38,7 @@ SRCS_LIB = \
 	./lib/ft_lstadd_back.c \
 	./lib/ft_lstadd_front.c \
 	./lib/ft_lstnew.c \
+	./lib/ft_putcolor.c \
 	./lib/ft_putstr.c \
 	./lib/ft_strcmp.c \
 	./lib/ft_strdup.c \

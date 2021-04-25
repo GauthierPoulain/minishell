@@ -6,7 +6,7 @@
 /*   By: gapoulai <gapoulai@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/23 16:58:41 by gapoulai          #+#    #+#             */
-/*   Updated: 2021/04/24 21:28:30 by gapoulai         ###   ########lyon.fr   */
+/*   Updated: 2021/04/25 02:17:14 by gapoulai         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,19 +27,30 @@ void	process_input(char *line)
 	}
 }
 
+void	pre_prompt(void)
+{
+	ft_putcolor("minishell", _BLUE);
+	ft_putcolor(" >> ", _GREEN);
+}
+
 int	main(void)
 {
 	char	**line;
+	int		gnl_ret;
 
 	init_shell();
 	line = gc_malloc(sizeof(char *));
 	add_catchers();
 	while (true)
 	{
-		ft_putstr("$ ");
-		if (ft_gnl(0, line) == -1)
+		pre_prompt();
+		gnl_ret = ft_gnl(0, line);
+		if (gnl_ret == -1)
 			close_shell(EXITMSG_GNL);
-		process_input(*line);
+		else if (gnl_ret == 0 && ft_strlen(*line) == 0)
+			close_shell(EXITMSG_NOPRINT);
+		else
+			process_input(*line);
 		gc_free(*line);
 	}
 	close_shell(EXITMSG_UNEXPECTED);
