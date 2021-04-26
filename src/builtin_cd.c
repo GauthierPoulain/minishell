@@ -6,7 +6,7 @@
 /*   By: gapoulai <gapoulai@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/26 13:47:54 by gapoulai          #+#    #+#             */
-/*   Updated: 2021/04/26 15:20:59 by gapoulai         ###   ########lyon.fr   */
+/*   Updated: 2021/04/26 19:27:16 by gapoulai         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ int	builtin_cd(char *path)
 		ret = chdir(path);
 		if (ret == -1)
 			cd_err(1, path);
+		else
+			set_env("PWD", path);
 	}	
 	return (cd_err(err_code, path));
 }

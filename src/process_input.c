@@ -6,7 +6,7 @@
 /*   By: gapoulai <gapoulai@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/26 13:12:12 by gapoulai          #+#    #+#             */
-/*   Updated: 2021/04/26 15:19:52 by gapoulai         ###   ########lyon.fr   */
+/*   Updated: 2021/04/26 22:19:50 by gapoulai         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,11 @@ void	process_input(char *line)
 	else if (!ft_strcmp(line, "test"))
 		exec_test();
 	else if (!ft_strcmp(line, "cd"))
-		g_shell.last_return = builtin_cd("/ergerzgerzg");
+		g_shell.last_return = builtin_cd("/bin");
 	else if (!ft_strcmp(line, "pwd"))
 		g_shell.last_return = builtin_pwd();
+	else if (!ft_strcmp(line, "env"))
+		g_shell.last_return = builtin_env();
 	else
 	{
 		ft_putstr_fd(2, "minishell: command not found: ");

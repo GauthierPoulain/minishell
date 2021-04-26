@@ -1,25 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   builtin_env.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gapoulai <gapoulai@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/24 00:14:27 by gapoulai          #+#    #+#             */
-/*   Updated: 2021/04/26 17:43:48 by gapoulai         ###   ########lyon.fr   */
+/*   Created: 2021/04/26 18:47:20 by gapoulai          #+#    #+#             */
+/*   Updated: 2021/04/26 22:36:27 by gapoulai         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-size_t	ft_strlen(char *str)
+int	builtin_env(void)
 {
-	char	*s;
+	t_list	*actual;
+	t_env	*content;
 
-	if (!str)
-		return (0);
-	s = str;
-	while (*str)
-		++str;
-	return (str - s);
+	actual = g_shell.env;
+	while (actual)
+	{
+		content = actual->content;
+		if (content && content->value)
+		{
+			ft_putstr(content->key);
+			ft_putstr("=");
+			ft_putstr(content->value);
+			ft_putstr("\n");
+		}
+		actual = actual->next;
+	}
+	return (0);
 }

@@ -3,22 +3,22 @@ _BOLD=\033[1m
 _UNDER=\033[4m
 _REV=\033[7m
 
+_DEFAULT=\033[39m
 _RED=\033[31m
 _GREEN=\033[32m
 _YELLOW=\033[33m
 _BLUE=\033[34m
-_PURPLE=\033[35m
+_MAGENTA=\033[35m
 _CYAN=\033[36m
-_WHITE=\033[37m
-
-_IGREY=\033[40m
-_IRED=\033[41m
-_IGREEN=\033[42m
-_IYELLOW=\033[43m
-_IBLUE=\033[44m
-_IPURPLE=\033[45m
-_ICYAN=\033[46m
-_IWHITE=\033[47m
+_LIGHTGRAY=\033[37m
+_DARKGRAY=\033[90m
+_LIGHTRED=\033[91m
+_LIGHTGREEN=\033[92m
+_LIGHTYELLOW=\033[93m
+_LIGHTBLUE=\033[94m
+_LIGHTMAGENTA=\033[95m
+_LIGHTCYAN=\033[96m
+_WHITE=\033[97m
 
 NAME = minishell
 
@@ -26,7 +26,7 @@ CC = clang
 
 CFLAGS = -Wall -Wextra -Werror -g
 # CFLAGS += -O3 -fno-builtin
-# CFLAGS += -fsanitize=address
+CFLAGS += -fsanitize=address
 
 MAKE = make --no-print-directory
 
@@ -46,22 +46,30 @@ SRCS_LIB = \
 	./lib/ft_lstnew.c \
 	./lib/ft_putcolor.c \
 	./lib/ft_putstr.c \
+	./lib/ft_strchr.c \
 	./lib/ft_strcmp.c \
 	./lib/ft_strdup.c \
-	./lib/ft_strjoinc.c \
+	./lib/ft_strjoin.c \
 	./lib/ft_strlen.c \
 	./lib/gc_clean.c \
 	./lib/gc_free.c \
 	./lib/gc_malloc.c \
+	./lib/ft_calloc.c \
+	./lib/ft_split.c \
+	./lib/ft_memcpy.c \
+	./lib/ft_strcat.c \
 
 SRCS_MS = \
 	./src/builtin_cd.c \
+	./src/builtin_env.c \
 	./src/builtin_pwd.c \
 	./src/catch_signals.c \
 	./src/close_handler.c \
 	./src/minishell.c \
 	./src/exec_test.c \
 	./src/process_input.c \
+	./src/env.c \
+	./src/exec.c \
 
 SRCS = $(SRCS_LIB) $(SRCS_MS)
 
@@ -76,7 +84,7 @@ all: $(NAME)
 $(NAME): $(OBJS)
 	@printf "[ $(_YELLOW)$(_BOLD)building$(_END) ] $(_BLUE)$(_BOLD)$(NAME)$(_END)\n"
 	@$(CC) $(CFLAGS) -o $(NAME) $(OBJS)
-	@printf "[ $(_PURPLE)$(_BOLD)done$(_END) ]\n"
+	@printf "[ $(_MAGENTA)$(_BOLD)done$(_END) ]\n"
 
 clean:
 	@printf "[ $(_RED)$(_BOLD)removing$(_END) ] $(_BLUE)$(_BOLD)objs$(_END)\n"
@@ -90,7 +98,7 @@ re: fclean
 	@$(MAKE) all
 
 run: all
-	@printf "[ $(_PURPLE)$(_BOLD)running$(_END) ] $(_BLUE)$(_BOLD)$(NAME)...$(_END)\n"
+	@printf "[ $(_MAGENTA)$(_BOLD)running$(_END) ] $(_BLUE)$(_BOLD)$(NAME)...$(_END)\n"
 	@./$(NAME)
 
 norm:
@@ -100,7 +108,7 @@ valgrind: all
 ifneq (,$(findstring fsanitize,$(CFLAGS)))
 	@echo "please use without fsanitize"
 else
-	@valgrind -s --leak-check=full --show-reachable=yes ./$(NAME)
+	@valgrind -s --leak-check=full --show-reachable=yes --track-origins=yes ./$(NAME)
 endif
 
 .PHONY: all clean fclean re run norm valgrind

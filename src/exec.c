@@ -1,25 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gapoulai <gapoulai@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/24 00:14:27 by gapoulai          #+#    #+#             */
-/*   Updated: 2021/04/26 17:43:48 by gapoulai         ###   ########lyon.fr   */
+/*   Created: 2021/04/26 22:18:41 by gapoulai          #+#    #+#             */
+/*   Updated: 2021/04/26 22:19:01 by gapoulai         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-size_t	ft_strlen(char *str)
+int	exec_subprocess(char *path, char *argv[], char *envp[])
 {
-	char	*s;
+	pid_t	pid;
+	int		status;
 
-	if (!str)
-		return (0);
-	s = str;
-	while (*str)
-		++str;
-	return (str - s);
+	status = 0;
+	pid = fork();
+	if (pid == -1)
+		close_shell("error while forking subprocess");
+	else if (pid == 0)
+	{
+		execve(path, argv, envp);
+		gc_clean();
+		exit(errno);
+	}
+	else
+		wait(&status);
+	return (((status) & 0xff00) >> 8);
 }

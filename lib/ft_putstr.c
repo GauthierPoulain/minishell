@@ -6,7 +6,7 @@
 /*   By: gapoulai <gapoulai@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/24 18:45:34 by gapoulai          #+#    #+#             */
-/*   Updated: 2021/04/24 18:46:53 by gapoulai         ###   ########lyon.fr   */
+/*   Updated: 2021/04/26 17:51:06 by gapoulai         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,5 +19,5 @@ void	ft_putstr_fd(int fd, char *str)
 
 void	ft_putstr(char *str)
 {
-	ft_putstr_fd(1, str);
+	ft_putstr_fd(0, str);
 }
