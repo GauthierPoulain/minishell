@@ -6,7 +6,7 @@
 /*   By: gapoulai <gapoulai@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/23 16:59:04 by gapoulai          #+#    #+#             */
-/*   Updated: 2021/04/26 22:21:43 by gapoulai         ###   ########lyon.fr   */
+/*   Updated: 2021/04/26 23:04:10 by gapoulai         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,8 @@ int		ft_gnl(int fd, char **line);
 void	ft_lstadd_back(t_list **alst, t_list *new);
 void	ft_lstadd_front(t_list **alst, t_list *new);
 t_list	*ft_lstnew(void *content);
+size_t	ft_lstsize(t_list *alist);
+size_t	ft_envlstsize(t_list *alist);
 void	ft_putcolor(char *str, char *color);
 void	ft_putstr_fd(int fd, char *str);
 void	ft_putstr(char *str);
@@ -125,12 +127,13 @@ void	process_input(char *line);
 int		builtin_cd(char *path);
 int		builtin_pwd(void);
 int		builtin_env(void);
+char	**get_envp(void);
 
 void	set_env(char *key, char *value);
 void	unset_env(char *key);
 char	*get_env(char *key);
 void	init_env(const char **envp);
 
-int		exec_subprocess(char *path, char *argv[], char *envp[]);
+int		exec_subprocess(char *path, char *argv[]);
 
 #endif

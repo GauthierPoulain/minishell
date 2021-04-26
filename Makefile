@@ -44,6 +44,7 @@ SRCS_LIB = \
 	./lib/ft_lstadd_back.c \
 	./lib/ft_lstadd_front.c \
 	./lib/ft_lstnew.c \
+	./lib/ft_lstsize.c \
 	./lib/ft_putcolor.c \
 	./lib/ft_putstr.c \
 	./lib/ft_strchr.c \

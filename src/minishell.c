@@ -6,7 +6,7 @@
 /*   By: gapoulai <gapoulai@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/23 16:58:41 by gapoulai          #+#    #+#             */
-/*   Updated: 2021/04/26 22:02:54 by gapoulai         ###   ########lyon.fr   */
+/*   Updated: 2021/04/26 22:59:27 by gapoulai         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,9 @@ static void	init_shell(void)
 	g_shell.workdir = gc_malloc(FILENAME_MAX);
 	g_shell.last_return = 0;
 	g_shell.env = NULL;
+	setbuf(stdout, NULL);
+	setbuf(stderr, NULL);
+	setbuf(stdout, NULL);
 }
 
 static void	pre_prompt(void)

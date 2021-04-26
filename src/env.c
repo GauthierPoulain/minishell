@@ -6,7 +6,7 @@
 /*   By: gapoulai <gapoulai@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/26 18:45:57 by gapoulai          #+#    #+#             */
-/*   Updated: 2021/04/26 22:38:10 by gapoulai         ###   ########lyon.fr   */
+/*   Updated: 2021/04/26 23:02:31 by gapoulai         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,4 +81,25 @@ void	init_env(const char **envp)
 		set_env(spres[0], *env + (ft_strlen(spres[0]) + 1));
 		env++;
 	}
+}
+
+char	**get_envp(void)
+{
+	char	**envp;
+	t_list	*actual;
+	t_env	*content;
+	int		pos;
+
+	envp = ft_calloc(sizeof(char *) * (ft_envlstsize(g_shell.env) + 1));
+	pos = 0;
+	actual = g_shell.env;
+	while (actual)
+	{
+		content = actual->content;
+		if (content && content->value)
+			envp[pos++] = ft_strjoin(content->key, ft_strjoin("=",
+						ft_strjoin(content->value, "\n")));
+		actual = actual->next;
+	}
+	return (envp);
 }
