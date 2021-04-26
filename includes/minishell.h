@@ -6,13 +6,14 @@
 /*   By: gapoulai <gapoulai@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/23 16:59:04 by gapoulai          #+#    #+#             */
-/*   Updated: 2021/04/26 13:57:45 by gapoulai         ###   ########lyon.fr   */
+/*   Updated: 2021/04/26 14:41:06 by gapoulai         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# include <errno.h>
 # include <fcntl.h>
 # include <unistd.h>
 # include <signal.h>
@@ -46,12 +47,14 @@ typedef struct s_minishell
 {
 	t_list	*gc;
 	char	*workdir;
+	int		last_return;
 }				t_minishell;
 
 extern t_minishell	g_shell;
 
 // LIB ------------------------------------------------------------------------
 
+int		ft_atoi(const char *str);
 int		ft_gnl(int fd, char **line);
 void	ft_lstadd_back(t_list **alst, t_list *new);
 void	ft_lstadd_front(t_list **alst, t_list *new);
@@ -66,6 +69,18 @@ size_t	ft_strlen(char *str);
 void	gc_clean(void);
 void	gc_free(void *ptr);
 void	*gc_malloc(size_t size);
+size_t	ft_nblen(long long nb);
+char	*ft_itoa(int n);
+void	ft_bzero(void *s, size_t n);
+
+bool	ft_isalpha(char c);
+bool	ft_isdigit(char c);
+bool	ft_isalnum(char c);
+bool	ft_isascii(char c);
+bool	ft_isprint(char c);
+bool	ft_isspace(char c);
+bool	ft_ischarset(char c, char *charset);
+bool	ft_isinrange(long long value, long long min, long long max);
 
 // MINISHELL ------------------------------------------------------------------
 
@@ -74,6 +89,7 @@ void	add_catchers(void);
 void	exec_test(void);
 void	process_input(char *line);
 
-void	builtin_cd(char *path);
+int		builtin_cd(char *path);
+int		builtin_pwd(void);
 
 #endif

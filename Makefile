@@ -34,6 +34,12 @@ HEADERS = \
 	./includes/minishell.h
 
 SRCS_LIB = \
+	./lib/ft_atoi.c \
+	./lib/ft_itoa.c \
+	./lib/ft_bzero.c \
+	./lib/ft_nblen.c \
+	./lib/ft_is_p1.c \
+	./lib/ft_is_p2.c \
 	./lib/ft_gnl.c \
 	./lib/ft_lstadd_back.c \
 	./lib/ft_lstadd_front.c \
@@ -50,6 +56,7 @@ SRCS_LIB = \
 
 SRCS_MS = \
 	./src/builtin_cd.c \
+	./src/builtin_pwd.c \
 	./src/catch_signals.c \
 	./src/close_handler.c \
 	./src/minishell.c \
