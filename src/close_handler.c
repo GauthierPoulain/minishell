@@ -6,7 +6,7 @@
 /*   By: gapoulai <gapoulai@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/24 18:44:12 by gapoulai          #+#    #+#             */
-/*   Updated: 2021/04/24 21:22:54 by gapoulai         ###   ########lyon.fr   */
+/*   Updated: 2021/04/26 13:37:08 by gapoulai         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,12 @@ void	print_err(char *msg)
 void	close_shell(char *msg)
 {
 	gc_clean();
-	if (DEBUG && ft_strlen(msg) > 0)
-		print_err(msg);
-	exit(EXIT_SUCCESS);
+	if (msg)
+	{
+		if (DEBUG)
+			print_err(msg);
+		exit(EXIT_FAILURE);
+	}
+	else
+		exit(EXIT_SUCCESS);
 }

@@ -1,24 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   catch_signals.c                                    :+:      :+:    :+:   */
+/*   exec_test.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gapoulai <gapoulai@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/24 19:56:07 by gapoulai          #+#    #+#             */
-/*   Updated: 2021/04/26 13:38:25 by gapoulai         ###   ########lyon.fr   */
+/*   Created: 2021/04/26 12:32:37 by gapoulai          #+#    #+#             */
+/*   Updated: 2021/04/26 13:39:50 by gapoulai         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	catch_SIGINT(int sig)
+void	exec_subprocess(char *path, char *argv[], char *envp[])
 {
-	(void)sig;
-	close_shell(NULL);
+	pid_t	pid;
+
+	pid = fork();
+	if (pid == -1)
+		close_shell("error while forking subprocess");
+	if (pid == 0)
+		execve(path, argv, envp);
+	else
+		wait(NULL);
 }
 
-void	add_catchers(void)
+void	exec_test()
 {
-	signal(SIGINT, catch_SIGINT);
+	char	*argv[] = {"", NULL};
+	char	*envp[] = {NULL};
+	char	*prog	= "/usr/bin/ls";
+
+	exec_subprocess(prog, argv, envp);
 }

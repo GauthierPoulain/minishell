@@ -1,24 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   catch_signals.c                                    :+:      :+:    :+:   */
+/*   process_input.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gapoulai <gapoulai@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/24 19:56:07 by gapoulai          #+#    #+#             */
-/*   Updated: 2021/04/26 13:38:25 by gapoulai         ###   ########lyon.fr   */
+/*   Created: 2021/04/26 13:12:12 by gapoulai          #+#    #+#             */
+/*   Updated: 2021/04/26 14:05:04 by gapoulai         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	catch_SIGINT(int sig)
+static void	preexec(char *cmd)
 {
-	(void)sig;
-	close_shell(NULL);
+	(void)cmd;
+	return ;
 }
 
-void	add_catchers(void)
+static void	precmd()
 {
-	signal(SIGINT, catch_SIGINT);
+	return ;
+}
+
+void	process_input(char *line)
+{
+	preexec(line);
+	if (!ft_strcmp(line, "exit"))
+		close_shell(NULL);
+	else if (!ft_strcmp(line, "ls"))
+		exec_test();
+	else if (!ft_strcmp(line, "cd"))
+		builtin_cd("/usr");
+	precmd();
 }

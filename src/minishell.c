@@ -6,7 +6,7 @@
 /*   By: gapoulai <gapoulai@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/23 16:58:41 by gapoulai          #+#    #+#             */
-/*   Updated: 2021/04/25 02:17:14 by gapoulai         ###   ########lyon.fr   */
+/*   Updated: 2021/04/26 13:47:34 by gapoulai         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,17 @@
 
 t_minishell	g_shell;
 
-void	init_shell(void)
+static void	init_shell(void)
 {
 	g_shell.gc = NULL;
+	g_shell.workdir = gc_malloc(FILENAME_MAX);
 }
 
-void	process_input(char *line)
+static void	pre_prompt(void)
 {
-	if (!ft_strcmp(line, "exit"))
-	{
-		close_shell(EXITMSG_NOPRINT);
-	}
-}
-
-void	pre_prompt(void)
-{
-	ft_putcolor("minishell", _BLUE);
+	if (getcwd(g_shell.workdir, FILENAME_MAX) == NULL)
+		close_shell("error while getting current workdir");
+	ft_putcolor(g_shell.workdir, _BLUE);
 	ft_putcolor(" >> ", _GREEN);
 }
 
@@ -46,12 +41,12 @@ int	main(void)
 		pre_prompt();
 		gnl_ret = ft_gnl(0, line);
 		if (gnl_ret == -1)
-			close_shell(EXITMSG_GNL);
+			close_shell("gnl failure");
 		else if (gnl_ret == 0 && ft_strlen(*line) == 0)
-			close_shell(EXITMSG_NOPRINT);
+			close_shell(NULL);
 		else
 			process_input(*line);
 		gc_free(*line);
 	}
-	close_shell(EXITMSG_UNEXPECTED);
+	close_shell("unexpecter error");
 }

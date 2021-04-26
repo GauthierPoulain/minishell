@@ -26,7 +26,7 @@ CC = clang
 
 CFLAGS = -Wall -Wextra -Werror -g
 # CFLAGS += -O3 -fno-builtin
-CFLAGS += -fsanitize=address
+# CFLAGS += -fsanitize=address
 
 MAKE = make --no-print-directory
 
@@ -49,9 +49,12 @@ SRCS_LIB = \
 	./lib/gc_malloc.c \
 
 SRCS_MS = \
+	./src/builtin_cd.c \
 	./src/catch_signals.c \
 	./src/close_handler.c \
 	./src/minishell.c \
+	./src/exec_test.c \
+	./src/process_input.c \
 
 SRCS = $(SRCS_LIB) $(SRCS_MS)
 

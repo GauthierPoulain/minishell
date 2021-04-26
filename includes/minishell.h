@@ -6,28 +6,25 @@
 /*   By: gapoulai <gapoulai@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/23 16:59:04 by gapoulai          #+#    #+#             */
-/*   Updated: 2021/04/25 02:15:01 by gapoulai         ###   ########lyon.fr   */
+/*   Updated: 2021/04/26 13:57:45 by gapoulai         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include <stdio.h>
-# include <stdlib.h>
+# include <fcntl.h>
 # include <unistd.h>
-# include <stdbool.h>
-# include <stdarg.h>
 # include <signal.h>
+# include <stdarg.h>
+# include <stdbool.h>
+# include <stddef.h>
+# include <stdlib.h>
+# include <stdio.h>
+# include <sys/types.h>
+# include <sys/wait.h>
 
 # define DEBUG 1
-
-# define EXITMSG_NOPRINT	""
-# define EXITMSG_HOW		"how ¿"
-# define EXITMSG_MALLOC		"malloc error"
-# define EXITMSG_GNL		"gnl error"
-# define EXITMSG_SIGINT		"signal : SIGINT"
-# define EXITMSG_UNEXPECTED	"unexpected error"
 
 # define _END "\033[1;0m"
 
@@ -48,6 +45,7 @@ typedef struct s_list
 typedef struct s_minishell
 {
 	t_list	*gc;
+	char	*workdir;
 }				t_minishell;
 
 extern t_minishell	g_shell;
@@ -73,5 +71,9 @@ void	*gc_malloc(size_t size);
 
 void	close_shell(char *msg);
 void	add_catchers(void);
+void	exec_test(void);
+void	process_input(char *line);
+
+void	builtin_cd(char *path);
 
 #endif
