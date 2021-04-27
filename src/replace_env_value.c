@@ -45,13 +45,14 @@ char	*replace_env_line(char *line)
 	char	*new_line;
 
 	i = 0;
-	while (line[i])
+	new_line = line;
+	while (new_line[i])
 	{
-		if (line[i] == '$')
+		if (new_line[i] == '$')
 		{
-			
-			env_value = get_env(get_word(line, ' ', i + 1));
-			new_line = set_env_line(line, env_value, i);
+			printf("one dollar\n");
+			env_value = get_env(get_word(new_line, ' ', i + 1));
+			new_line = set_env_line(new_line, env_value, i);
 		}
 		i++;
 	}
