@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gapoulai <gapoulai@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: ckurt <ckurt@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/23 16:59:04 by gapoulai          #+#    #+#             */
-/*   Updated: 2021/04/27 12:23:01 by gapoulai         ###   ########lyon.fr   */
+/*   Updated: 2021/04/27 13:42:14 by ckurt            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,6 +135,8 @@ char	*get_env(char *key);
 void	init_env(const char **envp);
 
 int		exec_subprocess(char *path, char *argv[]);
+
+char	*replace_env_line(char *line);
 
 #endif
 

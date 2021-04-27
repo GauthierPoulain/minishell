@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process_input.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gapoulai <gapoulai@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: ckurt <ckurt@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/26 13:12:12 by gapoulai          #+#    #+#             */
-/*   Updated: 2021/04/26 22:19:50 by gapoulai         ###   ########lyon.fr   */
+/*   Updated: 2021/04/27 13:54:29 by ckurt            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ static void	precmd(void)
 void	process_input(char *line)
 {
 	preexec(line);
+	replace_env_line(line);
 	if (ft_strlen(line) < 1)
 		return ;
 	if (!ft_strcmp(line, "exit"))

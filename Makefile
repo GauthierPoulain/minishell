@@ -71,6 +71,7 @@ SRCS_MS = \
 	./src/process_input.c \
 	./src/env.c \
 	./src/exec.c \
+	./src/replace_env_value.c \
 
 SRCS = $(SRCS_LIB) $(SRCS_MS)
 
