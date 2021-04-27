@@ -46,12 +46,13 @@ size_t	get_word_len_sp(char *line, int i)
 
 char	*set_env_line(char *line, char *env_value, int i)
 {
-	char *first_part;
-	char *final_part;
+	char	*first_part;
+	char	*final_part;
 
 	first_part = get_word(line, '$', 0);
 	final_part = ft_strjoin(first_part, env_value);
-	final_part = ft_strjoin(final_part, line + i + 1 + get_word_len_sp(line, i + 1));
+	final_part = ft_strjoin(final_part,
+			line + i + 1 + get_word_len_sp(line, i + 1));
 	return (final_part);
 }
 
