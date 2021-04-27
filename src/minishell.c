@@ -31,13 +31,10 @@ static void	pre_prompt(void)
 
 int	main(int argc, const char **argv, const char **envp)
 {
-	char	**line;
-
 	(void)argc;
 	(void)argv;
 	init_shell();
 	init_env(envp);
-	line = gc_malloc(sizeof(char *));
 	while (true)
 	{
 		pre_prompt();		

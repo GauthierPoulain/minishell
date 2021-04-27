@@ -3,7 +3,6 @@
 static void	preexec(char *cmd)
 {
 	(void)cmd;
-	printf("command = %s\n", cmd);
 	return ;
 }
 
@@ -15,6 +14,7 @@ static void	precmd(void)
 void	process_input(char *line)
 {
 	preexec(line);
+	printf("cmd = %s", line);
 	replace_env_line(line);
 	if (ft_strlen(line) < 1)
 		return ;

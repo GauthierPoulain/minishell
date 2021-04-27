@@ -1,31 +1,43 @@
 #include "../includes/minishell.h"
 
+void	set_input_mode(void)
+{
+	if (!isatty(STDIN_FILENO))
+		close_shell("error, not a terminal");
+	tcgetattr(STDIN_FILENO, &g_shell.save);
+	tcgetattr(STDIN_FILENO, &g_shell.term);
+	g_shell.term.c_lflag &= ~(ICANON | ECHO | ISIG);
+	g_shell.term.c_cc[VMIN] = 1;
+	g_shell.term.c_cc[VTIME] = 0;
+	tcsetattr(STDIN_FILENO, TCSAFLUSH, &g_shell.term);
+}
+
+void	reset_input_mode(void)
+{
+	tcsetattr(STDIN_FILENO, TCSANOW, &g_shell.save);
+}
+
 char	*read_term(void)
 {
 	char	*str;
-	char	*buff;
+	char	buff;
 	int		len;
+	int		ret;
 
+	set_input_mode();
 	len = 0;
-	buff = NULL;
+	buff = 0;
 	str = ft_strdup("");
-	tcgetattr(0, &g_shell.save);
-	tcgetattr(0, &g_shell.term);
-	g_shell.term.c_cflag &= ~(ECHO);
-	g_shell.term.c_cflag &= ~(ICANON);
-	g_shell.term.c_cflag &= ~(ISIG);
-	g_shell.term.c_cc[VMIN] = 1;
-	g_shell.term.c_cc[VTIME] = 0;
-	tcsetattr(0, TCSANOW, &g_shell.term);
-	tgetent(0, getenv("TERM"));
-	while (read(0, buff, 1) >= 0 && *buff != '\n')
+	ret = 0;
+	while (ret >= 0 && buff != '\n')
 	{
-		write(1, buff, 1);
-		if (*buff == 'c')
-			write(1, "salut", 5);
+		ret = read(STDIN_FILENO, &buff, 1);
+		if (buff == 'q')
+			close_shell(NULL);
+		write(1, &buff, 1);
 		len++;
-		ft_strjoinc(str, *buff);
+		ft_strjoinc(str, buff);
 	}
-	tcsetattr(0, TCSANOW, &g_shell.save);
+	reset_input_mode();
 	return (str);
 }
