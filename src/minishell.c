@@ -6,7 +6,7 @@
 /*   By: gapoulai <gapoulai@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/23 16:58:41 by gapoulai          #+#    #+#             */
-/*   Updated: 2021/04/27 12:24:11 by gapoulai         ###   ########lyon.fr   */
+/*   Updated: 2021/04/27 15:24:42 by gapoulai         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,15 @@ static void	pre_prompt(void)
 	ft_putcolor(" ", _DARKGRAY);
 }
 
+// static void	set_raw_input(void)
+// {
+// 	printf("salut");
+// 	tcgetattr(STDIN_FILENO, &g_shell.termios_ctl);
+// 	g_shell.termios_ctl = g_shell.termios_ctl;
+// 	g_shell.termios_ctl.c_cflag &= ~(ECHO | ICANON);
+// 	tcsetattr(STDIN_FILENO, TCSAFLUSH, &g_shell.termios_ctl);
+// }
+
 int	main(int argc, const char **argv, const char **envp)
 {
 	char	**line;
@@ -49,13 +58,14 @@ int	main(int argc, const char **argv, const char **envp)
 	(void)argc;
 	(void)argv;
 	init_shell();
+	// set_raw_input();
 	init_env(envp);
 	line = gc_malloc(sizeof(char *));
 	add_catchers();
 	while (true)
 	{
 		pre_prompt();
-		gnl_ret = ft_gnl(0, line);
+		gnl_ret = ft_gnl(STDIN_FILENO, line);
 		if (gnl_ret == -1)
 			close_shell("gnl failure");
 		else if (gnl_ret == 0 && ft_strlen(*line) == 0)

@@ -6,7 +6,7 @@
 /*   By: gapoulai <gapoulai@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/26 12:32:37 by gapoulai          #+#    #+#             */
-/*   Updated: 2021/04/27 12:25:27 by gapoulai         ###   ########lyon.fr   */
+/*   Updated: 2021/04/27 12:46:56 by gapoulai         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	exec_test(void)
 	char	*prog = "/bin/ls";
 	char	*argv[] = {prog, "/bin", NULL};
 
+	sleep(2);
 	g_shell.last_return = exec_subprocess(prog, argv);
 }
 
