@@ -74,7 +74,6 @@ extern t_minishell	g_shell;
 // LIB ------------------------------------------------------------------------
 
 int		ft_atoi(const char *str);
-int		ft_gnl(int fd, char **line);
 void	ft_lstadd_back(t_list **alst, t_list *new);
 void	ft_lstadd_front(t_list **alst, t_list *new);
 t_list	*ft_lstnew(void *content);
@@ -132,6 +131,7 @@ int		exec_subprocess(char *path, char *argv[]);
 
 char	*replace_env_line(char *line);
 
+void	set_input_mode(void);
 char	*read_term(void);
 
 #endif

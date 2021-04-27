@@ -40,7 +40,6 @@ SRCS_LIB = \
 	./lib/ft_nblen.c \
 	./lib/ft_is_p1.c \
 	./lib/ft_is_p2.c \
-	./lib/ft_gnl.c \
 	./lib/ft_lstadd_back.c \
 	./lib/ft_lstadd_front.c \
 	./lib/ft_lstnew.c \

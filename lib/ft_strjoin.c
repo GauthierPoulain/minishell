@@ -91,5 +91,6 @@ char	*ft_strjoinc(char *s1, char c)
 	}
 	res[i] = c;
 	res[i + 1] = 0;
+	gc_free(s1);
 	return (res);
 }
