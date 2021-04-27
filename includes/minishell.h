@@ -6,7 +6,7 @@
 /*   By: gapoulai <gapoulai@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/23 16:59:04 by gapoulai          #+#    #+#             */
-/*   Updated: 2021/04/27 12:23:01 by gapoulai         ###   ########lyon.fr   */
+/*   Updated: 2021/04/27 14:20:07 by gapoulai         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 # include <errno.h>
 # include <fcntl.h>
-# include <unistd.h>
 # include <signal.h>
 # include <stdarg.h>
 # include <stdbool.h>
@@ -23,11 +22,16 @@
 # include <stdlib.h>
 # include <stdio.h>
 # include <sys/types.h>
+# include <sys/ioctl.h>
 # include <sys/wait.h>
+# include <termios.h>
+# include <unistd.h>
 
 # define DEBUG 1
 
-# define BUFFER_SIZE	1
+# ifndef O_DIRECTORY
+#  define O_DIRECTORY __O_DIRECTORY
+# endif
 
 # define _END "\033[1;0m"
 
@@ -68,13 +72,15 @@ typedef struct s_env
 
 typedef struct s_minishell
 {
-	t_list	*gc;
-	char	*workdir;
-	int		last_return;
-	t_list	*env;
+	t_list			*gc;
+	char			*workdir;
+	int				last_return;
+	t_list			*env;
+	struct termios	termios_ctl;
 }				t_minishell;
 
 extern t_minishell	g_shell;
+
 
 // LIB ------------------------------------------------------------------------
 
@@ -136,8 +142,4 @@ void	init_env(const char **envp);
 
 int		exec_subprocess(char *path, char *argv[]);
 
-#endif
-
-#ifndef O_DIRECTORY
-# define O_DIRECTORY __O_DIRECTORY
 #endif

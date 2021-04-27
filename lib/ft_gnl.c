@@ -6,7 +6,7 @@
 /*   By: gapoulai <gapoulai@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/24 18:36:06 by gapoulai          #+#    #+#             */
-/*   Updated: 2021/04/26 17:50:18 by gapoulai         ###   ########lyon.fr   */
+/*   Updated: 2021/04/27 15:25:09 by gapoulai         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 static bool	custom_read(int fd, char *buffer, int *readvalue)
 {
 	*readvalue = read(fd, buffer, 1);
+	// printf("c = %c, int = %d\n", *buffer, *buffer);
+	// write(1, buffer, 1);
 	return (*readvalue != 0);
 }
 
