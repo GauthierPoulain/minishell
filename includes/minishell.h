@@ -13,6 +13,7 @@
 # include <sys/ioctl.h>
 # include <sys/wait.h>
 # include <termios.h>
+# include <term.h>
 # include <unistd.h>
 
 # define DEBUG 1
@@ -64,7 +65,8 @@ typedef struct s_minishell
 	char			*workdir;
 	int				last_return;
 	t_list			*env;
-	struct termios	termios_ctl;
+	struct termios	term;
+	struct termios	save;
 }				t_minishell;
 
 extern t_minishell	g_shell;
@@ -130,5 +132,7 @@ void	init_env(const char **envp);
 int		exec_subprocess(char *path, char *argv[]);
 
 char	*replace_env_line(char *line);
+
+char	*read_term(void);
 
 #endif

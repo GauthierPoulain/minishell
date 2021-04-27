@@ -41,7 +41,7 @@ static void	pre_prompt(void)
 int	main(int argc, const char **argv, const char **envp)
 {
 	char	**line;
-	int		gnl_ret;
+	// int		gnl_ret;
 
 	(void)argc;
 	(void)argv;
@@ -49,19 +49,20 @@ int	main(int argc, const char **argv, const char **envp)
 	// set_raw_input();
 	init_env(envp);
 	line = gc_malloc(sizeof(char *));
-	add_catchers();
+	// add_catchers();
 	while (true)
 	{
 		pre_prompt();
-		gnl_ret = ft_gnl(STDIN_FILENO, line);
-		if (gnl_ret == -1)
-			close_shell("gnl failure");
-		else if (gnl_ret == 0 && ft_strlen(*line) == 0)
-			close_shell(NULL);
-		else
-			process_input(*line);
-		if (*line)
-			gc_free(*line);
+		
+		// gnl_ret = ft_gnl(STDIN_FILENO, line);
+		// if (gnl_ret == -1)
+		// 	close_shell("gnl failure");
+		// else if (gnl_ret == 0 && ft_strlen(*line) == 0)
+		// 	close_shell(NULL);
+		// else
+		process_input(read_term());
+		// if (*line)
+		// 	gc_free(*line);
 	}
 	close_shell("unexpecter error");
 }

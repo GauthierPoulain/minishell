@@ -2,4 +2,5 @@ minishell
 *.o
 *.a
 *.out
+*.tmp
 .DS_Store

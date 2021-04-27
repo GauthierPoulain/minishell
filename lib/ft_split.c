@@ -41,11 +41,11 @@ char	**ft_split(char const *s, char c)
 	int		i;
 	int		j;
 	int		k;
-	char	**tab;
+	char	**res;
 
 	if (!s)
 		return (NULL);
-	tab = gc_malloc(sizeof(char *) * (count_words(s, c) + 1));
+	res = gc_malloc(sizeof(char *) * (count_words(s, c) + 1));
 	i = 0;
 	k = 0;
 	while (k < count_words(s, c))
@@ -53,12 +53,12 @@ char	**ft_split(char const *s, char c)
 		j = 0;
 		while (s[i] == c)
 			i++;
-		tab[k] = gc_malloc(sizeof(char) * (get_word_length(s, c, i) + 1));
+		res[k] = gc_malloc(sizeof(char) * (get_word_length(s, c, i) + 1));
 		while (s[i] && s[i] != c)
-			tab[k][j++] = s[i++];
-		tab[k][j] = 0;
+			res[k][j++] = s[i++];
+		res[k][j] = 0;
 		k++;
 	}
-	tab[k] = NULL;
-	return (tab);
+	res[k] = NULL;
+	return (res);
 }

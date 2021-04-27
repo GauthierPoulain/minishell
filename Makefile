@@ -26,7 +26,7 @@ CC = clang
 
 CFLAGS = -Wall -Wextra -Werror -g
 # CFLAGS += -O3 -fno-builtin
-CFLAGS += -fsanitize=address
+# CFLAGS += -fsanitize=address
 
 MAKE = make --no-print-directory
 
@@ -72,6 +72,7 @@ SRCS_MS = \
 	./src/env.c \
 	./src/exec.c \
 	./src/replace_env_value.c \
+	./src/read_line.c \
 
 SRCS = $(SRCS_LIB) $(SRCS_MS)
 
@@ -85,7 +86,7 @@ all: $(NAME)
 
 $(NAME): $(OBJS)
 	@printf "[ $(_YELLOW)$(_BOLD)building$(_END) ] $(_BLUE)$(_BOLD)$(NAME)$(_END)\n"
-	@$(CC) $(CFLAGS) -o $(NAME) $(OBJS)
+	@$(CC) $(CFLAGS) -ltermcap -o $(NAME) $(OBJS)
 	@printf "[ $(_MAGENTA)$(_BOLD)done$(_END) ]\n"
 
 clean:
@@ -106,11 +107,16 @@ run: all
 norm:
 	@norminette
 
-valgrind: all
+leaks: all
 ifneq (,$(findstring fsanitize,$(CFLAGS)))
 	@echo "please use without fsanitize"
 else
+ifeq ($(shell uname -s),Linux)
 	@valgrind -s --leak-check=full --show-reachable=yes --track-origins=yes ./$(NAME)
 endif
+ifeq ($(shell uname -s),Darwin)
+	@leaks --atExit -- ./$(NAME)
+endif
+endif
 
-.PHONY: all clean fclean re run norm valgrind
+.PHONY: all clean fclean re run norm leaks
