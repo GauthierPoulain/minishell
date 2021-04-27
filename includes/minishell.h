@@ -6,7 +6,7 @@
 /*   By: gapoulai <gapoulai@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/23 16:59:04 by gapoulai          #+#    #+#             */
-/*   Updated: 2021/04/26 23:04:10 by gapoulai         ###   ########lyon.fr   */
+/*   Updated: 2021/04/27 12:23:01 by gapoulai         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,4 +136,8 @@ void	init_env(const char **envp);
 
 int		exec_subprocess(char *path, char *argv[]);
 
+#endif
+
+#ifndef O_DIRECTORY
+# define O_DIRECTORY __O_DIRECTORY
 #endif

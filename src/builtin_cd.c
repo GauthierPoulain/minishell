@@ -6,7 +6,7 @@
 /*   By: gapoulai <gapoulai@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/26 13:47:54 by gapoulai          #+#    #+#             */
-/*   Updated: 2021/04/26 19:27:16 by gapoulai         ###   ########lyon.fr   */
+/*   Updated: 2021/04/27 12:22:19 by gapoulai         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	builtin_cd(char *path)
 		err_code = 1;
 	else
 		close(fd);
-	fd = open(path, __O_DIRECTORY);
+	fd = open(path, O_DIRECTORY);
 	if (fd == -1)
 		err_code = 2;
 	else

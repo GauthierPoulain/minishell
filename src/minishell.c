@@ -6,7 +6,7 @@
 /*   By: gapoulai <gapoulai@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/23 16:58:41 by gapoulai          #+#    #+#             */
-/*   Updated: 2021/04/26 22:59:27 by gapoulai         ###   ########lyon.fr   */
+/*   Updated: 2021/04/27 12:24:11 by gapoulai         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,6 @@ static void	init_shell(void)
 static void	pre_prompt(void)
 {
 	ft_putcolor(get_env("USER"), _LIGHTBLUE);
-	ft_putcolor(" at ", _DARKGRAY);
-	ft_putcolor(get_env("NAME"), _CYAN);
 	ft_putcolor(" in ", _DARKGRAY);
 	ft_putcolor(get_env("PWD"), _YELLOW);
 	ft_putcolor("\n", _DARKGRAY);
