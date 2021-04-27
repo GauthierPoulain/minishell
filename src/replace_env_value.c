@@ -6,7 +6,7 @@
 /*   By: ckurt <ckurt@student.42lyon.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/27 13:07:08 by ckurt             #+#    #+#             */
-/*   Updated: 2021/04/27 14:23:34 by ckurt            ###   ########lyon.fr   */
+/*   Updated: 2021/04/27 15:24:46 by ckurt            ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,13 +58,14 @@ char	*replace_env_line(char *line)
 	char	*new_line;
 
 	i = 0;
-	while (line[i])
+	new_line = line;
+	while (new_line[i])
 	{
-		if (line[i] == '$')
+		if (new_line[i] == '$')
 		{
-			
-			env_value = get_env(get_word(line, ' ', i + 1));
-			new_line = set_env_line(line, env_value, i);
+			printf("one dollar\n");
+			env_value = get_env(get_word(new_line, ' ', i + 1));
+			new_line = set_env_line(new_line, env_value, i);
 		}
 		i++;
 	}
