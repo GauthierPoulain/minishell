@@ -3,6 +3,7 @@
 static void	preexec(char *cmd)
 {
 	(void)cmd;
+	printf("command = %s\n", cmd);
 	return ;
 }
 

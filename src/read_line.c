@@ -9,8 +9,8 @@ char	*read_term(void)
 	len = 0;
 	buff = NULL;
 	str = ft_strdup("");
-	tcgetattr(0, &g_shell.term);
 	tcgetattr(0, &g_shell.save);
+	tcgetattr(0, &g_shell.term);
 	g_shell.term.c_cflag &= ~(ECHO);
 	g_shell.term.c_cflag &= ~(ICANON);
 	g_shell.term.c_cflag &= ~(ISIG);

@@ -115,7 +115,6 @@ bool	ft_isinrange(long long value, long long min, long long max);
 // MINISHELL ------------------------------------------------------------------
 
 void	close_shell(char *msg);
-void	add_catchers(void);
 void	exec_test(void);
 void	process_input(char *line);
 

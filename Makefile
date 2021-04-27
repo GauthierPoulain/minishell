@@ -64,7 +64,6 @@ SRCS_MS = \
 	./src/builtin_cd.c \
 	./src/builtin_env.c \
 	./src/builtin_pwd.c \
-	./src/catch_signals.c \
 	./src/close_handler.c \
 	./src/minishell.c \
 	./src/exec_test.c \

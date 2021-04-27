@@ -29,40 +29,19 @@ static void	pre_prompt(void)
 	ft_putcolor(" ", _DARKGRAY);
 }
 
-// static void	set_raw_input(void)
-// {
-// 	printf("salut");
-// 	tcgetattr(STDIN_FILENO, &g_shell.termios_ctl);
-// 	g_shell.termios_ctl = g_shell.termios_ctl;
-// 	g_shell.termios_ctl.c_cflag &= ~(ECHO | ICANON);
-// 	tcsetattr(STDIN_FILENO, TCSAFLUSH, &g_shell.termios_ctl);
-// }
-
 int	main(int argc, const char **argv, const char **envp)
 {
 	char	**line;
-	// int		gnl_ret;
 
 	(void)argc;
 	(void)argv;
 	init_shell();
-	// set_raw_input();
 	init_env(envp);
 	line = gc_malloc(sizeof(char *));
-	// add_catchers();
 	while (true)
 	{
-		pre_prompt();
-		
-		// gnl_ret = ft_gnl(STDIN_FILENO, line);
-		// if (gnl_ret == -1)
-		// 	close_shell("gnl failure");
-		// else if (gnl_ret == 0 && ft_strlen(*line) == 0)
-		// 	close_shell(NULL);
-		// else
+		pre_prompt();		
 		process_input(read_term());
-		// if (*line)
-		// 	gc_free(*line);
 	}
 	close_shell("unexpecter error");
 }
