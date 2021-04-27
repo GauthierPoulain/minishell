@@ -8,9 +8,7 @@ static void	init_shell(void)
 	g_shell.workdir = gc_malloc(FILENAME_MAX);
 	g_shell.last_return = 0;
 	g_shell.env = NULL;
-	setbuf(stdout, NULL);
-	setbuf(stderr, NULL);
-	setbuf(stdout, NULL);
+	tcgetattr(STDIN_FILENO, &g_shell.save);
 }
 
 static void	pre_prompt(void)
@@ -35,7 +33,6 @@ int	main(int argc, const char **argv, const char **envp)
 	(void)argv;
 	init_shell();
 	init_env(envp);
-	set_input_mode();
 	while (true)
 	{
 		pre_prompt();

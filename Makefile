@@ -58,6 +58,7 @@ SRCS_LIB = \
 	./lib/ft_split.c \
 	./lib/ft_memcpy.c \
 	./lib/ft_strcat.c \
+	./lib/ft_putchar.c \
 
 SRCS_MS = \
 	./src/builtin_cd.c \

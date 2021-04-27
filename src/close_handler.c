@@ -11,7 +11,7 @@ void	close_shell(char *msg)
 {
 	gc_clean();
 	if (isatty(STDERR_FILENO))
-		tcsetattr(STDIN_FILENO, TCSANOW, &g_shell.save);
+		reset_input_mode();
 	if (msg)
 	{
 		if (DEBUG)

@@ -59,6 +59,13 @@ typedef struct s_env
 	char	*value;
 }				t_env;
 
+typedef struct s_reader
+{
+	int		size;
+	int		pos;
+	bool	print;
+}				t_reader;
+
 typedef struct s_minishell
 {
 	t_list			*gc;
@@ -111,6 +118,8 @@ bool	ft_isspace(char c);
 bool	ft_ischarset(char c, char *charset);
 bool	ft_isinrange(long long value, long long min, long long max);
 
+int	ft_putchar(int c);
+
 // MINISHELL ------------------------------------------------------------------
 
 void	close_shell(char *msg);
@@ -132,6 +141,7 @@ int		exec_subprocess(char *path, char *argv[]);
 char	*replace_env_line(char *line);
 
 void	set_input_mode(void);
+void	reset_input_mode(void);
 char	*read_term(void);
 
 #endif

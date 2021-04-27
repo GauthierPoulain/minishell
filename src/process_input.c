@@ -14,7 +14,7 @@ static void	precmd(void)
 void	process_input(char *line)
 {
 	preexec(line);
-	replace_env_line(line);
+	// replace_env_line(line);
 	if (ft_strlen(line) < 1)
 		return ;
 	if (!ft_strcmp(line, "exit"))
