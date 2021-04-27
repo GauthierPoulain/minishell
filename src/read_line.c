@@ -12,11 +12,6 @@ void	set_input_mode(void)
 	tcsetattr(STDIN_FILENO, TCSAFLUSH, &g_shell.term);
 }
 
-void	reset_input_mode(void)
-{
-	tcsetattr(STDIN_FILENO, TCSANOW, &g_shell.save);
-}
-
 char	*read_term(void)
 {
 	char	*str;
@@ -38,6 +33,5 @@ char	*read_term(void)
 		len++;
 		ft_strjoinc(str, buff);
 	}
-	reset_input_mode();
 	return (str);
 }

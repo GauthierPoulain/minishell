@@ -37,7 +37,7 @@ int	main(int argc, const char **argv, const char **envp)
 	init_env(envp);
 	while (true)
 	{
-		pre_prompt();		
+		pre_prompt();
 		process_input(read_term());
 	}
 	close_shell("unexpecter error");
