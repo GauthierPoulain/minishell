@@ -3,7 +3,7 @@
 void	exec_test(void)
 {
 	char	*prog = "/bin/ls";
-	char	*argv[] = {prog, "/bin", NULL};
+	char	*argv[] = {prog, NULL};
 
 	sleep(2);
 	g_shell.last_return = exec_subprocess(prog, argv);

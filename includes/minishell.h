@@ -3,6 +3,7 @@
 
 # include <errno.h>
 # include <fcntl.h>
+# include <limits.h>
 # include <signal.h>
 # include <stdarg.h>
 # include <stdbool.h>
@@ -113,6 +114,8 @@ void	*ft_calloc(size_t size);
 void	*ft_memcpy(void *dst, const void *src, size_t n);
 char	*ft_strcat(char *dest, char *src);
 char	**ft_split_spaces(char const *s);
+char	*ft_strstr(char *str, char *to_find);
+char	*ft_strreplace(char *str, char *substr, char *replace);
 
 bool	ft_isalpha(char c);
 bool	ft_isdigit(char c);
@@ -129,8 +132,9 @@ void	close_shell(char *msg);
 void	exec_test(void);
 void	process_input(char *line);
 
-int		builtin_cd(char *path);
+int		builtin_cd(char **argv);
 int		builtin_pwd(void);
+char	*get_pwd(void);
 int		builtin_env(void);
 int		builtin_echo(char **str);
 char	**get_envp(void);

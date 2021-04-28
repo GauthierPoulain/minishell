@@ -46,6 +46,7 @@ SRCS_LIB = \
 	./lib/ft_lstsize.c \
 	./lib/ft_putcolor.c \
 	./lib/ft_putstr.c \
+	./lib/ft_putchar.c \
 	./lib/ft_strchr.c \
 	./lib/ft_strcmp.c \
 	./lib/ft_strdup.c \
@@ -59,7 +60,8 @@ SRCS_LIB = \
 	./lib/ft_split_spaces.c \
 	./lib/ft_memcpy.c \
 	./lib/ft_strcat.c \
-	./lib/ft_putchar.c \
+	./lib/ft_strstr.c \
+	./lib/ft_strreplace.c \
 
 SRCS_MS = \
 	./src/builtin_cd.c \

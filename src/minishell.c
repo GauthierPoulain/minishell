@@ -15,7 +15,7 @@ static void	pre_prompt(void)
 {
 	ft_putcolor(get_env("USER"), _LIGHTBLUE);
 	ft_putcolor(" in ", _DARKGRAY);
-	ft_putcolor(get_env("PWD"), _YELLOW);
+	ft_putcolor(ft_strreplace(get_pwd(), get_env("HOME"), "~"), _YELLOW);
 	ft_putcolor("\n", _DARKGRAY);
 	if (g_shell.last_return == 0)
 		ft_putcolor("›", _GREEN);

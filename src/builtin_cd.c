@@ -19,30 +19,45 @@ static int	cd_err(int code, char *path)
 	return (1);
 }
 
-int	builtin_cd(char *path)
+static int	check_err(char *path)
 {
-	int	ret;
 	int	fd;
-	int	err_code;
 
-	err_code = 0;
 	fd = open(path, O_RDONLY);
 	if (fd == -1)
-		err_code = 1;
+		return (1);
 	else
 		close(fd);
 	fd = open(path, O_DIRECTORY);
 	if (fd == -1)
-		err_code = 2;
+		return (2);
 	else
 		close(fd);
-	if (err_code == 0)
+	return (0);
+}
+
+int	builtin_cd(char **argv)
+{
+	int		ret;
+	int		err_code;
+	char	*path;
+	
+	if (argv[1])
+		path = argv[1];
+	else
+		path = getenv("HOME");
+	err_code = check_err(path);
+	if (!err_code)
 	{
 		ret = chdir(path);
 		if (ret == -1)
 			cd_err(1, path);
 		else
+		{
+
+			set_env("OLDPWD", get_env("PWD"));
 			set_env("PWD", path);
+		}
 	}	
 	return (cd_err(err_code, path));
 }
