@@ -7,7 +7,6 @@ char	*ft_strreplace(char *str, char *substr, char *replace)
 	int		i;
 
 	location = ft_strstr(str, substr);
-
 	if (!location)
 		return (str);
 	res = ft_calloc(sizeof(char) * (ft_strlen(str) - ft_strlen(substr)

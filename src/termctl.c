@@ -15,7 +15,7 @@ void	set_input_mode(void)
 	g_shell.term.c_lflag &= ~(ICANON | ECHO | ISIG);
 	g_shell.term.c_cc[VMIN] = 1;
 	g_shell.term.c_cc[VTIME] = 0;
-	tcsetattr(STDIN_FILENO, TCSAFLUSH, &g_shell.term);
+	tcsetattr(STDIN_FILENO, TCSANOW, &g_shell.term);
 }
 
 void	reset_input_mode(void)

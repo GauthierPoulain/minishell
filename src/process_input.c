@@ -11,17 +11,8 @@ static void	precmd(void)
 	return ;
 }
 
-void	process_input(char *line)
+static bool	is_builtin(char *prog, char **argv)
 {
-	char	**argv;
-	char	*prog;
-
-	replace_env_line(&line);
-	argv = ft_split_spaces(line);
-	prog = argv[0];
-	preexec(argv);
-	if (ft_strlen(line) < 1)
-		return ;
 	if (!ft_strcmp(prog, "exit"))
 		close_shell(NULL);
 	else if (!ft_strcmp(prog, "test"))
@@ -34,6 +25,23 @@ void	process_input(char *line)
 		g_shell.last_return = builtin_env();
 	else if (!ft_strcmp(prog, "echo"))
 		g_shell.last_return = builtin_echo(argv);
+	else return (false);
+	return (true);
+}
+
+void	process_input(char *line)
+{
+	char	**argv;
+	char	*prog;
+
+	replace_env_line(&line);
+	argv = ft_split_spaces(line);
+	prog = argv[0];
+	preexec(argv);
+	if (ft_strlen(line) < 1)
+		return ;
+	else if (is_builtin(prog, argv))
+		;
 	else
 	{
 		ft_putstr_fd(2, "minishell: command not found: ");
