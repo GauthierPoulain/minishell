@@ -40,3 +40,15 @@ size_t	ft_realstren(char *str)
 	}
 	return (count);
 }
+
+size_t	ft_strlen_charset(char *str, char *charset)
+{
+	char	*s;
+
+	if (!str)
+		return (0);
+	s = str;
+	while (*str && !ft_ischarset(*str, charset))
+		++str;
+	return (str - s);
+}

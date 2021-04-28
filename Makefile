@@ -78,6 +78,7 @@ SRCS_MS = \
 	./src/read_line.c \
 	./src/termcap.c \
 	./src/termctl.c \
+	./src/lexer.c \
 
 SRCS = $(SRCS_LIB) $(SRCS_MS)
 
