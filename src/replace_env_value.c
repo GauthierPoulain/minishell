@@ -69,7 +69,10 @@ char	*replace_env_line(char **line)
 		if (new_line[i] == '$')
 		{
 			if (new_line[i + 1] == '?')
+			{
 				env_value = ft_itoa(g_shell.last_return);
+				i++;
+			}
 			else
 				env_value = get_env(get_word_sp(new_line, i + 1));
 			if (!env_value)
