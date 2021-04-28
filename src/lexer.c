@@ -46,9 +46,7 @@ void	get_token_info(t_token *token, char *line, int start, int end)
 {
 	token->str = ft_substr(line, start, end - start);
 	printf("(%s)\n", token->str);
-	if (!ft_strcmp(token->str, "echo") || !ft_strcmp(token->str, "cd") || !ft_strcmp(token->str, "pwd")
-			|| !ft_strcmp(token->str, "export") || !ft_strcmp(token->str, "unset") || !ft_strcmp(token->str, "env")
-				|| !ft_strcmp(token->str, "exit"))
+	if (token->id == 0)
 		token->type = 1;
 	if (!ft_strcmp(token->str, "-n"))
 		token->type = 2;
@@ -60,23 +58,32 @@ void	get_lexer(char *line)
 {
 	int		i;
 	int		j;
+	int		id;
 	t_token	*token;
 
 	i = 0;
 	j = 0;
+	id = 0;
 	while (line[i])
 	{
 		token = gc_malloc(sizeof(t_token));
 		if ((line[i] == ' ' && line[i + 1] != ' ')|| line[i] == '$')
 		{
+			token->id = id++;
 			get_token_info(token, line, j, i);
 			ft_lstadd_back(&g_shell.tokens, ft_lstnew(token));
 			j = i;
 		}
 		i++;
 	}
-	get_token_info(token, line, j, i);
-	ft_lstadd_back(&g_shell.tokens, ft_lstnew(token));
+	if (ft_strlen(line))
+	{
+		if (line[i - 1])
+		{
+			get_token_info(token, line, j, i);
+			ft_lstadd_back(&g_shell.tokens, ft_lstnew(token));
+		}
+	}
 	display_tokens();
 	// gc_free(token);
 }

@@ -82,6 +82,7 @@ typedef struct s_token
 {
 	char	*str;
 	int		type;
+	int		id;
 }				t_token;
 
 typedef struct s_minishell
