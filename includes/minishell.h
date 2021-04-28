@@ -17,33 +17,35 @@
 # include <term.h>
 # include <unistd.h>
 
-# define DEBUG				1
-# define PRINT_TERMCAP		0
+# define	DEBUG				1
+# define	PRINT_TERMCAP		0
 
-# define KEY_BUFFER_SIZE	4096
+# define	HISTORY_FILE		".minishell_history"
+
+# define	KEY_BUFFER_SIZE		4096
 
 # ifndef O_DIRECTORY
-#  define O_DIRECTORY		__O_DIRECTORY
+#  define	O_DIRECTORY		__O_DIRECTORY
 # endif
 
-# define _END "\033[1;0m"
+# define	_END "\033[1;0m"
 
-# define _DEFAULT			"\033[1;39m"
-# define _RED				"\033[1;31m"
-# define _GREEN				"\033[1;32m"
-# define _YELLOW			"\033[1;33m"
-# define _BLUE				"\033[1;34m"
-# define _MAGENTA			"\033[1;35m"
-# define _CYAN				"\033[1;36m"
-# define _LIGHTGRAY			"\033[1;37m"
-# define _DARKGRAY			"\033[1;90m"
-# define _LIGHTRED			"\033[1;91m"
-# define _LIGHTGREEN		"\033[1;92m"
-# define _LIGHTYELLOW		"\033[1;93m"
-# define _LIGHTBLUE			"\033[1;94m"
-# define _LIGHTMAGENTA		"\033[1;95m"
-# define _LIGHTCYAN			"\033[1;96m"
-# define _WHITE				"\033[1;97m"
+# define	_DEFAULT			"\033[1;39m"
+# define	_RED				"\033[1;31m"
+# define	_GREEN				"\033[1;32m"
+# define	_YELLOW				"\033[1;33m"
+# define	_BLUE				"\033[1;34m"
+# define	_MAGENTA			"\033[1;35m"
+# define	_CYAN				"\033[1;36m"
+# define	_LIGHTGRAY			"\033[1;37m"
+# define	_DARKGRAY			"\033[1;90m"
+# define	_LIGHTRED			"\033[1;91m"
+# define	_LIGHTGREEN			"\033[1;92m"
+# define	_LIGHTYELLOW		"\033[1;93m"
+# define	_LIGHTBLUE			"\033[1;94m"
+# define	_LIGHTMAGENTA		"\033[1;95m"
+# define	_LIGHTCYAN			"\033[1;96m"
+# define	_WHITE				"\033[1;97m"
 
 typedef struct s_list
 {
@@ -67,7 +69,6 @@ typedef struct s_reader
 {
 	int		size;
 	int		pos;
-	bool	print;
 }				t_reader;
 
 typedef struct s_minishell
@@ -155,5 +156,6 @@ char	*read_term(void);
 bool	process_key(char *c, t_reader *reader, char **str);
 void	unprint_char(char **str, t_reader *reader);
 void	print_char(char **str, char *c, t_reader *reader);
+size_t	ft_realstren(char *str);
 
 #endif

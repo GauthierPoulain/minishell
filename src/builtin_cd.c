@@ -36,6 +36,12 @@ static int	check_err(char *path)
 	return (0);
 }
 
+static void	replace_env(void)
+{
+	set_env("OLDPWD", get_env("PWD"));
+	set_env("PWD", get_pwd());
+}
+
 int	builtin_cd(char **argv)
 {
 	int		ret;
@@ -58,10 +64,7 @@ int	builtin_cd(char **argv)
 		if (ret == -1)
 			cd_err(1, path);
 		else
-		{
-			set_env("OLDPWD", get_env("PWD"));
-			set_env("PWD", get_pwd());
-		}
+			replace_env();
 	}	
 	return (cd_err(err_code, path));
 }

@@ -75,15 +75,15 @@ void	print_char(char **str, char *c, t_reader *reader)
 		ft_putstr((*str) + reader->pos);
 		tputs(restore_cursor, 1, ft_putchar);
 		tputs(cursor_right, 1, ft_putchar);
-		reader->size++;
-		reader->pos++;
+		reader->size += ft_strlen(c);
+		reader->pos += ft_strlen(c);
 	}
 	else
 	{
 		ft_putstr(c);
 		*str = add_char(*str, c, reader->pos);
-		reader->size++;
-		reader->pos++;
+		reader->size += ft_strlen(c);
+		reader->pos += ft_strlen(c);
 	}
 }
 
@@ -102,7 +102,6 @@ char	*read_term(void)
 	ft_bzero(buffer, KEY_BUFFER_SIZE + 1);
 	while (reading && read(STDIN_FILENO, buffer, KEY_BUFFER_SIZE) >= 0)
 	{
-		reader.print = true;
 		reading = process_key(buffer, &reader, &str);
 		ft_bzero(buffer, KEY_BUFFER_SIZE);
 	}
