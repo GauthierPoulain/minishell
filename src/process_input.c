@@ -37,7 +37,10 @@ void	process_input(char *line)
 	history_add(line);
 	replace_env_line(&line);
 	argv = ft_split_spaces(line);
+	if (!*argv)
+		return ;
 	prog = argv[0];
+	printf("prog = %s\n", prog);
 	get_lexer(line);
 	preexec(argv);
 	if (ft_strlen(line) < 1)
