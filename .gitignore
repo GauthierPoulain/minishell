@@ -4,3 +4,4 @@ minishell
 *.out
 *.tmp
 .DS_Store
+minishell_history
