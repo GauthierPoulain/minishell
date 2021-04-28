@@ -16,10 +16,13 @@
 # include <term.h>
 # include <unistd.h>
 
-# define DEBUG 1
+# define DEBUG				1
+# define PRINT_TERMCAP		0
+
+# define KEY_BUFFER_SIZE	4096
 
 # ifndef O_DIRECTORY
-#  define O_DIRECTORY __O_DIRECTORY
+#  define O_DIRECTORY		__O_DIRECTORY
 # endif
 
 # define _END "\033[1;0m"
@@ -89,6 +92,7 @@ size_t	ft_envlstsize(t_list *alist);
 void	ft_putcolor(char *str, char *color);
 void	ft_putstr_fd(int fd, char *str);
 void	ft_putstr(char *str);
+int		ft_putchar(int c);
 int		ft_strcmp(const char *s1, const char *s2);
 char	*ft_strdup(char *s1);
 char	*ft_strjoin(char *s1, char *s2);
@@ -118,8 +122,6 @@ bool	ft_isspace(char c);
 bool	ft_ischarset(char c, char *charset);
 bool	ft_isinrange(long long value, long long min, long long max);
 
-int	ft_putchar(int c);
-
 // MINISHELL ------------------------------------------------------------------
 
 void	close_shell(char *msg);
@@ -142,6 +144,10 @@ char	*replace_env_line(char *line);
 
 void	set_input_mode(void);
 void	reset_input_mode(void);
+
 char	*read_term(void);
+bool	process_key(char *c, t_reader *reader, char **str);
+void	unprint_char(char **str, t_reader *reader);
+void	print_char(char **str, char *c, t_reader *reader);
 
 #endif
