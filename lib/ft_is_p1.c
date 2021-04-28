@@ -22,5 +22,5 @@ bool	ft_isascii(char c)
 
 bool	ft_isprint(char c)
 {
-	return (c >= 32 && c <= 126);
+	return (c < 0 || (c >= 32 && c <= 126));
 }

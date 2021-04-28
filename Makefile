@@ -40,7 +40,6 @@ SRCS_LIB = \
 	./lib/ft_nblen.c \
 	./lib/ft_is_p1.c \
 	./lib/ft_is_p2.c \
-	./lib/ft_gnl.c \
 	./lib/ft_lstadd_back.c \
 	./lib/ft_lstadd_front.c \
 	./lib/ft_lstnew.c \
@@ -59,12 +58,12 @@ SRCS_LIB = \
 	./lib/ft_split.c \
 	./lib/ft_memcpy.c \
 	./lib/ft_strcat.c \
+	./lib/ft_putchar.c \
 
 SRCS_MS = \
 	./src/builtin_cd.c \
 	./src/builtin_env.c \
 	./src/builtin_pwd.c \
-	./src/catch_signals.c \
 	./src/close_handler.c \
 	./src/minishell.c \
 	./src/exec_test.c \
@@ -72,6 +71,9 @@ SRCS_MS = \
 	./src/env.c \
 	./src/exec.c \
 	./src/replace_env_value.c \
+	./src/read_line.c \
+	./src/termcap.c \
+	./src/termctl.c \
 
 SRCS = $(SRCS_LIB) $(SRCS_MS)
 
@@ -85,7 +87,7 @@ all: $(NAME)
 
 $(NAME): $(OBJS)
 	@printf "[ $(_YELLOW)$(_BOLD)building$(_END) ] $(_BLUE)$(_BOLD)$(NAME)$(_END)\n"
-	@$(CC) $(CFLAGS) -o $(NAME) $(OBJS)
+	@$(CC) $(CFLAGS) -ltermcap -o $(NAME) $(OBJS)
 	@printf "[ $(_MAGENTA)$(_BOLD)done$(_END) ]\n"
 
 clean:
@@ -106,11 +108,16 @@ run: all
 norm:
 	@norminette
 
-valgrind: all
+leaks: all
 ifneq (,$(findstring fsanitize,$(CFLAGS)))
 	@echo "please use without fsanitize"
 else
+ifeq ($(shell uname -s),Linux)
 	@valgrind -s --leak-check=full --show-reachable=yes --track-origins=yes ./$(NAME)
 endif
+ifeq ($(shell uname -s),Darwin)
+	@leaks --atExit -- ./$(NAME)
+endif
+endif
 
-.PHONY: all clean fclean re run norm valgrind
+.PHONY: all clean fclean re run norm leaks

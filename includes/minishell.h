@@ -13,12 +13,16 @@
 # include <sys/ioctl.h>
 # include <sys/wait.h>
 # include <termios.h>
+# include <term.h>
 # include <unistd.h>
 
-# define DEBUG 1
+# define DEBUG				1
+# define PRINT_TERMCAP		0
+
+# define KEY_BUFFER_SIZE	4096
 
 # ifndef O_DIRECTORY
-#  define O_DIRECTORY __O_DIRECTORY
+#  define O_DIRECTORY		__O_DIRECTORY
 # endif
 
 # define _END "\033[1;0m"
@@ -58,13 +62,21 @@ typedef struct s_env
 	char	*value;
 }				t_env;
 
+typedef struct s_reader
+{
+	int		size;
+	int		pos;
+	bool	print;
+}				t_reader;
+
 typedef struct s_minishell
 {
 	t_list			*gc;
 	char			*workdir;
 	int				last_return;
 	t_list			*env;
-	struct termios	termios_ctl;
+	struct termios	term;
+	struct termios	save;
 }				t_minishell;
 
 extern t_minishell	g_shell;
@@ -72,7 +84,6 @@ extern t_minishell	g_shell;
 // LIB ------------------------------------------------------------------------
 
 int		ft_atoi(const char *str);
-int		ft_gnl(int fd, char **line);
 void	ft_lstadd_back(t_list **alst, t_list *new);
 void	ft_lstadd_front(t_list **alst, t_list *new);
 t_list	*ft_lstnew(void *content);
@@ -81,6 +92,7 @@ size_t	ft_envlstsize(t_list *alist);
 void	ft_putcolor(char *str, char *color);
 void	ft_putstr_fd(int fd, char *str);
 void	ft_putstr(char *str);
+int		ft_putchar(int c);
 int		ft_strcmp(const char *s1, const char *s2);
 char	*ft_strdup(char *s1);
 char	*ft_strjoin(char *s1, char *s2);
@@ -113,7 +125,6 @@ bool	ft_isinrange(long long value, long long min, long long max);
 // MINISHELL ------------------------------------------------------------------
 
 void	close_shell(char *msg);
-void	add_catchers(void);
 void	exec_test(void);
 void	process_input(char *line);
 
@@ -130,5 +141,13 @@ void	init_env(const char **envp);
 int		exec_subprocess(char *path, char *argv[]);
 
 char	*replace_env_line(char *line);
+
+void	set_input_mode(void);
+void	reset_input_mode(void);
+
+char	*read_term(void);
+bool	process_key(char *c, t_reader *reader, char **str);
+void	unprint_char(char **str, t_reader *reader);
+void	print_char(char **str, char *c, t_reader *reader);
 
 #endif
