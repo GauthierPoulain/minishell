@@ -20,9 +20,10 @@
 # define	DEBUG				1
 # define	PRINT_TERMCAP		0
 
-# define	HISTORY_FILE		".minishell_history"
+# define	HISTORY_PATH		"minishell_history"
 
 # define	KEY_BUFFER_SIZE		4096
+# define	GNL_BUFFER_SIZE		20
 
 # ifndef O_DIRECTORY
 #  define	O_DIRECTORY		__O_DIRECTORY
@@ -175,6 +176,8 @@ char	*read_term(void);
 bool	process_key(char *c, t_reader *reader, char **str);
 void	unprint_char(char **str, t_reader *reader);
 void	print_char(char **str, char *c, t_reader *reader);
-size_t	ft_realstren(char *str);
+int		get_next_line(int fd, char **line);
+
+void	history_add(char *line);
 
 #endif
