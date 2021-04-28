@@ -86,5 +86,6 @@ void	get_lexer(char *line)
 		}
 	}
 	display_tokens();
-	// gc_free(token);
+	// TODO : Delete this, will make us suffer later since we need the list to parse
+	ft_lstclear(&g_shell.tokens);
 }

@@ -104,6 +104,7 @@ extern t_minishell	g_shell;
 int		ft_atoi(const char *str);
 void	ft_lstadd_back(t_list **alst, t_list *new);
 void	ft_lstadd_front(t_list **alst, t_list *new);
+void	ft_lstclear(t_list **lst);
 t_list	*ft_lstnew(void *content);
 size_t	ft_lstsize(t_list *alist);
 size_t	ft_envlstsize(t_list *alist);

@@ -63,6 +63,7 @@ SRCS_LIB = \
 	./lib/ft_strstr.c \
 	./lib/ft_strreplace.c \
 	./lib/get_next_line.c \
+	./lib/ft_lstclear.c \
 
 SRCS_MS = \
 	./src/builtin_cd.c \
