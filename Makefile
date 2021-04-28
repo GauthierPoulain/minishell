@@ -80,6 +80,7 @@ SRCS_MS = \
 	./src/termcap.c \
 	./src/termctl.c \
 	./src/history.c \
+	./src/lexer.c \
 
 SRCS = $(SRCS_LIB) $(SRCS_MS)
 

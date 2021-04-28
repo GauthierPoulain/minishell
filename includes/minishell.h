@@ -72,12 +72,26 @@ typedef struct s_reader
 	int		pos;
 }				t_reader;
 
+typedef struct s_parse
+{
+	bool	s_quotes;
+	bool	quotes;
+	char	*new_line;
+}				t_parser;
+
+typedef struct s_token
+{
+	char	*str;
+	int		type;
+}				t_token;
+
 typedef struct s_minishell
 {
 	t_list			*gc;
 	char			*workdir;
 	int				last_return;
 	t_list			*env;
+	t_list			*tokens;
 	struct termios	term;
 	struct termios	save;
 }				t_minishell;
@@ -108,6 +122,7 @@ void	gc_clean(void);
 void	gc_free(void *ptr);
 void	*gc_malloc(size_t size);
 size_t	ft_nblen(long long nb);
+size_t	ft_strlen_charset(char *str, char *charset);
 char	*ft_itoa(int n);
 void	ft_bzero(void *s, size_t n);
 char	*ft_strchr(const char *s, int c);
@@ -118,6 +133,9 @@ char	*ft_strcat(char *dest, char *src);
 char	**ft_split_spaces(char const *s);
 char	*ft_strstr(char *str, char *to_find);
 char	*ft_strreplace(char *str, char *substr, char *replace);
+
+void	display_tokens();
+void	get_lexer(char *line);
 
 bool	ft_isalpha(char c);
 bool	ft_isdigit(char c);

@@ -38,6 +38,7 @@ void	process_input(char *line)
 	replace_env_line(&line);
 	argv = ft_split_spaces(line);
 	prog = argv[0];
+	get_lexer(line);
 	preexec(argv);
 	if (ft_strlen(line) < 1)
 		return ;
