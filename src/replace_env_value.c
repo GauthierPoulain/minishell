@@ -56,31 +56,3 @@ char	*set_env_line(char *line, char *env_value, int i)
 	return (final_part);
 }
 
-char	*replace_env_line(char **line)
-{
-	int		i;
-	char	*env_value;
-	char	*new_line;
-
-	i = 0;
-	new_line = *line;
-	while (new_line[i])
-	{
-		if (new_line[i] == '$')
-		{
-			if (new_line[i + 1] == '?')
-			{
-				env_value = ft_itoa(g_shell.last_return);
-				i++;
-			}
-			else
-				env_value = get_env(get_word_sp(new_line, i + 1));
-			if (!env_value)
-				break ;
-			new_line = set_env_line(new_line, env_value, i);
-		}
-		i++;
-	}
-	*line = new_line;
-	return (*line);
-}

@@ -70,12 +70,26 @@ typedef struct s_reader
 	bool	print;
 }				t_reader;
 
+typedef struct s_parse
+{
+	bool	s_quotes;
+	bool	quotes;
+	char	*new_line;
+}				t_parser;
+
+typedef struct s_token
+{
+	char	*str;
+	int		type;
+}				t_token;
+
 typedef struct s_minishell
 {
 	t_list			*gc;
 	char			*workdir;
 	int				last_return;
 	t_list			*env;
+	t_list			tokens;
 	struct termios	term;
 	struct termios	save;
 }				t_minishell;
