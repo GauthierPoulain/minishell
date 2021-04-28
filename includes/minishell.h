@@ -112,6 +112,7 @@ char	**ft_split(char const *s, char c);
 void	*ft_calloc(size_t size);
 void	*ft_memcpy(void *dst, const void *src, size_t n);
 char	*ft_strcat(char *dest, char *src);
+char	**ft_split_spaces(char const *s);
 
 bool	ft_isalpha(char c);
 bool	ft_isdigit(char c);
@@ -131,6 +132,7 @@ void	process_input(char *line);
 int		builtin_cd(char *path);
 int		builtin_pwd(void);
 int		builtin_env(void);
+int		builtin_echo(char **str);
 char	**get_envp(void);
 
 void	set_env(char *key, char *value);

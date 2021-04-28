@@ -56,6 +56,7 @@ SRCS_LIB = \
 	./lib/gc_malloc.c \
 	./lib/ft_calloc.c \
 	./lib/ft_split.c \
+	./lib/ft_split_spaces.c \
 	./lib/ft_memcpy.c \
 	./lib/ft_strcat.c \
 	./lib/ft_putchar.c \
@@ -64,6 +65,7 @@ SRCS_MS = \
 	./src/builtin_cd.c \
 	./src/builtin_env.c \
 	./src/builtin_pwd.c \
+	./src/builtin_echo.c \
 	./src/close_handler.c \
 	./src/minishell.c \
 	./src/exec_test.c \

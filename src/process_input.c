@@ -27,6 +27,8 @@ void	process_input(char *line)
 		g_shell.last_return = builtin_pwd();
 	else if (!ft_strcmp(line, "env"))
 		g_shell.last_return = builtin_env();
+	else if (!ft_strcmp(line, "echo"))
+		g_shell.last_return = builtin_echo(ft_split(line, ' '));
 	else
 	{
 		ft_putstr_fd(2, "minishell: command not found: ");

@@ -19,10 +19,8 @@ static void	print_debug_termcap(char *c)
 
 static void	check_termcap(char *c, t_reader *reader)
 {
-	if (PRINT_TERMCAP)
-		print_debug_termcap(c);
-	if (!*c)
-		;
+	if (!ft_strcmp(c, "OS"))
+		close_shell("force quit");
 	else if (!ft_strcmp(c, "[A"))
 		; // up arrow
 	else if (!ft_strcmp(c, "[B"))
@@ -47,8 +45,6 @@ static void	check_termcap(char *c, t_reader *reader)
 
 bool	process_key(char *c, t_reader *reader, char **str)
 {
-	if (*c == '-')
-		close_shell("force quit");
 	if (*c == '\n')
 	{
 		ft_putstr(c);
@@ -56,8 +52,12 @@ bool	process_key(char *c, t_reader *reader, char **str)
 	}
 	else if (*c == 127 && reader->pos > 0)
 		unprint_char(str, reader);
-	else if (*c == 27)
+	else if (*c == 27 && *(c + 1))
+	{
+		if (PRINT_TERMCAP)
+			print_debug_termcap(c + 1);
 		check_termcap(c + 1, reader);
+	}
 	else if (ft_isprint(*c))
 		print_char(str, c, reader);
 	return (true);
