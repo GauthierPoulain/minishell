@@ -16,7 +16,7 @@ void	process_input(char *line)
 	char	**argv;
 	char	*prog;
 
-	// replace_env_line(line);
+	replace_env_line(&line);
 	argv = ft_split_spaces(line);
 	prog = argv[0];
 	preexec(argv);

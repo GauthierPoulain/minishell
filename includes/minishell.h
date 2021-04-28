@@ -146,7 +146,7 @@ void	init_env(const char **envp);
 
 int		exec_subprocess(char *path, char *argv[]);
 
-char	*replace_env_line(char *line);
+char	*replace_env_line(char **line);
 
 void	set_input_mode(void);
 void	reset_input_mode(void);

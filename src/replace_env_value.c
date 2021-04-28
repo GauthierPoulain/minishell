@@ -56,14 +56,14 @@ char	*set_env_line(char *line, char *env_value, int i)
 	return (final_part);
 }
 
-char	*replace_env_line(char *line)
+char	*replace_env_line(char **line)
 {
 	int		i;
 	char	*env_value;
 	char	*new_line;
 
 	i = 0;
-	new_line = line;
+	new_line = *line;
 	while (new_line[i])
 	{
 		if (new_line[i] == '$')
@@ -75,7 +75,6 @@ char	*replace_env_line(char *line)
 		}
 		i++;
 	}
-	ft_putstr(new_line);
-	ft_putstr("\n");
-	return (new_line);
+	*line = new_line;
+	return (*line);
 }
