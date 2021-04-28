@@ -62,6 +62,7 @@ SRCS_LIB = \
 	./lib/ft_strcat.c \
 	./lib/ft_strstr.c \
 	./lib/ft_strreplace.c \
+	./lib/get_next_line.c \
 
 SRCS_MS = \
 	./src/builtin_cd.c \
@@ -78,6 +79,7 @@ SRCS_MS = \
 	./src/read_line.c \
 	./src/termcap.c \
 	./src/termctl.c \
+	./src/history.c \
 
 SRCS = $(SRCS_LIB) $(SRCS_MS)
 
