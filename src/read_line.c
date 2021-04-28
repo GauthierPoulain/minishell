@@ -24,21 +24,6 @@ void	reset_input_mode(void)
 	tcsetattr(STDIN_FILENO, TCSANOW, &g_shell.save);
 }
 
-void	add_char(char **str, char *c, t_reader *reader)
-{
-	if (reader->pos < reader->size)
-	{
-		;
-	}
-	else
-	{
-		ft_putstr(c);
-		*str = ft_strjoin(*str, c);
-		reader->size++;
-		reader->pos++;
-	}
-}
-
 void	check_termcap(char *c, t_reader *reader)
 {
 	if (!*c)
@@ -106,26 +91,49 @@ char	*delete_char(char *str, int pos)
 	return (res);
 }
 
-char	*addchar(char *str, char c, int pos)
+char	*add_char(char *str, char *c, int pos)
 {
 	char	*res;
 	int		i;
+	int		lenc;
 
-	res = ft_calloc(sizeof(char) * (ft_strlen(str) + 2));
+	lenc = ft_strlen(c);
+	res = ft_calloc(sizeof(char) * (ft_strlen(str) + lenc + 1));
 	i = 0;
 	while (str[i] && i < pos)
 	{
 		res[i] = str[i];
 		i++;
 	}
-	res[i++] = c;
-	while (str[i - 1])
+	res = ft_strcat(res, c);
+	while (str[i])
 	{
-		res[i] = str[i - 1];
+		res[i + lenc] = str[i];
 		i++;
 	}
 	gc_free(str);
 	return (res);
+}
+
+void	print_char(char **str, char *c, t_reader *reader)
+{
+	if (reader->pos < reader->size)
+	{
+		*str = add_char(*str, c, reader->pos);
+		tputs(save_cursor, 1, ft_putchar);
+		ft_putstr((*str) + reader->pos);
+		tputs(restore_cursor, 1, ft_putchar);
+		tputs(cursor_right, 1, ft_putchar);
+		reader->size++;
+		reader->pos++;
+	}
+	else
+	{
+		ft_putstr(c);
+		*str = add_char(*str, c, reader->pos);
+		reader->size++;
+		reader->pos++;
+	}
 }
 
 bool	process_key(char *c, t_reader *reader, char **str)
@@ -143,7 +151,7 @@ bool	process_key(char *c, t_reader *reader, char **str)
 	else if (*c == 27)
 		check_termcap(c + 1, reader);
 	else if(ft_isprint(*c))
-		add_char(str, c, reader);
+		print_char(str, c, reader);
 	return (true);
 }
 
