@@ -156,6 +156,5 @@ char	*read_term(void);
 bool	process_key(char *c, t_reader *reader, char **str);
 void	unprint_char(char **str, t_reader *reader);
 void	print_char(char **str, char *c, t_reader *reader);
-size_t	ft_realstren(char *str);
 
 #endif
