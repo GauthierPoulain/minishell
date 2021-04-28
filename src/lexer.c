@@ -38,6 +38,7 @@ void	display_tokens()
 		token = (t_token *)lst->content;
 		printf("string [%s]\n", token->str);
 		printf("type   [%d]\n", token->type);
+		printf("id     [%d]\n", token->id);
 		lst = lst->next;
 	}
 }
@@ -45,10 +46,9 @@ void	display_tokens()
 void	get_token_info(t_token *token, char *line, int start, int end)
 {
 	token->str = ft_substr(line, start, end - start);
-	printf("(%s)\n", token->str);
 	if (token->id == 0)
 		token->type = 1;
-	if (!ft_strcmp(token->str, "-n"))
+	else if (!ft_strcmp(token->str, "-n"))
 		token->type = 2;
 	else
 		token->type = 0;
@@ -72,7 +72,7 @@ void	get_lexer(char *line)
 			token->id = id++;
 			get_token_info(token, line, j, i);
 			ft_lstadd_back(&g_shell.tokens, ft_lstnew(token));
-			j = i;
+			j = i + 1;
 		}
 		i++;
 	}
@@ -80,6 +80,7 @@ void	get_lexer(char *line)
 	{
 		if (line[i - 1])
 		{
+			token->id = id++;
 			get_token_info(token, line, j, i);
 			ft_lstadd_back(&g_shell.tokens, ft_lstnew(token));
 		}
