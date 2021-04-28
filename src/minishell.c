@@ -33,10 +33,11 @@ int	main(int argc, const char **argv, const char **envp)
 	(void)argv;
 	init_shell();
 	init_env(envp);
+	set_input_mode();
 	while (true)
 	{
 		pre_prompt();
 		process_input(read_term());
 	}
-	close_shell("unexpecter error");
+	close_shell("unexpected error");
 }

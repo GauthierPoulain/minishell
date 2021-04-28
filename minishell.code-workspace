@@ -8,7 +8,8 @@
 		"files.associations": {
 			"minishell.h": "c",
 			"stdio.h": "c",
-			"type_traits": "c"
+			"type_traits": "c",
+			"wait.h": "c"
 		}
 	}
 }

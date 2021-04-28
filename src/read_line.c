@@ -98,7 +98,6 @@ char	*read_term(void)
 	reader.pos = 0;
 	reading = true;
 	str = ft_strdup("");
-	set_input_mode();
 	ft_bzero(buffer, KEY_BUFFER_SIZE + 1);
 	while (reading && read(STDIN_FILENO, buffer, KEY_BUFFER_SIZE) >= 0)
 	{
