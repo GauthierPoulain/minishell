@@ -69,6 +69,7 @@ void	init_env(const char **envp)
 		set_env(spres[0], *env + (ft_strlen(spres[0]) + 1));
 		env++;
 	}
+	set_env("OLDPWD", get_env("PWD"));
 }
 
 char	**get_envp(void)

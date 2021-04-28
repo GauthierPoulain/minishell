@@ -41,9 +41,14 @@ int	builtin_cd(char **argv)
 	int		ret;
 	int		err_code;
 	char	*path;
-	
+
 	if (argv[1])
-		path = argv[1];
+	{
+		if (!ft_strcmp(argv[1], "-"))
+			path = get_env("OLDPWD");
+		else
+			path = argv[1];
+	}
 	else
 		path = getenv("HOME");
 	err_code = check_err(path);
@@ -54,9 +59,8 @@ int	builtin_cd(char **argv)
 			cd_err(1, path);
 		else
 		{
-
 			set_env("OLDPWD", get_env("PWD"));
-			set_env("PWD", path);
+			set_env("PWD", get_pwd());
 		}
 	}	
 	return (cd_err(err_code, path));
