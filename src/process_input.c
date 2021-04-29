@@ -32,6 +32,7 @@ static bool	is_builtin(char *prog, char **argv)
 void	process_input(char *line)
 {
 	char	**argv;
+	char	**array;
 	char	*prog;
 
 	history_add(line);
@@ -40,8 +41,9 @@ void	process_input(char *line)
 		return ;
 	prog = argv[0];
 	printf("prog = %s\n", prog);
-	parse_line(line);
+	array = parse_line(line);
 	ft_lstclear(&g_shell.tokens);
+	gc_free(array);
 	preexec(argv);
 	if (ft_strlen(line) < 1)
 		return ;

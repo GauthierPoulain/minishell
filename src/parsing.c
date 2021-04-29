@@ -18,6 +18,7 @@ char	**array_from_list()
 	int		i;
 	t_list	*lst;
 	char	**words;
+	char	*env_value;
 
 	i = 0;
 	size = ft_lstsize(g_shell.tokens);
@@ -25,7 +26,13 @@ char	**array_from_list()
 	lst = g_shell.tokens;
 	while (i < size)
 	{
-		words[i] = ft_strdup(((t_token *)lst->content)->str);
+		if (((t_token *)lst->content)->type == 2)
+		{
+			env_value = get_env(((t_token *)lst->content)->str + 1);
+			words[i] = ft_strdup(env_value);
+		}
+		else
+			words[i] = ft_strdup(((t_token *)lst->content)->str);
 		lst = lst->next;
 		i++;
 	}
