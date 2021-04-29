@@ -102,6 +102,7 @@ typedef struct s_minishell
 	t_list			*tokens;
 	struct termios	term;
 	struct termios	save;
+	char			termbuffer[2048];
 	int				history_id;
 }				t_minishell;
 
