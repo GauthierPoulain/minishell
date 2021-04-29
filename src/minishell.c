@@ -37,7 +37,7 @@ int	main(int argc, const char **argv, const char **envp)
 	while (true)
 	{
 		pre_prompt();
-		process_input(read_term());
+		process_input(ft_strtrim_spaces(read_term()));
 	}
 	close_shell("unexpected error");
 }
