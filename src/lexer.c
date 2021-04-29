@@ -67,20 +67,21 @@ void	get_lexer(char *line)
 	while (line[i])
 	{
 		token = gc_malloc(sizeof(t_token));
-		if ((line[i] == ' ' && line[i + 1] != ' ')|| line[i] == '$')
+		if (line[i] == ' ' || line[i] == '$')
 		{
-			token->id = id++;
-			get_token_info(token, line, j, i);
-			ft_lstadd_back(&g_shell.tokens, ft_lstnew(token));
-			if (line[i] != '$')
-				j = i + 1;
-			else
-				j = i;
+			if (line[i - 1] != ' ')
+			{
+				token->id = id++;
+				get_token_info(token, line, j, i);
+				ft_lstadd_back(&g_shell.tokens, ft_lstnew(token));
+			}
+			j = i + 1;
 		}
 		i++;
 	}
 	if (ft_strlen(line))
 	{
+		printf("Second\n");
 		if (line[i - 1])
 		{
 			token->id = id++;

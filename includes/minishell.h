@@ -3,6 +3,7 @@
 
 # include <fcntl.h>
 # include <limits.h>
+# include <errno.h>
 # include <signal.h>
 # include <stdarg.h>
 # include <stdbool.h>
