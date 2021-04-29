@@ -65,6 +65,7 @@ SRCS_LIB = \
 	./lib/ft_strreplace.c \
 	./lib/get_next_line.c \
 	./lib/ft_lstclear.c \
+	./lib/ft_strtrim.c \
 
 SRCS_MS = \
 	./src/builtin_cd.c \
@@ -83,6 +84,7 @@ SRCS_MS = \
 	./src/termctl.c \
 	./src/history.c \
 	./src/lexer.c \
+	./src/lexer_utils.c \
 
 SRCS = $(SRCS_LIB) $(SRCS_MS)
 
@@ -104,6 +106,8 @@ clean:
 	@$(RM) $(OBJS)
 
 fclean: clean
+	@printf "[ $(_RED)$(_BOLD)removing$(_END) ] $(_BLUE)$(_BOLD)minishell_history$(_END)\n"
+	@$(RM) minishell_history
 	@printf "[ $(_RED)$(_BOLD)removing$(_END) ] $(_BLUE)$(_BOLD)$(NAME)$(_END)\n"
 	@$(RM) $(NAME)
 

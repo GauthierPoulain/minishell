@@ -79,6 +79,13 @@ typedef struct s_parse
 	char	*new_line;
 }				t_parser;
 
+typedef struct s_lexer
+{
+	int		i;
+	int		j;
+	int		id;
+}				t_lexer;
+
 typedef struct s_token
 {
 	char	*str;
@@ -139,6 +146,10 @@ char	*ft_strreplace(char *str, char *substr, char *replace);
 
 void	display_tokens();
 void	get_lexer(char *line);
+void	init_lexer(t_lexer *lexer);
+int		check_type_at(int i);
+char	*ft_strndup(char *s1, size_t n);
+char	*ft_strtrim_spaces(char *str);
 
 bool	ft_isalpha(char c);
 bool	ft_isdigit(char c);

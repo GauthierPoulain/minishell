@@ -23,9 +23,8 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 
 /*
 //	token 0 = arguments
-//	token 1 = commands
-//	token 2 = options
-//	token 3 = '$'
+//	token 1 = options
+//	token 2 = '$'
 */
 
 void	display_tokens()
@@ -47,51 +46,47 @@ void	display_tokens()
 void	get_token_info(t_token *token, char *line, int start, int end)
 {
 	token->str = ft_substr(line, start, end - start);
-	if (token->id == 0)
+	if (!ft_strcmp(token->str, "-n"))
 		token->type = 1;
-	else if (!ft_strcmp(token->str, "-n"))
-		token->type = 2;
 	else if (token->str[0] == '$')
-		token->type = 3;
+	{
+		printf("Last type is [%d]\n", check_type_at(token->id - 1));
+		token->type = 2;
+	}
 	else
 		token->type = 0;
 }
 
 void	get_lexer(char *line)
 {
-	int		i;
-	int		j;
-	int		id;
+	t_lexer	lexer;
 	t_token	*token;
 
-	i = 0;
-	j = 0;
-	id = 0;
-	while (line[i])
+	init_lexer(&lexer);
+	while (line[lexer.i])
 	{
 		token = gc_malloc(sizeof(t_token));
-		if (line[i] == ' ' || (line[i] == '$' && i != 0))
+		if (line[lexer.i] == ' ' || (line[lexer.i] == '$' && lexer.i != 0))
 		{
-			if (line[i - 1] != ' ')
+			if (line[lexer.i - 1] != ' ')
 			{
-				token->id = id++;
-				get_token_info(token, line, j, i);
+				token->id = lexer.id++;
+				get_token_info(token, line, lexer.j, lexer.i);
 				ft_lstadd_back(&g_shell.tokens, ft_lstnew(token));
 			}
-			if (line[i] == '$')
-				j = i;
+			if (line[lexer.i] == '$')
+				lexer.j = lexer.i;
 			else
-				j = i + 1;
+				lexer.j = lexer.i + 1;
 		}
-		i++;
+		lexer.i++;
 	}
 	if (ft_strlen(line))
 	{
-		printf("Second\n");
-		if (line[i - 1])
+		if (line[lexer.i - 1])
 		{
-			token->id = id++;
-			get_token_info(token, line, j, i);
+			token->id = lexer.id++;
+			get_token_info(token, line, lexer.j, lexer.i);
 			ft_lstadd_back(&g_shell.tokens, ft_lstnew(token));
 		}
 	}
