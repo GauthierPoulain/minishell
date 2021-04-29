@@ -25,6 +25,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 //	token 0 = arguments
 //	token 1 = commands
 //	token 2 = options
+//	token 3 = '$'
 */
 
 void	display_tokens()
@@ -50,6 +51,8 @@ void	get_token_info(t_token *token, char *line, int start, int end)
 		token->type = 1;
 	else if (!ft_strcmp(token->str, "-n"))
 		token->type = 2;
+	else if (token->str[0] == '$')
+		token->type = 3;
 	else
 		token->type = 0;
 }
