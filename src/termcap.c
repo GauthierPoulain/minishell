@@ -41,6 +41,8 @@ static void	check_termcap(char *c, t_reader *reader)
 			reader->pos--;
 		}
 	}
+	else
+		g_shell.history_id = -1;
 }
 
 bool	process_key(char *c, t_reader *reader, char **str)
@@ -58,7 +60,9 @@ bool	process_key(char *c, t_reader *reader, char **str)
 			print_debug_termcap(c + 1);
 		check_termcap(c + 1, reader);
 	}
-	else if (ft_isprint(*c))
+	else
+		g_shell.history_id = -1;
+	if (ft_isprint(*c))
 		print_char(str, c, reader);
 	return (true);
 }

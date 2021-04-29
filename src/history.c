@@ -55,3 +55,39 @@ void	history_add(char *line)
 	ft_putstr_fd(fd, "\n");
 	close(fd);
 }
+
+// char	*history_get_at_id(int id)
+// {
+// 	int		fd;
+// 	char	**line;
+// 	int		last;
+// 	char	**tmp;
+
+// 	file_check_isdir(HISTORY_PATH);
+// 	fd = open(HISTORY_PATH, O_RDONLY);
+// 	if (fd == -1)
+// 		close_shell("error on openning history file");
+// 	line = gc_malloc(sizeof(char *));
+// 	while (get_next_line(fd, line) > 0)
+// 	{
+// 		tmp = ft_split(*line, ':');
+// 		if (*tmp && !ft_strcmp(!*tmp, ft_itoa(id)))
+// 			return (tmp[1]);
+// 	}
+// 	close(fd);
+// 	return (last);
+// }
+
+// char	*history_before(void)
+// {
+// 	// if (g_shell.history_id == -1)
+// 		return (history_get_at_id(history_last_id()));
+	
+// }
+
+// char	*history_after(void)
+// {
+// 	// if (g_shell.history_id == -1)
+// 		return (history_get_at_id(history_last_id()));
+	
+// }

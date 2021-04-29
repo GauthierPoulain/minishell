@@ -103,7 +103,7 @@ typedef struct s_minishell
 	struct termios	term;
 	struct termios	save;
 	char			termbuffer[2048];
-	int				terminfos;
+	int				history_id;
 }				t_minishell;
 
 extern t_minishell	g_shell;
@@ -194,5 +194,7 @@ void	print_char(char **str, char *c, t_reader *reader);
 int		get_next_line(int fd, char **line);
 
 void	history_add(char *line);
+char	*history_before(void);
+char	*history_after(void);
 
 #endif
