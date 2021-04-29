@@ -33,3 +33,13 @@ char	**array_from_list()
 	return (words);
 }
 
+char	**parse_line(char *line)
+{
+	char	**array;
+
+	get_lexer(line);
+	array = array_from_list();
+	display_array(array);
+	return (array);
+	// TODO : don't forget to free the array later
+}

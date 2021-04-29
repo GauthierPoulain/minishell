@@ -146,12 +146,6 @@ char	*ft_strstr(char *str, char *to_find);
 char	*ft_strreplace(char *str, char *substr, char *replace);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 
-void	display_tokens();
-void	get_lexer(char *line);
-void	init_lexer(t_lexer *lexer);
-char	**array_from_list();
-void	display_array(char **array);
-int		check_type_at(int i);
 char	*ft_strndup(char *s1, size_t n);
 char	*ft_strtrim_spaces(char *str);
 
@@ -184,7 +178,15 @@ void	init_env(const char **envp);
 
 int		exec_subprocess(char *path, char *argv[]);
 
-char	*replace_env_line(char **line);
+int		check_type_at(int i);
+void	get_lexer(char *line);
+void	init_lexer(t_lexer *lexer);
+void	display_tokens();
+
+char	**parse_line(char *line);
+char	**array_from_list();
+void	display_array(char **array);
+
 
 void	set_input_mode(void);
 void	reset_input_mode(void);
