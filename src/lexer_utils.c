@@ -1,15 +1,24 @@
 #include "../includes/minishell.h"
 
-void	final_word(char *line, t_lexer *lexer, t_token *token)
+void	init_lexer(t_lexer *lexer)
 {
-	if (ft_strlen(line))
+	lexer->i = 0;
+	lexer->j = 0;
+	lexer->id = 0;
+}
+
+int	check_type_at(int i)
+{
+	t_list	*lst;
+	t_token	*token;
+
+	lst = g_shell.tokens;
+	while (lst)
 	{
-		printf("Second\n");
-		if (line[i - 1])
-		{
-			token->id = id++;
-			get_token_info(token, line, j, i);
-			ft_lstadd_back(&g_shell.tokens, ft_lstnew(token));
-		}
+		token = lst->content;
+		if (token->id == i)
+			return (token->type);
+		lst = lst->next;
 	}
+	return (-1);
 }

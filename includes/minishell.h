@@ -146,6 +146,8 @@ char	*ft_strreplace(char *str, char *substr, char *replace);
 
 void	display_tokens();
 void	get_lexer(char *line);
+void	init_lexer(t_lexer *lexer);
+int		check_type_at(int i);
 char	*ft_strndup(char *s1, size_t n);
 char	*ft_strtrim_spaces(char *str);
 
