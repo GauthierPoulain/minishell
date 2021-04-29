@@ -23,12 +23,13 @@ _WHITE=\033[97m
 NAME = minishell
 
 CC = clang
+MAKE = make --no-print-directory
 
 CFLAGS = -Wall -Wextra -Werror -g
 # CFLAGS += -O3 -fno-builtin
 CFLAGS += -fsanitize=address
 
-MAKE = make --no-print-directory
+CLIBS = -lncurses
 
 HEADERS = \
 	./includes/minishell.h
@@ -95,7 +96,7 @@ all: $(NAME)
 
 $(NAME): $(OBJS)
 	@printf "[ $(_YELLOW)$(_BOLD)building$(_END) ] $(_BLUE)$(_BOLD)$(NAME)$(_END)\n"
-	@$(CC) $(CFLAGS) -ltermcap -o $(NAME) $(OBJS)
+	@$(CC) $(CFLAGS) $(CLIBS) -o $(NAME) $(OBJS)
 	@printf "[ $(_MAGENTA)$(_BOLD)done$(_END) ]\n"
 
 clean:

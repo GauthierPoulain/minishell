@@ -1,7 +1,6 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include <errno.h>
 # include <fcntl.h>
 # include <limits.h>
 # include <signal.h>
@@ -26,7 +25,7 @@
 # define	GNL_BUFFER_SIZE		20
 
 # ifndef O_DIRECTORY
-#  define	O_DIRECTORY		__O_DIRECTORY
+#  define	O_DIRECTORY			__O_DIRECTORY
 # endif
 
 # define	_END "\033[1;0m"
@@ -95,6 +94,7 @@ typedef struct s_minishell
 	t_list			*tokens;
 	struct termios	term;
 	struct termios	save;
+	int				terminfos;
 }				t_minishell;
 
 extern t_minishell	g_shell;
