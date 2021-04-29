@@ -1,5 +1,25 @@
 #include "../includes/minishell.h"
 
+char	**array_from_list()
+{
+	int		size;
+	int		i;
+	t_list	*lst;
+	char	**words;
+
+	i = 0;
+	size = ft_lstsize(g_shell.tokens);
+	words = gc_malloc(sizeof(char *) * (size + 1));
+	lst = g_shell.tokens;
+	while (i < size)
+	{
+		*words[i] = ft_strdup(((t_token *)lst->content)->str);
+		lst = lst->next;
+		i++;
+	}
+	return (words);
+}
+
 char	*parse_line(char **line)
 {
 	int			i;

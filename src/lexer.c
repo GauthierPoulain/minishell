@@ -82,8 +82,6 @@ void	get_lexer(char *line)
 	if (ft_strlen(line))
 		handle_single_token(line, token, &lexer);
 	display_tokens();
-	/*
 	// TODO : Delete this, will make us suffer later since we need the list to parse
-	*/
 	ft_lstclear(&g_shell.tokens);
 }
