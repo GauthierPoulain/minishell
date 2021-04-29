@@ -42,6 +42,30 @@ int	get_token_info(t_token *token, char *line, int start, int end)
 	return (0);
 }
 
+void	handle_tokens(char *line, t_token *token, t_lexer *lexer)
+{
+	if (line[lexer->i - 1] != ' ')
+	{
+		token->id = lexer->id++;
+		if (get_token_info(token, line, lexer->j, lexer->i) != 2)
+			ft_lstadd_back(&g_shell.tokens, ft_lstnew(token));
+	}
+	if (line[lexer->i] == '$')
+		lexer->j = lexer->i;
+	else
+		lexer->j = lexer->i + 1;
+}
+
+void	handle_single_token(char *line, t_token *token, t_lexer *lexer)
+{
+	if (line[lexer->i - 1])
+	{
+		token->id = lexer->id++;
+		if (get_token_info(token, line, lexer->j, lexer->i) != 2)
+			ft_lstadd_back(&g_shell.tokens, ft_lstnew(token));
+	}
+}
+
 void	get_lexer(char *line)
 {
 	t_lexer	lexer;
@@ -52,29 +76,11 @@ void	get_lexer(char *line)
 	{
 		token = gc_malloc(sizeof(t_token));
 		if (line[lexer.i] == ' ' || (line[lexer.i] == '$' && lexer.i != 0))
-		{
-			if (line[lexer.i - 1] != ' ')
-			{
-				token->id = lexer.id++;
-				if (get_token_info(token, line, lexer.j, lexer.i) != 2)
-					ft_lstadd_back(&g_shell.tokens, ft_lstnew(token));
-			}
-			if (line[lexer.i] == '$')
-				lexer.j = lexer.i;
-			else
-				lexer.j = lexer.i + 1;
-		}
+			handle_tokens(line, token, &lexer);
 		lexer.i++;
 	}
 	if (ft_strlen(line))
-	{
-		if (line[lexer.i - 1])
-		{
-			token->id = lexer.id++;
-			if (get_token_info(token, line, lexer.j, lexer.i) != 2)
-				ft_lstadd_back(&g_shell.tokens, ft_lstnew(token));
-		}
-	}
+		handle_single_token(line, token, &lexer);
 	display_tokens();
 	// TODO : Delete this, will make us suffer later since we need the list to parse
 	ft_lstclear(&g_shell.tokens);
