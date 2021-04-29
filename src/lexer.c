@@ -59,39 +59,37 @@ void	get_token_info(t_token *token, char *line, int start, int end)
 
 void	get_lexer(char *line)
 {
-	int		i;
-	int		j;
-	int		id;
+	t_lexer	lexer;
 	t_token	*token;
 
-	i = 0;
-	j = 0;
-	id = 0;
-	while (line[i])
+	lexer.i = 0;
+	lexer.j = 0;
+	lexer.id = 0;
+	while (line[lexer.i])
 	{
 		token = gc_malloc(sizeof(t_token));
-		if (line[i] == ' ' || (line[i] == '$' && i != 0))
+		if (line[lexer.i] == ' ' || (line[lexer.i] == '$' && lexer.i != 0))
 		{
-			if (line[i - 1] != ' ')
+			if (line[lexer.i - 1] != ' ')
 			{
-				token->id = id++;
-				get_token_info(token, line, j, i);
+				token->id = lexer.id++;
+				get_token_info(token, line, lexer.j, lexer.i);
 				ft_lstadd_back(&g_shell.tokens, ft_lstnew(token));
 			}
-			if (line[i] == '$')
-				j = i;
+			if (line[lexer.i] == '$')
+				lexer.j = lexer.i;
 			else
-				j = i + 1;
+				lexer.j = lexer.i + 1;
 		}
-		i++;
+		lexer.i++;
 	}
 	if (ft_strlen(line))
 	{
 		printf("Second\n");
-		if (line[i - 1])
+		if (line[lexer.i - 1])
 		{
-			token->id = id++;
-			get_token_info(token, line, j, i);
+			token->id = lexer.id++;
+			get_token_info(token, line, lexer.j, lexer.i);
 			ft_lstadd_back(&g_shell.tokens, ft_lstnew(token));
 		}
 	}

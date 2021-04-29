@@ -79,6 +79,13 @@ typedef struct s_parse
 	char	*new_line;
 }				t_parser;
 
+typedef struct s_lexer
+{
+	int		i;
+	int		j;
+	int		id;
+}				t_lexer;
+
 typedef struct s_token
 {
 	char	*str;
