@@ -3,13 +3,14 @@
 void	set_input_mode(void)
 {
 	char	*term_name;
+	char	buff[2048];
 
 	if (!isatty(STDIN_FILENO))
 		close_shell("error, not a terminal");
 	term_name = get_env("TERM");
 	if (!term_name)
 		close_shell("invalid terminal name (check env var)");
-	if (tgetent(NULL, term_name) < 1)
+	if (tgetent(buff, term_name) < 1)
 		close_shell("error with termcap database");
 	tcgetattr(STDIN_FILENO, &g_shell.term);
 	g_shell.term.c_lflag &= ~(ICANON | ECHO | ISIG);

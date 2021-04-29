@@ -143,6 +143,7 @@ char	*ft_strcat(char *dest, char *src);
 char	**ft_split_spaces(char const *s);
 char	*ft_strstr(char *str, char *to_find);
 char	*ft_strreplace(char *str, char *substr, char *replace);
+char	*ft_substr(char const *s, unsigned int start, size_t len);
 
 void	display_tokens();
 void	get_lexer(char *line);

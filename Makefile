@@ -27,9 +27,9 @@ MAKE = make --no-print-directory
 
 CFLAGS = -Wall -Wextra -Werror -g
 # CFLAGS += -O3 -fno-builtin
-CFLAGS += -fsanitize=address
+# CFLAGS += -fsanitize=address
 
-CLIBS = -lncurses
+CLIBS = -ltermcap
 
 HEADERS = \
 	./includes/minishell.h
@@ -66,6 +66,7 @@ SRCS_LIB = \
 	./lib/get_next_line.c \
 	./lib/ft_lstclear.c \
 	./lib/ft_strtrim.c \
+	./lib/ft_substr.c \
 
 SRCS_MS = \
 	./src/builtin_cd.c \

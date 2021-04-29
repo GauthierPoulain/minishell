@@ -22,3 +22,19 @@ int	check_type_at(int i)
 	}
 	return (-1);
 }
+
+void	display_tokens()
+{
+	t_list	*lst;
+	t_token	*token;
+
+	lst = g_shell.tokens;
+	while (lst)
+	{
+		token = (t_token *)lst->content;
+		printf("string [%s]\n", token->str);
+		printf("type   [%d]\n", token->type);
+		printf("id     [%d]\n", token->id);
+		lst = lst->next;
+	}
+}
