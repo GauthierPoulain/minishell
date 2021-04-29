@@ -105,6 +105,8 @@ clean:
 	@$(RM) $(OBJS)
 
 fclean: clean
+	@printf "[ $(_RED)$(_BOLD)removing$(_END) ] $(_BLUE)$(_BOLD)minishell_history$(_END)\n"
+	@$(RM) minishell_history
 	@printf "[ $(_RED)$(_BOLD)removing$(_END) ] $(_BLUE)$(_BOLD)$(NAME)$(_END)\n"
 	@$(RM) $(NAME)
 
