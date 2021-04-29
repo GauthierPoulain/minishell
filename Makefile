@@ -134,4 +134,7 @@ ifeq ($(shell uname -s),Darwin)
 endif
 endif
 
-.PHONY: all clean fclean re run norm leaks
+valgrind: all
+	@valgrind -s --leak-check=full --show-reachable=yes --track-origins=yes ./$(NAME)
+
+.PHONY: all clean fclean re run norm leaks valgrind
