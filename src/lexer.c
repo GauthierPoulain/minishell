@@ -28,7 +28,7 @@ int	get_token_info(t_token *token, char *line, int start, int end)
 		token->type = 1;
 	else if (token->str[0] == '$')
 	{
-		if (check_type_at(token->id - 1) == 2)
+		if (check_type_at(token->id - 1) == 2 && line[start - 1] != ' ')
 		{
 			join_last_token(token);
 			printf("Last type is [%d]\n", check_type_at(token->id - 1));
