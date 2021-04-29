@@ -35,7 +35,7 @@ void	process_input(char *line)
 	char	*prog;
 
 	history_add(line);
-	replace_env_line(&line);
+	// replace_env_line(&line);
 	argv = ft_split_spaces(line);
 	if (!*argv)
 		return ;

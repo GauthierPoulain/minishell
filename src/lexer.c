@@ -72,7 +72,10 @@ void	get_lexer(char *line)
 			token->id = id++;
 			get_token_info(token, line, j, i);
 			ft_lstadd_back(&g_shell.tokens, ft_lstnew(token));
-			j = i + 1;
+			if (line[i] != '$')
+				j = i + 1;
+			else
+				j = i;
 		}
 		i++;
 	}
