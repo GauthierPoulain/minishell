@@ -27,9 +27,9 @@ MAKE = make --no-print-directory
 
 CFLAGS = -Wall -Wextra -Werror -g
 # CFLAGS += -O3 -fno-builtin
-CFLAGS += -fsanitize=address
+# CFLAGS += -fsanitize=address
 
-CLIBS = -lncurses
+CLIBS = -ltermcap
 
 HEADERS = \
 	./includes/minishell.h
@@ -106,6 +106,8 @@ clean:
 	@$(RM) $(OBJS)
 
 fclean: clean
+	@printf "[ $(_RED)$(_BOLD)removing$(_END) ] $(_BLUE)$(_BOLD)minishell_history$(_END)\n"
+	@$(RM) minishell_history
 	@printf "[ $(_RED)$(_BOLD)removing$(_END) ] $(_BLUE)$(_BOLD)$(NAME)$(_END)\n"
 	@$(RM) $(NAME)
 
