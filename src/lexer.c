@@ -67,7 +67,7 @@ void	get_lexer(char *line)
 	while (line[i])
 	{
 		token = gc_malloc(sizeof(t_token));
-		if (line[i] == ' ' || line[i] == '$')
+		if (line[i] == ' ' || (line[i] == '$' && i != 0))
 		{
 			if (line[i - 1] != ' ')
 			{
@@ -75,7 +75,10 @@ void	get_lexer(char *line)
 				get_token_info(token, line, j, i);
 				ft_lstadd_back(&g_shell.tokens, ft_lstnew(token));
 			}
-			j = i + 1;
+			if (line[i] == '$')
+				j = i;
+			else
+				j = i + 1;
 		}
 		i++;
 	}
