@@ -15,48 +15,11 @@ void	join_last_token(t_token *token)
 	}
 }
 
-char	*ft_substr(char const *s, unsigned int start, size_t len)
-{
-	unsigned int	i;
-	unsigned long	temp;
-	char			*substr;
-
-	i = 0;
-	temp = 0;
-	substr = gc_malloc(sizeof(char) * (len + 1));
-	if (!s || !substr)
-		return (0);
-	while (s[i] && temp < len)
-	{
-		if (i >= start)
-			substr[temp++] = s[i];
-		i++;
-	}
-	substr[temp] = 0;
-	return (substr);
-}
-
 /*
 //	token 0 = arguments
 //	token 1 = options
 //	token 2 = '$'
 */
-
-void	display_tokens()
-{
-	t_list	*lst;
-	t_token	*token;
-
-	lst = g_shell.tokens;
-	while (lst)
-	{
-		token = (t_token *)lst->content;
-		printf("string [%s]\n", token->str);
-		printf("type   [%d]\n", token->type);
-		printf("id     [%d]\n", token->id);
-		lst = lst->next;
-	}
-}
 
 int	get_token_info(t_token *token, char *line, int start, int end)
 {
