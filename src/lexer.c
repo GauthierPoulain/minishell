@@ -70,6 +70,7 @@ void	get_lexer(char *line)
 {
 	t_lexer	lexer;
 	t_token	*token;
+	char	**array;
 
 	init_lexer(&lexer);
 	while (line[lexer.i])
@@ -82,6 +83,8 @@ void	get_lexer(char *line)
 	if (ft_strlen(line))
 		handle_single_token(line, token, &lexer);
 	display_tokens();
+	array = array_from_list();
+	display_array(array);
 	// TODO : Delete this, will make us suffer later since we need the list to parse
 	ft_lstclear(&g_shell.tokens);
 }
