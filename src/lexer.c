@@ -23,9 +23,8 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 
 /*
 //	token 0 = arguments
-//	token 1 = commands
-//	token 2 = options
-//	token 3 = '$'
+//	token 1 = options
+//	token 2 = '$'
 */
 
 void	display_tokens()
@@ -47,12 +46,13 @@ void	display_tokens()
 void	get_token_info(t_token *token, char *line, int start, int end)
 {
 	token->str = ft_substr(line, start, end - start);
-	if (token->id == 0)
+	if (!ft_strcmp(token->str, "-n"))
 		token->type = 1;
-	else if (!ft_strcmp(token->str, "-n"))
-		token->type = 2;
 	else if (token->str[0] == '$')
-		token->type = 3;
+	{
+		printf("Last type is [%d]\n", check_type_at(token->id - 1));
+		token->type = 2;
+	}
 	else
 		token->type = 0;
 }
@@ -62,9 +62,7 @@ void	get_lexer(char *line)
 	t_lexer	lexer;
 	t_token	*token;
 
-	lexer.i = 0;
-	lexer.j = 0;
-	lexer.id = 0;
+	init_lexer(&lexer);
 	while (line[lexer.i])
 	{
 		token = gc_malloc(sizeof(t_token));
@@ -85,7 +83,6 @@ void	get_lexer(char *line)
 	}
 	if (ft_strlen(line))
 	{
-		printf("Second\n");
 		if (line[lexer.i - 1])
 		{
 			token->id = lexer.id++;

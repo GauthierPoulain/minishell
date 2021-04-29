@@ -146,6 +146,8 @@ char	*ft_strreplace(char *str, char *substr, char *replace);
 
 void	display_tokens();
 void	get_lexer(char *line);
+void	init_lexer(t_lexer *lexer);
+int		check_type_at(int i);
 
 bool	ft_isalpha(char c);
 bool	ft_isdigit(char c);
