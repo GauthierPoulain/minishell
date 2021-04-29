@@ -182,6 +182,7 @@ int		check_type_at(int i);
 void	get_lexer(char *line);
 void	init_lexer(t_lexer *lexer);
 void	display_tokens();
+char	*replace_env_line(char **line);
 
 char	**parse_line(char *line);
 char	**array_from_list();

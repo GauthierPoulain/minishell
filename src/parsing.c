@@ -12,10 +12,25 @@ void	display_array(char **array)
 	}
 }
 
+int	check_occurence(char *str, char c)
+{
+	int	i;
+
+	i = 0;
+	while (*str)
+	{
+		if (*str == c)
+			i++;
+		str++;
+	}
+	return (i);
+}
+
 char	**array_from_list()
 {
 	int		size;
 	int		i;
+	int		vars;
 	t_list	*lst;
 	char	**words;
 	char	*env_value;
@@ -28,8 +43,14 @@ char	**array_from_list()
 	{
 		if (((t_token *)lst->content)->type == 2)
 		{
-			env_value = get_env(((t_token *)lst->content)->str + 1);
-			words[i] = ft_strdup(env_value);
+			vars = check_occurence(((t_token *)lst->content)->str, '$');
+			if (vars > 1)
+				words[i] = replace_env_line(&((t_token *)lst->content)->str);
+			else
+			{
+				env_value = get_env(((t_token *)lst->content)->str + 1);
+				words[i] = ft_strdup(env_value);
+			}
 		}
 		else
 			words[i] = ft_strdup(((t_token *)lst->content)->str);
