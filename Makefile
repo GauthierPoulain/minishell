@@ -27,9 +27,9 @@ MAKE = make --no-print-directory
 
 CFLAGS = -Wall -Wextra -Werror -g
 # CFLAGS += -O3 -fno-builtin
-CFLAGS += -fsanitize=address
+# CFLAGS += -fsanitize=address
 
-CLIBS = -lncurses
+CLIBS = -ltermcap
 
 HEADERS = \
 	./includes/minishell.h
