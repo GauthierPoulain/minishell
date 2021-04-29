@@ -146,6 +146,8 @@ char	*ft_strreplace(char *str, char *substr, char *replace);
 
 void	display_tokens();
 void	get_lexer(char *line);
+char	*ft_strndup(char *s1, size_t n);
+char	*ft_strtrim_spaces(char *str);
 
 bool	ft_isalpha(char c);
 bool	ft_isdigit(char c);
