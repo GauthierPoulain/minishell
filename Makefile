@@ -86,6 +86,7 @@ SRCS_MS = \
 	./src/history.c \
 	./src/lexer.c \
 	./src/lexer_utils.c \
+	./src/parsing.c \
 
 SRCS = $(SRCS_LIB) $(SRCS_MS)
 

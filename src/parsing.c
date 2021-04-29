@@ -1,33 +1,73 @@
 #include "../includes/minishell.h"
 
-char	*parse_line(char **line)
+void	display_array(char **array)
 {
-	int			i;
-	char		*env_value;
-	t_parser	parser;
+	int	i;
 
 	i = 0;
-	parser.s_quotes = -1;
-	parser.quotes = -1;
-	parser.new_line = *line;
-	while (parser.new_line[i])
+	while (array[i])
 	{
-		if (parser.new_line[i] == 47)		// ascii for [']
-		{
-			parser.s_quotes = !parser.s_quotes;
-		}
-		if (parser.new_line[i] == '$')
-		{
-			if (parser.new_line[i + 1] == '?')
-				env_value = ft_itoa(g_shell.last_return);
-			else
-				env_value = get_env(get_word_sp(parser.new_line, i + 1));
-			if (!env_value)
-				break ;
-			parser.new_line = set_env_line(parser.new_line, env_value, i);
-		}
+		printf("(%s)\n", array[i]);
 		i++;
 	}
-	*line = parser.new_line;
-	return (*line);
+}
+
+int	check_occurence(char *str, char c)
+{
+	int	i;
+
+	i = 0;
+	while (*str)
+	{
+		if (*str == c)
+			i++;
+		str++;
+	}
+	return (i);
+}
+
+char	**array_from_list()
+{
+	int		size;
+	int		i;
+	int		vars;
+	t_list	*lst;
+	char	**words;
+	char	*env_value;
+
+	i = 0;
+	size = ft_lstsize(g_shell.tokens);
+	words = gc_malloc(sizeof(char *) * (size + 1));
+	lst = g_shell.tokens;
+	while (i < size)
+	{
+		if (((t_token *)lst->content)->type == 2)
+		{
+			vars = check_occurence(((t_token *)lst->content)->str, '$');
+			if (vars > 1)
+				words[i] = replace_env_line(&((t_token *)lst->content)->str);
+			else
+			{
+				env_value = get_env(((t_token *)lst->content)->str + 1);
+				words[i] = ft_strdup(env_value);
+			}
+		}
+		else
+			words[i] = ft_strdup(((t_token *)lst->content)->str);
+		lst = lst->next;
+		i++;
+	}
+	words[i] = NULL;
+	return (words);
+}
+
+char	**parse_line(char *line)
+{
+	char	**array;
+
+	get_lexer(line);
+	array = array_from_list();
+	display_array(array);
+	return (array);
+	// TODO : don't forget to free the array later
 }

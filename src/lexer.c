@@ -33,7 +33,7 @@ int	get_token_info(t_token *token, char *line, int start, int end)
 			join_last_token(token);
 			printf("Last type is [%d]\n", check_type_at(token->id - 1));
 			token->type = 2;
-			return(2);
+			return (2);
 		}
 		token->type = 2;
 	}
@@ -83,5 +83,4 @@ void	get_lexer(char *line)
 		handle_single_token(line, token, &lexer);
 	display_tokens();
 	// TODO : Delete this, will make us suffer later since we need the list to parse
-	ft_lstclear(&g_shell.tokens);
 }
