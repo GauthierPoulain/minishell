@@ -17,14 +17,19 @@ static void	print_debug_termcap(char *c)
 	printf("done\n");
 }
 
+// [A : up arrow
+// [B : down arrow
+// [C : right arrow
+// [D : left arrow
+
 static void	check_termcap(char *c, t_reader *reader)
 {
 	if (!ft_strcmp(c, "OS"))
 		close_shell("force quit");
 	else if (!ft_strcmp(c, "[A"))
-		; // up arrow
+		printf("%d - %s\n", g_shell.history_id, history_before());
 	else if (!ft_strcmp(c, "[B"))
-		; // down arrow
+		printf("%d - %s\n", g_shell.history_id, history_after());
 	else if (!ft_strcmp(c, "[C"))
 	{
 		if (reader->pos < reader->size)
