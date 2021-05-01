@@ -3,6 +3,7 @@ minishell
 *.a
 *.out
 *.tmp
+*.log
 .DS_Store
 minishell_history
 *.dSYM

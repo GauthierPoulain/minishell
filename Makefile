@@ -128,7 +128,7 @@ ifneq (,$(findstring fsanitize,$(CFLAGS)))
 	@echo "please use without fsanitize"
 else
 ifeq ($(shell uname -s),Linux)
-	@valgrind -s --leak-check=full --show-reachable=yes --track-origins=yes ./$(NAME)
+	@$(MAKE) valgrind
 endif
 ifeq ($(shell uname -s),Darwin)
 	@leaks --atExit -- ./$(NAME)
@@ -136,6 +136,20 @@ endif
 endif
 
 valgrind: all
-	@valgrind -s --leak-check=full --show-reachable=yes --track-origins=yes ./$(NAME)
+ifneq (,$(findstring fsanitize,$(CFLAGS)))
+	@echo "please use without fsanitize"
+else
+ifeq ($(shell uname -s),Linux)
+	@valgrind \
+	--leak-check=full \
+	--show-reachable=yes \
+	--track-origins=yes \
+	--error-limit=no \
+	--gen-suppressions=all \
+	-s \
+	--suppressions=./valgrind.supp \
+	./$(NAME)
+endif
+endif
 
 .PHONY: all clean fclean re run norm leaks valgrind

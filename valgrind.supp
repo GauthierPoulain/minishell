@@ -1,0 +1,6 @@
+{
+   ignore_libtermcap_still_reachable
+   Memcheck:Leak
+   ...
+   obj:*/libtinfo.so.*
+}
