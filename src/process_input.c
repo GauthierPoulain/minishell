@@ -33,7 +33,7 @@ void	process_input(char *line)
 	char	**array;
 	char	*prog;
 
-	history_add(line);
+	// history_add(line);
 	argv = ft_split_spaces(line);
 	if (!*argv)
 		return ;

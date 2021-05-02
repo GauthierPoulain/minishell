@@ -1,6 +1,6 @@
 #include "../includes/minishell.h"
 
-static void	print_debug_termcap(char *c)
+void	print_debug_termcap(char *c)
 {
 	printf("new key\n");
 	printf("key = %d, char = %c\n", c[0], c[0]);

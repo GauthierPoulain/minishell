@@ -20,7 +20,7 @@
 # define	DEBUG				1
 # define	PRINT_TERMCAP		0
 
-# define	HISTORY_PATH		"minishell_history"
+# define	HISTORY_PATH		".minishell_history"
 
 # define	KEY_BUFFER_SIZE		4096
 # define	GNL_BUFFER_SIZE		20
@@ -204,5 +204,7 @@ int		get_next_line(int fd, char **line);
 void	history_add(char *line);
 char	*history_before(void);
 char	*history_after(void);
+
+void	print_debug_termcap(char *c);
 
 #endif

@@ -5,5 +5,5 @@ minishell
 *.tmp
 *.log
 .DS_Store
-minishell_history
 *.dSYM
+.minishell_history
