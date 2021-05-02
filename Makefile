@@ -67,6 +67,8 @@ SRCS_LIB = \
 	./lib/ft_lstclear.c \
 	./lib/ft_strtrim.c \
 	./lib/ft_substr.c \
+	./lib/gc_free_tab.c \
+	./lib/ft_tab_len.c \
 
 SRCS_MS = \
 	./src/builtin_cd.c \

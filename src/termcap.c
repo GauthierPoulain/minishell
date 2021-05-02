@@ -27,9 +27,9 @@ static void	check_termcap(char *c, t_reader *reader)
 	if (!ft_strcmp(c, "OS"))
 		close_shell("force quit");
 	else if (!ft_strcmp(c, "[A"))
-		printf("%d - %s\n", g_shell.history_id, history_before());
+		printf("%s\n", history_before());
 	else if (!ft_strcmp(c, "[B"))
-		printf("%d - %s\n", g_shell.history_id, history_after());
+		printf("%s\n", history_after());
 	else if (!ft_strcmp(c, "[C"))
 	{
 		if (reader->pos < reader->size)
@@ -50,7 +50,7 @@ static void	check_termcap(char *c, t_reader *reader)
 		g_shell.history_id = -1;
 }
 
-bool	process_key(char *c, t_reader *reader, char **str)
+bool	process_key(char *c, t_reader *reader, char ***str)
 {
 	if (*c == '\n')
 	{
@@ -70,4 +70,17 @@ bool	process_key(char *c, t_reader *reader, char **str)
 	if (ft_isprint(*c))
 		print_char(str, c, reader);
 	return (true);
+}
+
+char	*get_str_rterm(char **str)
+{
+	char	*res;
+
+	res = ft_strdup("");
+	while (*str)
+	{
+		res = ft_strjoinf1(res, *str);
+		str++;
+	}
+	return (res);
 }

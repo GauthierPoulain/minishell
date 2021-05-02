@@ -1,16 +1,5 @@
 #include "../includes/minishell.h"
 
-static void	preexec(char **argv)
-{
-	(void)argv;
-	return ;
-}
-
-static void	precmd(void)
-{
-	return ;
-}
-
 static bool	is_builtin(char *prog, char **argv)
 {
 	if (!ft_strcmp(prog, "exit"))
@@ -25,8 +14,17 @@ static bool	is_builtin(char *prog, char **argv)
 		g_shell.last_return = builtin_env();
 	else if (!ft_strcmp(prog, "echo"))
 		g_shell.last_return = builtin_echo(argv);
-	else return (false);
+	else
+		return (false);
 	return (true);
+}
+
+void	err_not_fount(char *prog)
+{
+	ft_putstr_fd(2, "minishell: command not found: ");
+	ft_putstr_fd(2, prog);
+	ft_putstr_fd(2, "\n");
+	g_shell.last_return = 127;
 }
 
 void	process_input(char *line)
@@ -44,17 +42,8 @@ void	process_input(char *line)
 	array = parse_line(line);
 	ft_lstclear(&g_shell.tokens);
 	gc_free(array);
-	preexec(argv);
 	if (ft_strlen(line) < 1)
 		return ;
-	else if (is_builtin(prog, argv))
-		;
-	else
-	{
-		ft_putstr_fd(2, "minishell: command not found: ");
-		ft_putstr_fd(2, prog);
-		ft_putstr_fd(2, "\n");
-		g_shell.last_return = 127;
-	}
-	precmd();
+	if (!is_builtin(prog, argv))
+		err_not_fount(prog);
 }

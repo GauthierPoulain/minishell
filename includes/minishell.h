@@ -145,6 +145,8 @@ char	**ft_split_spaces(char const *s);
 char	*ft_strstr(char *str, char *to_find);
 char	*ft_strreplace(char *str, char *substr, char *replace);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
+void	gc_free_tab(char **arr);
+size_t	ft_tab_len(char **car);
 
 char	*ft_strndup(char *s1, size_t n);
 char	*ft_strtrim_spaces(char *str);
@@ -181,21 +183,22 @@ int		exec_subprocess(char *path, char *argv[]);
 int		check_type_at(int i);
 void	get_lexer(char *line);
 void	init_lexer(t_lexer *lexer);
-void	display_tokens();
+void	display_tokens(void);
 char	*replace_env_line(char **line);
 
 char	**parse_line(char *line);
-char	**array_from_list();
+char	**array_from_list(void);
 void	display_array(char **array);
-
 
 void	set_input_mode(void);
 void	reset_input_mode(void);
 
 char	*read_term(void);
-bool	process_key(char *c, t_reader *reader, char **str);
-void	unprint_char(char **str, t_reader *reader);
-void	print_char(char **str, char *c, t_reader *reader);
+bool	process_key(char *c, t_reader *reader, char ***str);
+void	unprint_char(char ***str, t_reader *reader);
+void	print_char(char ***str, char *c, t_reader *reader);
+char	*get_str_rterm(char **str);
+
 int		get_next_line(int fd, char **line);
 
 void	history_add(char *line);

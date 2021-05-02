@@ -65,7 +65,7 @@ static bool	customchr(const char *s, int c)
 	return (0);
 }
 
-int		get_next_line(int fd, char **line)
+int	get_next_line(int fd, char **line)
 {
 	char		*buffer;
 	static char	*save[10240];
@@ -77,7 +77,8 @@ int		get_next_line(int fd, char **line)
 	buffer = gc_malloc(sizeof(char) * (GNL_BUFFER_SIZE + 1));
 	while (readvalue != 0 && !customchr(save[fd], '\n'))
 	{
-		if ((readvalue = read(fd, buffer, GNL_BUFFER_SIZE)) == -1)
+		readvalue = read(fd, buffer, GNL_BUFFER_SIZE);
+		if (readvalue == -1)
 		{
 			gc_free(buffer);
 			return (-1);

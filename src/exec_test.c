@@ -2,12 +2,17 @@
 
 void	exec_test(void)
 {
-	char	*prog = "/bin/ls";
-	char	*argv[] = {prog, NULL};
-
-	sleep(2);
-	g_shell.last_return = exec_subprocess(prog, argv);
+	return ;
 }
+
+// void	exec_test(void)
+// {
+// 	char	*prog = "/bin/ls";
+// 	char	*argv[] = {prog, NULL};
+
+// 	sleep(2);
+// 	g_shell.last_return = exec_subprocess(prog, argv);
+// }
 
 // void	exec_test(void)
 // {
