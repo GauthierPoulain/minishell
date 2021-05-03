@@ -38,3 +38,18 @@ void	display_tokens()
 		lst = lst->next;
 	}
 }
+
+void	join_last_token(t_token *token)
+{
+	t_list	*lst;
+	t_token	*actual;
+
+	lst = g_shell.tokens;
+	while (lst)
+	{
+		actual = lst->content;
+		if (actual->id == token->id - 1)
+			actual->str = ft_strjoin(actual->str, token->str);
+		lst = lst->next;
+	}
+}

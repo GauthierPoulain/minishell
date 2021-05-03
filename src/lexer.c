@@ -1,20 +1,5 @@
 #include "../includes/minishell.h"
 
-void	join_last_token(t_token *token)
-{
-	t_list	*lst;
-	t_token	*actual;
-
-	lst = g_shell.tokens;
-	while (lst)
-	{
-		actual = lst->content;
-		if (actual->id == token->id - 1)
-			actual->str = ft_strjoin(actual->str, token->str);
-		lst = lst->next;
-	}
-}
-
 /*
 //	token 0 = arguments
 //	token 1 = options
@@ -56,24 +41,10 @@ static int	get_dollar_len(char *line, int i)
 	return (l);
 }
 
-// static int	len_to_charset(char *line, int i, char *set)
-// {
-// 	int	l;
-
-// 	l = 0;
-// 	while (line[i])
-// 	{
-// 		if (ft_ischarset(line[i], set))
-// 			return (l);
-// 		i++;
-// 		l++;
-// 	}
-// 	return (0);
-// }
-
 void	handle_tokens(char *line, t_token *token, t_lexer *lexer)
 {
 	int	temp;
+
 	if (line[lexer->i] == ' ' && line[lexer->i - 1] != ' ')
 	{
 		get_token_info(token, line, lexer->j, lexer->i);
@@ -94,12 +65,10 @@ void	handle_tokens(char *line, t_token *token, t_lexer *lexer)
 			printf("lexer i during : %d\n", lexer->i);
 		}
 	}
-	// printf("salut [%s]\n", token->str);
 }
 
 void	handle_single_token(char *line, t_token *token, t_lexer *lexer)
 {
-	printf("secondary\n");
 	if (line[lexer->i - 1])
 	{
 		token->id = lexer->id++;
