@@ -111,7 +111,9 @@ clean:
 
 fclean: clean
 	@printf "[ $(_RED)$(_BOLD)removing$(_END) ] $(_BLUE)$(_BOLD)minishell_history$(_END)\n"
-	@$(RM) minishell_history
+	@$(RM) .minishell_history
+	@printf "[ $(_RED)$(_BOLD)removing$(_END) ] $(_BLUE)$(_BOLD)tmp files$(_END)\n"
+	@$(RM) -rf *.dSYM
 	@printf "[ $(_RED)$(_BOLD)removing$(_END) ] $(_BLUE)$(_BOLD)$(NAME)$(_END)\n"
 	@$(RM) $(NAME)
 
@@ -141,7 +143,6 @@ valgrind: all
 ifneq (,$(findstring fsanitize,$(CFLAGS)))
 	@echo "please use without fsanitize"
 else
-ifeq ($(shell uname -s),Linux)
 	@valgrind \
 	--leak-check=full \
 	--show-reachable=yes \
@@ -151,7 +152,6 @@ ifeq ($(shell uname -s),Linux)
 	-s \
 	--suppressions=./valgrind.supp \
 	./$(NAME)
-endif
 endif
 
 .PHONY: all clean fclean re run norm leaks valgrind

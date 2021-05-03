@@ -12,60 +12,9 @@ void	file_check_isdir(char *path)
 	}
 }
 
-int	history_last_id(int max)
-{
-	int		fd;
-	char	**line;
-	int		last;
-	char	**tmp;
-
-	file_check_isdir(HISTORY_PATH);
-	fd = open(HISTORY_PATH, O_RDONLY);
-	if (fd == -1)
-		close_shell("error on openning history file");
-	line = gc_malloc(sizeof(char *));
-	last = 1;
-	while (get_next_line(fd, line) > 0)
-	{
-		tmp = ft_split(*line, ':');
-		if (*tmp)
-			if (ft_atoi(*tmp) > last && (max == -1 || ft_atoi(*tmp) < max))
-				last = ft_atoi(*tmp);
-		gc_free(*line);
-	}
-	close(fd);
-	return (last);
-}
-
-int	history_first_id(int min)
-{
-	int		fd;
-	char	**line;
-	int		first;
-	char	**tmp;
-
-	file_check_isdir(HISTORY_PATH);
-	fd = open(HISTORY_PATH, O_RDONLY);
-	if (fd == -1)
-		close_shell("error on openning history file");
-	line = gc_malloc(sizeof(char *));
-	first = history_last_id(-1);
-	while (get_next_line(fd, line) > 0)
-	{
-		tmp = ft_split(*line, ':');
-		if (*tmp)
-			if (ft_atoi(*tmp) < first && (min == -1 || ft_atoi(*tmp) > min))
-				first = ft_atoi(*tmp);
-		gc_free(*line);
-	}
-	close(fd);
-	return (first);
-}
-
 void	history_add(char *line)
 {
 	int		fd;
-	char	*tmp;
 
 	file_check_isdir(HISTORY_PATH);
 	fd = open(HISTORY_PATH, O_WRONLY | O_CREAT | O_APPEND, 0755);
@@ -76,46 +25,80 @@ void	history_add(char *line)
 		close(fd);
 		return ;
 	}
-	tmp = ft_itoa(history_last_id(g_shell.history_id) + 1);
-	ft_putstr_fd(fd, tmp);
-	ft_putstr_fd(fd, ":");
 	ft_putstr_fd(fd, line);
 	ft_putstr_fd(fd, "\n");
 	close(fd);
 }
 
-char	*history_get_at_id(int id)
+void	read_history(void)
 {
 	int		fd;
 	char	**line;
-	char	**tmp;
 
+	ft_lstclear(&g_shell.history.lst);
 	file_check_isdir(HISTORY_PATH);
+	g_shell.history.lst = NULL;
 	fd = open(HISTORY_PATH, O_RDONLY);
 	if (fd == -1)
 		close_shell("error on openning history file");
 	line = gc_malloc(sizeof(char *));
 	while (get_next_line(fd, line) > 0)
 	{
-		tmp = ft_split(*line, ':');
-		if (*tmp && !ft_strcmp(*tmp, ft_itoa(id)))
-		{
-			g_shell.history_id = id;
-			close(fd);
-			return (tmp[1]);
-		}
+		if (*line)
+			ft_lstadd_front(&g_shell.history.lst, ft_lstnew(ft_strdup(*line)));
 		gc_free(*line);
 	}
+	ft_lstadd_front(&g_shell.history.lst, ft_lstnew(NULL));
 	close(fd);
+}
+
+char	*get_in_history(int pos)
+{
+	int		id;
+	t_list	*lst;
+
+	lst = g_shell.history.lst;
+	id = 0;
+	while (lst)
+	{
+		if (id == pos)
+			return (lst->content);
+		id++;
+		lst = lst->next;
+	}
 	return (NULL);
 }
 
 char	*history_before(void)
 {
-	return (history_get_at_id(history_last_id(g_shell.history_id)));
+	int		id;
+	char	*res;
+
+	id = g_shell.history.act_pos + 1;
+	if (id > (int)ft_lstsize(g_shell.history.lst) - 1)
+		id = (int)ft_lstsize(g_shell.history.lst) - 1;
+	res = get_in_history(id);
+	if (res)
+	{
+	g_shell.history.act_pos = id;
+		return (res);
+	}
+	return (NULL);
 }
 
 char	*history_after(void)
 {
-	return (history_get_at_id(history_first_id(g_shell.history_id)));
+	int		id;
+	char	*res;
+
+	id = g_shell.history.act_pos - 1;
+	if (id < 0)
+		id = 0;
+	res = get_in_history(id);
+	if (res)
+	{
+	g_shell.history.act_pos = id;
+		return (res);
+	}
+	return (NULL);
 }
