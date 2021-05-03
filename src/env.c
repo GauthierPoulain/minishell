@@ -86,8 +86,7 @@ char	**get_envp(void)
 	{
 		content = actual->content;
 		if (content && content->value)
-			envp[pos++] = ft_strjoin(content->key, ft_strjoin("=",
-						ft_strjoin(content->value, "\n")));
+			envp[pos++] = ft_strjoin(content->key, ft_strjoin("=", content->value));
 		actual = actual->next;
 	}
 	return (envp);
