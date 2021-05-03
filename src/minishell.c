@@ -8,8 +8,9 @@ static void	init_shell(void)
 	g_shell.workdir = gc_malloc(FILENAME_MAX);
 	g_shell.last_return = 0;
 	g_shell.env = NULL;
+	g_shell.history.lst = NULL;
+	ft_lstadd_front(&g_shell.history.lst, ft_lstnew(NULL));
 	tcgetattr(STDIN_FILENO, &g_shell.save);
-	history_add(NULL);
 }
 
 static void	pre_prompt(void)
@@ -38,8 +39,6 @@ int	main(int argc, const char **argv, const char **envp)
 	while (true)
 	{
 		pre_prompt();
-		read_history();
-		// tputs(save_cursor, 1, ft_putchar);
 		g_shell.history.act_pos = 0;
 		process_input(ft_strtrim_spaces(read_term()));
 	}

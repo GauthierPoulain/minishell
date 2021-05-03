@@ -1,58 +1,12 @@
 #include "../includes/minishell.h"
 
-void	file_check_isdir(char *path)
+void	history_add(char **line)
 {
-	int		fd;
-
-	fd = open(path, O_DIRECTORY);
-	if (fd != -1)
-	{
-		close_shell("error, history path if a directory");
-		close(fd);
-	}
-}
-
-void	history_add(char *line)
-{
-	int		fd;
-
-	file_check_isdir(HISTORY_PATH);
-	fd = open(HISTORY_PATH, O_WRONLY | O_CREAT | O_APPEND, 0755);
-	if (fd == -1)
-		close_shell("error on openning history file");
-	if (ft_strlen(line) < 1)
-	{
-		close(fd);
-		return ;
-	}
-	ft_putstr_fd(fd, line);
-	ft_putstr_fd(fd, "\n");
-	close(fd);
-}
-
-void	read_history(void)
-{
-	int		fd;
-	char	**line;
-
-	ft_lstclear(&g_shell.history.lst);
-	file_check_isdir(HISTORY_PATH);
-	g_shell.history.lst = NULL;
-	fd = open(HISTORY_PATH, O_RDONLY);
-	if (fd == -1)
-		close_shell("error on openning history file");
-	line = gc_malloc(sizeof(char *));
-	while (get_next_line(fd, line) > 0)
-	{
-		if (*line)
-			ft_lstadd_front(&g_shell.history.lst, ft_lstnew(ft_strdup(*line)));
-		gc_free(*line);
-	}
+	g_shell.history.lst->content = line;
 	ft_lstadd_front(&g_shell.history.lst, ft_lstnew(NULL));
-	close(fd);
 }
 
-char	*get_in_history(int pos)
+char	**get_in_history(int pos)
 {
 	int		id;
 	t_list	*lst;
@@ -73,41 +27,32 @@ void	remove_line(char ***str, t_reader *reader)
 {
 	t_reader	tmp_reader;
 
-	// void	unprint_char(char ***str, t_reader *reader)
 	while (**str)
 	{
 		tmp_reader.pos = ft_tab_len(*str);
 		tmp_reader.size = ft_tab_len(*str);
 		unprint_char(str, &tmp_reader);
-		// tputs(cursor_right, 1, ft_putchar);
 	}
 	reader->pos = 0;
 	reader->size = 0;
 }
 
-void	put_in_term(char *line, char ***str, t_reader *reader)
+void	put_in_term(char **line, char ***str, t_reader *reader)
 {
-	char		*c;
-
-	c = gc_malloc(sizeof(char) * 2);
-	c[1] = 0;
-	while (*line)
+	if (line)
 	{
-		c[0] = *line;
-		print_char(str, c, reader);
-		// tputs(save_cursor, 1, ft_putchar);
-		// write(0, line, 1);
-		// tputs(restore_cursor, 1, ft_putchar);
-		// tputs(cursor_right, 1, ft_putchar);
-		line++;
+		while (*line)
+		{
+			print_char(str, *line, reader);
+			line++;
+		}
 	}
-	
 }
 
 char	*history_before(char ***str, t_reader *reader)
 {
 	int		id;
-	char	*res;
+	char	**res;
 
 	id = g_shell.history.act_pos + 1;
 	if (id > (int)ft_lstsize(g_shell.history.lst) - 1)
@@ -122,7 +67,7 @@ char	*history_before(char ***str, t_reader *reader)
 char	*history_after(char ***str, t_reader *reader)
 {
 	int		id;
-	char	*res;
+	char	**res;
 
 	id = g_shell.history.act_pos - 1;
 	if (id < 0)

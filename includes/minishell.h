@@ -20,8 +20,6 @@
 # define	DEBUG				1
 # define	PRINT_TERMCAP		0
 
-# define	HISTORY_PATH		".minishell_history"
-
 # define	KEY_BUFFER_SIZE		4096
 # define	GNL_BUFFER_SIZE		20
 
@@ -121,6 +119,7 @@ void	ft_lstadd_back(t_list **alst, t_list *new);
 void	ft_lstadd_front(t_list **alst, t_list *new);
 void	ft_lstclear(t_list **lst);
 t_list	*ft_lstnew(void *content);
+t_list	*ft_lstlast(t_list *lst);
 size_t	ft_lstsize(t_list *alist);
 size_t	ft_envlstsize(t_list *alist);
 void	ft_putcolor(char *str, char *color);
@@ -208,10 +207,9 @@ char	*get_str_rterm(char **str);
 
 int		get_next_line(int fd, char **line);
 
-void	history_add(char *line);
+void	history_add(char **line);
 char	*history_before(char ***str, t_reader *reader);
 char	*history_after(char ***str, t_reader *reader);
-void	read_history(void);
 
 void	print_debug_termcap(char *c);
 

@@ -69,6 +69,7 @@ SRCS_LIB = \
 	./lib/ft_substr.c \
 	./lib/gc_free_tab.c \
 	./lib/ft_tab_len.c \
+	./lib/ft_lstlast.c \
 
 SRCS_MS = \
 	./src/builtin_cd.c \
@@ -110,8 +111,6 @@ clean:
 	@$(RM) $(OBJS)
 
 fclean: clean
-	@printf "[ $(_RED)$(_BOLD)removing$(_END) ] $(_BLUE)$(_BOLD)minishell_history$(_END)\n"
-	@$(RM) .minishell_history
 	@printf "[ $(_RED)$(_BOLD)removing$(_END) ] $(_BLUE)$(_BOLD)tmp files$(_END)\n"
 	@$(RM) -rf *.dSYM
 	@printf "[ $(_RED)$(_BOLD)removing$(_END) ] $(_BLUE)$(_BOLD)$(NAME)$(_END)\n"

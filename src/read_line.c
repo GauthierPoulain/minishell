@@ -106,7 +106,7 @@ char	*read_term(void)
 		reading = process_key(buffer, &reader, &str);
 		ft_bzero(buffer, KEY_BUFFER_SIZE);
 	}
+	history_add(str);
 	res = get_str_rterm(str);
-	gc_free_tab(str);
 	return (res);
 }
