@@ -69,7 +69,33 @@ char	*get_in_history(int pos)
 	return (NULL);
 }
 
-char	*history_before(void)
+void	remove_line(char **str)
+{
+	t_reader	reader;
+
+	reader.pos = 0;
+	reader.size = ft_tab_len(str);
+	// void	unprint_char(char ***str, t_reader *reader)
+	while (*str)
+	{
+		unprint_char(&str, &reader);
+	}
+}
+
+void	put_in_term(char *str)
+{
+	while (*str)
+	{
+		tputs(save_cursor, 1, ft_putchar);
+		write(1, str, 1);
+		tputs(restore_cursor, 1, ft_putchar);
+		tputs(cursor_right, 1, ft_putchar);
+		str++;
+	}
+	
+}
+
+char	*history_before(char **str)
 {
 	int		id;
 	char	*res;
@@ -78,15 +104,13 @@ char	*history_before(void)
 	if (id > (int)ft_lstsize(g_shell.history.lst) - 1)
 		id = (int)ft_lstsize(g_shell.history.lst) - 1;
 	res = get_in_history(id);
-	if (res)
-	{
 	g_shell.history.act_pos = id;
-		return (res);
-	}
+	remove_line(str);
+	put_in_term(res);
 	return (NULL);
 }
 
-char	*history_after(void)
+char	*history_after(char **str)
 {
 	int		id;
 	char	*res;
@@ -95,10 +119,8 @@ char	*history_after(void)
 	if (id < 0)
 		id = 0;
 	res = get_in_history(id);
-	if (res)
-	{
 	g_shell.history.act_pos = id;
-		return (res);
-	}
+	remove_line(str);
+	put_in_term(res);
 	return (NULL);
 }

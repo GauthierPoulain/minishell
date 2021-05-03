@@ -42,5 +42,5 @@ int	main(int argc, const char **argv, const char **envp)
 		g_shell.history.act_pos = 0;
 		process_input(ft_strtrim_spaces(read_term()));
 	}
-	close_shell("unexpected error");
+	close_shell(":thonk:");
 }
