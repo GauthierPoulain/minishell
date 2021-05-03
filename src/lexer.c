@@ -24,7 +24,7 @@ void	join_last_token(t_token *token)
 int	get_token_info(t_token *token, char *line, int start, int end)
 {
 	token->str = ft_substr(line, start, end - start);
-	printf("substr : [%s]\n", token->str);
+	printf("substr :(%d)(%d) [%s]\n", start, end, token->str);
 	if (!ft_strcmp(token->str, "-n"))
 		token->type = 1;
 	else if (token->str[0] == '$')
@@ -43,8 +43,37 @@ int	get_token_info(t_token *token, char *line, int start, int end)
 	return (0);
 }
 
+static int	get_dollar_len(char *line, int i)
+{
+	int	l;
+
+	l = 0;
+	while (line[i] && line[i] != ' ')
+	{
+		i++;
+		l++;
+	}
+	return (l);
+}
+
+// static int	len_to_charset(char *line, int i, char *set)
+// {
+// 	int	l;
+
+// 	l = 0;
+// 	while (line[i])
+// 	{
+// 		if (ft_ischarset(line[i], set))
+// 			return (l);
+// 		i++;
+// 		l++;
+// 	}
+// 	return (0);
+// }
+
 void	handle_tokens(char *line, t_token *token, t_lexer *lexer)
 {
+	int	temp;
 	if (line[lexer->i] == ' ' && line[lexer->i - 1] != ' ')
 	{
 		get_token_info(token, line, lexer->j, lexer->i);
@@ -52,14 +81,17 @@ void	handle_tokens(char *line, t_token *token, t_lexer *lexer)
 		lexer->j = lexer->i + 1;
 		token->id = lexer->id++;
 	}
-	else if (line[lexer->i] == '$')
+	else if (line[lexer->i] == '$' && lexer->i != 0)
 	{
 		if (line[lexer->i - 1] == ' ')
 		{
-			get_token_info(token, line, lexer->j, lexer->i);
+			temp = get_dollar_len(line, lexer->i);
+			get_token_info(token, line, lexer->j, lexer->i + temp);
 			ft_lstadd_back(&g_shell.tokens, ft_lstnew(token));
 			token->id = lexer->id++;
-			lexer->j = lexer->i;
+			lexer->j = lexer->i + temp;
+			lexer->i += temp + 1;
+			printf("lexer i during : %d\n", lexer->i);
 		}
 	}
 	// printf("salut [%s]\n", token->str);
@@ -84,14 +116,16 @@ void	get_lexer(char *line)
 
 	set = " $";
 	init_lexer(&lexer);
-	while (line[lexer.i])
+	printf("len : %zu\n", ft_strlen(line));
+	while (lexer.i < (int)ft_strlen(line))
 	{
 		token = gc_malloc(sizeof(t_token));
 		if (ft_ischarset(line[lexer.i], set))
 			handle_tokens(line, token, &lexer);
 		lexer.i++;
+		printf("lexer i : %d\n", lexer.i);
 	}
-	if (ft_strlen(line))
+	if (ft_strlen(line) && (int)ft_strlen(line) != lexer.j)
 		handle_single_token(line, token, &lexer);
 	display_tokens();
 }
