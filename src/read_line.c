@@ -52,7 +52,7 @@ void	unprint_char(char ***str, t_reader *reader)
 		tputs(cursor_left, 1, ft_putchar);
 		tputs(save_cursor, 1, ft_putchar);
 		ft_putstr(get_str_rterm(*str + reader->pos - 1));
-		ft_putstr(" ");
+		ft_putstr("     ");
 		tputs(restore_cursor, 1, ft_putchar);
 		reader->size--;
 		reader->pos--;

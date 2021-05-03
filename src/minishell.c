@@ -39,8 +39,9 @@ int	main(int argc, const char **argv, const char **envp)
 	{
 		pre_prompt();
 		read_history();
+		// tputs(save_cursor, 1, ft_putchar);
 		g_shell.history.act_pos = 0;
 		process_input(ft_strtrim_spaces(read_term()));
 	}
-	close_shell("unexpected error");
+	close_shell(":thonk:");
 }
