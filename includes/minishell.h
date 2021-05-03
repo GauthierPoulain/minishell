@@ -93,6 +93,12 @@ typedef struct s_token
 	int		id;
 }				t_token;
 
+typedef struct s_history
+{
+	t_list	*lst;
+	int		act_pos;
+}				t_history;
+
 typedef struct s_minishell
 {
 	t_list			*gc;
@@ -103,7 +109,7 @@ typedef struct s_minishell
 	struct termios	term;
 	struct termios	save;
 	char			termbuffer[2048];
-	int				history_id;
+	t_history		history;
 }				t_minishell;
 
 extern t_minishell	g_shell;
@@ -204,6 +210,7 @@ int		get_next_line(int fd, char **line);
 void	history_add(char *line);
 char	*history_before(void);
 char	*history_after(void);
+void	read_history(void);
 
 void	print_debug_termcap(char *c);
 

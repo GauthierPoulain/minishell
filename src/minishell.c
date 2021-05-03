@@ -38,7 +38,8 @@ int	main(int argc, const char **argv, const char **envp)
 	while (true)
 	{
 		pre_prompt();
-		g_shell.history_id = -1;
+		read_history();
+		g_shell.history.act_pos = 0;
 		process_input(ft_strtrim_spaces(read_term()));
 	}
 	close_shell("unexpected error");
