@@ -69,33 +69,42 @@ char	*get_in_history(int pos)
 	return (NULL);
 }
 
-void	remove_line(char **str)
+void	remove_line(char ***str, t_reader *reader)
 {
-	t_reader	reader;
+	t_reader	tmp_reader;
 
-	reader.pos = 0;
-	reader.size = ft_tab_len(str);
 	// void	unprint_char(char ***str, t_reader *reader)
-	while (*str)
+	while (**str)
 	{
-		unprint_char(&str, &reader);
+		tmp_reader.pos = ft_tab_len(*str);
+		tmp_reader.size = ft_tab_len(*str);
+		unprint_char(str, &tmp_reader);
+		// tputs(cursor_right, 1, ft_putchar);
 	}
+	reader->pos = 0;
+	reader->size = 0;
 }
 
-void	put_in_term(char *str)
+void	put_in_term(char *line, char ***str, t_reader *reader)
 {
-	while (*str)
+	char		*c;
+
+	c = gc_malloc(sizeof(char) * 2);
+	c[1] = 0;
+	while (*line)
 	{
-		tputs(save_cursor, 1, ft_putchar);
-		write(1, str, 1);
-		tputs(restore_cursor, 1, ft_putchar);
-		tputs(cursor_right, 1, ft_putchar);
-		str++;
+		c[0] = *line;
+		print_char(str, c, reader);
+		// tputs(save_cursor, 1, ft_putchar);
+		// write(0, line, 1);
+		// tputs(restore_cursor, 1, ft_putchar);
+		// tputs(cursor_right, 1, ft_putchar);
+		line++;
 	}
 	
 }
 
-char	*history_before(char **str)
+char	*history_before(char ***str, t_reader *reader)
 {
 	int		id;
 	char	*res;
@@ -105,12 +114,12 @@ char	*history_before(char **str)
 		id = (int)ft_lstsize(g_shell.history.lst) - 1;
 	res = get_in_history(id);
 	g_shell.history.act_pos = id;
-	remove_line(str);
-	put_in_term(res);
+	remove_line(str, reader);
+	put_in_term(res, str, reader);
 	return (NULL);
 }
 
-char	*history_after(char **str)
+char	*history_after(char ***str, t_reader *reader)
 {
 	int		id;
 	char	*res;
@@ -120,7 +129,7 @@ char	*history_after(char **str)
 		id = 0;
 	res = get_in_history(id);
 	g_shell.history.act_pos = id;
-	remove_line(str);
-	put_in_term(res);
+	remove_line(str, reader);
+	put_in_term(res, str, reader);
 	return (NULL);
 }

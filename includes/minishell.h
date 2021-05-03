@@ -208,12 +208,12 @@ char	*get_str_rterm(char **str);
 int		get_next_line(int fd, char **line);
 
 void	history_add(char *line);
-char	*history_before(char **str);
-char	*history_after(char **str);
+char	*history_before(char ***str, t_reader *reader);
+char	*history_after(char ***str, t_reader *reader);
 void	read_history(void);
 
 void	print_debug_termcap(char *c);
 
-void	remove_line(char **line);
+void	remove_line(char ***line, t_reader *reader);
 
 #endif

@@ -22,14 +22,14 @@ void	print_debug_termcap(char *c)
 // [C : right arrow
 // [D : left arrow
 
-static void	check_termcap(char *c, t_reader *reader, char **str)
+static void	check_termcap(char *c, t_reader *reader, char ***str)
 {
 	if (!ft_strcmp(c, "OS"))
 		close_shell("force quit");
 	else if (!ft_strcmp(c, "[A"))
-		history_before(str);
+		history_before(str, reader);
 	else if (!ft_strcmp(c, "[B"))
-		history_after(str);
+		history_after(str, reader);
 	else if (!ft_strcmp(c, "[C"))
 	{
 		if (reader->pos < reader->size)
@@ -61,7 +61,7 @@ bool	process_key(char *c, t_reader *reader, char ***str)
 	{
 		if (PRINT_TERMCAP)
 			print_debug_termcap(c + 1);
-		check_termcap(c + 1, reader, *str);
+		check_termcap(c + 1, reader, str);
 	}
 	else
 		g_shell.history.act_pos = 0;
