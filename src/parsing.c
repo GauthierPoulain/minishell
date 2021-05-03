@@ -26,14 +26,37 @@ int	check_occurence(char *str, char c)
 	return (i);
 }
 
-char	**array_from_list()
+void	if_forest(char **words, int i, t_list *lst)
+{
+	int		vars;
+	char	*env_value;
+
+	if (((t_token *)lst->content)->type == 2)
+	{
+		vars = check_occurence(((t_token *)lst->content)->str, '$');
+		if (vars > 1)
+			words[i] = replace_env_line(&((t_token *)lst->content)->str);
+		else
+		{
+			if (((t_token *)lst->content)->str[1] == '?')
+				env_value = ft_itoa(g_shell.last_return);
+			else
+				env_value = get_env(((t_token *)lst->content)->str + 1);
+			words[i] = ft_strdup(env_value);
+		}
+	}
+	else if (((t_token *)lst->content)->type == 3)
+		words[i] = ft_strdup(((t_token *)lst->content)->str + 1);
+	else
+		words[i] = ft_strdup(((t_token *)lst->content)->str);
+}
+
+char	**array_from_list(void)
 {
 	int		size;
 	int		i;
-	int		vars;
 	t_list	*lst;
 	char	**words;
-	char	*env_value;
 
 	i = 0;
 	size = ft_lstsize(g_shell.tokens);
@@ -41,22 +64,7 @@ char	**array_from_list()
 	lst = g_shell.tokens;
 	while (i < size)
 	{
-		if (((t_token *)lst->content)->type == 2)
-		{
-			vars = check_occurence(((t_token *)lst->content)->str, '$');
-			if (vars > 1)
-				words[i] = replace_env_line(&((t_token *)lst->content)->str);
-			else
-			{
-				if (((t_token *)lst->content)->str[1] == '?')
-					env_value = ft_itoa(g_shell.last_return);
-				else
-					env_value = get_env(((t_token *)lst->content)->str + 1);
-				words[i] = ft_strdup(env_value);
-			}
-		}
-		else
-			words[i] = ft_strdup(((t_token *)lst->content)->str);
+		if_forest(words, i, lst);
 		lst = lst->next;
 		i++;
 	}
@@ -72,5 +80,4 @@ char	**parse_line(char *line)
 	array = array_from_list();
 	display_array(array);
 	return (array);
-	// TODO : don't forget to free the array later
 }
