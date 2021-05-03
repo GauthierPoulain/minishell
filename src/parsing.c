@@ -48,7 +48,10 @@ char	**array_from_list()
 				words[i] = replace_env_line(&((t_token *)lst->content)->str);
 			else
 			{
-				env_value = get_env(((t_token *)lst->content)->str + 1);
+				if (((t_token *)lst->content)->str[1] == '?')
+					env_value = ft_itoa(g_shell.last_return);
+				else
+					env_value = get_env(((t_token *)lst->content)->str + 1);
 				words[i] = ft_strdup(env_value);
 			}
 		}
