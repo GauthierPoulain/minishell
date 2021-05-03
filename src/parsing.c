@@ -38,6 +38,11 @@ void	if_forest(char **words, int i, t_list *lst)
 			words[i] = replace_env_line(&((t_token *)lst->content)->str);
 		else
 		{
+			if (((t_token *)lst->content)->str[1] == '\\')
+			{
+				words[i] = ft_strndup(((t_token *)lst->content).str, 1);
+				words[i] = ft_strjoin(words[i], ((t_token *)lst->content)->str + 2);
+			}
 			if (((t_token *)lst->content)->str[1] == '?')
 				env_value = ft_itoa(g_shell.last_return);
 			else
