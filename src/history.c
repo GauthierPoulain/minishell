@@ -4,8 +4,12 @@ void	history_add(char **line)
 {
 	if (ft_strlen(ft_strtrim_spaces(get_str_rterm(line))) > 0)
 	{
-		g_shell.history.lst->content = line;
-		ft_lstadd_front(&g_shell.history.lst, ft_lstnew(NULL));
+		if (!(g_shell.history.lst->next &&
+			!ft_strcmp(get_str_rterm(line), get_str_rterm(g_shell.history.lst->next->content))))
+		{
+			g_shell.history.lst->content = line;
+			ft_lstadd_front(&g_shell.history.lst, ft_lstnew(NULL));
+		}
 	}
 }
 
