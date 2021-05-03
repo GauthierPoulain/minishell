@@ -1,6 +1,6 @@
 #include "../includes/minishell.h"
 
-int	exec_subprocess(char *path, char *argv[])
+void	exec_subprocess(char *path, char *argv[])
 {
 	pid_t	pid;
 	int		status;
@@ -17,5 +17,5 @@ int	exec_subprocess(char *path, char *argv[])
 	}
 	else
 		wait(&status);
-	return (((status) & 0xff00) >> 8);
+	g_shell.last_return = (((status) & 0xff00) >> 8);
 }

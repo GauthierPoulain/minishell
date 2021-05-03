@@ -183,7 +183,7 @@ void	unset_env(char *key);
 char	*get_env(char *key);
 void	init_env(const char **envp);
 
-int		exec_subprocess(char *path, char *argv[]);
+void	exec_subprocess(char *path, char *argv[]);
 
 int		check_type_at(int i);
 void	get_lexer(char *line);
@@ -217,5 +217,7 @@ void	print_debug_termcap(char *c);
 void	remove_line(char ***line, t_reader *reader);
 
 void	put_in_term(char **line, char ***str, t_reader *reader);
+
+char	*which(char *prog);
 
 #endif

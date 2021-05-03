@@ -31,6 +31,7 @@ void	process_input(char *line)
 {
 	char	**argv;
 	char	*prog;
+	char	*prog_path;
 
 	argv = parse_line(line);
 	if (!*argv)
@@ -41,5 +42,11 @@ void	process_input(char *line)
 	if (ft_strlen(line) < 1)
 		return ;
 	if (!is_builtin(prog, argv))
-		err_not_fount(prog);
+	{
+		prog_path = which(prog);
+		if (prog_path)
+			exec_subprocess(prog_path, argv);
+		else
+			err_not_fount(prog);
+	}
 }
