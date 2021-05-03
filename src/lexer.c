@@ -5,6 +5,7 @@
 //	token 1 = options
 //	token 2 = '$'
 //	token 3 = '\'
+//	token 4 = '"'
 */
 
 int	get_token_info(t_token *token, char *line, int start, int end)
@@ -15,17 +16,11 @@ int	get_token_info(t_token *token, char *line, int start, int end)
 	if (!ft_strcmp(token->str, "-n"))
 		token->type = 1;
 	else if (token->str[0] == '$')
-	{
-		if (check_type_at(token->id - 1) == 2 && line[start - 1] != ' ')
-		{
-			join_last_token(token);
-			token->type = 2;
-			return (2);
-		}
-		token->type = 2;
-	}
+		return (set_dollar_type(token, line, start));
 	else if (token->str[0] == '\\')
 		token->type = 3;
+	else if (token->str[0] == '"')
+		token->type = 4;
 	else
 		token->type = 0;
 	return (0);

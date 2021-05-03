@@ -53,3 +53,15 @@ void	join_last_token(t_token *token)
 		lst = lst->next;
 	}
 }
+
+int	set_dollar_type(t_token *token, char *line, int start)
+{
+	if (check_type_at(token->id - 1) == 2 && line[start - 1] != ' ')
+	{
+		join_last_token(token);
+		token->type = 2;
+		return (2);
+	}
+	token->type = 2;
+	return (0);
+}

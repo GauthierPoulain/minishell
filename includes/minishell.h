@@ -191,6 +191,7 @@ void	init_lexer(t_lexer *lexer);
 void	display_tokens(void);
 char	*replace_env_line(char **line);
 void	join_last_token(t_token *token);
+int		set_dollar_type(t_token *token, char *line, int start);
 
 char	**parse_line(char *line);
 char	**array_from_list(void);
