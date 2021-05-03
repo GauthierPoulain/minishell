@@ -30,18 +30,15 @@ void	err_not_fount(char *prog)
 void	process_input(char *line)
 {
 	char	**argv;
-	char	**array;
 	char	*prog;
 
 	// history_add(line);
-	argv = ft_split_spaces(line);
+	argv = parse_line(line);
 	if (!*argv)
 		return ;
 	prog = argv[0];
 	printf("prog = %s\n", prog);
-	array = parse_line(line);
 	ft_lstclear(&g_shell.tokens);
-	gc_free(array);
 	if (ft_strlen(line) < 1)
 		return ;
 	if (!is_builtin(prog, argv))

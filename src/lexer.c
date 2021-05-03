@@ -4,12 +4,14 @@
 //	token 0 = arguments
 //	token 1 = options
 //	token 2 = '$'
+//	token 3 = '\'
 */
 
 int	get_token_info(t_token *token, char *line, int start, int end)
 {
 	token->str = ft_substr(line, start, end - start);
-	printf("substr :(%d)(%d) [%s]\n", start, end, token->str);
+	if (DEBUG)
+		printf("substr :(%d)(%d) [%s]\n", start, end, token->str);
 	if (!ft_strcmp(token->str, "-n"))
 		token->type = 1;
 	else if (token->str[0] == '$')
@@ -17,12 +19,13 @@ int	get_token_info(t_token *token, char *line, int start, int end)
 		if (check_type_at(token->id - 1) == 2 && line[start - 1] != ' ')
 		{
 			join_last_token(token);
-			printf("Last type is [%d]\n", check_type_at(token->id - 1));
 			token->type = 2;
 			return (2);
 		}
 		token->type = 2;
 	}
+	else if (token->str[0] == '\\')
+		token->type = 3;
 	else
 		token->type = 0;
 	return (0);
@@ -62,7 +65,6 @@ void	handle_tokens(char *line, t_token *token, t_lexer *lexer)
 			token->id = lexer->id++;
 			lexer->j = lexer->i + temp + 1;
 			lexer->i += temp;
-			printf("lexer i during : %d\n", lexer->i);
 		}
 	}
 }
@@ -83,7 +85,7 @@ void	get_lexer(char *line)
 	t_token	*token;
 	char	*set;
 
-	set = " $";
+	set = " \\$";
 	init_lexer(&lexer);
 	printf("len : %zu\n", ft_strlen(line));
 	while (lexer.i < (int)ft_strlen(line))
@@ -92,9 +94,9 @@ void	get_lexer(char *line)
 		if (ft_ischarset(line[lexer.i], set))
 			handle_tokens(line, token, &lexer);
 		lexer.i++;
-		printf("lexer i : %d\n", lexer.i);
 	}
 	if (ft_strlen(line) && (int)ft_strlen(line) != lexer.j)
 		handle_single_token(line, token, &lexer);
-	display_tokens();
+	if (DEBUG)
+		display_tokens();
 }
