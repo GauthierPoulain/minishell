@@ -17,6 +17,5 @@ char	*ft_strtrim_spaces(char *str)
 		}
 	}
 	res = ft_strndup(str, len);
-	gc_free(str);
 	return (res);
 }

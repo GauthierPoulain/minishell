@@ -32,7 +32,6 @@ void	process_input(char *line)
 	char	**argv;
 	char	*prog;
 
-	// history_add(line);
 	argv = parse_line(line);
 	if (!*argv)
 		return ;

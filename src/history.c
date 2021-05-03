@@ -2,8 +2,11 @@
 
 void	history_add(char **line)
 {
-	g_shell.history.lst->content = line;
-	ft_lstadd_front(&g_shell.history.lst, ft_lstnew(NULL));
+	if (ft_strlen(ft_strtrim_spaces(get_str_rterm(line))) > 0)
+	{
+		g_shell.history.lst->content = line;
+		ft_lstadd_front(&g_shell.history.lst, ft_lstnew(NULL));
+	}
 }
 
 char	**get_in_history(int pos)
@@ -35,18 +38,6 @@ void	remove_line(char ***str, t_reader *reader)
 	}
 	reader->pos = 0;
 	reader->size = 0;
-}
-
-void	put_in_term(char **line, char ***str, t_reader *reader)
-{
-	if (line)
-	{
-		while (*line)
-		{
-			print_char(str, *line, reader);
-			line++;
-		}
-	}
 }
 
 char	*history_before(char ***str, t_reader *reader)

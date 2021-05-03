@@ -82,3 +82,15 @@ char	*get_str_rterm(char **str)
 	}
 	return (res);
 }
+
+void	put_in_term(char **line, char ***str, t_reader *reader)
+{
+	if (line)
+	{
+		while (*line)
+		{
+			print_char(str, *line, reader);
+			line++;
+		}
+	}
+}

@@ -215,4 +215,6 @@ void	print_debug_termcap(char *c);
 
 void	remove_line(char ***line, t_reader *reader);
 
+void	put_in_term(char **line, char ***str, t_reader *reader);
+
 #endif
