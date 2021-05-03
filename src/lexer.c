@@ -24,6 +24,7 @@ void	join_last_token(t_token *token)
 int	get_token_info(t_token *token, char *line, int start, int end)
 {
 	token->str = ft_substr(line, start, end - start);
+	printf("substr : [%s]\n", token->str);
 	if (!ft_strcmp(token->str, "-n"))
 		token->type = 1;
 	else if (token->str[0] == '$')
@@ -51,7 +52,17 @@ void	handle_tokens(char *line, t_token *token, t_lexer *lexer)
 		lexer->j = lexer->i + 1;
 		token->id = lexer->id++;
 	}
-	printf("salut [%s]\n", token->str);
+	else if (line[lexer->i] == '$')
+	{
+		if (line[lexer->i - 1] == ' ')
+		{
+			get_token_info(token, line, lexer->j, lexer->i);
+			ft_lstadd_back(&g_shell.tokens, ft_lstnew(token));
+			token->id = lexer->id++;
+			lexer->j = lexer->i;
+		}
+	}
+	// printf("salut [%s]\n", token->str);
 }
 
 void	handle_single_token(char *line, t_token *token, t_lexer *lexer)
