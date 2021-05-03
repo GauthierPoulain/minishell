@@ -89,8 +89,8 @@ void	handle_tokens(char *line, t_token *token, t_lexer *lexer)
 			get_token_info(token, line, lexer->j, lexer->i + temp);
 			ft_lstadd_back(&g_shell.tokens, ft_lstnew(token));
 			token->id = lexer->id++;
-			lexer->j = lexer->i + temp;
-			lexer->i += temp + 1;
+			lexer->j = lexer->i + temp + 1;
+			lexer->i += temp;
 			printf("lexer i during : %d\n", lexer->i);
 		}
 	}
