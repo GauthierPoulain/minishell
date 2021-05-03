@@ -6,6 +6,7 @@ void	exec_subprocess(char *path, char *argv[])
 	int		status;
 
 	status = 0;
+	reset_input_mode();
 	pid = fork();
 	if (pid == -1)
 		close_shell("error while forking subprocess");
@@ -17,5 +18,6 @@ void	exec_subprocess(char *path, char *argv[])
 	}
 	else
 		wait(&status);
+	set_input_mode();
 	g_shell.last_return = (((status) & 0xff00) >> 8);
 }

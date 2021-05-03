@@ -22,6 +22,8 @@ char	*which(char *prog)
 	char	**path;
 	char	*prog_path;
 
+	if (is_a_programm(prog))
+			return (prog);
 	path = ft_split(get_env("PATH"),  ':');
 	while (*path)
 	{
@@ -31,4 +33,24 @@ char	*which(char *prog)
 		path++;
 	}
 	return (NULL);
+}
+
+int	builtin_which(char **argv)
+{
+	char	*prog_path;
+
+	if (!argv[1])
+		return (1);
+	prog_path = which(argv[1]);
+	if (prog_path)
+	{
+		ft_putstr_fd(1, prog_path);
+		return (0);
+	}
+	else
+	{
+		ft_putstr_fd(2, argv[1]);
+		ft_putstr_fd(2, " not found\n");
+		return (1);
+	}
 }

@@ -14,6 +14,8 @@ static bool	is_builtin(char *prog, char **argv)
 		g_shell.last_return = builtin_env();
 	else if (!ft_strcmp(prog, "echo"))
 		g_shell.last_return = builtin_echo(argv);
+	else if (!ft_strcmp(prog, "which"))
+		g_shell.last_return = builtin_which(argv);
 	else
 		return (false);
 	return (true);

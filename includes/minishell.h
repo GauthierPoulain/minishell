@@ -177,6 +177,7 @@ char	*get_pwd(void);
 int		builtin_env(void);
 int		builtin_echo(char **str);
 char	**get_envp(void);
+int		builtin_which(char **argv);
 
 void	set_env(char *key, char *value);
 void	unset_env(char *key);
