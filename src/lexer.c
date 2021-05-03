@@ -44,20 +44,19 @@ int	get_token_info(t_token *token, char *line, int start, int end)
 
 void	handle_tokens(char *line, t_token *token, t_lexer *lexer)
 {
-	if (line[lexer->i - 1] != ' ')
+	if (line[lexer->i] == ' ' && line[lexer->i - 1] != ' ')
 	{
-		token->id = lexer->id++;
-		if (get_token_info(token, line, lexer->j, lexer->i) != 2)
-			ft_lstadd_back(&g_shell.tokens, ft_lstnew(token));
-	}
-	if (line[lexer->i] == '$')
-		lexer->j = lexer->i;
-	else
+		get_token_info(token, line, lexer->j, lexer->i);
+		ft_lstadd_back(&g_shell.tokens, ft_lstnew(token));
 		lexer->j = lexer->i + 1;
+		token->id = lexer->id++;
+	}
+	printf("salut [%s]\n", token->str);
 }
 
 void	handle_single_token(char *line, t_token *token, t_lexer *lexer)
 {
+	printf("secondary\n");
 	if (line[lexer->i - 1])
 	{
 		token->id = lexer->id++;
@@ -70,17 +69,18 @@ void	get_lexer(char *line)
 {
 	t_lexer	lexer;
 	t_token	*token;
+	char	*set;
 
+	set = " $";
 	init_lexer(&lexer);
 	while (line[lexer.i])
 	{
 		token = gc_malloc(sizeof(t_token));
-		if (line[lexer.i] == ' ' || (line[lexer.i] == '$' && lexer.i != 0))
+		if (ft_ischarset(line[lexer.i], set))
 			handle_tokens(line, token, &lexer);
 		lexer.i++;
 	}
 	if (ft_strlen(line))
 		handle_single_token(line, token, &lexer);
 	display_tokens();
-	// TODO : Delete this, will make us suffer later since we need the list to parse
 }

@@ -73,9 +73,7 @@ char	*replace_env_line(char **line)
 			if (new_line[i + 1] == '?')
 				env_value = ft_itoa(g_shell.last_return);
 			else
-			{
 				env_value = get_env(get_word_sp(new_line, i + 1));
-			}
 			new_line = set_env_line(new_line, env_value, i);
 		}
 		i++;
