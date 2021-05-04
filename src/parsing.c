@@ -40,7 +40,7 @@ void	if_forest(char **words, int i, t_list *lst)
 		{
 			if (((t_token *)lst->content)->str[1] == '\\')
 			{
-				words[i] = ft_strndup(((t_token *)lst->content).str, 1);
+				words[i] = ft_strndup(((t_token *)lst->content)->str, 1);
 				words[i] = ft_strjoin(words[i], ((t_token *)lst->content)->str + 2);
 			}
 			if (((t_token *)lst->content)->str[1] == '?')
