@@ -195,6 +195,8 @@ void	join_last_token(t_token *token);
 int		set_dollar_type(t_token *token, char *line, int start);
 
 char	**parse_line(char *line);
+void	display_array(char **array);
+int		check_occurence(char *str, char c);
 char	**array_from_list(void);
 void	display_array(char **array);
 

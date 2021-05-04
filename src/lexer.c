@@ -8,7 +8,7 @@
 //	token 4 = '"'
 */
 
-int	get_token_info(t_token *token, char *line, int start, int end)
+static int	get_token_info(t_token *token, char *line, int start, int end)
 {
 	token->str = ft_substr(line, start, end - start);
 	if (DEBUG)
@@ -82,7 +82,6 @@ void	get_lexer(char *line)
 
 	set = " \\$";
 	init_lexer(&lexer);
-	printf("len : %zu\n", ft_strlen(line));
 	while (lexer.i < (int)ft_strlen(line))
 	{
 		token = gc_malloc(sizeof(t_token));

@@ -1,50 +1,45 @@
 #include "../includes/minishell.h"
 
-void	display_array(char **array)
-{
-	int	i;
-
-	i = 0;
-	while (array[i])
-	{
-		printf("(%s)\n", array[i]);
-		i++;
-	}
-}
-
-int	check_occurence(char *str, char c)
-{
-	int	i;
-
-	i = 0;
-	while (*str)
-	{
-		if (*str == c)
-			i++;
-		str++;
-	}
-	return (i);
-}
-
-void	if_forest(char **words, int i, t_list *lst)
+static void	replace_dollars(char **words, int i, t_list *lst)
 {
 	int		vars;
 	char	*env_value;
 
-	if (((t_token *)lst->content)->type == 2)
+	vars = check_occurence(((t_token *)lst->content)->str, '$');
+	if (vars > 1)
+		words[i] = replace_env_line(&((t_token *)lst->content)->str);
+	else
 	{
-		vars = check_occurence(((t_token *)lst->content)->str, '$');
-		if (vars > 1)
-			words[i] = replace_env_line(&((t_token *)lst->content)->str);
-		else
+		if (((t_token *)lst->content)->str[1] == '\\')
 		{
-			if (((t_token *)lst->content)->str[1] == '?')
-				env_value = ft_itoa(g_shell.last_return);
-			else
-				env_value = get_env(((t_token *)lst->content)->str + 1);
-			words[i] = ft_strdup(env_value);
+			words[i] = ft_strndup(((t_token *)lst->content)->str, 1);
+			printf("lil part [%s]\n", words[i]);
+			words[i] = ft_strjoin(words[i], ((t_token *)lst->content)->str + 2);
+			printf("total [%s]\n", words[i]);
+			env_value = get_env(((t_token *)lst->content)->str);
+			words[i] = ft_strjoin(words[i], env_value);
+			return ;
 		}
+		if (((t_token *)lst->content)->str[1] == '?')
+			env_value = ft_itoa(g_shell.last_return);
+		else
+			env_value = get_env(((t_token *)lst->content)->str + 1);
+		printf("content [%s]\n", ((t_token *)lst->content)->str);
+		printf("env value [%s]\n", env_value);
+		words[i] = ft_strdup(env_value);
 	}
+}
+
+/*
+//	seems to have some issues with the replace_env_line for token id 0
+*/
+
+void	if_forest(char **words, int i, t_list *lst)
+{
+	if (((t_token *)lst->content)->id == 0)
+		words[i] = replace_env_line(&((t_token *)lst->content)->str);
+	else if (((t_token *)lst->content)->type == 2)
+		replace_dollars(words, i, lst);
 	else if (((t_token *)lst->content)->type == 3)
 		words[i] = ft_strdup(((t_token *)lst->content)->str + 1);
 	else
