@@ -26,29 +26,53 @@ int	check_occurence(char *str, char c)
 	return (i);
 }
 
-void	if_forest(char **words, int i, t_list *lst)
+void	test(char **words, int i, t_list *lst)
 {
 	int		vars;
 	char	*env_value;
 
+	vars = check_occurence(((t_token *)lst->content)->str, '$');
+	if (vars > 1)
+		words[i] = replace_env_line(&((t_token *)lst->content)->str);
+	else
+	{
+		if (((t_token *)lst->content)->str[1] == '\\')
+		{
+			words[i] = ft_strndup(((t_token *)lst->content)->str, 1);
+			words[i] = ft_strjoin(words[i], ((t_token *)lst->content)->str + 2);
+		}
+		if (((t_token *)lst->content)->str[1] == '?')
+			env_value = ft_itoa(g_shell.last_return);
+		else
+			env_value = get_env(((t_token *)lst->content)->str + 1);
+		words[i] = ft_strdup(env_value);
+	}
+}
+
+void	if_forest(char **words, int i, t_list *lst)
+{
+	// int		vars;
+	// char	*env_value;
+
 	if (((t_token *)lst->content)->type == 2)
 	{
-		vars = check_occurence(((t_token *)lst->content)->str, '$');
-		if (vars > 1)
-			words[i] = replace_env_line(&((t_token *)lst->content)->str);
-		else
-		{
-			if (((t_token *)lst->content)->str[1] == '\\')
-			{
-				words[i] = ft_strndup(((t_token *)lst->content)->str, 1);
-				words[i] = ft_strjoin(words[i], ((t_token *)lst->content)->str + 2);
-			}
-			if (((t_token *)lst->content)->str[1] == '?')
-				env_value = ft_itoa(g_shell.last_return);
-			else
-				env_value = get_env(((t_token *)lst->content)->str + 1);
-			words[i] = ft_strdup(env_value);
-		}
+		test(words, i, lst);
+		// vars = check_occurence(((t_token *)lst->content)->str, '$');
+		// if (vars > 1)
+		// 	words[i] = replace_env_line(&((t_token *)lst->content)->str);
+		// else
+		// {
+		// 	if (((t_token *)lst->content)->str[1] == '\\')
+		// 	{
+		// 		words[i] = ft_strndup(((t_token *)lst->content)->str, 1);
+		// 		words[i] = ft_strjoin(words[i], ((t_token *)lst->content)->str + 2);
+		// 	}
+		// 	if (((t_token *)lst->content)->str[1] == '?')
+		// 		env_value = ft_itoa(g_shell.last_return);
+		// 	else
+		// 		env_value = get_env(((t_token *)lst->content)->str + 1);
+		// 	words[i] = ft_strdup(env_value);
+		// }
 	}
 	else if (((t_token *)lst->content)->type == 3)
 		words[i] = ft_strdup(((t_token *)lst->content)->str + 1);

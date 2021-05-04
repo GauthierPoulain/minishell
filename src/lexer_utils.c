@@ -23,7 +23,7 @@ int	check_type_at(int i)
 	return (-1);
 }
 
-void	display_tokens()
+void	display_tokens(void)
 {
 	t_list	*lst;
 	t_token	*token;

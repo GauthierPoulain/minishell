@@ -50,15 +50,11 @@ char	*set_env_line(char *line, char *env_value, int i)
 {
 	char	*first_part;
 	char	*final_part;
-	(void)i;
 
 	first_part = get_word(line, '$', 0);
 	final_part = ft_strjoin(first_part, env_value);
-	printf("final part [%s}\n", final_part);
-	printf("len [%zu}\n", get_word_len_sp(line, i + 1));
 	final_part = ft_strjoin(final_part,
 			line + i + 1 + get_word_len_sp(line, i + 1));
-	printf("final part 2[%s}\n", final_part);
 	return (final_part);
 }
 
@@ -74,12 +70,8 @@ char	*replace_env_line(char **line)
 	{
 		if (new_line[i] == '$')
 		{
-			printf("salut\n");
 			if (new_line[i + 1] == '?')
-			{
 				env_value = ft_itoa(g_shell.last_return);
-				printf("env value [%s]\n", env_value);
-			}
 			else
 				env_value = get_env(get_word_sp(new_line, i + 1));
 			new_line = set_env_line(new_line, env_value, i);
