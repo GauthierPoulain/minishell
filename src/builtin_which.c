@@ -23,8 +23,8 @@ char	*which(char *prog)
 	char	*prog_path;
 
 	if (is_a_programm(prog))
-			return (prog);
-	path = ft_split(get_env("PATH"),  ':');
+		return (prog);
+	path = ft_split(get_env("PATH"), ':');
 	while (*path)
 	{
 		prog_path = ft_strjoin(*path, ft_strjoin("/", prog));

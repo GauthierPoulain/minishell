@@ -75,12 +75,13 @@ char	*get_str_rterm(char **str)
 	char	*res;
 
 	res = ft_strdup("");
-	if (str)
-		while (*str)
-		{
-			res = ft_strjoinf1(res, *str);
-			str++;
-		}
+	if (!str)
+		return (NULL);
+	while (*str)
+	{
+		res = ft_strjoinf1(res, *str);
+		str++;
+	}
 	return (res);
 }
 

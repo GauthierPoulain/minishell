@@ -33,7 +33,7 @@ void	process_input(char *line)
 	char	*prog;
 	char	*prog_path;
 
-	line  = ft_strreplace(line, "~", get_env("HOME"));
+	line = ft_strreplace(line, "~", get_env("HOME"));
 	argv = parse_line(line);
 	if (!*argv)
 		return ;
