@@ -95,6 +95,11 @@ char	*replace_env_line(char **line)
 			new_line = set_env_line(new_line, env_value, i);
 			i = 0;
 		}
+		else if (new_line[i] == '\\')
+		{
+			// maybe treat it this way
+			;
+		}
 		i++;
 	}
 	*line = new_line;

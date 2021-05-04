@@ -30,6 +30,10 @@ static void	replace_dollars(char **words, int i, t_list *lst)
 	}
 }
 
+/*
+//	seems to have some issues with the replace_env_line for token id 0
+*/
+
 void	if_forest(char **words, int i, t_list *lst)
 {
 	if (((t_token *)lst->content)->id == 0)
