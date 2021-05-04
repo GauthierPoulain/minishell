@@ -18,7 +18,8 @@ static void	replace_dollars(char **words, int i, t_list *lst)
 		if (((t_token *)lst->content)->str[1] == '?')
 			env_value = ft_itoa(g_shell.last_return);
 		else
-			env_value = get_env(((t_token *)lst->content)->str + 1);
+			env_value = get_env(((t_token *)lst->content)->str);
+		printf("env value [%s]\n", env_value);
 		words[i] = ft_strdup(env_value);
 	}
 }
@@ -27,7 +28,7 @@ void	if_forest(char **words, int i, t_list *lst)
 {
 	if (((t_token *)lst->content)->id == 0)
 		words[i] = replace_env_line(&((t_token *)lst->content)->str);
-	if (((t_token *)lst->content)->type == 2)
+	else if (((t_token *)lst->content)->type == 2)
 		replace_dollars(words, i, lst);
 	else if (((t_token *)lst->content)->type == 3)
 		words[i] = ft_strdup(((t_token *)lst->content)->str + 1);
