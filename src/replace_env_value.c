@@ -64,18 +64,26 @@ size_t	get_word_len_sp(char *line, int i)
 	return (j - i);
 }
 
-char	*set_env_line(char *line, char *env_value, int i)
+char	*set_env_line(char *line, char *env_value, int *i)
 {
 	char	*first_part;
 	char	*final_part;
+	int		back;
 
-	if (line[i + 1] == '\\')
+	back = 0;
+	if (line[*i + 1] == '\\')
+	{
+		back = 1;
 		first_part = get_word_dollar(line, 0);
+		printf("first part [%s}\n", first_part);
+	}
 	else
 		first_part = get_word(line, '$', 0);
 	final_part = ft_strjoin(first_part, env_value);
 	final_part = ft_strjoin(final_part,
-			line + i + 1 + get_word_len_sp(line, i + 1));
+			line + *i + 1 + get_word_len_sp(line, *i + 1));
+	if (!back)
+		*i = 0;
 	return (final_part);
 }
 
@@ -95,8 +103,7 @@ char	*replace_env_line(char **line)
 				env_value = ft_itoa(g_shell.last_return);
 			else
 				env_value = get_env(get_word_sp(new_line, i + 1));
-			new_line = set_env_line(new_line, env_value, i);
-			i = 0;
+			new_line = set_env_line(new_line, env_value, &i);
 		}
 		i++;
 	}
