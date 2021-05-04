@@ -45,6 +45,7 @@ int	builtin_which(char **argv)
 	if (prog_path)
 	{
 		ft_putstr_fd(1, prog_path);
+		ft_putstr_fd(1, "\n");
 		return (0);
 	}
 	else

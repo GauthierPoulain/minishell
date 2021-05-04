@@ -23,5 +23,5 @@ char	*ft_strreplace(char *str, char *substr, char *replace)
 		res[i + ft_strlen(replace)] = str[i + ft_strlen(substr)];
 		i++;
 	}
-	return (res);
+	return (ft_strreplace(res, substr, replace));
 }

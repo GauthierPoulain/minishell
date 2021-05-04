@@ -4,8 +4,6 @@ static bool	is_builtin(char *prog, char **argv)
 {
 	if (!ft_strcmp(prog, "exit"))
 		close_shell(NULL);
-	else if (!ft_strcmp(prog, "test"))
-		exec_test();
 	else if (!ft_strcmp(prog, "cd"))
 		g_shell.last_return = builtin_cd(argv);
 	else if (!ft_strcmp(prog, "pwd"))
@@ -35,11 +33,11 @@ void	process_input(char *line)
 	char	*prog;
 	char	*prog_path;
 
+	line  = ft_strreplace(line, "~", get_env("HOME"));
 	argv = parse_line(line);
 	if (!*argv)
 		return ;
 	prog = argv[0];
-	printf("prog = %s\n", prog);
 	ft_lstclear(&g_shell.tokens);
 	if (ft_strlen(line) < 1)
 		return ;
