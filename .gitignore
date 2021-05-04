@@ -6,4 +6,3 @@ minishell
 *.log
 .DS_Store
 *.dSYM
-.minishell_history
