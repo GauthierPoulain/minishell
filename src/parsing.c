@@ -1,31 +1,5 @@
 #include "../includes/minishell.h"
 
-void	display_array(char **array)
-{
-	int	i;
-
-	i = 0;
-	while (array[i])
-	{
-		printf("(%s)\n", array[i]);
-		i++;
-	}
-}
-
-int	check_occurence(char *str, char c)
-{
-	int	i;
-
-	i = 0;
-	while (*str)
-	{
-		if (*str == c)
-			i++;
-		str++;
-	}
-	return (i);
-}
-
 void	test(char **words, int i, t_list *lst)
 {
 	int		vars;
@@ -51,29 +25,8 @@ void	test(char **words, int i, t_list *lst)
 
 void	if_forest(char **words, int i, t_list *lst)
 {
-	// int		vars;
-	// char	*env_value;
-
 	if (((t_token *)lst->content)->type == 2)
-	{
 		test(words, i, lst);
-		// vars = check_occurence(((t_token *)lst->content)->str, '$');
-		// if (vars > 1)
-		// 	words[i] = replace_env_line(&((t_token *)lst->content)->str);
-		// else
-		// {
-		// 	if (((t_token *)lst->content)->str[1] == '\\')
-		// 	{
-		// 		words[i] = ft_strndup(((t_token *)lst->content)->str, 1);
-		// 		words[i] = ft_strjoin(words[i], ((t_token *)lst->content)->str + 2);
-		// 	}
-		// 	if (((t_token *)lst->content)->str[1] == '?')
-		// 		env_value = ft_itoa(g_shell.last_return);
-		// 	else
-		// 		env_value = get_env(((t_token *)lst->content)->str + 1);
-		// 	words[i] = ft_strdup(env_value);
-		// }
-	}
 	else if (((t_token *)lst->content)->type == 3)
 		words[i] = ft_strdup(((t_token *)lst->content)->str + 1);
 	else
