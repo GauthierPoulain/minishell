@@ -17,6 +17,24 @@ char	*get_word(char *line, char end, int i)
 	return (word);
 }
 
+char	*get_word_dollar(char *line, int i)
+{
+	int		j;
+	int		len;
+	char	*word;
+
+	j = i;
+	while (line[j] != '$' && line[j])
+		j++;
+	j++;
+	len = j - i;
+	word = ft_calloc(sizeof(char) * (len + 1));
+	j = 0;
+	while (j < len)
+		word[j++] = line[i++];
+	return (word);
+}
+
 char	*get_word_sp(char *line, int i)
 {
 	int		j;
@@ -51,7 +69,10 @@ char	*set_env_line(char *line, char *env_value, int i)
 	char	*first_part;
 	char	*final_part;
 
-	first_part = get_word(line, '$', 0);
+	if (line[i + 1] == '\\')
+		first_part = get_word_dollar(line, 0);
+	else
+		first_part = get_word(line, '$', 0);
 	final_part = ft_strjoin(first_part, env_value);
 	final_part = ft_strjoin(final_part,
 			line + i + 1 + get_word_len_sp(line, i + 1));
