@@ -25,6 +25,8 @@ void	test(char **words, int i, t_list *lst)
 
 void	if_forest(char **words, int i, t_list *lst)
 {
+	if (((t_token *)lst->content)->id == 0)
+		words[i] = replace_env_line(&((t_token *)lst->content)->str);
 	if (((t_token *)lst->content)->type == 2)
 		test(words, i, lst);
 	else if (((t_token *)lst->content)->type == 3)
