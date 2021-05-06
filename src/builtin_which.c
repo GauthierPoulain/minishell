@@ -1,10 +1,11 @@
 #include "../includes/minishell.h"
 
-static bool	is_a_programm(char *path)
+static bool	is_a_file(char *path)
 {
-	struct stat	buffer;
+	struct stat	path_stat;
 
-	return (stat(path, &buffer) == 0);
+	stat(path, &path_stat);
+	return (S_ISREG(path_stat.st_mode));
 }
 
 char	*which(char *prog)
@@ -12,13 +13,13 @@ char	*which(char *prog)
 	char	**path;
 	char	*prog_path;
 
-	if (is_a_programm(prog))
+	if (is_a_file(prog))
 		return (prog);
 	path = ft_split(get_env("PATH"), ':');
 	while (*path)
 	{
 		prog_path = ft_strjoin(*path, ft_strjoin("/", prog));
-		if (is_a_programm(prog_path))
+		if (is_a_file(prog_path))
 			return (prog_path);
 		path++;
 	}
