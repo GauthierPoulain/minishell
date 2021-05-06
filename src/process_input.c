@@ -14,6 +14,10 @@ static bool	is_builtin(char *prog, char **argv)
 		g_shell.last_return = builtin_echo(argv);
 	else if (!ft_strcmp(prog, "which"))
 		g_shell.last_return = builtin_which(argv);
+	else if (!ft_strcmp(prog, "export"))
+		g_shell.last_return = builtin_export(argv);
+	else if (!ft_strcmp(prog, "unset"))
+		g_shell.last_return = builtin_unset(argv);
 	else
 		return (false);
 	return (true);

@@ -77,6 +77,8 @@ SRCS_MS = \
 	./src/builtin_pwd.c \
 	./src/builtin_echo.c \
 	./src/builtin_which.c \
+	./src/builtin_export.c \
+	./src/builtin_unset.c \
 	./src/close_handler.c \
 	./src/minishell.c \
 	./src/process_input.c \
