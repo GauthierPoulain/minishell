@@ -2,6 +2,8 @@
 
 static bool	is_a_programm(char *path)
 {
+
+	stat()
 	int		fd;
 
 	fd = open(path, O_DIRECTORY);
