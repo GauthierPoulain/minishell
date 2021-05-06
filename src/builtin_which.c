@@ -2,21 +2,9 @@
 
 static bool	is_a_programm(char *path)
 {
+	struct stat	buffer;
 
-	stat()
-	int		fd;
-
-	fd = open(path, O_DIRECTORY);
-	if (fd != -1)
-	{
-		close(fd);
-		return (false);
-	}
-	fd = open(path, O_RDONLY);
-	if (fd == -1)
-		return (false);
-	close(fd);
-	return (true);
+	return (stat(path, &buffer) == 0);
 }
 
 char	*which(char *prog)
