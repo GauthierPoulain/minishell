@@ -1,23 +1,21 @@
 #include "../includes/minishell.h"
 
-char	*treat_dollar(char *word, int i, int env)
+char	*treat_dollar(char *word)
 {
-	char	*buff;
+	// char	*buff;
 	char	*env_value;
 	char	*new_word;
 
+	if (DEBUG)
+		printf("word during treat [%s]\n", word);
 	if (word[0] == '/')
 	{
 		new_word = ft_strdup("$");
 		new_word = ft_strjoinf2(new_word, word);
 		return (new_word);
 	}
-	buff = ft_strndup(word, i);
-	env_value = get_env(word + i + env);
-	new_word = ft_strjoin(buff, env_value);
-	if (ft_strlen(buff))
-		new_word = ft_strjoin(new_word,
-				word + ft_strlen(buff) + ft_strlen(env_value));
+	env_value = get_env(word);
+	new_word = ft_strdup(env_value);
 	return (new_word);
 }
 
@@ -39,14 +37,18 @@ char	*treat_several_dollars(char *word)
 {
 	char	**array;
 	int		j;
+	int		has_dollar;
 
+	has_dollar = 0;
+	if (word[0] != '$')
+		has_dollar = 1;
 	j = 0;
 	array = ft_split(word, '$');
 	while (array[j])
 	{
 		if (DEBUG)
 			printf("array[%s] (before)\n", array[j]);
-		array[j] = treat_dollar(array[j], 0, 0);
+		array[j] = treat_dollar(array[j]);
 		if (DEBUG)
 			printf("array[%s] (after)\n", array[j]);
 		j++;
@@ -61,6 +63,7 @@ char	*parse_env_var(char *word)
 
 	i = 0;
 	new = word;
+	printf("word [%s]\n", word);
 	if (check_occurence(word, '$') > 1)
 		return (treat_several_dollars(word));
 	else
@@ -68,7 +71,7 @@ char	*parse_env_var(char *word)
 		while (new[i])
 		{
 			if (new[i] == '$')
-				new = treat_dollar(new, i, 1);
+				new = treat_several_dollars(word);
 			i++;
 		}
 	}
