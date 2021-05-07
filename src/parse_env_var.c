@@ -6,13 +6,15 @@ char	*treat_dollar(char *word, int i, int env)
 	char	*env_value;
 	char	*new_word;
 
+	printf("act word = [%s]\n", word);
 	buff = ft_strndup(word, i);
 	printf("buff = [%s]\n", buff);
 	env_value = get_env(word + i + env);
 	printf("env = [%s]\n", env_value);
 	new_word = ft_strjoin(buff, env_value);
 	printf("new = [%s]\n", new_word);
-	new_word = ft_strjoin(new_word, word + ft_strlen(buff) + ft_strlen(env_value));
+	if (ft_strlen(buff))
+		new_word = ft_strjoin(new_word, word + ft_strlen(buff) + ft_strlen(env_value));
 	return (new_word);
 }
 
