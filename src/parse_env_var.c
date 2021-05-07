@@ -6,6 +6,12 @@ char	*treat_dollar(char *word, int i, int env)
 	char	*env_value;
 	char	*new_word;
 
+	if (word[0] == '/')
+	{
+		new_word = ft_strdup("$");
+		new_word = ft_strjoinf2(new_word, word);
+		return (new_word);
+	}
 	buff = ft_strndup(word, i);
 	env_value = get_env(word + i + env);
 	new_word = ft_strjoin(buff, env_value);
@@ -38,7 +44,11 @@ char	*treat_several_dollars(char *word)
 	array = ft_split(word, '$');
 	while (array[j])
 	{
+		if (DEBUG)
+			printf("array[%s] (before)\n", array[j]);
 		array[j] = treat_dollar(array[j], 0, 0);
+		if (DEBUG)
+			printf("array[%s] (after)\n", array[j]);
 		j++;
 	}
 	return (join_tab(array));
@@ -57,7 +67,7 @@ char	*parse_env_var(char *word)
 	{
 		while (new[i])
 		{
-			if (new[i] == '$' && new[i + 1] != '\\')
+			if (new[i] == '$')
 				new = treat_dollar(new, i, 1);
 			i++;
 		}
