@@ -91,6 +91,7 @@ SRCS_MS = \
 	./src/lexer_utils.c \
 	./src/parsing.c \
 	./src/parsing_utils.c \
+	./src/parse_env_var.c \
 
 SRCS = $(SRCS_LIB) $(SRCS_MS)
 
