@@ -10,7 +10,8 @@ char	*treat_dollar(char *word, int i, int env)
 	env_value = get_env(word + i + env);
 	new_word = ft_strjoin(buff, env_value);
 	if (ft_strlen(buff))
-		new_word = ft_strjoin(new_word, word + ft_strlen(buff) + ft_strlen(env_value));
+		new_word = ft_strjoin(new_word,
+				word + ft_strlen(buff) + ft_strlen(env_value));
 	return (new_word);
 }
 
@@ -43,10 +44,9 @@ char	*treat_several_dollars(char *word)
 	return (join_tab(array));
 }
 
-
 char	*parse_env_var(char *word)
 {
-	int	i;
+	int		i;
 	char	*new;
 
 	i = 0;

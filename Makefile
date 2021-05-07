@@ -82,7 +82,6 @@ SRCS_MS = \
 	./src/process_input.c \
 	./src/env.c \
 	./src/exec.c \
-	./src/replace_env_value.c \
 	./src/read_line.c \
 	./src/termcap.c \
 	./src/termctl.c \
