@@ -1,14 +1,29 @@
 #include "../includes/minishell.h"
 
-char	*treat_dollar(char *word)
+static char	*treat_non_dollar(char *word, int *no_dollar)
 {
-	// char	*buff;
+	int		len;
+	char	*new_word;
+	char	*env_value;
+
+	*no_dollar = 0;
+	len = ft_strlen_charset(word, "$");
+	new_word = ft_strndup(word, len);
+	env_value = get_env(word + len);
+	new_word = ft_strjoin(new_word, env_value);
+	return (new_word);
+}
+
+char	*treat_dollar(char *word, int *no_dollar)
+{
 	char	*env_value;
 	char	*new_word;
 
 	if (DEBUG)
 		printf("word during treat [%s]\n", word);
-	if (word[0] == '/')
+	if (*no_dollar)
+		return (treat_non_dollar(word, no_dollar));
+	else if (word[0] == '/')
 	{
 		new_word = ft_strdup("$");
 		new_word = ft_strjoinf2(new_word, word);
@@ -37,18 +52,18 @@ char	*treat_several_dollars(char *word)
 {
 	char	**array;
 	int		j;
-	int		has_dollar;
+	int		no_dollar;
 
-	has_dollar = 0;
+	no_dollar = 0;
 	if (word[0] != '$')
-		has_dollar = 1;
+		no_dollar = 1;
 	j = 0;
 	array = ft_split(word, '$');
 	while (array[j])
 	{
 		if (DEBUG)
 			printf("array[%s] (before)\n", array[j]);
-		array[j] = treat_dollar(array[j]);
+		array[j] = treat_dollar(array[j], &no_dollar);
 		if (DEBUG)
 			printf("array[%s] (after)\n", array[j]);
 		j++;
