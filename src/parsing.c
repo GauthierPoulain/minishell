@@ -7,7 +7,12 @@
 void	if_forest(char **words, int i, t_list *lst)
 {
 	if (((t_token *)lst->content)->id == 0)
-		words[i] = parse_env_var(((t_token *)lst->content)->str);
+	{
+		if (((t_token *)lst->content)->type == 3)
+			words[i] = ft_strdup(((t_token *)lst->content)->str + 1);
+		else
+			words[i] = parse_env_var(((t_token *)lst->content)->str);
+	}
 	else if (((t_token *)lst->content)->type == 2)
 		words[i] = parse_env_var(((t_token *)lst->content)->str);
 	else if (((t_token *)lst->content)->type == 3)
