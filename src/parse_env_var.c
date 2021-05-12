@@ -91,19 +91,27 @@ char	*treat_doll(char *word, int i)
 {
 	int		back;
 	char	*ret;
+	char	*env_value;
 
 	if (DEBUG)
-	{
 		printf("word [%s]\n", word);
-		printf("word of i [%c]\n", word[i + 1]);
-	}
 	back = check_slash(word, i + 1);
 	if (back)
 	{
+		env_value = get_env(ft_strndup(word + i + 1, back));
 		back++;
-		ret = ft_strndup(word, i);
-		ret = ft_strjoin(ret, word + i + back);
-		printf("ret : [%s]\n", ret);
+		if (env_value)
+		{
+			ret = ft_strndup(word, i);
+			ret = ft_strjoin(ret, env_value);
+			ret = ft_strjoin(ret, word + i + back);
+		}
+		else
+		{
+			ret = ft_strndup(word, i);
+			ret = ft_strjoin(ret, word + i + back);
+			// printf("ret : [%s]\n", ret);
+		}
 		return (ret);
 	}
 	return (word);
