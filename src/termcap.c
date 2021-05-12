@@ -1,36 +1,40 @@
 #include "../includes/minishell.h"
 
-void	print_debug_termcap(char *c)
+int	get_this_char(char **c, char **retour)
 {
-	printf("new key\n");
-	printf("key = %d, char = %c\n", c[0], c[0]);
-	printf("key = %d, char = %c\n", c[1], c[1]);
-	printf("key = %d, char = %c\n", c[2], c[2]);
-	printf("key = %d, char = %c\n", c[3], c[3]);
-	printf("key = %d, char = %c\n", c[4], c[4]);
-	printf("key = %d, char = %c\n", c[5], c[5]);
-	printf("key = %d, char = %c\n", c[6], c[6]);
-	printf("key = %d, char = %c\n", c[7], c[7]);
-	printf("key = %d, char = %c\n", c[8], c[8]);
-	printf("key = %d, char = %c\n", c[9], c[9]);
-	printf("key = %d, char = %c\n", c[10], c[10]);
-	printf("done\n");
-}
+	char	*res;
 
-// [A : up arrow
-// [B : down arrow
-// [C : right arrow
-// [D : left arrow
+	if (!*c)
+		*retour = NULL;
+	else
+	{
+		res = ft_calloc(sizeof(char) * 2);
+		if ((0x80 & **c) == 0)
+		{
+			res = ft_strjoinc(res, **c);
+			*c += 1;
+			*retour = res;
+		}
+		else
+		{
+			while ((0x80 & **c) == 1)
+			{
+				res = ft_strjoinc(res, **c);
+				*c += 1;
+			}
+			*retour = res;
+		}
+	}
+	return (1);
+}
 
 static void	check_termcap(char *c, t_reader *reader, char ***str)
 {
-	if (!ft_strcmp(c, "OS"))
-		close_shell("force quit");
-	else if (!ft_strcmp(c, "[A"))
+	if (!ft_strcmp(c, KEY_UP))
 		history_before(str, reader);
-	else if (!ft_strcmp(c, "[B"))
+	else if (!ft_strcmp(c, KEY_DOWN))
 		history_after(str, reader);
-	else if (!ft_strcmp(c, "[C"))
+	else if (!ft_strcmp(c, KEY_RIGHT))
 	{
 		if (reader->pos < reader->size)
 		{
@@ -38,7 +42,7 @@ static void	check_termcap(char *c, t_reader *reader, char ***str)
 			reader->pos++;
 		}
 	}
-	else if (!ft_strcmp(c, "[D"))
+	else if (!ft_strcmp(c, KEY_LEFT))
 	{
 		if (reader->pos > 0)
 		{
@@ -50,6 +54,8 @@ static void	check_termcap(char *c, t_reader *reader, char ***str)
 
 bool	process_key(char *c, t_reader *reader, char ***str)
 {
+	char	*key;
+
 	if (*c == '\n')
 	{
 		ft_putstr(c);
@@ -64,9 +70,13 @@ bool	process_key(char *c, t_reader *reader, char ***str)
 		check_termcap(c + 1, reader, str);
 	}
 	else
+	{
+		key = NULL;
+		while (get_this_char(&c, &key) && *key)
+			if (ft_isprint(*key))
+				print_char(str, key, reader);
 		g_shell.history.act_pos = 0;
-	if (ft_isprint(*c))
-		print_char(str, c, reader);
+	}
 	return (true);
 }
 

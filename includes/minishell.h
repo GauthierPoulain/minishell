@@ -24,6 +24,11 @@
 # define	KEY_BUFFER_SIZE		4096
 # define	GNL_BUFFER_SIZE		20
 
+# define	KEY_UP				"[A"
+# define	KEY_DOWN			"[B"
+# define	KEY_RIGHT			"[C"
+# define	KEY_LEFT			"[D"
+
 # ifndef O_DIRECTORY
 #  define	O_DIRECTORY			__O_DIRECTORY
 # endif
@@ -231,5 +236,7 @@ char	*which(char *prog);
 void	add_signals_listeners(void);
 
 void	pre_prompt(void);
+
+int		get_this_char(char **c, char **retour);
 
 #endif

@@ -27,7 +27,7 @@ MAKE = make --no-print-directory
 
 CFLAGS = -Wall -Wextra -Werror -g
 # CFLAGS += -O3 -fno-builtin
-# CFLAGS += -fsanitize=address
+CFLAGS += -fsanitize=address
 
 CLIBS = -ltermcap
 
@@ -94,6 +94,7 @@ SRCS_MS = \
 	./src/parsing_utils.c \
 	./src/parse_env_var.c \
 	./src/signals_catcher.c \
+	./src/debugging.c \
 
 SRCS = $(SRCS_LIB) $(SRCS_MS)
 

@@ -90,11 +90,12 @@ void	print_char(char ***str, char *c, t_reader *reader)
 
 char	*read_term(void)
 {
-	char		buffer[KEY_BUFFER_SIZE + 1];
+	char		*buffer;
 	bool		reading;
 	t_reader	reader;
 	char		*res;
 
+	buffer = ft_calloc(sizeof(char) * (KEY_BUFFER_SIZE + 1));
 	reader.size = 0;
 	reader.pos = 0;
 	g_shell.actual_str = ft_calloc(sizeof(char *));

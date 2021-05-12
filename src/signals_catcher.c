@@ -2,7 +2,6 @@
 
 static void	ctrlc_catcher(int code)
 {
-	// printf("sigint catched with code: %d\n", code);
 	(void)code;
 	g_shell.actual_str = ft_calloc(sizeof(char *));
 	ft_putchar('\n');
