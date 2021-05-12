@@ -21,12 +21,14 @@ static int	get_token_info(t_token *token, char *line, int start, int end)
 		token->type = 3;
 	else if (token->str[0] == '"')
 		token->type = 4;
+	else if (token->str[0] == '/')
+		token->type = 5;
 	else
 		token->type = 0;
 	return (0);
 }
 
-static int	get_dollar_len(char *line, int i)
+int	get_dollar_len(char *line, int i)
 {
 	int	l;
 
@@ -80,7 +82,7 @@ void	get_lexer(char *line)
 	t_token	*token;
 	char	*set;
 
-	set = " \\/$";
+	set = " ";
 	init_lexer(&lexer);
 	while (lexer.i < (int)ft_strlen(line))
 	{

@@ -199,7 +199,6 @@ int		check_type_at(int i);
 void	get_lexer(char *line);
 void	init_lexer(t_lexer *lexer);
 void	display_tokens(void);
-char	*replace_env_line(char **line);
 char	*parse_env_var(char *word);
 void	join_last_token(t_token *token);
 int		set_dollar_type(t_token *token, char *line, int start);
@@ -207,6 +206,7 @@ int		set_dollar_type(t_token *token, char *line, int start);
 char	**parse_line(char *line);
 void	display_array(char **array);
 int		check_occurence(char *str, char c);
+int		get_dollar_len(char *line, int i);
 char	**array_from_list(void);
 void	display_array(char **array);
 

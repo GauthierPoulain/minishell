@@ -18,7 +18,12 @@ void	if_forest(char **words, int i, t_list *lst)
 	else if (((t_token *)lst->content)->type == 3)
 		words[i] = ft_strdup(((t_token *)lst->content)->str + 1);
 	else
-		words[i] = ft_strdup(((t_token *)lst->content)->str);
+	{
+		if (check_occurence(((t_token *)lst->content)->str, '$'))
+			words[i] = parse_env_var(((t_token *)lst->content)->str);
+		else
+			words[i] = ft_strdup(((t_token *)lst->content)->str);
+	}
 }
 
 char	**array_from_list(void)
