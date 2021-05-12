@@ -80,7 +80,7 @@ void	get_lexer(char *line)
 	t_token	*token;
 	char	*set;
 
-	set = " \\/$";
+	set = " ";
 	init_lexer(&lexer);
 	while (lexer.i < (int)ft_strlen(line))
 	{

@@ -71,25 +71,76 @@ char	*treat_several_dollars(char *word)
 	return (join_tab(array));
 }
 
-char	*parse_env_var(char *word)
+int		check_backslash(char *word, int i)
+{
+	int	j;
+
+	j = i;
+	while (word[i])
+	{
+		if (word[i] == '$')
+			return (0);
+		else if (word[i] == '/')
+			return (i - j);
+		i++;
+	}
+	return (0);
+}
+
+char	*treat_doll(char *word, int i)
+{
+	int		back;
+	char	*ret;
+
+	printf("word [%s]\n", word);
+	back = check_backslash(word, i + 1);
+	printf("slash [%d]\n", i);
+	if (back)
+	{
+		ret = ft_strndup(word, i);
+		ret = ft_strjoin(ret, word + i + back);
+		printf("ret : [%s]\n", ret);
+		return (ret);
+	}
+	return (word);
+}
+
+char	*parse_test(char *word)
 {
 	int		i;
 	char	*new;
 
 	i = 0;
 	new = word;
-	if (DEBUG)
-		printf("word [%s]\n", word);
-	if (check_occurence(word, '$') > 1)
-		return (treat_several_dollars(word));
-	else
+	while (new[i])
 	{
-		while (new[i])
-		{
-			if (new[i] == '$')
-				new = treat_several_dollars(word);
-			i++;
-		}
+		if (new[i] == '$')
+			new = treat_doll(new, i);
+		i++;
 	}
 	return (new);
+}
+
+char	*parse_env_var(char *word)
+{
+	return (parse_test(word));
+	// int		i;
+	// char	*new;
+
+	// i = 0;
+	// new = word;
+	// if (DEBUG)
+	// 	printf("word [%s]\n", word);
+	// if (check_occurence(word, '$') > 1)
+	// 	return (treat_several_dollars(word));
+	// else
+	// {
+	// 	while (new[i])
+	// 	{
+	// 		if (new[i] == '$')
+	// 			new = treat_several_dollars(word);
+	// 		i++;
+	// 	}
+	// }
+	// return (new);
 }
