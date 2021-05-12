@@ -93,6 +93,7 @@ SRCS_MS = \
 	./src/parsing.c \
 	./src/parsing_utils.c \
 	./src/parse_env_var.c \
+	./src/signals_catcher.c \
 
 SRCS = $(SRCS_LIB) $(SRCS_MS)
 

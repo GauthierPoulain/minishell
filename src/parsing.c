@@ -48,6 +48,7 @@ char	**parse_line(char *line)
 
 	get_lexer(line);
 	array = array_from_list();
-	display_array(array);
+	if (DEBUG)
+		display_array(array);
 	return (array);
 }

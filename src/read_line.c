@@ -93,20 +93,21 @@ char	*read_term(void)
 	char		buffer[KEY_BUFFER_SIZE + 1];
 	bool		reading;
 	t_reader	reader;
-	char		**str;
 	char		*res;
 
 	reader.size = 0;
 	reader.pos = 0;
-	str = ft_calloc(sizeof(char *));
+	g_shell.actual_str = ft_calloc(sizeof(char *));
 	reading = true;
 	ft_bzero(buffer, KEY_BUFFER_SIZE + 1);
 	while (reading && read(STDIN_FILENO, buffer, KEY_BUFFER_SIZE) >= 0)
 	{
-		reading = process_key(buffer, &reader, &str);
+		if (!*g_shell.actual_str && *buffer == 4)
+			close_shell(NULL);
+		reading = process_key(buffer, &reader, &g_shell.actual_str);
 		ft_bzero(buffer, KEY_BUFFER_SIZE);
 	}
-	history_add(str);
-	res = get_str_rterm(str);
+	history_add(g_shell.actual_str);
+	res = get_str_rterm(g_shell.actual_str);
 	return (res);
 }

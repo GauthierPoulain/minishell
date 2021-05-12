@@ -13,11 +13,11 @@ static void	init_shell(void)
 	tcgetattr(STDIN_FILENO, &g_shell.save);
 }
 
-static void	pre_prompt(void)
+void	pre_prompt(void)
 {
-	ft_putcolor(get_env("USER"), _LIGHTBLUE);
+	ft_putcolor(get_env("USER"), _CYAN);
 	ft_putcolor(" in ", _DARKGRAY);
-	ft_putcolor(ft_strreplace(get_pwd(), get_env("HOME"), "~"), _YELLOW);
+	ft_putcolor(ft_strreplace(get_pwd(), get_env("HOME"), "~"), _CYAN);
 	ft_putcolor("\n", _DARKGRAY);
 	if (g_shell.last_return == 0)
 		ft_putcolor("›", _GREEN);
@@ -36,6 +36,7 @@ int	main(int argc, const char **argv, const char **envp)
 	init_env(envp);
 	set_env("MINISHELL_LOCATION", (char *)argv[0]);
 	set_input_mode();
+	add_signals_listeners();
 	while (true)
 	{
 		pre_prompt();

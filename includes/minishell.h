@@ -18,7 +18,7 @@
 # include <term.h>
 # include <unistd.h>
 
-# define	DEBUG				1
+# define	DEBUG				0
 # define	PRINT_TERMCAP		0
 
 # define	KEY_BUFFER_SIZE		4096
@@ -109,6 +109,7 @@ typedef struct s_minishell
 	struct termios	save;
 	char			termbuffer[2048];
 	t_history		history;
+	char			**actual_str;
 }				t_minishell;
 
 extern t_minishell	g_shell;
@@ -226,5 +227,9 @@ void	remove_line(char ***line, t_reader *reader);
 void	put_in_term(char **line, char ***str, t_reader *reader);
 
 char	*which(char *prog);
+
+void	add_signals_listeners(void);
+
+void	pre_prompt(void);
 
 #endif
