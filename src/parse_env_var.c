@@ -17,24 +17,8 @@ char	*treat_doll_backslash(char *word, int i, int back)
 	{
 		ret = ft_strndup(word, i);
 		ret = ft_strjoin(ret, word + i + back);
-		// printf("ret : [%s]\n", ret);
 	}
 	return (ret);
-}
-
-static size_t	get_word_len(char *word, int i)
-{
-	int	j;
-
-	j = 0;
-	while (word[i])
-	{
-		if (word[i] == ' ' || word[i] == '$')
-			return (j);
-		i++;
-		j++;
-	}
-	return (j);
 }
 
 char	*replace_dolls(char *word, int i)
@@ -44,19 +28,14 @@ char	*replace_dolls(char *word, int i)
 	int		len;
 
 	ret = ft_strndup(word, i);
-	printf("ret no slash : [%s]\n", ret);
 	len = get_word_len(word, ft_strlen(ret) + 1);
-	printf("len [%d]\n", len);
-	printf("yes [%s]\n", ft_strndup(word + i + 1, len));
 	env_value = get_env(ft_strndup(word + i + 1, len));
-	printf("env value : [%s]\n", env_value);
 	ret = ft_strjoin(ret, env_value);
 	ret = ft_strjoin(ret, word + i + len + 1);
-	printf("ret before last : [%s]\n", ret);
 	return (ret);
 }
 
-int		check_slash(char *word, int i)
+int	check_slash(char *word, int i)
 {
 	int	j;
 
@@ -88,7 +67,7 @@ char	*treat_doll(char *word, int i)
 	return (word);
 }
 
-char	*parse_test(char *word)
+char	*parse_env_var(char *word)
 {
 	int		i;
 	char	*new;
@@ -103,9 +82,4 @@ char	*parse_test(char *word)
 	}
 	printf("retun new : [%s]\n", new);
 	return (new);
-}
-
-char	*parse_env_var(char *word)
-{
-	return (parse_test(word));
 }

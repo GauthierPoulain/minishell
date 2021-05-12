@@ -25,3 +25,18 @@ int	check_occurence(char *str, char c)
 	}
 	return (i);
 }
+
+size_t	get_word_len(char *word, int i)
+{
+	int	j;
+
+	j = 0;
+	while (word[i])
+	{
+		if (word[i] == ' ' || word[i] == '$')
+			return (j);
+		i++;
+		j++;
+	}
+	return (j);
+}

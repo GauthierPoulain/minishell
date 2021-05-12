@@ -200,6 +200,7 @@ void	get_lexer(char *line);
 void	init_lexer(t_lexer *lexer);
 void	display_tokens(void);
 char	*parse_env_var(char *word);
+size_t	get_word_len(char *word, int i);
 void	join_last_token(t_token *token);
 int		set_dollar_type(t_token *token, char *line, int start);
 
