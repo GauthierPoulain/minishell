@@ -78,7 +78,8 @@ char	*parse_env_var(char *word)
 
 	i = 0;
 	new = word;
-	printf("word [%s]\n", word);
+	if (DEBUG)
+		printf("word [%s]\n", word);
 	if (check_occurence(word, '$') > 1)
 		return (treat_several_dollars(word));
 	else
