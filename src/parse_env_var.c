@@ -71,7 +71,7 @@ char	*treat_several_dollars(char *word)
 	return (join_tab(array));
 }
 
-int		check_backslash(char *word, int i)
+int		check_slash(char *word, int i)
 {
 	int	j;
 
@@ -92,11 +92,15 @@ char	*treat_doll(char *word, int i)
 	int		back;
 	char	*ret;
 
-	printf("word [%s]\n", word);
-	back = check_backslash(word, i + 1);
-	printf("slash [%d]\n", i);
+	if (DEBUG)
+	{
+		printf("word [%s]\n", word);
+		printf("word of i [%c]\n", word[i + 1]);
+	}
+	back = check_slash(word, i + 1);
 	if (back)
 	{
+		back++;
 		ret = ft_strndup(word, i);
 		ret = ft_strjoin(ret, word + i + back);
 		printf("ret : [%s]\n", ret);
