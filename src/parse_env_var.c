@@ -1,26 +1,59 @@
 #include "../includes/minishell.h"
 
-char	*treat_several_dollars(char *word)
+char	*treat_doll_backslash(char *word, int i, int back)
 {
-	char	**array;
-	int		j;
-	int		no_dollar;
+	char	*env_value;
+	char	*ret;
 
-	no_dollar = 0;
-	if (word[0] != '$')
-		no_dollar = 1;
-	j = 0;
-	array = ft_split(word, '$');
-	while (array[j])
+	env_value = get_env(ft_strndup(word + i + 1, back));
+	back++;
+	if (env_value)
 	{
-		if (DEBUG)
-			printf("array[%s] (before)\n", array[j]);
-		array[j] = treat_dollar(array[j], &no_dollar);
-		if (DEBUG)
-			printf("array[%s] (after)\n", array[j]);
+		ret = ft_strndup(word, i);
+		ret = ft_strjoin(ret, env_value);
+		ret = ft_strjoin(ret, word + i + back);
+	}
+	else
+	{
+		ret = ft_strndup(word, i);
+		ret = ft_strjoin(ret, word + i + back);
+		// printf("ret : [%s]\n", ret);
+	}
+	return (ret);
+}
+
+static size_t	get_word_len(char *word, int i)
+{
+	int	j;
+
+	j = 0;
+	while (word[i])
+	{
+		if (word[i] == ' ' || word[i] == '$')
+			return (j);
+		i++;
 		j++;
 	}
-	return (join_tab(array));
+	return (0);
+}
+
+char	*replace_dolls(char *word, int i)
+{
+	char	*ret;
+	char	*env_value;
+	int		len;
+
+	ret = ft_strndup(word, i);
+	printf("ret no slash : [%s]\n", ret);
+	len = get_word_len(word, ft_strlen(ret) + 1);
+	printf("len [%d]\n", len);
+	printf("yes [%s]\n", ft_strndup(word + i + 1, len));
+	env_value = get_env(ft_strndup(word + i + 1, len));
+	printf("env value : [%s]\n", env_value);
+	ret = ft_strjoin(ret, env_value);
+	ret = ft_strjoin(ret, word + i + len);
+	printf("ret before last : [%s]\n", ret);
+	return (ret);
 }
 
 int		check_slash(char *word, int i)
@@ -42,30 +75,14 @@ int		check_slash(char *word, int i)
 char	*treat_doll(char *word, int i)
 {
 	int		back;
-	char	*ret;
-	char	*env_value;
 
 	if (DEBUG)
 		printf("word [%s]\n", word);
 	back = check_slash(word, i + 1);
 	if (back)
-	{
-		env_value = get_env(ft_strndup(word + i + 1, back));
-		back++;
-		if (env_value)
-		{
-			ret = ft_strndup(word, i);
-			ret = ft_strjoin(ret, env_value);
-			ret = ft_strjoin(ret, word + i + back);
-		}
-		else
-		{
-			ret = ft_strndup(word, i);
-			ret = ft_strjoin(ret, word + i + back);
-			// printf("ret : [%s]\n", ret);
-		}
-		return (ret);
-	}
+		return (treat_doll_backslash(word, i, back));
+	else
+		return (replace_dolls(word, i));
 	return (word);
 }
 
@@ -82,6 +99,7 @@ char	*parse_test(char *word)
 			new = treat_doll(new, i);
 		i++;
 	}
+	printf("retun new : [%s]\n", new);
 	return (new);
 }
 

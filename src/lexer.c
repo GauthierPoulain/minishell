@@ -26,7 +26,7 @@ static int	get_token_info(t_token *token, char *line, int start, int end)
 	return (0);
 }
 
-static int	get_dollar_len(char *line, int i)
+int	get_dollar_len(char *line, int i)
 {
 	int	l;
 
