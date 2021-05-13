@@ -34,7 +34,7 @@ int	main(int argc, const char **argv, const char **envp)
 	(void)argc;
 	init_shell();
 	init_env(envp);
-	set_env("MINISHELL_LOCATION", (char *)argv[0]);
+	set_env("SHELL", (char *)argv[0]);
 	set_input_mode();
 	add_signals_listeners();
 	while (true)

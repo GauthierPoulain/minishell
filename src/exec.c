@@ -22,22 +22,22 @@ static int	exec_builtin(char *prog, char *argv[])
 		return (1);
 }
 
-static int	exec(char *prog, char *argv[])
+static int	exec(char *path, char *prog, char *argv[])
 {
 	int	status;
 
-	if (!prog)
+	if (!path)
 	{
 		ft_putstr_fd(2, "minishell: command not found: ");
-		ft_putstr_fd(2, *argv);
+		ft_putstr_fd(2, prog);
 		ft_putstr_fd(2, "\n");
 		status = 127;
 	}
-	else if (!ft_strcmp(prog, "builtin"))
+	else if (!ft_strcmp(path, "builtin"))
 		status = exec_builtin(prog, argv);
 	else
 	{
-		execve(prog, argv, get_envp());
+		execve(path, argv, get_envp());
 		status = errno;
 	}
 	gc_clean();
@@ -50,12 +50,14 @@ int	run_command(char *prog, char *argv[])
 	int		status;
 
 	status = 0;
+	if (!ft_strcmp(prog, "exit"))
+		close_shell(NULL);
 	reset_input_mode();
 	process = fork();
 	if (process == -1)
 		close_shell("error while forking subprocess");
 	else if (process == 0)
-		exec(which(prog), argv);
+		exec(which(prog), prog, argv);
 	else
 		wait(&status);
 	set_input_mode();
