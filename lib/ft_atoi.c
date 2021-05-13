@@ -17,7 +17,10 @@ int	ft_atoi(const char *str)
 	int			neg;
 	int			res;
 
+	if (!str)
+		return (0);
 	tstr = (char *)str;
+	res = 0;
 	pos = 0;
 	neg = 0;
 	while (ft_isspace(*tstr))
@@ -29,13 +32,8 @@ int	ft_atoi(const char *str)
 		else
 			neg++;
 	}
-	res = 0;
 	while (ft_isdigit(*tstr))
-	{
-		res *= 10;
-		res += *tstr - '0';
-		tstr++;
-	}
+		res = (res * 10) + (*tstr++ - '0');
 	return (res * ft_atoi_calcsign(pos, neg));
 }
 

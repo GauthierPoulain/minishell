@@ -89,5 +89,6 @@ char	*parse_env_var(char *word)
 			|| (new[i] && new[i] == '$' && new[i + 1] == '/'))
 			i++;
 	}
-	return (new);
+	if (DEBUG)
+		printf("retun new : [%s]\n", new);
 }
