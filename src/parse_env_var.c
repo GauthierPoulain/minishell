@@ -91,4 +91,5 @@ char	*parse_env_var(char *word)
 	}
 	if (DEBUG)
 		printf("retun new : [%s]\n", new);
+	return (new);
 }
