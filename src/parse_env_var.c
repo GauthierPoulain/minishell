@@ -80,6 +80,7 @@ char	*parse_env_var(char *word)
 			new = treat_doll(new, i);
 		i++;
 	}
-	printf("retun new : [%s]\n", new);
+	if (DEBUG)
+		printf("retun new : [%s]\n", new);
 	return (new);
 }

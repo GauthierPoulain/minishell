@@ -7,7 +7,7 @@ void	print_err(char *msg)
 	ft_putstr_fd(2, "\n");
 }
 
-void	close_shell(char *msg)
+int	close_shell(char *msg)
 {
 	gc_clean();
 	if (isatty(STDERR_FILENO))
@@ -20,4 +20,5 @@ void	close_shell(char *msg)
 	}
 	else
 		exit(EXIT_SUCCESS);
+	return (0);
 }
