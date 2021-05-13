@@ -82,7 +82,7 @@ char	*parse_env_var(char *word)
 			printf("new during [%s]\n", new);
 			printf("new[%s]\n", new + i);
 		}
-		if (new[i])
+		if (new[i] && new[i] != '$')
 			i++;
 	}
 	return (new);
