@@ -84,6 +84,8 @@ char	*parse_env_var(char *word)
 		}
 		if (new[i] && new[i] != '$')
 			i++;
+		else if (new[i] && new[i] == '$' && new[i + 1] == '/')
+			i++;
 	}
 	return (new);
 }
