@@ -29,7 +29,10 @@ char	*replace_dolls(char *word, int i)
 
 	ret = ft_strndup(word, i);
 	len = get_word_len(word, ft_strlen(ret) + 1);
-	env_value = get_env(ft_strndup(word + i + 1, len));
+	if (word[i + 1] == '?')
+		env_value = ft_itoa(g_shell.last_return);
+	else
+		env_value = get_env(ft_strndup(word + i + 1, len));
 	ret = ft_strjoin(ret, env_value);
 	ret = ft_strjoin(ret, word + i + len + 1);
 	return (ret);
@@ -82,9 +85,8 @@ char	*parse_env_var(char *word)
 			printf("new during [%s]\n", new);
 			printf("new[%s]\n", new + i);
 		}
-		if (new[i] && new[i] != '$')
-			i++;
-		else if (new[i] && new[i] == '$' && new[i + 1] == '/')
+		if ((new[i] && new[i] != '$')
+			|| (new[i] && new[i] == '$' && new[i + 1] == '/'))
 			i++;
 	}
 	return (new);
