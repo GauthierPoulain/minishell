@@ -85,5 +85,6 @@ char	*parse_env_var(char *word)
 		if (new[i] && new[i] != '$')
 			i++;
 	}
-	return (new);
+	if (DEBUG)
+		printf("retun new : [%s]\n", new);
 }

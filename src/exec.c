@@ -1,23 +1,65 @@
 #include "../includes/minishell.h"
 
-void	exec_subprocess(char *path, char *argv[])
+static int	exec_builtin(char *prog, char *argv[])
+{
+	if (!ft_strcmp(prog, "exit"))
+		return (close_shell(NULL));
+	else if (!ft_strcmp(prog, "cd"))
+		return (builtin_cd(argv));
+	else if (!ft_strcmp(prog, "pwd"))
+		return (builtin_pwd());
+	else if (!ft_strcmp(prog, "env"))
+		return (builtin_env());
+	else if (!ft_strcmp(prog, "echo"))
+		return (builtin_echo(argv));
+	else if (!ft_strcmp(prog, "which"))
+		return (builtin_which(argv));
+	else if (!ft_strcmp(prog, "export"))
+		return (builtin_export(argv));
+	else if (!ft_strcmp(prog, "unset"))
+		return (builtin_unset(argv));
+	else
+		return (1);
+}
+
+static int	exec(char *path, char *prog, char *argv[])
+{
+	int	status;
+
+	if (!path)
+	{
+		ft_putstr_fd(2, "minishell: command not found: ");
+		ft_putstr_fd(2, prog);
+		ft_putstr_fd(2, "\n");
+		status = 127;
+	}
+	else if (!ft_strcmp(path, "builtin"))
+		status = exec_builtin(prog, argv);
+	else
+	{
+		execve(path, argv, get_envp());
+		status = errno;
+	}
+	gc_clean();
+	exit(status);
+}
+
+int	run_command(char *prog, char *argv[])
 {
 	pid_t	process;
 	int		status;
 
 	status = 0;
+	if (!ft_strcmp(prog, "exit"))
+		close_shell(NULL);
 	reset_input_mode();
 	process = fork();
 	if (process == -1)
 		close_shell("error while forking subprocess");
 	else if (process == 0)
-	{
-		execve(path, argv, get_envp());
-		gc_clean();
-		exit(errno);
-	}
+		exec(which(prog), prog, argv);
 	else
 		wait(&status);
 	set_input_mode();
-	g_shell.last_return = (((status) & 0xff00) >> 8);
+	return (((status) & 0xff00) >> 8);
 }

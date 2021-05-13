@@ -174,8 +174,7 @@ bool	ft_isinrange(long long value, long long min, long long max);
 
 // MINISHELL ------------------------------------------------------------------
 
-void	close_shell(char *msg);
-void	exec_test(void);
+int		close_shell(char *msg);
 void	process_input(char *line);
 
 int		builtin_cd(char **argv);
@@ -193,7 +192,7 @@ void	unset_env(char *key);
 char	*get_env(char *key);
 void	init_env(const char **envp);
 
-void	exec_subprocess(char *path, char *argv[]);
+int		run_command(char *prog, char *argv[]);
 
 int		check_type_at(int i);
 void	get_lexer(char *line);
