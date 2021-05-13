@@ -11,13 +11,13 @@ static bool	is_a_file(char *path)
 static bool	is_builtin(char *prog)
 {
 	return (!ft_strcmp(prog, "echo")
-	|| !ft_strcmp(prog, "cd")
-	|| !ft_strcmp(prog, "pwd")
-	|| !ft_strcmp(prog, "export")
-	|| !ft_strcmp(prog, "unset")
-	|| !ft_strcmp(prog, "env")
-	|| !ft_strcmp(prog, "exit")
-	|| !ft_strcmp(prog, "which"));
+		|| !ft_strcmp(prog, "cd")
+		|| !ft_strcmp(prog, "pwd")
+		|| !ft_strcmp(prog, "export")
+		|| !ft_strcmp(prog, "unset")
+		|| !ft_strcmp(prog, "env")
+		|| !ft_strcmp(prog, "exit")
+		|| !ft_strcmp(prog, "which"));
 }
 
 char	*which(char *prog)
