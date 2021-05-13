@@ -80,11 +80,7 @@ char	*parse_env_var(char *word)
 	while (new[i])
 	{
 		if (new[i] == '$')
-		{
 			new = treat_doll(new, i);
-			printf("new during [%s]\n", new);
-			printf("new[%s]\n", new + i);
-		}
 		if ((new[i] && new[i] != '$')
 			|| (new[i] && new[i] == '$' && new[i + 1] == '/'))
 			i++;

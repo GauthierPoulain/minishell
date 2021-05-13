@@ -1,7 +1,7 @@
 #include "../includes/minishell.h"
 
 /*
-//	seems to have some issues with the replace_env_line for token id 0
+//	I don't even know why I did that, it's ugly, it works. For now
 */
 
 void	if_forest(char **words, int i, t_list *lst)
