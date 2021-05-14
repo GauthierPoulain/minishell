@@ -70,18 +70,6 @@ char	*treat_doll(char *word, int i)
 	return (word);
 }
 
-char	*treat_backslash(char *word, int *i)
-{
-	// char	*new;
-
-	if (*i == 0)
-	{
-		*i += 1;
-		return (ft_strdup(word + 1));
-	}
-	return (NULL);
-}
-
 char	*parse_env_var(char *word)
 {
 	int		i;

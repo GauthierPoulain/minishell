@@ -18,7 +18,7 @@
 # include <term.h>
 # include <unistd.h>
 
-# define	DEBUG				1
+# define	DEBUG				0
 # define	PRINT_TERMCAP		0
 
 # define	KEY_BUFFER_SIZE		4096
@@ -203,6 +203,8 @@ char	*parse_env_var(char *word);
 size_t	get_word_len(char *word, int i);
 void	join_last_token(t_token *token);
 int		set_dollar_type(t_token *token, char *line, int start);
+
+char	*treat_backslash(char *word, int *i);
 
 char	**parse_line(char *line);
 void	display_array(char **array);

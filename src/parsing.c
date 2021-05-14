@@ -19,7 +19,8 @@ void	if_forest(char **words, int i, t_list *lst)
 // 	words[i] = ft_strdup(((t_token *)lst->content)->str + 1);
 	else
 	{
-		if (check_occurence(((t_token *)lst->content)->str, '$'))
+		if (check_occurence(((t_token *)lst->content)->str, '$')
+			|| check_occurence(((t_token *)lst->content)->str, '\\'))
 			words[i] = parse_env_var(((t_token *)lst->content)->str);
 		else
 			words[i] = ft_strdup(((t_token *)lst->content)->str);
