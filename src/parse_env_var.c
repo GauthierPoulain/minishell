@@ -72,7 +72,14 @@ char	*treat_doll(char *word, int i)
 
 char	*treat_backslash(char *word, int *i)
 {
-	
+	// char	*new;
+
+	if (*i == 0)
+	{
+		*i += 1;
+		return (ft_strdup(word + 1));
+	}
+	return (NULL);
 }
 
 char	*parse_env_var(char *word)
@@ -84,7 +91,9 @@ char	*parse_env_var(char *word)
 	new = word;
 	while (new[i])
 	{
-		if (new[i] == '$')
+		if (new[i] == '\\')
+			new = treat_backslash(word, &i);
+		else if (new[i] == '$')
 			new = treat_doll(new, i);
 		if ((new[i] && new[i] != '$')
 			|| (new[i] && new[i] == '$' && new[i + 1] == '/'))
