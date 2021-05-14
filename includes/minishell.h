@@ -103,6 +103,12 @@ typedef struct s_history
 	int		act_pos;
 }				t_history;
 
+typedef struct s_pipes
+{
+	int		master;
+	int		slave;
+}				t_pipes;
+
 typedef struct s_minishell
 {
 	t_list			*gc;
@@ -116,6 +122,7 @@ typedef struct s_minishell
 	t_history		history;
 	char			**actual_str;
 	bool			use_termcaps;
+	t_pipes			pipes;
 }				t_minishell;
 
 extern t_minishell	g_shell;

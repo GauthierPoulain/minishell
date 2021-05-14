@@ -22,22 +22,17 @@ static int	exec_builtin(char *prog, char *argv[])
 		return (1);
 }
 
-static int	exec(char *path, char *prog, char *argv[])
+static int	exec(char *path, char *argv[])
 {
 	int	status;
 
-	if (!path)
-	{
-		ft_putstr_fd(2, "minishell: command not found: ");
-		ft_putstr_fd(2, prog);
-		ft_putstr_fd(2, "\n");
-		status = 127;
-	}
-	else
-	{
-		execve(path, argv, get_envp());
-		status = errno;
-	}
+	close(g_shell.pipes.master);
+	dup2(g_shell.pipes.slave, 1);
+	dup2(g_shell.pipes.slave, 2);
+	close(g_shell.pipes.slave);
+	execve(path, argv, get_envp());
+	status = errno;
+	ft_putchar(EOF);
 	gc_clean();
 	exit(status);
 }
@@ -45,26 +40,47 @@ static int	exec(char *path, char *prog, char *argv[])
 int	run_command(char *prog, char *argv[])
 {
 	pid_t	process;
+	char	*path;
 	int		status;
+	int		pipes[2];
+	char	buffer[1024];
 
 	status = 0;
+	if (pipe(pipes) != 0)
+		close_shell("pipe error");
+	g_shell.pipes.slave = pipes[1];
+	g_shell.pipes.master = pipes[0];
 	reset_input_mode();
 	if (!ft_strcmp(which(prog), "builtin"))
-	{
 		status = exec_builtin(prog, argv);
-		set_input_mode();
-		return (status);
-	}
 	else
 	{
-		process = fork();
-		if (process == -1)
-			close_shell("error while forking subprocess");
-		else if (process == 0)
-			exec(which(prog), prog, argv);
+		path = which(prog);
+		if (!path)
+		{
+			ft_putstr_fd(2, "minishell: command not found: ");
+			ft_putstr_fd(2, prog);
+			ft_putstr_fd(2, "\n");
+			status = 127;
+		}
 		else
-			wait(&status);
-		set_input_mode();
-		return (((status) & 0xff00) >> 8);
+		{
+			process = fork();
+			if (process == -1)
+				close_shell("error while forking subprocess");
+			else if (process == 0)
+				exec(path, argv);
+			else
+			{
+				close(g_shell.pipes.slave);
+				while (read(g_shell.pipes.master, buffer, sizeof(buffer)))
+					ft_putcolor(buffer, _MAGENTA);
+				close(g_shell.pipes.master);
+				wait(&status);
+			}
+			status = (((status) & 0xff00) >> 8);
+		}
 	}
+	set_input_mode();
+	return (status);
 }
