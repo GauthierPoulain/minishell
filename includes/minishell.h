@@ -115,6 +115,7 @@ typedef struct s_minishell
 	char			termbuffer[2048];
 	t_history		history;
 	char			**actual_str;
+	bool			use_termcaps;
 }				t_minishell;
 
 extern t_minishell	g_shell;

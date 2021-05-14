@@ -11,14 +11,18 @@ static void	init_shell(void)
 	g_shell.history.lst = NULL;
 	ft_lstadd_front(&g_shell.history.lst, ft_lstnew(NULL));
 	tcgetattr(STDIN_FILENO, &g_shell.save);
+	g_shell.use_termcaps = false;
 }
 
 void	pre_prompt(void)
 {
-	ft_putcolor(get_env("USER"), _CYAN);
-	ft_putcolor(" in ", _DARKGRAY);
-	ft_putcolor(ft_strreplace(get_pwd(), get_env("HOME"), "~"), _CYAN);
-	ft_putcolor("\n", _DARKGRAY);
+	if (get_env("USER") && get_env("HOME"))
+	{
+		ft_putcolor(get_env("USER"), _CYAN);
+		ft_putcolor(" in ", _DARKGRAY);
+		ft_putcolor(ft_strreplace(get_pwd(), get_env("HOME"), "~"), _CYAN);
+		ft_putcolor("\n", _DARKGRAY);
+	}
 	if (g_shell.last_return == 0)
 		ft_putcolor("›", _GREEN);
 	else
@@ -37,11 +41,16 @@ int	main(int argc, const char **argv, const char **envp)
 	set_env("SHELL", (char *)argv[0]);
 	set_input_mode();
 	add_signals_listeners();
-	while (true)
+	if (isatty(STDIN_FILENO))
 	{
-		pre_prompt();
-		g_shell.history.act_pos = 0;
-		process_input(ft_strtrim_spaces(read_term()));
+		while (true)
+		{
+			pre_prompt();
+			g_shell.history.act_pos = 0;
+			process_input(ft_strtrim_spaces(read_term()));
+		}
 	}
-	close_shell(":thonk:");
+	else
+		process_input(ft_strtrim_spaces(read_term()));
+	close_shell(NULL);
 }

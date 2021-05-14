@@ -6,6 +6,8 @@ char	*ft_strreplace(char *str, char *substr, char *replace)
 	char	*location;
 	int		i;
 
+	if (!str || !substr || !replace)
+		return (str);
 	location = ft_strstr(str, substr);
 	if (!location)
 		return (str);

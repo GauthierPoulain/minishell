@@ -29,13 +29,16 @@ char	*which(char *prog)
 		return ("builtin");
 	if (is_a_file(prog))
 		return (prog);
-	path = ft_split(get_env("PATH"), ':');
-	while (*path)
+	if (get_env("PATH"))
 	{
-		prog_path = ft_strjoin(*path, ft_strjoin("/", prog));
-		if (is_a_file(prog_path))
-			return (prog_path);
-		path++;
+		path = ft_split(get_env("PATH"), ':');
+		while (*path)
+		{
+			prog_path = ft_strjoin(*path, ft_strjoin("/", prog));
+			if (is_a_file(prog_path))
+				return (prog_path);
+			path++;
+		}
 	}
 	return (NULL);
 }
