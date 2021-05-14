@@ -18,7 +18,7 @@
 # include <term.h>
 # include <unistd.h>
 
-# define	DEBUG				0
+# define	DEBUG				1
 # define	PRINT_TERMCAP		0
 
 # define	KEY_BUFFER_SIZE		4096

@@ -1,6 +1,6 @@
 #include "../includes/minishell.h"
 
-char	*treat_doll_backslash(char *word, int i, int back)
+char	*treat_doll_slash(char *word, int i, int back)
 {
 	char	*env_value;
 	char	*ret;
@@ -56,18 +56,23 @@ int	check_slash(char *word, int i)
 
 char	*treat_doll(char *word, int i)
 {
-	int		back;
+	int		slash;
 
 	if (DEBUG)
 		printf("word [%s]\n", word);
 	if (word[i + 1] == '/')
 		return (word);
-	back = check_slash(word, i + 1);
-	if (back)
-		return (treat_doll_backslash(word, i, back));
+	slash = check_slash(word, i + 1);
+	if (slash)
+		return (treat_doll_slash(word, i, slash));
 	else
 		return (replace_dolls(word, i));
 	return (word);
+}
+
+char	*treat_backslash(char *word, int *i)
+{
+	
 }
 
 char	*parse_env_var(char *word)
