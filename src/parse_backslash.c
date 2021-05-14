@@ -1,6 +1,6 @@
 #include "../includes/minishell.h"
 
-size_t	bslash_f_count(char *word, int i)
+static size_t	bslash_f_count(char *word, int i)
 {
 	int	j;
 
@@ -20,6 +20,11 @@ static int	real_bslash(int nb)
 	return (((nb / 2) + 1) / 2);
 }
 
+char	*bslash_first(char *word, int *i)
+{
+	return ;
+}
+
 char	*treat_backslash(char *word, int *i)
 {
 	char	*new;
@@ -28,7 +33,7 @@ char	*treat_backslash(char *word, int *i)
 	if (*i == 0)
 	{
 		back = bslash_f_count(word, *i);
-		if (back % 2)
+		if (back % 2 && ft_strlen(word) == (size_t)back)
 		{
 			ft_putstr_fd(2, "Syntax error");
 			return ("");
