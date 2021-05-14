@@ -160,6 +160,7 @@ char	*ft_strreplace(char *str, char *substr, char *replace);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 void	gc_free_tab(char **arr);
 size_t	ft_tab_len(char **car);
+void	*ft_calloc_char(size_t size, char c);
 
 char	*ft_strndup(char *s1, size_t n);
 char	*ft_strtrim_spaces(char *str);
