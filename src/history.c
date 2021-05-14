@@ -2,7 +2,8 @@
 
 void	history_add(char **line)
 {
-	if (ft_strlen(ft_strtrim_spaces(get_str_rterm(line))) > 0)
+	if (g_shell.use_termcaps
+		&& ft_strlen(ft_strtrim_spaces(get_str_rterm(line))) > 0)
 	{
 		if (!(g_shell.history.lst->next
 				&& !ft_strcmp(get_str_rterm(line)

@@ -33,8 +33,6 @@ static int	exec(char *path, char *prog, char *argv[])
 		ft_putstr_fd(2, "\n");
 		status = 127;
 	}
-	else if (!ft_strcmp(path, "builtin"))
-		status = exec_builtin(prog, argv);
 	else
 	{
 		execve(path, argv, get_envp());
@@ -50,16 +48,23 @@ int	run_command(char *prog, char *argv[])
 	int		status;
 
 	status = 0;
-	if (!ft_strcmp(prog, "exit"))
-		close_shell(NULL);
 	reset_input_mode();
-	process = fork();
-	if (process == -1)
-		close_shell("error while forking subprocess");
-	else if (process == 0)
-		exec(which(prog), prog, argv);
+	if (!ft_strcmp(which(prog), "builtin"))
+	{
+		status = exec_builtin(prog, argv);
+		set_input_mode();
+		return (status);
+	}
 	else
-		wait(&status);
-	set_input_mode();
-	return (((status) & 0xff00) >> 8);
+	{
+		process = fork();
+		if (process == -1)
+			close_shell("error while forking subprocess");
+		else if (process == 0)
+			exec(which(prog), prog, argv);
+		else
+			wait(&status);
+		set_input_mode();
+		return (((status) & 0xff00) >> 8);
+	}
 }

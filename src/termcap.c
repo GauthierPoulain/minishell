@@ -58,7 +58,8 @@ bool	process_key(char *c, t_reader *reader, char ***str)
 
 	if (*c == '\n')
 	{
-		ft_putstr(c);
+		if (g_shell.use_termcaps)
+			ft_putstr(c);
 		return (false);
 	}
 	else if (*c == 127 && reader->pos > 0)

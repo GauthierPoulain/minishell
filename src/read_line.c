@@ -81,7 +81,8 @@ void	print_char(char ***str, char *c, t_reader *reader)
 	}
 	else
 	{
-		ft_putstr(c);
+		if (g_shell.use_termcaps)
+			ft_putstr(c);
 		*str = add_char(*str, c, reader->pos);
 		reader->size++;
 		reader->pos++;
@@ -94,19 +95,23 @@ char	*read_term(void)
 	bool		reading;
 	t_reader	reader;
 	char		*res;
+	int			buffer_len;
 
-	buffer = ft_calloc(sizeof(char) * (KEY_BUFFER_SIZE + 1));
+	buffer_len = 1;
+	if (g_shell.use_termcaps)
+		buffer_len = KEY_BUFFER_SIZE;
+	buffer = ft_calloc(sizeof(char) * (buffer_len + 1));
 	reader.size = 0;
 	reader.pos = 0;
 	g_shell.actual_str = ft_calloc(sizeof(char *));
 	reading = true;
-	ft_bzero(buffer, KEY_BUFFER_SIZE + 1);
-	while (reading && read(STDIN_FILENO, buffer, KEY_BUFFER_SIZE) >= 0)
+	ft_bzero(buffer, buffer_len + 1);
+	while (reading && read(STDIN_FILENO, buffer, buffer_len) >= 0)
 	{
 		if (!*g_shell.actual_str && *buffer == 4)
 			close_shell(NULL);
 		reading = process_key(buffer, &reader, &g_shell.actual_str);
-		ft_bzero(buffer, KEY_BUFFER_SIZE);
+		ft_bzero(buffer, buffer_len);
 	}
 	history_add(g_shell.actual_str);
 	res = get_str_rterm(g_shell.actual_str);
