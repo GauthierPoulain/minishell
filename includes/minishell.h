@@ -58,12 +58,6 @@ typedef struct s_list
 	struct s_list	*next;
 }				t_list;
 
-typedef struct s_command
-{
-	char	*prog;
-	char	**argv;
-}				t_command;
-
 typedef struct s_env
 {
 	char	*key;
@@ -108,6 +102,13 @@ typedef struct s_pipes
 	int		master;
 	int		slave;
 }				t_pipes;
+
+typedef struct s_command
+{
+	char	*prog;
+	char	*path;
+	char	**argv;
+}				t_command;
 
 typedef struct s_minishell
 {
@@ -200,7 +201,7 @@ void	unset_env(char *key);
 char	*get_env(char *key);
 void	init_env(const char **envp);
 
-int		run_command(char *prog, char *argv[]);
+int		run_command(char **argv);
 
 int		check_type_at(int i);
 void	get_lexer(char *line);

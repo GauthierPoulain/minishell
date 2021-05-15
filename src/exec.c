@@ -1,6 +1,6 @@
 #include "../includes/minishell.h"
 
-static int	exec_builtin(char *prog, char *argv[])
+static int	exec_builtin(char *prog, char **argv)
 {
 	if (!ft_strcmp(prog, "exit"))
 		return (close_shell(NULL));
@@ -22,7 +22,7 @@ static int	exec_builtin(char *prog, char *argv[])
 		return (1);
 }
 
-static int	exec(char *path, char *argv[])
+static int	exec(char *path, char **argv)
 {
 	int	status;
 
@@ -37,29 +37,40 @@ static int	exec(char *path, char *argv[])
 	exit(status);
 }
 
-int	run_command(char *prog, char *argv[])
+static t_command	init_cmd(char **argv)
 {
-	pid_t	process;
-	char	*path;
-	int		status;
-	int		pipes[2];
-	char	buffer[1024];
+	t_command	cmd;
 
+	cmd.argv = argv;
+	cmd.prog = argv[0];
+	cmd.path = which(cmd.prog);
+	cmd.need_pipe = false;		//LOOK A THIS MEEEEEEEN
+	return (cmd);
+}
+
+int	run_command(char **argv)
+{
+	pid_t		process;
+	t_command	cmd;
+	int			status;
+	int			pipes[2];
+	char		buffer[1024];
+
+	cmd = init_cmd(argv);
 	status = 0;
 	if (pipe(pipes) != 0)
 		close_shell("pipe error");
 	g_shell.pipes.slave = pipes[1];
 	g_shell.pipes.master = pipes[0];
 	reset_input_mode();
-	if (!ft_strcmp(which(prog), "builtin"))
-		status = exec_builtin(prog, argv);
+	if (!ft_strcmp(cmd.path, "builtin"))
+		status = exec_builtin(cmd.prog, argv);
 	else
 	{
-		path = which(prog);
-		if (!path)
+		if (!cmd.path)
 		{
 			ft_putstr_fd(2, "minishell: command not found: ");
-			ft_putstr_fd(2, prog);
+			ft_putstr_fd(2, cmd.prog);
 			ft_putstr_fd(2, "\n");
 			status = 127;
 		}
@@ -69,7 +80,7 @@ int	run_command(char *prog, char *argv[])
 			if (process == -1)
 				close_shell("error while forking subprocess");
 			else if (process == 0)
-				exec(path, argv);
+				exec(cmd.path, argv);
 			else
 			{
 				close(g_shell.pipes.slave);
@@ -77,8 +88,8 @@ int	run_command(char *prog, char *argv[])
 					ft_putcolor(buffer, _MAGENTA);
 				close(g_shell.pipes.master);
 				wait(&status);
+				status = (((status) & 0xff00) >> 8);
 			}
-			status = (((status) & 0xff00) >> 8);
 		}
 	}
 	set_input_mode();
