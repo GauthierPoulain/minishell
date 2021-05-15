@@ -108,6 +108,16 @@ typedef struct s_command
 	char	*prog;
 	char	*path;
 	char	**argv;
+	bool	need_pipe;
+	bool	pipe_stderr;
+	bool	need_redirect;
+	bool	redirect_from_file;
+	char	*redirect_path;
+	bool	redirect_to_fd;
+	int		redirect_fd;
+	bool	redirect_stdin;
+	bool	redirect_stdout;
+	bool	redirect_append;
 }				t_command;
 
 typedef struct s_minishell
