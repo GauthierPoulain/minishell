@@ -120,6 +120,13 @@ typedef struct s_command
 	bool	redirect_append;
 }				t_command;
 
+typedef struct s_iomng
+{
+	int		cin;
+	int		cout;
+	int		cerr;
+}				t_iomng;
+
 typedef struct s_minishell
 {
 	t_list			*gc;
@@ -134,6 +141,7 @@ typedef struct s_minishell
 	char			**actual_str;
 	bool			use_termcaps;
 	t_pipes			pipes;
+	t_iomng			io;
 }				t_minishell;
 
 extern t_minishell	g_shell;
@@ -257,5 +265,7 @@ void	add_signals_listeners(void);
 void	pre_prompt(void);
 
 int		get_this_char(char **c, char **retour);
+
+void	reset_cio(void);
 
 #endif
