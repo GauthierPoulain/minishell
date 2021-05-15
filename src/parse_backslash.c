@@ -22,7 +22,9 @@ static int	real_bslash(int nb)
 
 char	*bslash_first(char *word, int *i)
 {
-	return ;
+	(void)word;
+	(void)i;
+	return (NULL);
 }
 
 char	*treat_backslash(char *word, int *i)
