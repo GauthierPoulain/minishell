@@ -2,6 +2,13 @@
 
 t_minishell	g_shell;
 
+void	reset_cio(void)
+{
+	g_shell.io.cin = 0;
+	g_shell.io.cout = 1;
+	g_shell.io.cerr = 2;
+}
+
 static void	init_shell(void)
 {
 	g_shell.gc = NULL;
@@ -48,6 +55,7 @@ int	main(int argc, const char **argv, const char **envp)
 			pre_prompt();
 			g_shell.history.act_pos = 0;
 			process_input(ft_strtrim_spaces(read_term()));
+			reset_cio();
 		}
 	}
 	else

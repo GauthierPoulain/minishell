@@ -3,8 +3,11 @@
 static bool	is_a_file(char *path)
 {
 	struct stat	path_stat;
+	int			ret;
 
-	stat(path, &path_stat);
+	ret = stat(path, &path_stat);
+	if (ret != 0)
+		return (false);
 	return (S_ISREG(path_stat.st_mode));
 }
 
@@ -24,20 +27,23 @@ char	*which(char *prog)
 {
 	char	**path;
 	char	*prog_path;
+	int		i;
 
 	if (is_builtin(prog))
 		return ("builtin");
-	if (is_a_file(prog))
+	else if (is_a_file(prog))
 		return (prog);
-	if (get_env("PATH"))
+	else if (get_env("PATH"))
 	{
 		path = ft_split(get_env("PATH"), ':');
-		while (*path)
+		i = 0;
+		while (path[i])
 		{
-			prog_path = ft_strjoin(*path, ft_strjoin("/", prog));
+			prog_path = ft_strjoin(path[i], ft_strjoin("/", prog));
 			if (is_a_file(prog_path))
 				return (prog_path);
-			path++;
+			gc_free(prog_path);
+			i++;
 		}
 	}
 	return (NULL);

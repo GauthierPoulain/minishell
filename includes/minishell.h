@@ -58,12 +58,6 @@ typedef struct s_list
 	struct s_list	*next;
 }				t_list;
 
-typedef struct s_command
-{
-	char	*prog;
-	char	**argv;
-}				t_command;
-
 typedef struct s_env
 {
 	char	*key;
@@ -103,6 +97,36 @@ typedef struct s_history
 	int		act_pos;
 }				t_history;
 
+typedef struct s_pipes
+{
+	int		master;
+	int		slave;
+}				t_pipes;
+
+typedef struct s_command
+{
+	char	*prog;
+	char	*path;
+	char	**argv;
+	bool	need_pipe;
+	bool	pipe_stderr;
+	bool	need_redirect;
+	bool	redirect_from_file;
+	char	*redirect_path;
+	bool	redirect_to_fd;
+	int		redirect_fd;
+	bool	redirect_stdin;
+	bool	redirect_stdout;
+	bool	redirect_append;
+}				t_command;
+
+typedef struct s_iomng
+{
+	int		cin;
+	int		cout;
+	int		cerr;
+}				t_iomng;
+
 typedef struct s_minishell
 {
 	t_list			*gc;
@@ -116,6 +140,8 @@ typedef struct s_minishell
 	t_history		history;
 	char			**actual_str;
 	bool			use_termcaps;
+	t_pipes			pipes;
+	t_iomng			io;
 }				t_minishell;
 
 extern t_minishell	g_shell;
@@ -194,7 +220,7 @@ void	unset_env(char *key);
 char	*get_env(char *key);
 void	init_env(const char **envp);
 
-int		run_command(char *prog, char *argv[]);
+int		run_command(char **argv);
 
 int		check_type_at(int i);
 void	get_lexer(char *line);
@@ -242,5 +268,7 @@ void	add_signals_listeners(void);
 void	pre_prompt(void);
 
 int		get_this_char(char **c, char **retour);
+
+void	reset_cio(void);
 
 #endif

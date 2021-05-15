@@ -17,7 +17,7 @@ int	get_this_char(char **c, char **retour)
 		}
 		else
 		{
-			while ((0x80 & **c) == 1)
+			while ((0x80 & **c) != 0)
 			{
 				res = ft_strjoinc(res, **c);
 				*c += 1;
