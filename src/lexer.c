@@ -98,7 +98,7 @@ int	get_token_len(char *line, t_lexer *lexer)
 	{
 		while(line[i])
 		{
-			if (line[i] == ' ')
+			if (line[i] == ' ' || line[i] == '"')
 				return (len);
 			i++;
 			len++;
@@ -119,6 +119,8 @@ void	handle_space(char *line, t_token *token, t_lexer *lexer)
 	token->id = lexer->id++;
 	get_token_info(token, line, lexer->i, lexer->i + token_l);
 	ft_lstadd_back(&g_shell.tokens, ft_lstnew(token));
+	lexer->i += token_l + 1;
+	printf("actual rest [%s]\n", line + lexer->i);
 }
 
 void	get_lexer(char *line)
@@ -132,7 +134,7 @@ void	get_lexer(char *line)
 	while (lexer.i < (int)ft_strlen(line))
 	{
 		token = gc_malloc(sizeof(t_token));
-		if (line[lexer.i] == ' ' || lexer.i == 0)
+		if (line[lexer.i] == ' ' || line[lexer.i] == '"' || lexer.i == 0)
 			handle_space(line, token, &lexer);
 		// if (ft_ischarset(line[lexer.i], set))
 		// 	handle_tokens(line, token, &lexer);
