@@ -133,7 +133,13 @@ void	handle_space(char *line, t_token *token, t_lexer *lexer)
 		lexer->i++;
 	token_l = get_token_len(line, lexer);
 	if (token_l == -1)
-		ft_putstr_fd(2, "Syntax error");
+	{
+		ft_putstr_fd(2, "Syntax error\n");
+		ft_lstclear(&g_shell.tokens);
+		lexer->i = ft_strlen(line);
+		g_shell.last_return = 1;
+		return ;
+	}
 	token->id = lexer->id++;
 	get_token_info(token, line, lexer->i, lexer->i + token_l);
 	ft_lstadd_back(&g_shell.tokens, ft_lstnew(token));
