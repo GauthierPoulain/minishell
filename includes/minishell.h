@@ -231,7 +231,7 @@ size_t	get_word_len(char *word, int i);
 void	join_last_token(t_token *token);
 int		set_dollar_type(t_token *token, char *line, int start);
 
-char	*treat_backslash(char *word, int *i);
+char	*treat_backslash(char *word, int *i, int *trans);
 
 char	**parse_line(char *line);
 void	display_array(char **array);

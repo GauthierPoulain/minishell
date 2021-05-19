@@ -27,7 +27,7 @@ char	*bslash_first(char *word, int *i)
 	return (NULL);
 }
 
-char	*treat_backslash(char *word, int *i)
+char	*treat_backslash(char *word, int *i, int *trans)
 {
 	char	*new;
 
@@ -45,6 +45,11 @@ char	*treat_backslash(char *word, int *i)
 			new = ft_calloc_char((real_bslash(back)) + 1, '\\');
 			new = ft_strjoin(new, word + back);
 			*i += real_bslash(back);
+			if (back % 4 == 1)
+			{
+				*trans = 0;
+				printf("word during the changes [%s]\n", new);
+			}
 			return (new);
 		}
 		*i += back;
