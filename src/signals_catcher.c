@@ -9,7 +9,7 @@ static void	SIGINT_catcher(int code)
 	pre_prompt();
 }
 
-void	SIGQUIT_catcher(int code)
+static void	SIGQUIT_catcher(int code)
 {
 	(void)code;
 

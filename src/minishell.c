@@ -43,9 +43,9 @@ void	pre_prompt(void)
 int	main(int argc, const char **argv, const char **envp)
 {
 	(void)argc;
+	(void)argv;
 	init_shell();
 	init_env(envp);
-	set_env("SHELL", (char *)argv[0]);
 	set_input_mode();
 	add_signals_listeners();
 	if (isatty(STDIN_FILENO))
