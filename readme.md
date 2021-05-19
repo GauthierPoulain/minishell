@@ -1,11 +1,19 @@
-# minishell - 42 ![norminette](https://github.com/gauthierpoulain/minishell/workflows/norminette/badge.svg)
+# 42 Cursus (2021) - minishell
+
 As beautiful as a shell
 
+![norminette](https://github.com/gauthierpoulain/minishell/workflows/norminette/badge.svg)
 
 ## by:
-- ckurt (@Neryss)
-- gapoulai (@GauthierPoulain)
+
+- ckurt
+  ([@Neryss](https://github.com/Neryss))
+- gapoulai
+  ([@GauthierPoulain](https://github.com/GauthierPoulain))
 
 ## links:
-- [subject en](https://cdn.intra.42.fr/pdf/pdf/22551/en.subject.pdf)
-- [subject fr](https://cdn.intra.42.fr/pdf/pdf/22552/fr.subject.pdf)
+
+- subject:
+  [en](https://cdn.intra.42.fr/pdf/pdf/22551/en.subject.pdf)
+  ,
+  [fr](https://cdn.intra.42.fr/pdf/pdf/22552/fr.subject.pdf)

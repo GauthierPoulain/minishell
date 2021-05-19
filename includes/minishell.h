@@ -29,6 +29,12 @@
 # define	KEY_RIGHT			"[C"
 # define	KEY_LEFT			"[D"
 
+# define	CURSOR_RIGHT		"\033[1C"
+# define	CURSOR_LEFT			"\033[1D"
+# define	CURSOR_SAVE			"\033[s"
+# define	CURSOR_RECOVER		"\033[u"
+# define	CURSOR_DEL			"\033[K"
+
 # ifndef O_DIRECTORY
 #  define	O_DIRECTORY			__O_DIRECTORY
 # endif
@@ -142,6 +148,7 @@ typedef struct s_minishell
 	bool			use_termcaps;
 	t_pipes			pipes;
 	t_iomng			io;
+	pid_t			child;
 }				t_minishell;
 
 extern t_minishell	g_shell;
@@ -248,9 +255,15 @@ void	print_debug_termcap(char *c);
 void	remove_line(char ***line, t_reader *reader);
 void	put_in_term(char **line, char ***str, t_reader *reader);
 char	*which(char *prog);
-void	add_signals_listeners(void);
 void	pre_prompt(void);
 int		get_this_char(char **c, char **retour);
 void	reset_cio(void);
+void	cursor_op(char *op);
+void	add_signals_listeners(void);
+void	reset_signals_listeners(void);
+void	signals_listeners_to_child(void);
+void	SIGQUIT_catcher_subprocess(int code);
+void	SIGQUIT_catcher(int code);
+void	redir_sig_to_child(int signal);
 
 #endif

@@ -59,10 +59,8 @@ static t_command	init_cmd(char **argv)
 	return (cmd);
 }
 
-
 int	run_command(char **argv)
 {
-	pid_t		process;
 	t_command	cmd;
 	int			status;
 
@@ -82,22 +80,25 @@ int	run_command(char **argv)
 		}
 		else
 		{
-			process = fork();
-			if (process == -1)
+			signals_listeners_to_child();
+			g_shell.child = fork();
+			if (g_shell.child < 0)
 				close_shell("fork error");
-			else if (process == 0)
+			else if (g_shell.child == 0)
 			{
-				signal(SIGTERM, SIG_DFL);
+				reset_signals_listeners();
+				signal(SIGQUIT, SIGQUIT_catcher_subprocess);
 				exec(cmd);
 			}
 			else
 			{
-				
 				wait(&status);
 				status = (((status) & 0xff00) >> 8);
+				// signal(SIGQUIT, SIGQUIT_catcher);
 			}
 		}
 	}
+	add_signals_listeners();
 	set_input_mode();
 	return (status);
 }
