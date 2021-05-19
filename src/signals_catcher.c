@@ -19,13 +19,14 @@ void	SIGQUIT_catcher_subprocess(int code)
 {
 	(void)code;
 	printf("lolz\n");
-	gc_clean();
-	g_shell.last_return = 131;
-	exit(131);
+	// gc_clean();
+	// g_shell.last_return = 131;
+	// exit(131);
 }
 
 void	redir_sig_to_child(int code)
 {
+	printf("ionf go to child\n");
 	kill(g_shell.child, code);
 }
 

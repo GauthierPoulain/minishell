@@ -85,13 +85,13 @@ int	run_command(char **argv)
 				close_shell("fork error");
 			else if (g_shell.child == 0)
 			{
-				reset_signals_listeners();
+				// reset_signals_listeners();
 				signal(SIGQUIT, SIGQUIT_catcher_subprocess);
+				signal(SIGINT, SIGQUIT_catcher_subprocess);
 				exec(cmd);
 			}
 			else
 			{
-				// signal(SIGQUIT, void);
 				signals_listeners_to_child();
 				wait(&status);
 				status = (((status) & 0xff00) >> 8);
@@ -140,6 +140,7 @@ int	run_command(char **argv)
 // 			{
 // 				close(g_shell.pipes.slave);
 // 				while (read(g_shell.pipes.master, buffer, sizeof(buffer)))
+// 										printf("buffer = %s\n", buffer)			<<<<<<<<<----------- need to (speeeed) check this
 // 					ft_putcolor(buffer, _MAGENTA);
 // 				close(g_shell.pipes.master);
 // 				wait(&status);
