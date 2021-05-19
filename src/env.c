@@ -71,6 +71,10 @@ void	init_env(const char **envp)
 	}
 	set_env("SHLVL", ft_itoa(ft_atoi(get_env("SHLVL")) + 1));
 	set_env("OLDPWD", get_env("PWD"));
+	if (!get_env("TERM"))
+		set_env("TERM", "dumb");
+	if (!get_env("PATH"))
+		set_env("PATH", "/usr/gnu/bin:/usr/local/bin:/bin:/usr/bin:.");
 }
 
 char	**get_envp(void)

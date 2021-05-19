@@ -271,4 +271,6 @@ int		get_this_char(char **c, char **retour);
 
 void	reset_cio(void);
 
+void	SIGQUIT_catcher(int code);
+
 #endif

@@ -38,7 +38,8 @@ static void	check_termcap(char *c, t_reader *reader, char ***str)
 	{
 		if (reader->pos < reader->size)
 		{
-			tputs(cursor_right, 1, ft_putchar);
+			// tputs(cursor_right, 1, ft_putchar);
+			ft_putstr("\033[1C");
 			reader->pos++;
 		}
 	}
@@ -46,7 +47,8 @@ static void	check_termcap(char *c, t_reader *reader, char ***str)
 	{
 		if (reader->pos > 0)
 		{
-			tputs(cursor_left, 1, ft_putchar);
+			// tputs(cursor_left, 1, ft_putchar);
+			ft_putstr("\033[1D");
 			reader->pos--;
 		}
 	}

@@ -86,7 +86,10 @@ int	run_command(char **argv)
 			if (process == -1)
 				close_shell("fork error");
 			else if (process == 0)
+			{
+				signal(SIGQUIT, SIGQUIT_catcher);
 				exec(cmd);
+			}
 			else
 			{
 				wait(&status);
