@@ -121,7 +121,6 @@ int	get_token_len(char *line, t_lexer *lexer)
 // 		ft_putstr_fd(2, "Syntax error");
 // 	token->id = lexer->id++;
 // 	get_token_info(token, line, lexer->i, lexer->i + token_l);
-// }
 
 void	handle_space(char *line, t_token *token, t_lexer *lexer)
 {
