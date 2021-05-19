@@ -45,16 +45,6 @@ char	*treat_backslash(char *word, int *i, int *trans)
 		else
 		{
 			r_back = real_bslash(back);
-			if (back % 4 == 2)
-			{
-				if (word[r_back + 1] == '$')
-				{
-					r_back -= 1;
-					new = ft_calloc_char(r_back + 1, '\\');
-					*i = r_back;
-					return(new);
-				}
-			}
 			printf("r_back = %d\n", r_back);
 			new = ft_calloc_char(r_back + 1, '\\');
 			new = ft_strjoin(new, word + back);
@@ -65,6 +55,15 @@ char	*treat_backslash(char *word, int *i, int *trans)
 			{
 				*trans = 0;
 				printf("word during the changes [%s]\n", new);
+			}
+			else if (back % 4 == 2)
+			{
+				if (word[r_back + 1] == '$')
+				{
+					// *i += 1;
+					printf("word i : [%s]\n", word + *i);
+					return(new);
+				}
 			}
 			return (new);
 		}

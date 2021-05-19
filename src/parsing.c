@@ -48,6 +48,13 @@ char	**array_from_list(void)
 	return (words);
 }
 
+// char	***split_arrays(char **array)
+// {
+// 	char	***res;
+
+	
+// }
+
 char	**parse_line(char *line)
 {
 	char	**array;

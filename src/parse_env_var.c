@@ -58,21 +58,21 @@ char	*treat_doll(char *word, int *i, int *trans)
 {
 	int		slash;
 
-	if (*trans == 0)
+	if (*trans == 1)
 	{
-		*trans = 1;
+		*trans = 0;
 		*i += 1;
 		return (word);
 	}
 	if (DEBUG)
 		printf("word [%s]\n", word);
-	if (word[*i + 1] == '/')
+	if (word[(*i) + 1] == '/')
 		return (word);
-	slash = check_slash(word, *i + 1);
+	slash = check_slash(word, (*i) + 1);
 	if (slash)
-		return (treat_doll_slash(word, *i, slash));
+		return (treat_doll_slash(word, (*i), slash));
 	else
-		return (replace_dolls(word, *i));
+		return (replace_dolls(word, (*i)));
 	return (word);
 }
 
@@ -89,10 +89,12 @@ char	*parse_env_var(char *word)
 	{
 		if (new[i] == '\\')
 			new = treat_backslash(word, &i, &trans);
-		if (DEBUG)
-			printf("trans before doll [%d]\n", trans);
-		else if (new[i] == '$')
+		printf("new i [%c]\n", new[i]);
+		if (new[i] == '$')
+		{
+			printf("Treating dolls\n");
 			new = treat_doll(new, &i, &trans);
+		}
 		if ((new[i] && new[i] != '$')
 			|| (new[i] && new[i] == '$' && new[i + 1] == '/'))
 			i++;
