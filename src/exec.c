@@ -80,7 +80,6 @@ int	run_command(char **argv)
 		}
 		else
 		{
-			signals_listeners_to_child();
 			g_shell.child = fork();
 			if (g_shell.child < 0)
 				close_shell("fork error");
@@ -92,9 +91,10 @@ int	run_command(char **argv)
 			}
 			else
 			{
+				// signal(SIGQUIT, void);
+				signals_listeners_to_child();
 				wait(&status);
 				status = (((status) & 0xff00) >> 8);
-				// signal(SIGQUIT, SIGQUIT_catcher);
 			}
 		}
 	}

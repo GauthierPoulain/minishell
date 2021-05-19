@@ -148,7 +148,7 @@ typedef struct s_minishell
 	bool			use_termcaps;
 	t_pipes			pipes;
 	t_iomng			io;
-	pid_t			child;
+	int				child;
 }				t_minishell;
 
 extern t_minishell	g_shell;
