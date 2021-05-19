@@ -88,7 +88,10 @@ int	get_token_len(char *line, t_lexer *lexer)
 		while (line[i])
 		{
 			if (line[i] == '"')
-				return (len);
+			{
+				lexer->had_quotes = true;
+				return (len + 1);
+			}
 			i++;
 			len++;
 		}
@@ -107,10 +110,25 @@ int	get_token_len(char *line, t_lexer *lexer)
 	}
 }
 
+// void	get_after_quotes(char *line, t_token *token, t_lexer *lexer)
+// {
+// 	int	token_l;
+
+// 	while (line[lexer->i] == ' ')
+// 		lexer->i++;
+// 	token_l = get_token_len(line, lexer);
+// 	if (token_l == -1)
+// 		ft_putstr_fd(2, "Syntax error");
+// 	token->id = lexer->id++;
+// 	get_token_info(token, line, lexer->i, lexer->i + token_l);
+// }
+
 void	handle_space(char *line, t_token *token, t_lexer *lexer)
 {
 	int	token_l;
 
+	if (lexer->had_quotes)
+		lexer->had_quotes = false;
 	while (line[lexer->i] == ' ')
 		lexer->i++;
 	token_l = get_token_len(line, lexer);
@@ -119,7 +137,9 @@ void	handle_space(char *line, t_token *token, t_lexer *lexer)
 	token->id = lexer->id++;
 	get_token_info(token, line, lexer->i, lexer->i + token_l);
 	ft_lstadd_back(&g_shell.tokens, ft_lstnew(token));
-	lexer->i += token_l + 1;
+	lexer->i += token_l;
+	if (lexer->i > (int)ft_strlen(line))
+		lexer->i = ft_strlen(line);
 	printf("actual rest [%s]\n", line + lexer->i);
 }
 
@@ -127,18 +147,15 @@ void	get_lexer(char *line)
 {
 	t_lexer	lexer;
 	t_token	*token;
-	char	*set;
 
-	set = " \"";
 	init_lexer(&lexer);
 	while (lexer.i < (int)ft_strlen(line))
 	{
 		token = gc_malloc(sizeof(t_token));
-		if (line[lexer.i] == ' ' || line[lexer.i] == '"' || lexer.i == 0)
+		if (line[lexer.i] == ' ' || line[lexer.i] == '"' || lexer.i == 0 || lexer.had_quotes)
 			handle_space(line, token, &lexer);
-		// if (ft_ischarset(line[lexer.i], set))
-		// 	handle_tokens(line, token, &lexer);
-		lexer.i++;
+		if (line[lexer.i] != '"' && line[lexer.i] != ' ' && !lexer.had_quotes)
+			lexer.i++;
 	}
 	// if (ft_strlen(line) && (int)ft_strlen(line) != lexer.j)
 	// 	handle_single_token(line, token, &lexer);

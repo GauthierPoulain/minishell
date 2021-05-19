@@ -82,6 +82,7 @@ typedef struct s_lexer
 	int		i;
 	int		j;
 	int		id;
+	bool	had_quotes;
 }				t_lexer;
 
 typedef struct s_token
