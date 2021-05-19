@@ -39,7 +39,7 @@ void	remove_line(char ***str, t_reader *reader)
 	while (reader->pos < reader->size)
 	{
 		reader->pos++;
-		tputs(cursor_right, 1, ft_putchar);
+		cursor_op(CURSOR_RIGHT);
 	}
 	while (**str)
 	{

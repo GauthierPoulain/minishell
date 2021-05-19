@@ -54,7 +54,6 @@ void	unprint_char(char ***str, t_reader *reader)
 		cursor_op(CURSOR_DEL);
 		ft_putstr(get_str_rterm(*str + reader->pos - 1));
 		cursor_op(CURSOR_RECOVER);
-		tputs(restore_cursor, 1, ft_putchar);
 		reader->size--;
 		reader->pos--;
 	}
