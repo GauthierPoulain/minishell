@@ -20,7 +20,7 @@ char	*bslash_filled(char *word, int *i, int *trans, int back)
 
 	r_back = (((back / 2) + 1) / 2);
 	new = ft_calloc_char(r_back + 1, '\\');
-	new = ft_strjoin(new, word + back);
+	new = ft_strjoin(new, word + back + *i);
 	*i += (((back / 2) + 1) / 2);
 	if (back % 4 == 1)
 		*trans = 0;
@@ -32,7 +32,8 @@ char	*bslash_filled(char *word, int *i, int *trans, int back)
 
 char	*treat_backslash(char *word, int *i, int *trans)
 {
-	int	back;
+	int		back;
+	char	*new;
 
 	if (*i == 0)
 	{
@@ -44,8 +45,13 @@ char	*treat_backslash(char *word, int *i, int *trans)
 		}
 		else
 			return (bslash_filled(word, i, trans, back));
-		*i += back;
-		return (ft_strdup(word + 1));
+	}
+	else
+	{
+		back = bslash_f_count(word, *i);
+		new = ft_strndup(word, *i);
+		new = ft_strjoin(new, bslash_filled(word, i, trans, back));
+		return (new);
 	}
 	return (NULL);
 }

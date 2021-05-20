@@ -43,7 +43,6 @@ char	**array_from_list(void)
 	lst = g_shell.tokens;
 	while (i < size)
 	{
-		// if_forest(words, i, lst);
 		chose_parsing(&words[i], lst);
 		lst = lst->next;
 		i++;
