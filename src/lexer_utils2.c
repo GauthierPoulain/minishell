@@ -12,7 +12,7 @@ int	quotes_token_len(char *line, t_lexer *lexer)
 		if (line[i] == '"')
 		{
 			lexer->had_quotes = true;
-			return (len + 1);
+			return (len	+ 1);
 		}
 		i++;
 		len++;
