@@ -8,6 +8,8 @@ on:
 
 jobs:
   badge-it:
+    runs-on: ubuntu-latest
+    name: badge-it
     steps:
       - name: Add Badges
         uses: rocktimsaikia/badge-it@master
