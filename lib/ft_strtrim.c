@@ -12,7 +12,6 @@ char	*ft_strtrim_spaces(char *str)
 	{
 		while (ft_isspace(str[len - 1]))
 		{
-			printf("len = %zu\n", len);
 			len--;
 		}
 	}

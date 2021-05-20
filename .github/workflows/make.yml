@@ -1,4 +1,4 @@
-name: norminette
+name: make
 
 on:
   push:
@@ -7,9 +7,10 @@ on:
     branches: [master]
 
 jobs:
-  norminette:
+  build:
     runs-on: ubuntu-latest
-    name: Norminette
+
     steps:
       - uses: actions/checkout@v2
-      - uses: alexandregv/norminette-action@v3
+      - name: make
+        run: make

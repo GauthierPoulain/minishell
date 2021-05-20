@@ -28,6 +28,11 @@ int	get_this_char(char **c, char **retour)
 	return (1);
 }
 
+void	cursor_op(char *op)
+{
+	ft_putstr(op);
+}
+
 static void	check_termcap(char *c, t_reader *reader, char ***str)
 {
 	if (!ft_strcmp(c, KEY_UP))
@@ -38,7 +43,7 @@ static void	check_termcap(char *c, t_reader *reader, char ***str)
 	{
 		if (reader->pos < reader->size)
 		{
-			tputs(cursor_right, 1, ft_putchar);
+			cursor_op(CURSOR_RIGHT);
 			reader->pos++;
 		}
 	}
@@ -46,7 +51,7 @@ static void	check_termcap(char *c, t_reader *reader, char ***str)
 	{
 		if (reader->pos > 0)
 		{
-			tputs(cursor_left, 1, ft_putchar);
+			cursor_op(CURSOR_LEFT);
 			reader->pos--;
 		}
 	}

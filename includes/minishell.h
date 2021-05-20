@@ -29,6 +29,12 @@
 # define	KEY_RIGHT			"[C"
 # define	KEY_LEFT			"[D"
 
+# define	CURSOR_RIGHT		"\033[1C"
+# define	CURSOR_LEFT			"\033[1D"
+# define	CURSOR_SAVE			"\033[s"
+# define	CURSOR_RECOVER		"\033[u"
+# define	CURSOR_DEL			"\033[K"
+
 # ifndef O_DIRECTORY
 #  define	O_DIRECTORY			__O_DIRECTORY
 # endif
@@ -143,6 +149,7 @@ typedef struct s_minishell
 	bool			use_termcaps;
 	t_pipes			pipes;
 	t_iomng			io;
+	pid_t			child;
 }				t_minishell;
 
 extern t_minishell	g_shell;
@@ -205,7 +212,6 @@ bool	ft_isinrange(long long value, long long min, long long max);
 
 int		close_shell(char *msg);
 void	process_input(char *line);
-
 int		builtin_cd(char **argv);
 int		builtin_pwd(void);
 char	*get_pwd(void);
@@ -215,14 +221,11 @@ char	**get_envp(void);
 int		builtin_which(char **argv);
 int		builtin_export(char **argv);
 int		builtin_unset(char **argv);
-
 void	set_env(char *key, char *value);
 void	unset_env(char *key);
 char	*get_env(char *key);
 void	init_env(const char **envp);
-
 int		run_command(char **argv);
-
 int		check_type_at(int i);
 void	get_lexer(char *line);
 void	init_lexer(t_lexer *lexer);
@@ -231,45 +234,37 @@ char	*parse_env_var(char *word);
 size_t	get_word_len(char *word, int i);
 void	join_last_token(t_token *token);
 int		set_dollar_type(t_token *token, char *line, int start);
-
 char	*treat_backslash(char *word, int *i, int *trans);
-
 char	**parse_line(char *line);
 void	display_array(char **array);
 int		check_occurence(char *str, char c);
 int		quotes_token_len(char *line, t_lexer *lexer);
 char	**array_from_list(void);
 void	display_array(char **array);
-
 void	set_input_mode(void);
 void	reset_input_mode(void);
-
 char	*read_term(void);
 bool	process_key(char *c, t_reader *reader, char ***str);
 void	unprint_char(char ***str, t_reader *reader);
 void	print_char(char ***str, char *c, t_reader *reader);
 char	*get_str_rterm(char **str);
-
 int		get_next_line(int fd, char **line);
-
 void	history_add(char **line);
 char	*history_before(char ***str, t_reader *reader);
 char	*history_after(char ***str, t_reader *reader);
-
 void	print_debug_termcap(char *c);
-
 void	remove_line(char ***line, t_reader *reader);
-
 void	put_in_term(char **line, char ***str, t_reader *reader);
-
 char	*which(char *prog);
-
-void	add_signals_listeners(void);
-
 void	pre_prompt(void);
-
 int		get_this_char(char **c, char **retour);
-
 void	reset_cio(void);
+void	cursor_op(char *op);
+void	add_signals_listeners(void);
+void	signals_listeners_to_child(void);
+void	SIGQUIT_catcher_subprocess(int code);
+void	SIGQUIT_catcher(int code);
+void	redir_sig_to_child(int signal);
+int		builtin_exit(char **argv);
 
 #endif

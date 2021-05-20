@@ -36,67 +36,68 @@ HEADERS = \
 
 SRCS_LIB = \
 	./lib/ft_atoi.c \
-	./lib/ft_itoa.c \
 	./lib/ft_bzero.c \
-	./lib/ft_nblen.c \
+	./lib/ft_calloc.c \
 	./lib/ft_is_p1.c \
 	./lib/ft_is_p2.c \
+	./lib/ft_itoa.c \
 	./lib/ft_lstadd_back.c \
 	./lib/ft_lstadd_front.c \
+	./lib/ft_lstclear.c \
+	./lib/ft_lstlast.c \
 	./lib/ft_lstnew.c \
 	./lib/ft_lstsize.c \
+	./lib/ft_memcpy.c \
+	./lib/ft_nblen.c \
+	./lib/ft_putchar.c \
 	./lib/ft_putcolor.c \
 	./lib/ft_putstr.c \
-	./lib/ft_putchar.c \
+	./lib/ft_split_spaces.c \
+	./lib/ft_split.c \
+	./lib/ft_strcat.c \
 	./lib/ft_strchr.c \
 	./lib/ft_strcmp.c \
 	./lib/ft_strdup.c \
 	./lib/ft_strjoin.c \
 	./lib/ft_strlen.c \
-	./lib/gc_clean.c \
-	./lib/gc_free.c \
-	./lib/gc_malloc.c \
-	./lib/ft_calloc.c \
-	./lib/ft_split.c \
-	./lib/ft_split_spaces.c \
-	./lib/ft_memcpy.c \
-	./lib/ft_strcat.c \
-	./lib/ft_strstr.c \
 	./lib/ft_strreplace.c \
-	./lib/get_next_line.c \
-	./lib/ft_lstclear.c \
+	./lib/ft_strstr.c \
 	./lib/ft_strtrim.c \
 	./lib/ft_substr.c \
-	./lib/gc_free_tab.c \
 	./lib/ft_tab_len.c \
-	./lib/ft_lstlast.c \
+	./lib/gc_clean.c \
+	./lib/gc_free_tab.c \
+	./lib/gc_free.c \
+	./lib/gc_malloc.c \
+	./lib/get_next_line.c \
 
 SRCS_MS = \
 	./src/builtin_cd.c \
-	./src/builtin_env.c \
-	./src/builtin_pwd.c \
 	./src/builtin_echo.c \
-	./src/builtin_which.c \
+	./src/builtin_env.c \
+	./src/builtin_exit.c \
 	./src/builtin_export.c \
+	./src/builtin_pwd.c \
 	./src/builtin_unset.c \
+	./src/builtin_which.c \
 	./src/close_handler.c \
-	./src/minishell.c \
-	./src/process_input.c \
+	./src/debugging.c \
 	./src/env.c \
 	./src/exec.c \
-	./src/read_line.c \
-	./src/termcap.c \
-	./src/termctl.c \
 	./src/history.c \
-	./src/lexer.c \
 	./src/lexer_utils.c \
 	./src/lexer_utils2.c \
-	./src/parsing.c \
-	./src/parsing_utils.c \
-	./src/parse_env_var.c \
-	./src/signals_catcher.c \
-	./src/debugging.c \
+	./src/lexer.c \
+	./src/minishell.c \
 	./src/parse_backslash.c \
+	./src/parse_env_var.c \
+	./src/parsing_utils.c \
+	./src/parsing.c \
+	./src/process_input.c \
+	./src/read_line.c \
+	./src/signals_catcher.c \
+	./src/termcap.c \
+	./src/termctl.c \
 
 SRCS = $(SRCS_LIB) $(SRCS_MS)
 

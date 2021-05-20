@@ -49,18 +49,18 @@ void	unprint_char(char ***str, t_reader *reader)
 	if (reader->pos < reader->size)
 	{
 		*str = delete_char(*str, reader->pos - 1);
-		tputs(cursor_left, 1, ft_putchar);
-		tputs(save_cursor, 1, ft_putchar);
+		cursor_op(CURSOR_LEFT);
+		cursor_op(CURSOR_SAVE);
+		cursor_op(CURSOR_DEL);
 		ft_putstr(get_str_rterm(*str + reader->pos - 1));
-		ft_putstr("     ");
-		tputs(restore_cursor, 1, ft_putchar);
+		cursor_op(CURSOR_RECOVER);
 		reader->size--;
 		reader->pos--;
 	}
 	else
 	{
-		tputs(cursor_left, 1, ft_putchar);
-		tputs(delete_character, 1, ft_putchar);
+		cursor_op(CURSOR_LEFT);
+		cursor_op(CURSOR_DEL);
 		*str = delete_char(*str, reader->pos - 1);
 		reader->size--;
 		reader->pos--;
@@ -72,10 +72,10 @@ void	print_char(char ***str, char *c, t_reader *reader)
 	if (reader->pos < reader->size)
 	{
 		*str = add_char(*str, c, reader->pos);
-		tputs(save_cursor, 1, ft_putchar);
+		cursor_op(CURSOR_SAVE);
 		ft_putstr(get_str_rterm(*str + reader->pos));
-		tputs(restore_cursor, 1, ft_putchar);
-		tputs(cursor_right, 1, ft_putchar);
+		cursor_op(CURSOR_RECOVER);
+		cursor_op(CURSOR_RIGHT);
 		reader->size++;
 		reader->pos++;
 	}

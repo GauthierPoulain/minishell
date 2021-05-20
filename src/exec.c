@@ -3,7 +3,7 @@
 static int	exec_builtin(char *prog, char **argv)
 {
 	if (!ft_strcmp(prog, "exit"))
-		return (close_shell(NULL));
+		return (builtin_exit(argv));
 	else if (!ft_strcmp(prog, "cd"))
 		return (builtin_cd(argv));
 	else if (!ft_strcmp(prog, "pwd"))
@@ -59,10 +59,8 @@ static t_command	init_cmd(char **argv)
 	return (cmd);
 }
 
-
 int	run_command(char **argv)
 {
-	pid_t		process;
 	t_command	cmd;
 	int			status;
 
@@ -82,18 +80,24 @@ int	run_command(char **argv)
 		}
 		else
 		{
-			process = fork();
-			if (process == -1)
+			g_shell.child = fork();
+			if (g_shell.child < 0)
 				close_shell("fork error");
-			else if (process == 0)
+			else if (g_shell.child == 0)
+			{
+				signal(SIGQUIT, exit);
+				signal(SIGINT, exit);
 				exec(cmd);
+			}
 			else
 			{
+				signals_listeners_to_child();
 				wait(&status);
 				status = (((status) & 0xff00) >> 8);
 			}
 		}
 	}
+	add_signals_listeners();
 	set_input_mode();
 	return (status);
 }
@@ -135,6 +139,7 @@ int	run_command(char **argv)
 // 			{
 // 				close(g_shell.pipes.slave);
 // 				while (read(g_shell.pipes.master, buffer, sizeof(buffer)))
+// 										printf("buffer = %s\n", buffer)			<<<<<<<<<----------- need to (speeeed) check this
 // 					ft_putcolor(buffer, _MAGENTA);
 // 				close(g_shell.pipes.master);
 // 				wait(&status);
