@@ -86,6 +86,7 @@ SRCS_MS = \
 	./src/exec.c \
 	./src/history.c \
 	./src/lexer_utils.c \
+	./src/lexer_utils2.c \
 	./src/lexer.c \
 	./src/minishell.c \
 	./src/parse_backslash.c \

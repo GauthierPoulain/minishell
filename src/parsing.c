@@ -15,8 +15,6 @@ void	if_forest(char **words, int i, t_list *lst)
 	}
 	else if (((t_token *)lst->content)->type == 2)
 		words[i] = parse_env_var(((t_token *)lst->content)->str);
-// else if (((t_token *)lst->content)->type == 3)
-// 	words[i] = ft_strdup(((t_token *)lst->content)->str + 1);
 	else
 	{
 		if (check_occurence(((t_token *)lst->content)->str, '$')
@@ -25,6 +23,11 @@ void	if_forest(char **words, int i, t_list *lst)
 		else
 			words[i] = ft_strdup(((t_token *)lst->content)->str);
 	}
+}
+
+void	chose_parsing(char **word, t_list *lst)
+{
+	*word = parse_env_var(((t_token *)lst->content)->str);
 }
 
 char	**array_from_list(void)
@@ -40,7 +43,7 @@ char	**array_from_list(void)
 	lst = g_shell.tokens;
 	while (i < size)
 	{
-		if_forest(words, i, lst);
+		chose_parsing(&words[i], lst);
 		lst = lst->next;
 		i++;
 	}
