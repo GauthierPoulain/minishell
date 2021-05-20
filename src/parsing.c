@@ -25,6 +25,11 @@ void	if_forest(char **words, int i, t_list *lst)
 	}
 }
 
+void	chose_parsing(char **word, t_list *lst)
+{
+	*word = parse_env_var(((t_token *)lst->content)->str);
+}
+
 char	**array_from_list(void)
 {
 	int		size;
@@ -38,7 +43,8 @@ char	**array_from_list(void)
 	lst = g_shell.tokens;
 	while (i < size)
 	{
-		if_forest(words, i, lst);
+		// if_forest(words, i, lst);
+		chose_parsing(&words[i], lst);
 		lst = lst->next;
 		i++;
 	}

@@ -89,7 +89,6 @@ char	*parse_env_var(char *word)
 	{
 		if (new[i] == '\\')
 			new = treat_backslash(word, &i, &trans);
-		printf("new i [%c]\n", new[i]);
 		if (new[i] == '$')
 		{
 			printf("Treating dolls\n");
@@ -103,3 +102,17 @@ char	*parse_env_var(char *word)
 		printf("retun new : [%s]\n", new);
 	return (new);
 }
+
+// char	*treat_dolls(t_token *token)
+// {
+
+// }
+
+// char	*parse_token(t_token *token)
+// {
+// 	int	i;
+
+// 	i = 0;
+// 	if (token->type == 2)
+// 		treat_dolls()
+// }
