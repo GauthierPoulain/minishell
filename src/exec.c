@@ -39,6 +39,7 @@ static int	exec(t_command cmd)
 	// execve(path, argv, get_envp());
 	// status = errno;
 	// ft_putchar(EOF);
+
 	if (!cmd.need_pipe && !cmd.need_redirect)
 		status = exec_pure(cmd);
 	else
