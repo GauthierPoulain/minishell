@@ -264,5 +264,6 @@ void	signals_listeners_to_child(void);
 void	SIGQUIT_catcher_subprocess(int code);
 void	SIGQUIT_catcher(int code);
 void	redir_sig_to_child(int signal);
+int		builtin_exit(char **argv);
 
 #endif
