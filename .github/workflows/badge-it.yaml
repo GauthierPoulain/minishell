@@ -8,9 +8,10 @@ on:
 
 jobs:
   badge-it:
-    - name: Add Badges
-      uses: rocktimsaikia/badge-it@master
-      with:
-        GITHUB_TOKEN: ${{ secrets.MY_GITHUB_TOKEN }}
-        badges: "gh_repo_size, gh_code_size"
-        badge-style: "flat-square"
+    steps:
+      - name: Add Badges
+        uses: rocktimsaikia/badge-it@master
+        with:
+          GITHUB_TOKEN: ${{ secrets.MY_GITHUB_TOKEN }}
+          badges: "gh_repo_size, gh_code_size"
+          badge-style: "flat-square"
