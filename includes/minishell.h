@@ -260,7 +260,6 @@ int		get_this_char(char **c, char **retour);
 void	reset_cio(void);
 void	cursor_op(char *op);
 void	add_signals_listeners(void);
-void	reset_signals_listeners(void);
 void	signals_listeners_to_child(void);
 void	SIGQUIT_catcher_subprocess(int code);
 void	SIGQUIT_catcher(int code);

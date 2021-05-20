@@ -30,12 +30,6 @@ void	signals_listeners_to_child(void)
 	signal(SIGQUIT, redir_sig_to_child);
 }
 
-void	reset_signals_listeners(void)
-{
-	signal(SIGINT, SIG_DFL);
-	signal(SIGQUIT, SIG_DFL);
-}
-
 void	add_signals_listeners(void)
 {
 	signal(SIGINT, SIGINT_catcher);
