@@ -1,4 +1,4 @@
-# 42 Cursus (2021) - minishell
+# 42 Cursus (2021) - minishell ![GitHub](<https://img.shields.io/github/repo-size/GauthierPoulain/minishell?style=flat-square>) ![GitHub](<https://img.shields.io/github/languages/code-size/GauthierPoulain/minishell?style=flat-square>)
 
 As beautiful as a shell
 
