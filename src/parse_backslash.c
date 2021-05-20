@@ -13,26 +13,27 @@ static size_t	bslash_f_count(char *word, int i)
 	return (j);
 }
 
-static int	real_bslash(int nb)
+char	*bslash_filled(char *word, int *i, int *trans, int back)
 {
-	// if (nb % 2)
-	// 	return (0);
-	return (((nb / 2) + 1) / 2);
-}
+	char	*new;
+	int		r_back;
 
-char	*bslash_first(char *word, int *i)
-{
-	(void)word;
-	(void)i;
-	return (NULL);
+	r_back = (((back / 2) + 1) / 2);
+	new = ft_calloc_char(r_back + 1, '\\');
+	new = ft_strjoin(new, word + back);
+	*i += (((back / 2) + 1) / 2);
+	if (back % 4 == 1)
+		*trans = 0;
+	else if (back % 4 == 2)
+		if (word[r_back + 1] == '$')
+			return (new);
+	return (new);
 }
 
 char	*treat_backslash(char *word, int *i, int *trans)
 {
-	char	*new;
-
 	int	back;
-	int	r_back;
+
 	if (*i == 0)
 	{
 		back = bslash_f_count(word, *i);
@@ -42,18 +43,7 @@ char	*treat_backslash(char *word, int *i, int *trans)
 			return ("");
 		}
 		else
-		{
-			r_back = real_bslash(back);
-			new = ft_calloc_char(r_back + 1, '\\');
-			new = ft_strjoin(new, word + back);
-			*i += real_bslash(back);;
-			if (back % 4 == 1)
-				*trans = 0;
-			else if (back % 4 == 2)
-				if (word[r_back + 1] == '$')
-					return(new);
-			return (new);
-		}
+			return (bslash_filled(word, i, trans, back));
 		*i += back;
 		return (ft_strdup(word + 1));
 	}

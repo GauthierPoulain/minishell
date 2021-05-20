@@ -90,6 +90,7 @@ SRCS_MS = \
 	./src/history.c \
 	./src/lexer.c \
 	./src/lexer_utils.c \
+	./src/lexer_utils2.c \
 	./src/parsing.c \
 	./src/parsing_utils.c \
 	./src/parse_env_var.c \

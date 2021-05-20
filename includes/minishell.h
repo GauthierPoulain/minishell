@@ -237,7 +237,7 @@ char	*treat_backslash(char *word, int *i, int *trans);
 char	**parse_line(char *line);
 void	display_array(char **array);
 int		check_occurence(char *str, char c);
-int		get_dollar_len(char *line, int i);
+int		quotes_token_len(char *line, t_lexer *lexer);
 char	**array_from_list(void);
 void	display_array(char **array);
 
