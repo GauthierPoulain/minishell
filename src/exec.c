@@ -85,6 +85,7 @@ int	run_command(char **argv)
 				close_shell("fork error");
 			else if (g_shell.child == 0)
 			{
+				pouet
 				// reset_signals_listeners();
 				signal(SIGQUIT, SIGQUIT_catcher_subprocess);
 				signal(SIGINT, SIGQUIT_catcher_subprocess);
