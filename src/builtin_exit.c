@@ -2,6 +2,11 @@
 
 int	builtin_exit(char **argv)
 {
+	int		ret;
+
+	ret = 0;
+	if (argv[1])
+		ret = ft_atoi(argv[1]);
 	gc_clean();
-	exit(ft_atoi(argv[1]));
+	exit(ret);
 }

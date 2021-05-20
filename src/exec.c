@@ -3,7 +3,7 @@
 static int	exec_builtin(char *prog, char **argv)
 {
 	if (!ft_strcmp(prog, "exit"))
-		return (close_shell(NULL));
+		return (builtin_exit(argv));
 	else if (!ft_strcmp(prog, "cd"))
 		return (builtin_cd(argv));
 	else if (!ft_strcmp(prog, "pwd"))
