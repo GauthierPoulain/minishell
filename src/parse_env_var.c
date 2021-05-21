@@ -35,6 +35,7 @@ char	*replace_dolls(char *word, int i)
 		env_value = get_env(ft_strndup(word + i + 1, len));
 	ret = ft_strjoin(ret, env_value);
 	ret = ft_strjoin(ret, word + i + len + 1);
+	printf("dollars ret [%s]\n", ret);
 	return (ret);
 }
 
