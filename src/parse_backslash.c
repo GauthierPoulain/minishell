@@ -21,7 +21,7 @@ char	*bslash_filled(char *word, int *i, int *trans, int back)
 	r_back = back / 2;
 	new = ft_calloc_char(r_back + 1, '\\');
 	new = ft_strjoin(new, word + back + *i);
-	*i += back / 2;
+	*i += r_back;
 	if (back % 4 == 1 || back % 4 == 3)
 		*trans = 1;
 	return (new);
