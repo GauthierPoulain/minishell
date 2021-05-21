@@ -77,7 +77,7 @@ char	*treat_doll(char *word, int *i, int *trans)
 	return (word);
 }
 
-char	*parse_env_var(char *word)
+char	*parse_tokens(char *word)
 {
 	int		i;
 	int		trans;

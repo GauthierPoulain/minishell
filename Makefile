@@ -90,9 +90,10 @@ SRCS_MS = \
 	./src/lexer.c \
 	./src/minishell.c \
 	./src/parse_backslash.c \
-	./src/parse_env_var.c \
+	./src/parse_tokens.c \
 	./src/parsing_utils.c \
 	./src/parsing.c \
+	./src/handle_d_quotes.c \
 	./src/process_input.c \
 	./src/read_line.c \
 	./src/signals_catcher.c \
