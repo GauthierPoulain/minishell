@@ -15,7 +15,7 @@ void	set_output(t_command cmd)
 	{
 		if (cmd.redirect_stdout)
 			dup2(g_shell.pipes.to_son[1], 1);
-		if (cmd.pipe_stderr)
+		if (cmd.redirect_stderr)
 			dup2(g_shell.pipes.to_son[1], 2);
 	}
 	else if (cmd.need_pipe)
@@ -51,7 +51,7 @@ void	manage_output(t_command cmd)
 	buffer = ft_calloc(sizeof(char) * (GNL_BUFFER_SIZE + 1));
 	ft_putchar_fd(g_shell.pipes.to_father[1], EOF);
 	while (read(g_shell.pipes.to_son[0], buffer, GNL_BUFFER_SIZE) > 0
-			&& !(!g_shell.read_pipe && ft_strchr(buffer, EOF)))
+		&& !(!g_shell.read_pipe && ft_strchr(buffer, EOF)))
 		process_pipe(buffer);
 	process_pipe(buffer);
 	close_subprocess(0);

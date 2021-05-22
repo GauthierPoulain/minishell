@@ -30,3 +30,15 @@ int	exec_builtin(char *prog, char **argv)
 	else
 		return (1);
 }
+
+void	wait_outputmanager(t_command cmd)
+{
+	char		buff;
+
+	if (cmd.need_pipe || cmd.need_redirect)
+	{
+		set_output(cmd);
+		while (read(g_shell.pipes.to_father[0], &buff, 1) > 0 && buff != EOF)
+			;
+	}
+}

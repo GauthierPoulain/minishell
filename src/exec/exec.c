@@ -42,6 +42,10 @@ void	close_pipe(void)
 		waitpid(g_shell.outputmngr, NULL, 0);
 	}
 	g_shell.outputmngr = 0;
+	close(g_shell.pipes.to_father[0]);
+	close(g_shell.pipes.to_father[1]);
+	close(g_shell.pipes.to_son[0]);
+	close(g_shell.pipes.to_son[1]);
 	reset_output();
 }
 
@@ -49,17 +53,11 @@ int	run_command(char **argv)
 {
 	t_command	cmd;
 	int			status;
-	char		buff;
 
 	cmd = init_cmd_struct(argv);
 	status = 0;
 	reset_input_mode();
-	if (cmd.need_pipe || cmd.need_redirect)
-	{
-		set_output(cmd);
-	}
-	while (read(g_shell.pipes.to_father[0], &buff, 1) > 0 && buff != EOF)
-		;
+	wait_outputmanager(cmd);
 	if (!ft_strcmp(cmd.path, "builtin"))
 		status = exec_builtin(cmd.prog, argv);
 	else
