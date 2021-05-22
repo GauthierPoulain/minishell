@@ -44,11 +44,9 @@ void	manage_output(t_command cmd)
 	close(g_shell.pipes.process);
 	buffer = ft_calloc(sizeof(char) * (GNL_BUFFER_SIZE + 1));
 	while (read(g_shell.pipes.target, buffer, GNL_BUFFER_SIZE) > 0
-		&& !ft_strchr(buffer, EOF)
-		)
+		&& !ft_strchr(buffer, EOF))
 		process_pipe(buffer);
 	process_pipe(buffer);
-	
 	gc_free(buffer);
 	ft_putstr("done\n");
 	close_subprocess(0);

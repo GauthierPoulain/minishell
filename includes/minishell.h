@@ -267,5 +267,6 @@ void		reset_output(void);
 void		manage_output(t_command cmd);
 void		cut_eof(char *str);
 void		process_pipe(char *buffer);
+int			exec_builtin(char *prog, char **argv);
 
 #endif

@@ -1,27 +1,5 @@
 #include "../../includes/minishell.h"
 
-static int	exec_builtin(char *prog, char **argv)
-{
-	if (!ft_strcmp(prog, "exit"))
-		return (builtin_exit(argv));
-	else if (!ft_strcmp(prog, "cd"))
-		return (builtin_cd(argv));
-	else if (!ft_strcmp(prog, "pwd"))
-		return (builtin_pwd());
-	else if (!ft_strcmp(prog, "env"))
-		return (builtin_env());
-	else if (!ft_strcmp(prog, "echo"))
-		return (builtin_echo(argv));
-	else if (!ft_strcmp(prog, "which"))
-		return (builtin_which(argv));
-	else if (!ft_strcmp(prog, "export"))
-		return (builtin_export(argv));
-	else if (!ft_strcmp(prog, "unset"))
-		return (builtin_unset(argv));
-	else
-		return (1);
-}
-
 int	exec(t_command cmd)
 {
 	execve(cmd.path, cmd.argv, get_envp());
@@ -55,6 +33,16 @@ static void	subprocess(t_command cmd, int *status)
 	}
 }
 
+void	close_pipe(void)
+{
+	if (g_shell.outputmngr)
+	{
+		ft_putchar(EOF);
+		waitpid(g_shell.outputmngr, NULL, 0);
+		close(g_shell.pipes.process);
+	}
+}
+
 int	run_command(char **argv)
 {
 	t_command	cmd;
@@ -75,12 +63,7 @@ int	run_command(char **argv)
 			subprocess(cmd, &status);
 	}
 	g_shell.child = 0;
-	if (g_shell.outputmngr)
-	{
-		ft_putchar(EOF);
-		waitpid(g_shell.outputmngr, NULL, 0);
-		close(g_shell.pipes.process);
-	}
+	close_pipe();
 	reset_output();
 	g_shell.outputmngr = 0;
 	add_signals_listeners();
