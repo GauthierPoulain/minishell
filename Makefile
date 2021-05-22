@@ -72,6 +72,7 @@ SRCS_LIB = \
 	./lib/get_next_line.c \
 
 SRCS_MS = \
+	./src/exec/exec.c \
 	./src/builtin_cd.c \
 	./src/builtin_echo.c \
 	./src/builtin_env.c \
@@ -83,7 +84,6 @@ SRCS_MS = \
 	./src/close_handler.c \
 	./src/debugging.c \
 	./src/env.c \
-	./src/exec.c \
 	./src/history.c \
 	./src/lexer_utils.c \
 	./src/lexer_utils2.c \

@@ -2,13 +2,6 @@
 
 t_minishell	g_shell;
 
-void	reset_cio(void)
-{
-	g_shell.io.cin = 0;
-	g_shell.io.cout = 1;
-	g_shell.io.cerr = 2;
-}
-
 static void	init_shell(void)
 {
 	g_shell.gc = NULL;
@@ -19,11 +12,13 @@ static void	init_shell(void)
 	ft_lstadd_front(&g_shell.history.lst, ft_lstnew(NULL));
 	tcgetattr(STDIN_FILENO, &g_shell.save);
 	g_shell.use_termcaps = false;
+	g_shell.saved_stdout = dup(1);
+	g_shell.saved_stderr = dup(2);
 }
 
 void	pre_prompt(void)
 {
-	if (get_env("USER") && get_env("HOME"))
+	if (get_env("USER"))
 	{
 		ft_putcolor(get_env("USER"), _CYAN);
 		ft_putcolor(" in ", _DARKGRAY);
@@ -55,7 +50,6 @@ int	main(int argc, const char **argv, const char **envp)
 			pre_prompt();
 			g_shell.history.act_pos = 0;
 			process_input(ft_strtrim_spaces(read_term()));
-			reset_cio();
 		}
 	}
 	else

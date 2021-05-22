@@ -106,8 +106,8 @@ typedef struct s_history
 
 typedef struct s_pipes
 {
-	int		master;
-	int		slave;
+	int		process;
+	int		target;
 }				t_pipes;
 
 typedef struct s_command
@@ -115,6 +115,7 @@ typedef struct s_command
 	char	*prog;
 	char	*path;
 	char	**argv;
+	char	*output;
 	bool	need_pipe;
 	bool	pipe_stderr;
 	bool	need_redirect;
@@ -126,13 +127,6 @@ typedef struct s_command
 	bool	redirect_stdout;
 	bool	redirect_append;
 }				t_command;
-
-typedef struct s_iomng
-{
-	int		cin;
-	int		cout;
-	int		cerr;
-}				t_iomng;
 
 typedef struct s_minishell
 {
@@ -148,8 +142,9 @@ typedef struct s_minishell
 	char			**actual_str;
 	bool			use_termcaps;
 	t_pipes			pipes;
-	t_iomng			io;
 	pid_t			child;
+	int				saved_stdout;
+	int				saved_stderr;
 }				t_minishell;
 
 extern t_minishell	g_shell;
@@ -258,7 +253,6 @@ void	put_in_term(char **line, char ***str, t_reader *reader);
 char	*which(char *prog);
 void	pre_prompt(void);
 int		get_this_char(char **c, char **retour);
-void	reset_cio(void);
 void	cursor_op(char *op);
 void	add_signals_listeners(void);
 void	signals_listeners_to_child(void);
@@ -266,5 +260,6 @@ void	SIGQUIT_catcher_subprocess(int code);
 void	SIGQUIT_catcher(int code);
 void	redir_sig_to_child(int signal);
 int		builtin_exit(char **argv);
+void	close_subprocess(int code);
 
 #endif
