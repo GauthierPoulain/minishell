@@ -22,7 +22,7 @@
 # define	PRINT_TERMCAP		0
 
 # define	KEY_BUFFER_SIZE		4096
-# define	GNL_BUFFER_SIZE		20
+# define	GNL_BUFFER_SIZE		1024
 
 # define	KEY_UP				"[A"
 # define	KEY_DOWN			"[B"
@@ -106,8 +106,8 @@ typedef struct s_history
 
 typedef struct s_pipes
 {
-	int		process;
-	int		target;
+	int		to_father[2];
+	int		to_son[2];
 }				t_pipes;
 
 typedef struct s_command
@@ -122,7 +122,7 @@ typedef struct s_command
 	char	*redirect_path;
 	bool	redirect_to_fd;
 	int		redirect_fd;
-	bool	redirect_stdin;
+	bool	redirect_stderr;
 	bool	redirect_stdout;
 	bool	redirect_append;
 }				t_command;
@@ -145,6 +145,7 @@ typedef struct s_minishell
 	pid_t			outputmngr;
 	int				saved_stdout;
 	int				saved_stderr;
+	bool			read_pipe;
 }				t_minishell;
 
 extern t_minishell	g_shell;
@@ -163,6 +164,7 @@ void		ft_putcolor(char *str, char *color);
 void		ft_putstr_fd(int fd, char *str);
 void		ft_putstr(char *str);
 int			ft_putchar(int c);
+int			ft_putchar_fd(int fd, int c);
 int			ft_strcmp(const char *s1, const char *s2);
 char		*ft_strdup(char *s1);
 char		*ft_strjoin(char *s1, char *s2);
@@ -257,7 +259,7 @@ void		cursor_op(char *op);
 void		add_signals_listeners(void);
 void		signals_listeners_to_child(void);
 void		SIGQUIT_catcher_subprocess(int code);
-void		SIGQUIT_catcher(int code);
+void		signal_nothing(int code);
 void		redir_sig_to_child(int signal);
 int			builtin_exit(char **argv);
 void		close_subprocess(int code);

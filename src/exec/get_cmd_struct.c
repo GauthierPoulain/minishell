@@ -9,7 +9,7 @@ t_command	init_cmd_struct(char **argv)
 	cmd.path = which(cmd.prog);
 	cmd.need_pipe = false;
 	cmd.need_redirect = true;
-	cmd.redirect_stdin = true;
 	cmd.redirect_stdout = true;
+	cmd.redirect_stderr = true;
 	return (cmd);
 }

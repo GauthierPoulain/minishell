@@ -10,7 +10,7 @@ void	SIGINT_catcher(int code)
 	pre_prompt();
 }
 
-void	SIGQUIT_catcher(int code)
+void	signal_nothing(int code)
 {
 	(void)code;
 }
@@ -37,5 +37,5 @@ void	signals_listeners_to_child(void)
 void	add_signals_listeners(void)
 {
 	signal(SIGINT, SIGINT_catcher);
-	signal(SIGQUIT, SIGQUIT_catcher);
+	signal(SIGQUIT, signal_nothing);
 }

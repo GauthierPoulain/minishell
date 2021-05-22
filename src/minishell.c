@@ -12,8 +12,6 @@ static void	init_shell(void)
 	ft_lstadd_front(&g_shell.history.lst, ft_lstnew(NULL));
 	tcgetattr(STDIN_FILENO, &g_shell.save);
 	g_shell.use_termcaps = false;
-	g_shell.saved_stdout = dup(1);
-	g_shell.saved_stderr = dup(2);
 	g_shell.child = 0;
 	g_shell.outputmngr = 0;
 }
