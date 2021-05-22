@@ -35,7 +35,6 @@ static t_command	init_cmd(char **argv)
 	cmd.argv = argv;
 	cmd.prog = argv[0];
 	cmd.path = which(cmd.prog);
-	cmd.output = ft_strdup("");
 	cmd.need_pipe = false;
 	cmd.need_redirect = true;
 	cmd.redirect_stdin = true;
@@ -70,6 +69,23 @@ static void	subprocess(t_command cmd, int *status)
 	}
 }
 
+void	cut_eof(char *str)
+{
+	char	*pos;
+
+	pos = ft_strchr(str, EOF);
+	if (pos)
+		*pos = 0;
+}
+
+void	process_buffer(char *buffer)
+{
+	// print_debug_termcap(buffer);
+	cut_eof(buffer);
+	ft_putcolor(buffer, _BLUE);
+	ft_bzero(buffer, GNL_BUFFER_SIZE + 1);
+}
+
 void	manage_output(t_command cmd)
 {
 	char	*buffer;
@@ -79,13 +95,11 @@ void	manage_output(t_command cmd)
 	(void)cmd;
 	close(g_shell.pipes.process);
 	buffer = ft_calloc(sizeof(char) * (GNL_BUFFER_SIZE + 1));
-	while (read(g_shell.pipes.target, buffer, GNL_BUFFER_SIZE) > 0)
-	{
-		ft_putcolor(buffer, _BLUE);
-		// ft_putstr(buffer);
-		ft_bzero(buffer, GNL_BUFFER_SIZE + 1);
-	}
-	close(g_shell.pipes.target);
+	while (read(g_shell.pipes.target, buffer, GNL_BUFFER_SIZE) > 1 && !ft_strchr(buffer, EOF))
+		process_buffer(buffer);
+	process_buffer(buffer);
+	gc_free(buffer);
+	ft_putstr("done\n");
 	close_subprocess(0);
 }
 
@@ -97,8 +111,8 @@ void	set_output(t_command cmd)
 	{
 		if (pipe(pipes) != 0)
 			close_shell("pipe error");
-		g_shell.pipes.process = pipes[1];
 		g_shell.pipes.target = pipes[0];
+		g_shell.pipes.process = pipes[1];
 		g_shell.outputmngr = fork();
 		if (g_shell.outputmngr < 0)
 			close_shell("fork error");
@@ -133,6 +147,7 @@ int	run_command(char **argv)
 	status = 0;
 	reset_input_mode();
 	set_output(cmd);
+	close(g_shell.pipes.target);
 	if (!ft_strcmp(cmd.path, "builtin"))
 		status = exec_builtin(cmd.prog, argv);
 	else
@@ -142,13 +157,16 @@ int	run_command(char **argv)
 		else
 			subprocess(cmd, &status);
 	}
-	reset_output();
-	add_signals_listeners();
-	set_input_mode();
 	g_shell.child = 0;
 	if (g_shell.outputmngr)
-		waitpid(g_shell.outputmngr, NULL, WNOHANG);
-	ft_putchar(0);
+	{
+		ft_putchar(EOF);
+		waitpid(g_shell.outputmngr, NULL, 0);
+		close(g_shell.pipes.process);
+	}
+	reset_output();
 	g_shell.outputmngr = 0;
+	add_signals_listeners();
+	set_input_mode();
 	return (status);
 }

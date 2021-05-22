@@ -115,7 +115,6 @@ typedef struct s_command
 	char	*prog;
 	char	*path;
 	char	**argv;
-	char	*output;
 	bool	need_pipe;
 	bool	pipe_stderr;
 	bool	need_redirect;
