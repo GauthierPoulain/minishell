@@ -56,7 +56,16 @@ static t_command	init_cmd(char **argv)
 	cmd.prog = argv[0];
 	cmd.path = which(cmd.prog);
 	cmd.need_pipe = false;		//LOOK A THIS MEEEEEEEN
+	cmd.need_redirect = false;	//this too
 	return (cmd);
+}
+
+int		commant_not_found(char *cmd)
+{
+	ft_putstr_fd(g_shell.io.cerr, "minishell: command not found: ");
+	ft_putstr_fd(g_shell.io.cerr, cmd);
+	ft_putstr_fd(g_shell.io.cerr, "\n");
+	return (127);
 }
 
 int	run_command(char **argv)
@@ -72,12 +81,7 @@ int	run_command(char **argv)
 	else
 	{
 		if (!cmd.path)
-		{
-			ft_putstr_fd(g_shell.io.cerr, "minishell: command not found: ");
-			ft_putstr_fd(g_shell.io.cerr, cmd.prog);
-			ft_putstr_fd(g_shell.io.cerr, "\n");
-			status = 127;
-		}
+			status = commant_not_found(cmd.prog);
 		else
 		{
 			g_shell.child = fork();
