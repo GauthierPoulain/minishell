@@ -36,8 +36,7 @@ static t_command	init_cmd(char **argv)
 	cmd.prog = argv[0];
 	cmd.path = which(cmd.prog);
 	cmd.output = ft_strdup("");
-	cmd.need_pipe = false;		//LOOK A THIS MEEEEEEEN
-	// cmd.need_redirect = false;	//this too
+	cmd.need_pipe = false;
 	cmd.need_redirect = true;
 	cmd.redirect_stdin = true;
 	cmd.redirect_stdout = true;
@@ -75,9 +74,10 @@ void	manage_output(t_command cmd)
 {
 	char	*buffer;
 
+	signal(SIGQUIT, close_subprocess);
+	signal(SIGINT, close_subprocess);
 	(void)cmd;
 	close(g_shell.pipes.process);
-
 	buffer = ft_calloc(sizeof(char) * (GNL_BUFFER_SIZE + 1));
 	while (read(g_shell.pipes.target, buffer, GNL_BUFFER_SIZE) > 0)
 	{
@@ -85,7 +85,6 @@ void	manage_output(t_command cmd)
 		// ft_putstr(buffer);
 		ft_bzero(buffer, GNL_BUFFER_SIZE + 1);
 	}
-	gc_free(buffer);
 	close(g_shell.pipes.target);
 	close_subprocess(0);
 }
@@ -93,7 +92,6 @@ void	manage_output(t_command cmd)
 void	set_output(t_command cmd)
 {
 	int		pipes[2];
-	pid_t	outputmngr;
 
 	if (cmd.need_redirect || cmd.need_pipe)
 	{
@@ -101,10 +99,10 @@ void	set_output(t_command cmd)
 			close_shell("pipe error");
 		g_shell.pipes.process = pipes[1];
 		g_shell.pipes.target = pipes[0];
-		outputmngr = fork();
-		if (outputmngr < 0)
+		g_shell.outputmngr = fork();
+		if (g_shell.outputmngr < 0)
 			close_shell("fork error");
-		else if (outputmngr == 0)
+		else if (g_shell.outputmngr == 0)
 			manage_output(cmd);
 	}
 	if (cmd.need_redirect)
@@ -147,5 +145,10 @@ int	run_command(char **argv)
 	reset_output();
 	add_signals_listeners();
 	set_input_mode();
+	g_shell.child = 0;
+	if (g_shell.outputmngr)
+		waitpid(g_shell.outputmngr, NULL, WNOHANG);
+	ft_putchar(0);
+	g_shell.outputmngr = 0;
 	return (status);
 }

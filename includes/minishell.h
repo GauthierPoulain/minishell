@@ -143,6 +143,7 @@ typedef struct s_minishell
 	bool			use_termcaps;
 	t_pipes			pipes;
 	pid_t			child;
+	pid_t			outputmngr;
 	int				saved_stdout;
 	int				saved_stderr;
 }				t_minishell;
