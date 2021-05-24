@@ -11,15 +11,15 @@ void	if_forest(char **words, int i, t_list *lst)
 		if (((t_token *)lst->content)->type == 3)
 			words[i] = ft_strdup(((t_token *)lst->content)->str + 1);
 		else
-			words[i] = parse_env_var(((t_token *)lst->content)->str);
+			words[i] = parse_tokens(((t_token *)lst->content)->str);
 	}
 	else if (((t_token *)lst->content)->type == 2)
-		words[i] = parse_env_var(((t_token *)lst->content)->str);
+		words[i] = parse_tokens(((t_token *)lst->content)->str);
 	else
 	{
 		if (check_occurence(((t_token *)lst->content)->str, '$')
 			|| check_occurence(((t_token *)lst->content)->str, '\\'))
-			words[i] = parse_env_var(((t_token *)lst->content)->str);
+			words[i] = parse_tokens(((t_token *)lst->content)->str);
 		else
 			words[i] = ft_strdup(((t_token *)lst->content)->str);
 	}
@@ -27,7 +27,10 @@ void	if_forest(char **words, int i, t_list *lst)
 
 void	chose_parsing(char **word, t_list *lst)
 {
-	*word = parse_env_var(((t_token *)lst->content)->str);
+	if (((t_token *)lst->content)->type == 4)
+		*word = parse_d_quotes(((t_token *)lst->content)->str);
+	else
+		*word = parse_tokens(((t_token *)lst->content)->str);
 }
 
 char	**array_from_list(void)
@@ -44,6 +47,8 @@ char	**array_from_list(void)
 	while (i < size)
 	{
 		chose_parsing(&words[i], lst);
+		if (words[i] == NULL)
+			break ;
 		lst = lst->next;
 		i++;
 	}

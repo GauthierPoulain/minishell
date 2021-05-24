@@ -45,11 +45,20 @@ int	get_token_len(char *line, t_lexer *lexer)
 	i = lexer->i;
 	if (line[i] == '"')
 		return (quotes_token_len(line, lexer));
+	else if (line[i] == '\\')
+		return (bslash_token_len(line, lexer));
 	else
 	{
 		while (line[i])
 		{
-			if (line[i] == ' ' || line[i] == '"')
+			if (line[i] == '\\')
+			{
+				if (line[i + 1] == '\"')
+					return (len);
+				i++;
+				len++;
+			}
+			else if (line[i] == ' ' || line[i] == '\"')
 				return (len);
 			i++;
 			len++;
@@ -64,8 +73,12 @@ void	handle_space(char *line, t_token *token, t_lexer *lexer)
 
 	if (lexer->had_quotes)
 		lexer->had_quotes = false;
+	token->sp = false;
 	while (line[lexer->i] == ' ')
+	{
+		token->sp = true;
 		lexer->i++;
+	}
 	token_l = get_token_len(line, lexer);
 	if (token_l == -1)
 	{

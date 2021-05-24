@@ -94,6 +94,7 @@ typedef struct s_lexer
 typedef struct s_token
 {
 	char	*str;
+	bool	sp;
 	int		type;
 	int		id;
 }				t_token;
