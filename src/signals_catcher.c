@@ -7,6 +7,7 @@ void	SIGINT_catcher(int code)
 	g_shell.actual_str = ft_calloc(sizeof(char *));
 	ft_putchar('\n');
 	g_shell.last_return = 130;
+	g_shell.history.act_pos = 0;
 	pre_prompt();
 }
 
