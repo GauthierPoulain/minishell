@@ -39,7 +39,7 @@ char	**array_from_list(void)
 	int		i;
 	t_list	*lst;
 	char	**words;
-	
+
 	i = 0;
 	size = ft_lstsize(g_shell.tokens);
 	words = gc_malloc(sizeof(char *) * (size + 1));

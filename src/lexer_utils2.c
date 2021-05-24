@@ -25,7 +25,7 @@ int	quotes_token_len(char *line, t_lexer *lexer)
 	return (-1);
 }
 
-int bslash_token_len(char *line, t_lexer *lexer)
+int	bslash_token_len(char *line, t_lexer *lexer)
 {
 	int	len;
 	int	i;
