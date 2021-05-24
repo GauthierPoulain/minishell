@@ -272,5 +272,9 @@ void		cut_eof(char *str);
 void		process_pipe(char *buffer);
 int			exec_builtin(char *prog, char **argv);
 void		wait_outputmanager(t_command cmd);
+int			bslash_token_len(char *line, t_lexer *lexer);
+int			quotes_token_len(char *line, t_lexer *lexer);
+char		*parse_tokens(char *word);
+char		*parse_d_quotes(char *word);
 
 #endif
