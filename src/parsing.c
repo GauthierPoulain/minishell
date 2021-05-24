@@ -28,7 +28,9 @@ void	if_forest(char **words, int i, t_list *lst)
 void	chose_parsing(char **word, t_list *lst)
 {
 	if (((t_token *)lst->content)->type == 4)
-	*word = parse_tokens(((t_token *)lst->content)->str);
+		*word = parse_d_quotes(((t_token *)lst->content)->str);
+	else
+		*word = parse_tokens(((t_token *)lst->content)->str);
 }
 
 char	**array_from_list(void)
@@ -40,11 +42,14 @@ char	**array_from_list(void)
 
 	i = 0;
 	size = ft_lstsize(g_shell.tokens);
+	printf("lst size : %d\n", size);
 	words = gc_malloc(sizeof(char *) * (size + 1));
 	lst = g_shell.tokens;
 	while (i < size)
 	{
 		chose_parsing(&words[i], lst);
+		if (words[i] == NULL)
+			break ;
 		lst = lst->next;
 		i++;
 	}

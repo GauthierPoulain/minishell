@@ -2,35 +2,36 @@
 
 static char	*trim_d_quotes(char *word, int first, int lasts, size_t size)
 {
-	return (ft_substr(word, first, size - lasts));
+	return (ft_substr(word, first, size + 1 - lasts));
 }
 
-static int	count_d_quotes(char *word, size_t size)
+static char	*count_and_trim(char *word, size_t size)
 {
 	int	first;
 	int	lasts;
-	int	diff;
 
 	first = 0;
 	lasts = 0;
-	while (word[first] == '\\')
+	while (word[first] == '\"')
 		first++;
-	while (word[--size] == '\\')
+	while (word[--size] == '\"')
 		lasts++;
-	diff = first - lasts;
-	if (diff < 0)
-		diff = !diff;
+	printf("first : %d\nlasts : %d\n", first, lasts);
+	if (first != lasts)
+	{
+		//crashing here
+		ft_putstr_fd(2, "Syntax error\n");
+		ft_lstclear(&g_shell.tokens);
+		g_shell.last_return = 1;
+		return (NULL);
+	}
 	word = trim_d_quotes(word, first, lasts, size);
-	return (diff);
+	return (word);
 }
 
 
 char	*parse_d_quotes(char *word)
 {
-	if (count_d_quotes(word, ft_strlen(word)) % 2)
-	{
-		ft_putstr_fd(2, "Syntax error");
-		return ("");
-	}
+	word = count_and_trim(word, ft_strlen(word));
 	return (word);
 }
