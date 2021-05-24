@@ -43,15 +43,26 @@ int	get_token_len(char *line, t_lexer *lexer)
 
 	len = 0;
 	i = lexer->i;
+	printf("line token len [%s]\n", line + i);
 	if (line[i] == '"')
 		return (quotes_token_len(line, lexer));
 	else if (line[i] == '\\')
+	{
+		printf("going bslash\n");
 		return (bslash_token_len(line, lexer));
+	}
 	else
 	{
 		while (line[i])
 		{
-			if (line[i] == ' ' || line[i] == '"')
+			if (line[i] == '\\')
+			{
+				if (line[i + 1] != '\"')
+					return (len);
+				i++;
+				len++;
+			}
+			else if (line[i] == ' ' || line[i] == '\"')
 				return (len);
 			i++;
 			len++;

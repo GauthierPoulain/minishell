@@ -32,7 +32,7 @@ int bslash_token_len(char *line, t_lexer *lexer)
 
 	len = 1;
 	i = lexer->i + 1;
-	if (line[i] == '\"')
+	if (line[i] == '\"' || line[i] == '\"')
 	{
 		i++;
 		len++;
