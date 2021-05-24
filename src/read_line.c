@@ -93,7 +93,6 @@ char	*read_term(void)
 {
 	char		*buffer;
 	bool		reading;
-	t_reader	reader;
 	char		*res;
 	int			buffer_len;
 
@@ -101,8 +100,8 @@ char	*read_term(void)
 	if (g_shell.use_termcaps)
 		buffer_len = KEY_BUFFER_SIZE;
 	buffer = ft_calloc(sizeof(char) * (buffer_len + 1));
-	reader.size = 0;
-	reader.pos = 0;
+	g_shell.reader.size = 0;
+	g_shell.reader.pos = 0;
 	g_shell.actual_str = ft_calloc(sizeof(char *));
 	reading = true;
 	ft_bzero(buffer, buffer_len + 1);
@@ -110,7 +109,7 @@ char	*read_term(void)
 	{
 		if (!*g_shell.actual_str && *buffer == 4)
 			close_shell(NULL);
-		reading = process_key(buffer, &reader, &g_shell.actual_str);
+		reading = process_key(buffer, &g_shell.reader, &g_shell.actual_str);
 		ft_bzero(buffer, buffer_len);
 	}
 	history_add(g_shell.actual_str);
