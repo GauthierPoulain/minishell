@@ -28,11 +28,6 @@ int	get_this_char(char **c, char **retour)
 	return (1);
 }
 
-void	cursor_op(char *op)
-{
-	ft_putstr(op);
-}
-
 static void	check_termcap(char *c, t_reader *reader, char ***str)
 {
 	if (!ft_strcmp(c, KEY_UP))

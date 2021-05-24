@@ -26,3 +26,8 @@ void	reset_input_mode(void)
 		tcsetattr(STDIN_FILENO, TCSANOW, &g_shell.save);
 	g_shell.use_termcaps = false;
 }
+
+void	cursor_op(char *op)
+{
+	ft_putstr(op);
+}
