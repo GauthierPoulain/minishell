@@ -45,6 +45,8 @@ int	get_token_len(char *line, t_lexer *lexer)
 	i = lexer->i;
 	if (line[i] == '"')
 		return (quotes_token_len(line, lexer));
+	else if (line[i] == '\\')
+		return (bslash_token_len(line, lexer));
 	else
 	{
 		while (line[i])

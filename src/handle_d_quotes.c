@@ -19,7 +19,6 @@ static char	*count_and_trim(char *word, size_t size)
 	printf("first : %d\nlasts : %d\n", first, lasts);
 	if (first != lasts)
 	{
-		//crashing here
 		ft_putstr_fd(2, "Syntax error\n");
 		ft_lstclear(&g_shell.tokens);
 		g_shell.last_return = 1;

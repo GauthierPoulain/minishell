@@ -240,6 +240,7 @@ char	**parse_line(char *line);
 void	display_array(char **array);
 int		check_occurence(char *str, char c);
 char	*parse_d_quotes(char *word);
+int 	bslash_token_len(char *line, t_lexer *lexer);
 int		quotes_token_len(char *line, t_lexer *lexer);
 char	**array_from_list(void);
 void	display_array(char **array);

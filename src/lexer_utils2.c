@@ -24,3 +24,25 @@ int	quotes_token_len(char *line, t_lexer *lexer)
 	}
 	return (-1);
 }
+
+int bslash_token_len(char *line, t_lexer *lexer)
+{
+	int	len;
+	int	i;
+
+	len = 1;
+	i = lexer->i + 1;
+	if (line[i] == '\"')
+	{
+		i++;
+		len++;
+	}
+	while (line[i])
+	{
+		if (line[i] == ' ' || line[i] == '"')
+			return (len);
+		i++;
+		len++;
+	}
+	return (len);
+}
