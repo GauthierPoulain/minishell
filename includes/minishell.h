@@ -276,5 +276,9 @@ int			bslash_token_len(char *line, t_lexer *lexer);
 int			quotes_token_len(char *line, t_lexer *lexer);
 char		*parse_tokens(char *word);
 char		*parse_d_quotes(char *word);
+int			get_token_len(char *line, t_lexer *lexer);
+int			bslash_token_len(char *line, t_lexer *lexer);
+void		token_l_error(char *line, t_lexer *lexer);
+int			else_token_l(char *line, t_lexer *lexer);
 
 #endif

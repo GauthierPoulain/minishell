@@ -1,10 +1,5 @@
 #include "../includes/minishell.h"
 
-static char	*trim_d_quotes(char *word, int first, int lasts, size_t size)
-{
-	return (ft_substr(word, first, size + 1 - lasts));
-}
-
 static char	*count_and_trim(char *word, size_t size)
 {
 	int	first;
@@ -24,10 +19,9 @@ static char	*count_and_trim(char *word, size_t size)
 		g_shell.last_return = 1;
 		return (NULL);
 	}
-	word = trim_d_quotes(word, first, lasts, size);
+	word = ft_substr(word, first, size + 1 - lasts);
 	return (word);
 }
-
 
 char	*parse_d_quotes(char *word)
 {

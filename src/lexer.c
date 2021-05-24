@@ -63,20 +63,6 @@ int	else_token_l(char *line, t_lexer *lexer)
 	return (len);
 }
 
-int	get_token_len(char *line, t_lexer *lexer)
-{
-	int	len;
-	int	i;
-
-	len = 0;
-	i = lexer->i;
-	if (line[i] == '"')
-		return (quotes_token_len(line, lexer));
-	else if (line[i] == '\\')
-		return (bslash_token_len(line, lexer));
-	return (else_token_l(line, lexer));
-}
-
 void	handle_space(char *line, t_token *token, t_lexer *lexer)
 {
 	int	token_l;
@@ -91,20 +77,15 @@ void	handle_space(char *line, t_token *token, t_lexer *lexer)
 	}
 	token_l = get_token_len(line, lexer);
 	if (token_l == -1)
-	{
-		ft_putstr_fd(2, "Syntax error\n");
-		ft_lstclear(&g_shell.tokens);
-		lexer->i = ft_strlen(line);
-		g_shell.last_return = 1;
-		return ;
-	}
+		return (token_l_error(line, lexer));
 	token->id = lexer->id++;
 	get_token_info(token, line, lexer->i, lexer->i + token_l);
 	ft_lstadd_back(&g_shell.tokens, ft_lstnew(token));
 	lexer->i += token_l;
 	if (lexer->i > (int)ft_strlen(line))
 		lexer->i = ft_strlen(line);
-	printf("actual rest [%s]\n", line + lexer->i);
+	if (DEBUG)
+		printf("actual rest [%s]\n", line + lexer->i);
 }
 
 void	get_lexer(char *line)
