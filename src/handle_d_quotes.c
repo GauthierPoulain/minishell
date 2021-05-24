@@ -11,7 +11,6 @@ static char	*count_and_trim(char *word, size_t size)
 		first++;
 	while (word[--size] == '\"')
 		lasts++;
-	printf("first : %d\nlasts : %d\n", first, lasts);
 	if (first != lasts)
 	{
 		ft_putstr_fd(2, "Syntax error\n");
