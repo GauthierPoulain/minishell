@@ -36,6 +36,33 @@ void	handle_single_token(char *line, t_token *token, t_lexer *lexer)
 	}
 }
 
+int	else_token_l(char *line, t_lexer *lexer)
+{
+	int	len;
+	int	i;
+
+	len = 0;
+	i = lexer->i;
+	while (line[i])
+	{
+		if (line[i] == '\\')
+		{
+			if (line[i + 1] == '\"')
+				return (len);
+			i++;
+			len++;
+		}
+		else if (line[i] == ' ' || line[i] == '\"')
+			return (len);
+		else
+		{
+			i++;
+			len++;
+		}
+	}
+	return (len);
+}
+
 int	get_token_len(char *line, t_lexer *lexer)
 {
 	int	len;
@@ -47,24 +74,7 @@ int	get_token_len(char *line, t_lexer *lexer)
 		return (quotes_token_len(line, lexer));
 	else if (line[i] == '\\')
 		return (bslash_token_len(line, lexer));
-	else
-	{
-		while (line[i])
-		{
-			if (line[i] == '\\')
-			{
-				if (line[i + 1] == '\"')
-					return (len);
-				i++;
-				len++;
-			}
-			else if (line[i] == ' ' || line[i] == '\"')
-				return (len);
-			i++;
-			len++;
-		}
-		return (len);
-	}
+	return (else_token_l(line, lexer));
 }
 
 void	handle_space(char *line, t_token *token, t_lexer *lexer)
