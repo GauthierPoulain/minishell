@@ -8,6 +8,8 @@ void	SIGINT_catcher(int code)
 	ft_putchar('\n');
 	g_shell.last_return = 130;
 	g_shell.history.act_pos = 0;
+	g_shell.reader.pos = 0;
+	g_shell.reader.size = 0;
 	pre_prompt();
 }
 

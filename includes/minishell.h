@@ -147,6 +147,7 @@ typedef struct s_minishell
 	int				saved_stdout;
 	int				saved_stderr;
 	bool			read_pipe;
+	t_reader		reader;
 }				t_minishell;
 
 extern t_minishell	g_shell;
