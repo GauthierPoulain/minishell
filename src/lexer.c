@@ -64,8 +64,12 @@ void	handle_space(char *line, t_token *token, t_lexer *lexer)
 
 	if (lexer->had_quotes)
 		lexer->had_quotes = false;
+	token->sp = false;
 	while (line[lexer->i] == ' ')
+	{
+		token->sp = true;
 		lexer->i++;
+	}
 	token_l = get_token_len(line, lexer);
 	if (token_l == -1)
 	{

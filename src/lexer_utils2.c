@@ -7,7 +7,6 @@ int	quotes_token_len(char *line, t_lexer *lexer)
 
 	len = 1;
 	i = lexer->i + 1;
-	printf("word token len : [%s]\n", line + i);
 	while (line[i] == '"')
 	{
 		i++;

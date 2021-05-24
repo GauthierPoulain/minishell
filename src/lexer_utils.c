@@ -34,6 +34,7 @@ void	display_tokens(void)
 	{
 		token = (t_token *)lst->content;
 		printf("string [%s]\n", token->str);
+		printf("space  [%d]\n", token->sp);
 		printf("type   [%d]\n", token->type);
 		printf("id     [%d]\n", token->id);
 		lst = lst->next;
