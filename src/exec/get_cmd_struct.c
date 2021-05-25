@@ -8,8 +8,9 @@ t_command	init_cmd_struct(char **argv)
 	cmd.prog = argv[0];
 	cmd.path = which(cmd.prog);
 	cmd.need_pipe = false;
-	cmd.need_redirect = false;
+	cmd.need_redirect = true;
 	cmd.redirect_stdout = true;
 	cmd.redirect_stderr = true;
+	cmd.redirect_path = ft_strdup("salut");
 	return (cmd);
 }

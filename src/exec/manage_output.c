@@ -40,19 +40,27 @@ void	toogle_read_pipe(int code)
 void	manage_output(t_command cmd)
 {
 	char	*buffer;
+	int		len;
 
-	(void)cmd;
 	g_shell.read_pipe = true;
-	signal(SIGQUIT, close_subprocess);
-	signal(SIGINT, close_subprocess);
+	if (cmd.need_redirect)
+		write_redirect(cmd, "", true, 0);
+	signal(SIGQUIT, toogle_read_pipe);
+	signal(SIGINT, toogle_read_pipe);
 	signal(SIGUSR1, toogle_read_pipe);
 	while (!g_shell.read_pipe)
 		;
 	buffer = ft_calloc(sizeof(char) * (GNL_BUFFER_SIZE + 1));
 	ft_putchar_fd(g_shell.pipes.to_father[1], EOF);
-	while (read(g_shell.pipes.to_son[0], buffer, GNL_BUFFER_SIZE) > 0
-		&& !(!g_shell.read_pipe && ft_strchr(buffer, EOF)))
-		process_pipe(buffer);
-	process_pipe(buffer);
+	while (g_shell.read_pipe)
+	{
+		len = read(g_shell.pipes.to_son[0], buffer, GNL_BUFFER_SIZE);
+		// if (len > 0)
+			process_pipe(cmd, buffer, len);
+		// else
+			// process_pipe(cmd, buffer, GNL_BUFFER_SIZE);
+		printf("salut = %d\n", len);
+	}
+	process_pipe(cmd, buffer, GNL_BUFFER_SIZE);
 	close_subprocess(0);
 }

@@ -40,12 +40,12 @@ void	close_pipe(void)
 		kill(g_shell.outputmngr, SIGUSR1);
 		ft_putchar(EOF);
 		waitpid(g_shell.outputmngr, NULL, 0);
+		close(g_shell.pipes.to_father[0]);
+		close(g_shell.pipes.to_father[1]);
+		close(g_shell.pipes.to_son[0]);
+		close(g_shell.pipes.to_son[1]);
 	}
 	g_shell.outputmngr = 0;
-	close(g_shell.pipes.to_father[0]);
-	close(g_shell.pipes.to_father[1]);
-	close(g_shell.pipes.to_son[0]);
-	close(g_shell.pipes.to_son[1]);
 	reset_output();
 }
 
