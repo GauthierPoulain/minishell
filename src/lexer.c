@@ -97,10 +97,10 @@ void	get_lexer(char *line)
 	while (lexer.i < (int)ft_strlen(line))
 	{
 		token = gc_malloc(sizeof(t_token));
-		if (line[lexer.i] == ' ' || line[lexer.i] == '"'
-			|| lexer.i == 0 || line[lexer.i] == '\\' || lexer.had_quotes)
+		if (line[lexer.i] == ' ' || line[lexer.i] == '\\'
+			|| lexer.i == 0 || line[lexer.i] == '"' || lexer.had_quotes)
 			handle_space(line, token, &lexer);
-		if (line[lexer.i] != '"' && line[lexer.i] != ' ' && !lexer.had_quotes)
+		if (line[lexer.i] != '"' && line[lexer.i] != ' ' &&line[lexer.i] != '\\' && !lexer.had_quotes)
 			lexer.i++;
 	}
 	if (DEBUG)

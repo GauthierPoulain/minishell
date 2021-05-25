@@ -7,6 +7,8 @@ int	quotes_token_len(char *line, t_lexer *lexer)
 
 	len = 1;
 	i = lexer->i + 1;
+	if (DEBUG)
+		printf("quotes token\n");
 	while (line[i] == '"')
 	{
 		i++;
@@ -32,7 +34,9 @@ int	bslash_token_len(char *line, t_lexer *lexer)
 
 	len = 1;
 	i = lexer->i + 1;
-	if (line[i] == '\"' || line[i] == '\"')
+	if (DEBUG)
+		printf("blash token\n");
+	if (line[i] == '\"')
 	{
 		i++;
 		len++;
@@ -49,12 +53,12 @@ int	bslash_token_len(char *line, t_lexer *lexer)
 
 int	get_token_len(char *line, t_lexer *lexer)
 {
-	int	len;
 	int	i;
 
-	len = 0;
 	i = lexer->i;
-	if (line[i] == '"')
+	if (DEBUG)
+		printf("actual char [%c] during line [%s]\n", line[i], line + i);
+	if (line[i] == '\"')
 		return (quotes_token_len(line, lexer));
 	else if (line[i] == '\\')
 		return (bslash_token_len(line, lexer));

@@ -30,11 +30,11 @@ char	*bslash_filled(char *word, int *i, int *trans, int back)
 static char	*error_bslash(int *i)
 {
 	*i = 0;
-	ft_putstr_fd(2, "Syntax error");
+	ft_putstr_fd(2, "Syntax error\n");
 	ft_lstclear(&g_shell.tokens);
 	g_shell.last_return = 1;
 	g_shell.error = true;
-	return("");
+	return ("");
 }
 
 char	*treat_backslash(char *word, int *i, int *trans)
@@ -48,5 +48,5 @@ char	*treat_backslash(char *word, int *i, int *trans)
 		return (bslash_filled(word, i, trans, back));
 	else
 		return (ft_strjoin(ft_strndup(word, *i),
-			bslash_filled(word, i, trans, back)));
+				bslash_filled(word, i, trans, back)));
 }
