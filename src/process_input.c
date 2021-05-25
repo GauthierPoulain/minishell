@@ -8,7 +8,7 @@ void	process_input(char *line)
 	tmp = 0;
 	line = ft_strreplace(line, "~", get_env("HOME"));
 	argv = parse_line(line);
-	if (!*argv)
+	if (!argv || !*argv)
 		return ;
 	ft_lstclear(&g_shell.tokens);
 	if (ft_strlen(line) > 0)

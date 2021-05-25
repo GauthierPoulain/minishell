@@ -44,12 +44,15 @@ char	**array_from_list(void)
 	size = ft_lstsize(g_shell.tokens);
 	words = gc_malloc(sizeof(char *) * (size + 1));
 	lst = g_shell.tokens;
-	while (i < size)
+	while (i < size && g_shell.error == false)
 	{
 		chose_parsing(&words[i], lst);
 		if (words[i] == NULL)
 			break ;
-		lst = lst->next;
+		if (g_shell.error == false)
+			lst = lst->next;
+		else
+			return (NULL);
 		i++;
 	}
 	words[i] = NULL;
@@ -61,8 +64,9 @@ char	**parse_line(char *line)
 	char	**array;
 
 	get_lexer(line);
+	g_shell.error = false;
 	array = array_from_list();
-	if (DEBUG)
+	if (DEBUG && array)
 		display_array(array);
 	return (array);
 }
