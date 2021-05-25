@@ -24,6 +24,8 @@ int	quotes_token_len(char *line, t_lexer *lexer)
 		i++;
 		len++;
 	}
+	// if (lexer->had_bslash)
+	// 	return (len + 1);
 	return (-1);
 }
 
@@ -44,7 +46,15 @@ int	bslash_token_len(char *line, t_lexer *lexer)
 	while (line[i])
 	{
 		if (line[i] == ' ' || line[i] == '"')
+		{
+			if (i && line[i - 1] == '\\')
+			{
+				lexer->had_bslash = true;
+				printf("blash status : [%d]\n", lexer->had_bslash);
+				return (len - 1);
+			}
 			return (len);
+		}
 		i++;
 		len++;
 	}
