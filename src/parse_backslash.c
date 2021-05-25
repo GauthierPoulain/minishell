@@ -27,28 +27,41 @@ char	*bslash_filled(char *word, int *i, int *trans, int back)
 	return (new);
 }
 
+char	*treat_first_bslash(char *word, int *i, int *trans, int back)
+{
+	if (back % 2 && ft_strlen(word) == *i + (size_t)back)
+	{
+		*i = 0;
+		ft_putstr_fd(2, "Syntax error");
+		ft_lstclear(&g_shell.tokens);
+		g_shell.last_return = 1;
+		return ("");
+	}
+	else
+		return (bslash_filled(word, i, trans, back));
+}
+
+char	*treat_other_bslash(char *word, int *i, int *trans, int back)
+{
+	if (back % 2 && ft_strlen(word) == (size_t)back + *i)
+	{
+		*i = 0;
+		ft_putstr_fd(2, "Syntax error");
+		ft_lstclear(&g_shell.tokens);
+		g_shell.last_return = 1;
+		return ("");
+	}
+	return (ft_strjoin(ft_strndup(word, *i),
+			bslash_filled(word, i, trans, back)));
+}
+
 char	*treat_backslash(char *word, int *i, int *trans)
 {
 	int		back;
-	char	*new;
 
+	back = bslash_f_count(word, *i);
 	if (*i == 0)
-	{
-		back = bslash_f_count(word, *i);
-		if (back % 2 && ft_strlen(word) == (size_t)back)
-		{
-			ft_putstr_fd(2, "Syntax error");
-			return ("");
-		}
-		else
-			return (bslash_filled(word, i, trans, back));
-	}
+		return (treat_first_bslash(word, i, trans, back));
 	else
-	{
-		back = bslash_f_count(word, *i);
-		new = ft_strndup(word, *i);
-		new = ft_strjoin(new, bslash_filled(word, i, trans, back));
-		return (new);
-	}
-	return (NULL);
+		return (treat_other_bslash(word, i, trans, back));
 }
