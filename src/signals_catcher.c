@@ -26,10 +26,7 @@ void	redir_sig_to_child(int code)
 		g_shell.last_return = 131;
 	kill(g_shell.child, code);
 	if (g_shell.outputmngr)
-	{
-		kill(g_shell.outputmngr, SIGUSR1);
 		close_pipe();
-	}
 	g_shell.child = 0;
 	g_shell.outputmngr = 0;
 }

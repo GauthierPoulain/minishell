@@ -270,7 +270,7 @@ void		set_output(t_command cmd);
 void		reset_output(void);
 void		manage_output(t_command cmd);
 void		cut_eof(char *str);
-void		process_pipe(t_command cmd,  char *buffer, int len);
+void		process_pipe(t_command cmd, char *buffer, int len);
 int			exec_builtin(char *prog, char **argv);
 void		wait_outputmanager(t_command cmd);
 int			bslash_token_len(char *line, t_lexer *lexer);

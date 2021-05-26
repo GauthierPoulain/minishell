@@ -17,6 +17,7 @@ int	commant_not_found(char *cmd)
 static void	subprocess(t_command cmd, int *status)
 {
 	g_shell.child = fork();
+	printf("%d\n", g_shell.child);
 	if (g_shell.child < 0)
 		close_shell("fork error");
 	else if (g_shell.child == 0)
