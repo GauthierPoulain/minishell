@@ -26,6 +26,7 @@ char	*bslash_filled(char *word, int *i, int *trans, int back)
 		*trans = 1;
 	else
 		*trans = 0;
+	printf("NEW [%s]\n", new);
 	return (new);
 }
 
