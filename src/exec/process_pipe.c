@@ -14,7 +14,7 @@ void	write_redirect(t_command cmd, char *buffer, bool erease, int len)
 
 void	process_pipe(t_command cmd, char *buffer, int len)
 {
-	cut_eof(buffer);
+	// cut_eof(buffer);
 	// write(1, buffer, len);
 	// ft_putcolor(buffer, _BLUE);
 	if (cmd.need_redirect)

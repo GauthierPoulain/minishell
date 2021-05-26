@@ -7,3 +7,4 @@ minishell
 .DS_Store
 *.dSYM
 salut
+*.hex
