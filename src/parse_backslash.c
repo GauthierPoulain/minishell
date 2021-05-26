@@ -24,6 +24,8 @@ char	*bslash_filled(char *word, int *i, int *trans, int back)
 	*i += r_back;
 	if (back % 4 == 1 || back % 4 == 3)
 		*trans = 1;
+	else
+		*trans = 0;
 	return (new);
 }
 

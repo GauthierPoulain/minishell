@@ -26,16 +26,6 @@ static int	get_token_info(t_token *token, char *line, int start, int end)
 	return (0);
 }
 
-void	handle_single_token(char *line, t_token *token, t_lexer *lexer)
-{
-	if (line[lexer->i - 1])
-	{
-		token->id = lexer->id++;
-		if (get_token_info(token, line, lexer->j, lexer->i) != 2)
-			ft_lstadd_back(&g_shell.tokens, ft_lstnew(token));
-	}
-}
-
 int	else_token_l(char *line, t_lexer *lexer)
 {
 	int	len;
@@ -100,7 +90,8 @@ void	get_lexer(char *line)
 		if (line[lexer.i] == ' ' || line[lexer.i] == '\\'
 			|| lexer.i == 0 || line[lexer.i] == '"' || lexer.had_quotes)
 			handle_space(line, token, &lexer);
-		if (line[lexer.i] != '"' && line[lexer.i] != ' ' &&line[lexer.i] != '\\' && !lexer.had_quotes)
+		if (line[lexer.i] != '"' && line[lexer.i] != ' '
+			&&line[lexer.i] != '\\' && !lexer.had_quotes)
 			lexer.i++;
 	}
 	if (DEBUG)
