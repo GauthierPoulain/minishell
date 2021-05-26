@@ -39,6 +39,11 @@ int	bslash_token_len(char *line, t_lexer *lexer)
 	// printf("slash string [%s]\ncurrent char [%c]\n", line + i, line[i]);
 	if (DEBUG)
 		printf("blash token\n");
+	while(line[i] == '\\')
+	{
+		i++;
+		len++;
+	}
 	if (line[i] == '\"')
 	{
 		i++;

@@ -32,6 +32,7 @@ char	*bslash_filled(char *word, int *i, int *trans, int back)
 static char	*error_bslash(int *i)
 {
 	*i = 0;
+	printf("JE SUIS LA EN FAIT\n");
 	ft_putstr_fd(2, "Syntax error\n");
 	ft_lstclear(&g_shell.tokens);
 	g_shell.last_return = 1;
@@ -44,6 +45,8 @@ char	*treat_backslash(char *word, int *i, int *trans)
 	int		back;
 
 	back = bslash_f_count(word, *i);
+	printf("string [%s] and i value : %d\n", word, *i);
+	printf("back : %d and strlen (%zu)\n *i is %d\n", back, ft_strlen(word), *i);
 	if (back % 2 && ft_strlen(word) == *i + (size_t)back)
 		return (error_bslash(i));
 	if (*i == 0)

@@ -59,6 +59,7 @@ char	*treat_doll(char *word, int *i, int *trans)
 {
 	int		slash;
 
+	printf("trans during treatment : %d\n", *trans);
 	if (*trans == 1)
 	{
 		*trans = 0;
@@ -86,6 +87,7 @@ char	*parse_tokens(char *word)
 	i = 0;
 	trans = 0;
 	new = word;
+	printf("word before treat [%s]\n", word);
 	while (new[i])
 	{
 		if (new[i] == '\\')
