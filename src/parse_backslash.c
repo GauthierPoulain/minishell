@@ -13,6 +13,24 @@ static size_t	bslash_f_count(char *word, int i)
 	return (j);
 }
 
+char	*special_trim_quotes(char *word)
+{
+	int		first;
+	int		lasts;
+	int		size;
+	char	*new;
+
+	first = 0;
+	lasts = 0;
+	size = ft_strlen(word);
+	while (word[first] == '\"')
+		first++;
+	while (word[--size] == '\"')
+		lasts++;
+	new = ft_substr(word, first, size + 2 - lasts);
+	return (new);
+}
+
 char	*bslash_filled(char *word, int *i, int *trans, int back)
 {
 	char	*new;
@@ -26,6 +44,10 @@ char	*bslash_filled(char *word, int *i, int *trans, int back)
 		*trans = 1;
 	else
 		*trans = 0;
+	if (new[*i] == '\"')
+	{
+		new = special_trim_quotes(ft_strdup(word + *i));
+	}
 	printf("NEW [%s]\n", new);
 	return (new);
 }
