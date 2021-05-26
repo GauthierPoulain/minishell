@@ -29,24 +29,32 @@ int	quotes_token_len(char *line, t_lexer *lexer)
 
 int	bslash_token_len(char *line, t_lexer *lexer)
 {
-	int	len;
-	int	i;
+	int		len;
+	int		i;
+	bool	was_quotes;
 
+	was_quotes = false;
 	len = 1;
 	i = lexer->i + 1;
+	// printf("slash string [%s]\ncurrent char [%c]\n", line + i, line[i]);
 	if (DEBUG)
 		printf("blash token\n");
 	if (line[i] == '\"')
 	{
 		i++;
 		len++;
+		was_quotes = true;
 	}
+	printf("slash string [%s]\ncurrent char [%c]\n", line + i, line[i]);
 	while (line[i])
 	{
 		if (line[i] == ' ' || line[i] == '"')
 		{
-			if (i && line[i - 1] == '\\')
+			if (i && (line[i - 1] == '\\' || line[i - 1] == '\"'))
 				return (len - 1);
+			//seems to be ok for now
+			if (was_quotes)
+				len += 1;
 			return (len);
 		}
 		i++;

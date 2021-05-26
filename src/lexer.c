@@ -66,6 +66,7 @@ void	handle_space(char *line, t_token *token, t_lexer *lexer)
 		lexer->i++;
 	}
 	token_l = get_token_len(line, lexer);
+	printf("token len : %d\n", token_l);
 	if (token_l == -1)
 		return (token_l_error(line, lexer));
 	token->id = lexer->id++;
