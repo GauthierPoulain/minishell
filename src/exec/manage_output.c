@@ -7,7 +7,6 @@ void	set_output(t_command cmd)
 	if (pipe(g_shell.pipes.to_father) != 0 || pipe(g_shell.pipes.to_son) != 0)
 		close_shell("pipe error");
 	g_shell.outputmngr = fork();
-	printf("%d\n", g_shell.outputmngr);
 	if (g_shell.outputmngr < 0)
 		close_shell("fork error");
 	else if (g_shell.outputmngr == 0)
