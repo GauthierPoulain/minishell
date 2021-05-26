@@ -17,6 +17,7 @@ int	commant_not_found(char *cmd)
 static void	subprocess(t_command cmd, int *status)
 {
 	g_shell.child = fork();
+	printf("%d\n", g_shell.child);
 	if (g_shell.child < 0)
 		close_shell("fork error");
 	else if (g_shell.child == 0)
@@ -40,12 +41,12 @@ void	close_pipe(void)
 		kill(g_shell.outputmngr, SIGUSR1);
 		ft_putchar(EOF);
 		waitpid(g_shell.outputmngr, NULL, 0);
+		close(g_shell.pipes.to_father[0]);
+		close(g_shell.pipes.to_father[1]);
+		close(g_shell.pipes.to_son[0]);
+		close(g_shell.pipes.to_son[1]);
 	}
 	g_shell.outputmngr = 0;
-	close(g_shell.pipes.to_father[0]);
-	close(g_shell.pipes.to_father[1]);
-	close(g_shell.pipes.to_son[0]);
-	close(g_shell.pipes.to_son[1]);
 	reset_output();
 }
 

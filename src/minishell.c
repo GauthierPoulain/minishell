@@ -4,6 +4,8 @@ t_minishell	g_shell;
 
 static void	init_shell(void)
 {
+	setbuf(stdout, NULL);
+	setbuf(stderr, NULL);
 	g_shell.gc = NULL;
 	g_shell.workdir = gc_malloc(FILENAME_MAX);
 	g_shell.last_return = 0;
@@ -14,6 +16,10 @@ static void	init_shell(void)
 	g_shell.use_termcaps = false;
 	g_shell.child = 0;
 	g_shell.outputmngr = 0;
+	g_shell.pipes.to_father[0] = -1;
+	g_shell.pipes.to_father[1] = -1;
+	g_shell.pipes.to_son[0] = -1;
+	g_shell.pipes.to_son[1] = -1;
 }
 
 void	pre_prompt(void)

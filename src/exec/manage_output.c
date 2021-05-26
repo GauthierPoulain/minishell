@@ -7,6 +7,7 @@ void	set_output(t_command cmd)
 	if (pipe(g_shell.pipes.to_father) != 0 || pipe(g_shell.pipes.to_son) != 0)
 		close_shell("pipe error");
 	g_shell.outputmngr = fork();
+	printf("%d\n", g_shell.outputmngr);
 	if (g_shell.outputmngr < 0)
 		close_shell("fork error");
 	else if (g_shell.outputmngr == 0)
@@ -40,19 +41,23 @@ void	toogle_read_pipe(int code)
 void	manage_output(t_command cmd)
 {
 	char	*buffer;
+	int		len;
 
-	(void)cmd;
 	g_shell.read_pipe = true;
-	signal(SIGQUIT, close_subprocess);
-	signal(SIGINT, close_subprocess);
+	if (cmd.need_redirect)
+		write_redirect(cmd, "", true, 0);
+	signal(SIGQUIT, toogle_read_pipe);
+	signal(SIGINT, toogle_read_pipe);
 	signal(SIGUSR1, toogle_read_pipe);
-	while (!g_shell.read_pipe)
-		;
 	buffer = ft_calloc(sizeof(char) * (GNL_BUFFER_SIZE + 1));
 	ft_putchar_fd(g_shell.pipes.to_father[1], EOF);
-	while (read(g_shell.pipes.to_son[0], buffer, GNL_BUFFER_SIZE) > 0
-		&& !(!g_shell.read_pipe && ft_strchr(buffer, EOF)))
-		process_pipe(buffer);
-	process_pipe(buffer);
+	len = GNL_BUFFER_SIZE;
+	while (len == GNL_BUFFER_SIZE || g_shell.read_pipe)
+	{
+		len = read(g_shell.pipes.to_son[0], buffer, GNL_BUFFER_SIZE);
+		if (!g_shell.read_pipe && len < GNL_BUFFER_SIZE)
+			len--;
+		process_pipe(cmd, buffer, len);
+	}
 	close_subprocess(0);
 }

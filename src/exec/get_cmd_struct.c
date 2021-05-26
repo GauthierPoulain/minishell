@@ -11,5 +11,6 @@ t_command	init_cmd_struct(char **argv)
 	cmd.need_redirect = false;
 	cmd.redirect_stdout = true;
 	cmd.redirect_stderr = true;
+	cmd.redirect_path = ft_strdup("salut");
 	return (cmd);
 }

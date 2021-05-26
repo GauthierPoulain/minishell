@@ -6,3 +6,5 @@ minishell
 *.log
 .DS_Store
 *.dSYM
+salut
+*.hex
