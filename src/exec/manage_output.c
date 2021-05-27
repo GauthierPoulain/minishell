@@ -33,44 +33,35 @@ void	reset_output(void)
 
 void	manage_output(t_command cmd)
 {
-	char	*buff;
-	char	*new_buff;
-	int		len;
-	char	*end;
-	bool	read_pipe;
-	char	*tmp;
+	t_buffer	buff;
+	t_buffer	new_buff;
+	char		*end;
+	bool		read_pipe;
 
 	read_pipe = true;
 	if (cmd.need_redirect)
 		write_redirect(cmd, "", true, 0);
-	buff = ft_calloc(sizeof(char) * (GNL_BUFFER_SIZE + 1));
-	new_buff = ft_calloc(sizeof(char) * (GNL_BUFFER_SIZE + 1));
+	buff.ptr = ft_calloc(sizeof(char) * (GNL_BUFFER_SIZE + 1));
+	new_buff.ptr = ft_calloc(sizeof(char) * (GNL_BUFFER_SIZE + 1));
 	end = ft_calloc_char(sizeof(char) * (GNL_BUFFER_SIZE + 1), -1);
 	ft_putchar_fd(g_shell.pipes.to_father[1], EOF);
-
-	len = read(g_shell.pipes.to_son[0], buff, GNL_BUFFER_SIZE);
+	buff.size =  read(g_shell.pipes.to_son[0], buff.ptr, GNL_BUFFER_SIZE);
 	while (read_pipe)
 	{
-
-		len = read(g_shell.pipes.to_son[0], new_buff, GNL_BUFFER_SIZE);
-
-		if (!ft_memcmp(new_buff, end, GNL_BUFFER_SIZE))
+		new_buff.size = read(g_shell.pipes.to_son[0], new_buff.ptr,
+				GNL_BUFFER_SIZE);
+		new_buff.size = GNL_BUFFER_SIZE;
+		if (!ft_memcmp(new_buff.ptr, end, GNL_BUFFER_SIZE))
 		{
 			read_pipe = false;
-			tmp = ft_memchr(buff, -1, GNL_BUFFER_SIZE);
-			while (tmp)
-			{
-				*tmp = 0;
-				tmp = ft_memchr(buff, -1, GNL_BUFFER_SIZE);
-			}
-			print_debug_termcap(buff);
+			cut_eof(&buff);
+			print_debug_termcap(buff.ptr);
+			process_pipe(cmd, buff.ptr, buff.size);
 		}
-
-		process_pipe(cmd, buff, len);
-		ft_memcpy(buff, new_buff, GNL_BUFFER_SIZE);
-
-
-
+		else
+			process_pipe(cmd, buff.ptr, buff.size);
+		buff.size = new_buff.size;
+		ft_memcpy(buff.ptr, new_buff.ptr, GNL_BUFFER_SIZE);
 	}
 	close_subprocess(0);
 }

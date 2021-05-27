@@ -13,16 +13,16 @@ char	*ft_strchr(const char *s, int c)
 	return (NULL);
 }
 
-char	*ft_memchr(const char *s, int c, size_t size)
+char	*ft_memchr(const char *s, int c, int pos, size_t size)
 {
-	size_t	i;
+	int		i;
 
-	i = 0;
-	while (i < size)
+	i = (int)size;
+	while (i > pos)
 	{
 		if (s[i] == c)
 			return ((char *)s + i);
-		i++;
+		i--;
 	}
 	return (NULL);
 }

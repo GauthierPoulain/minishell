@@ -1,12 +1,18 @@
 #include "../../includes/minishell.h"
 
-void	cut_eof(char *str)
+void	cut_eof(t_buffer *buff)
 {
-	char	*pos;
+	char	*tmp;
+	size_t	pos;
 
-	pos = ft_strchr(str, EOF);
-	if (pos)
-		*pos = 0;
+	pos = buff->size;
+	tmp = ft_memchr(buff->ptr, -1, pos--, buff->size);
+	while (tmp)
+	{
+		*tmp = 0;
+		buff->size--;
+		tmp = ft_memchr(buff->ptr, -1, pos--, buff->size);
+	}
 }
 
 int	exec_builtin(char *prog, char **argv)
