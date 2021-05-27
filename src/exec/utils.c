@@ -2,16 +2,10 @@
 
 void	cut_eof(t_buffer *buff)
 {
-	char	*tmp;
-	size_t	pos;
-
-	pos = buff->size;
-	tmp = ft_memchr(buff->ptr, -1, pos--, buff->size);
-	while (tmp)
+	while (buff->size > 0 && buff->ptr[buff->size - 1] == READ_CUT_CARAC)
 	{
-		*tmp = 0;
+		buff->ptr[buff->size - 1] = 0;
 		buff->size--;
-		tmp = ft_memchr(buff->ptr, -1, pos--, buff->size);
 	}
 }
 

@@ -37,9 +37,11 @@ void	close_pipe(void)
 {
 	if (g_shell.outputmngr)
 	{
-		write(1, ft_calloc_char(sizeof(char) * (GNL_BUFFER_SIZE + 1), -1),
+		write(1, ft_calloc_char(sizeof(char) * (GNL_BUFFER_SIZE + 1),
+				READ_CUT_CARAC),
 			GNL_BUFFER_SIZE);
-		write(1, ft_calloc_char(sizeof(char) * (GNL_BUFFER_SIZE + 1), -1),
+		write(1, ft_calloc_char(sizeof(char) * (GNL_BUFFER_SIZE + 1),
+				READ_CUT_CARAC),
 			GNL_BUFFER_SIZE);
 		waitpid(g_shell.outputmngr, NULL, 0);
 		close(g_shell.pipes.to_father[0]);
