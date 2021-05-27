@@ -13,6 +13,5 @@ void	print_debug_termcap(char *c)
 	printf("key = %d, char = %c\n", c[7], c[7]);
 	printf("key = %d, char = %c\n", c[8], c[8]);
 	printf("key = %d, char = %c\n", c[9], c[9]);
-	printf("key = %d, char = %c\n", c[10], c[10]);
 	printf("done\n");
 }

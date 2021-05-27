@@ -31,32 +31,46 @@ void	reset_output(void)
 	close(g_shell.saved_stderr);
 }
 
-void	toogle_read_pipe(int code)
-{
-	(void)code;
-	g_shell.read_pipe = false;
-}
-
 void	manage_output(t_command cmd)
 {
-	char	*buffer;
+	char	*buff;
+	char	*new_buff;
 	int		len;
+	char	*end;
+	bool	read_pipe;
+	char	*tmp;
 
-	g_shell.read_pipe = true;
+	read_pipe = true;
 	if (cmd.need_redirect)
 		write_redirect(cmd, "", true, 0);
-	signal(SIGQUIT, toogle_read_pipe);
-	signal(SIGINT, toogle_read_pipe);
-	signal(SIGUSR1, toogle_read_pipe);
-	buffer = ft_calloc(sizeof(char) * (GNL_BUFFER_SIZE + 1));
+	buff = ft_calloc(sizeof(char) * (GNL_BUFFER_SIZE + 1));
+	new_buff = ft_calloc(sizeof(char) * (GNL_BUFFER_SIZE + 1));
+	end = ft_calloc_char(sizeof(char) * (GNL_BUFFER_SIZE + 1), -1);
 	ft_putchar_fd(g_shell.pipes.to_father[1], EOF);
-	len = GNL_BUFFER_SIZE;
-	while (len == GNL_BUFFER_SIZE || g_shell.read_pipe)
+
+	len = read(g_shell.pipes.to_son[0], buff, GNL_BUFFER_SIZE);
+	while (read_pipe)
 	{
-		len = read(g_shell.pipes.to_son[0], buffer, GNL_BUFFER_SIZE);
-		if (!g_shell.read_pipe && len < GNL_BUFFER_SIZE)
-			len--;
-		process_pipe(cmd, buffer, len);
+
+		len = read(g_shell.pipes.to_son[0], new_buff, GNL_BUFFER_SIZE);
+
+		if (!ft_memcmp(new_buff, end, GNL_BUFFER_SIZE))
+		{
+			read_pipe = false;
+			tmp = ft_memchr(buff, -1, GNL_BUFFER_SIZE);
+			while (tmp)
+			{
+				*tmp = 0;
+				tmp = ft_memchr(buff, -1, GNL_BUFFER_SIZE);
+			}
+			print_debug_termcap(buff);
+		}
+
+		process_pipe(cmd, buff, len);
+		ft_memcpy(buff, new_buff, GNL_BUFFER_SIZE);
+
+
+
 	}
 	close_subprocess(0);
 }

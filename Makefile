@@ -25,9 +25,9 @@ NAME = minishell
 CC = clang
 MAKE = make --no-print-directory
 
-CFLAGS = -Wall -Wextra -Werror -g
+CFLAGS = -Wall -Wextra -Werror
 # CFLAGS += -O3 -fno-builtin
-CFLAGS += -fsanitize=address
+CFLAGS += -g3 -fsanitize=address
 
 CLIBS = -ltermcap
 
@@ -70,6 +70,7 @@ SRCS_LIB = \
 	./lib/gc_free.c \
 	./lib/gc_malloc.c \
 	./lib/get_next_line.c \
+	./lib/ft_memcmp.c \
 
 SRCS_MS = \
 	./src/exec/exec.c \

@@ -22,7 +22,7 @@
 # define	PRINT_TERMCAP		0
 
 # define	KEY_BUFFER_SIZE		4096
-# define	GNL_BUFFER_SIZE		1024
+# define	GNL_BUFFER_SIZE		10
 
 # define	KEY_UP				"[A"
 # define	KEY_DOWN			"[B"
@@ -146,7 +146,6 @@ typedef struct s_minishell
 	pid_t			outputmngr;
 	int				saved_stdout;
 	int				saved_stderr;
-	bool			read_pipe;
 	t_reader		reader;
 	bool			error;
 }				t_minishell;
@@ -194,7 +193,9 @@ char		*ft_strreplace(char *str, char *substr, char *replace);
 char		*ft_substr(char const *s, unsigned int start, size_t len);
 void		gc_free_tab(char **arr);
 size_t		ft_tab_len(char **car);
-void		*ft_calloc_char(size_t size, char c);
+void		*ft_calloc_char(size_t size, int c);
+int			ft_memcmp(const char *s1, const char *s2, size_t size);
+char		*ft_memchr(const char *s, int c, size_t size);
 
 char		*ft_strndup(char *s1, size_t n);
 char		*ft_strtrim_spaces(char *str);
