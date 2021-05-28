@@ -60,7 +60,7 @@ void	manage_output(t_command cmd)
 	t_buffer	new_buff;
 	char		*end;
 
-	if (cmd.need_redirect && cmd.redirect_append)
+	if (cmd.need_redirect && !cmd.redirect_append)
 		write_redirect(cmd, "", true, 0);
 	buff.ptr = ft_calloc(sizeof(char) * (GNL_BUFFER_SIZE + 1));
 	new_buff.ptr = ft_calloc_char(sizeof(char) * (GNL_BUFFER_SIZE + 1),

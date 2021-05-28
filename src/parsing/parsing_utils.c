@@ -5,7 +5,7 @@ void	display_array(char **array)
 	int	i;
 
 	i = 0;
-	while (array[i])
+	while (array && array[i])
 	{
 		printf("(%s)\n", array[i]);
 		i++;

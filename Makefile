@@ -27,7 +27,8 @@ MAKE = make --no-print-directory
 
 CFLAGS = -Wall -Wextra -Werror
 # CFLAGS += -O3 -fno-builtin
-CFLAGS += -g3 -fsanitize=address
+CFLAGS += -g
+# CFLAGS += -fsanitize=address
 
 CLIBS = -ltermcap
 

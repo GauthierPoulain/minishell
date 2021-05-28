@@ -14,7 +14,7 @@ void	process_input(char *line)
 	if (ft_strlen(line) > 0)
 	{
 		g_shell.last_return = 0;
-		tmp = run_command(argv);
+		tmp = run_line(argv);
 		if (!g_shell.last_return)
 			g_shell.last_return = tmp;
 	}
