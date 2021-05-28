@@ -131,8 +131,8 @@ typedef struct s_command
 	char	*redirect_path;
 	bool	redirect_to_fd;
 	int		redirect_fd;
-	bool	redirect_stderr;
-	bool	redirect_stdout;
+	bool	listen_stderr;
+	bool	listen_stdout;
 	bool	redirect_append;
 }				t_command;
 
@@ -156,6 +156,7 @@ typedef struct s_minishell
 	int				saved_stderr;
 	t_reader		reader;
 	bool			error;
+	t_buffer		pipe_output;
 }				t_minishell;
 
 extern t_minishell	g_shell;
@@ -293,5 +294,6 @@ void		token_l_error(char *line, t_lexer *lexer);
 int			else_token_l(char *line, t_lexer *lexer);
 void		write_redirect(t_command cmd, char *buffer, bool erease, int len);
 void		close_pipe(void);
+void		reset_pipe_output(void);
 
 #endif

@@ -12,7 +12,7 @@ int	close_shell(char *msg)
 	gc_clean();
 	close(g_shell.saved_stdout);
 	close(g_shell.saved_stderr);
-	if (isatty(STDERR_FILENO))
+	if (isatty(STDIN_FILENO))
 		reset_input_mode();
 	if (msg)
 	{

@@ -42,3 +42,9 @@ void	wait_outputmanager(t_command cmd)
 			;
 	}
 }
+
+void	reset_pipe_output(void)
+{
+	gc_free(g_shell.pipe_output.ptr);
+	g_shell.pipe_output.size = 0;
+}
