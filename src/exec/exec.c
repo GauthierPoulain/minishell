@@ -14,17 +14,14 @@ int	syntax_error(void)
 	return (126);
 }
 
-static void	exec(t_command cmd)
+static void	exec(t_command cmd, char *envp[])
 {
-	execve(cmd.path, cmd.argv, get_envp());
+	execve(cmd.path, cmd.argv, envp);
 	close_subprocess(errno);
 }
 
 void	subprocess(t_command cmd, int *status)
 {
-	char	*envp[10];
-
-	(void)envp;
 	g_shell.child = fork();
 	if (g_shell.child < 0)
 		close_shell("fork error");
@@ -32,7 +29,7 @@ void	subprocess(t_command cmd, int *status)
 	{
 		signal(SIGQUIT, close_subprocess);
 		signal(SIGINT, close_subprocess);
-		exec(cmd);
+		exec(cmd, get_envp());
 	}
 	else
 	{
