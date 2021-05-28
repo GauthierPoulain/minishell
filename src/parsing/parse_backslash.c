@@ -1,4 +1,4 @@
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 static size_t	bslash_f_count(char *word, int i)
 {
