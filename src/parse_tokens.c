@@ -78,6 +78,35 @@ char	*treat_doll(char *word, int *i, int *trans)
 	return (word);
 }
 
+char	*treat_quotes(char *word, int *i)
+{
+	int	first;
+	int	lasts;
+	int	size;
+
+	first = 0;
+	lasts = 0;
+	size = ft_strlen(word + *i);
+	while (word[*i] == '\"')
+	{
+		*i += 1;
+		first++;
+	}
+	while (word[--size] == '\"')
+		lasts++;
+	if (first != lasts)
+	{
+		printf("yo je usis ici\n");
+		ft_putstr_fd(2, "Syntax error\n");
+		ft_lstclear(&g_shell.tokens);
+		g_shell.last_return = 1;
+		return (NULL);
+	}
+	word = ft_substr(word, first, size + 1 - lasts);
+	word = parse_tokens(word);
+	return (word);
+}
+
 char	*parse_tokens(char *word)
 {
 	int		i;
@@ -94,6 +123,8 @@ char	*parse_tokens(char *word)
 			new = treat_backslash(new, &i, &trans);
 		if (new[i] == '$')
 			new = treat_doll(new, &i, &trans);
+		if (new[i] == '\"')
+			treat_quotes(new, &i);
 		if ((new[i] && new[i] != '$')
 			|| (new[i] && new[i] == '$' && new[i + 1] == '/'))
 			i++;
