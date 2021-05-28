@@ -1,30 +1,5 @@
 #include "../includes/minishell.h"
 
-/*
-//	I don't even know why I did that, it's ugly, it works. For now
-*/
-
-void	if_forest(char **words, int i, t_list *lst)
-{
-	if (((t_token *)lst->content)->id == 0)
-	{
-		if (((t_token *)lst->content)->type == 3)
-			words[i] = ft_strdup(((t_token *)lst->content)->str + 1);
-		else
-			words[i] = parse_tokens(((t_token *)lst->content)->str);
-	}
-	else if (((t_token *)lst->content)->type == 2)
-		words[i] = parse_tokens(((t_token *)lst->content)->str);
-	else
-	{
-		if (check_occurence(((t_token *)lst->content)->str, '$')
-			|| check_occurence(((t_token *)lst->content)->str, '\\'))
-			words[i] = parse_tokens(((t_token *)lst->content)->str);
-		else
-			words[i] = ft_strdup(((t_token *)lst->content)->str);
-	}
-}
-
 void	chose_parsing(char **word, t_list *lst)
 {
 	if (((t_token *)lst->content)->type == 4)
@@ -33,14 +8,16 @@ void	chose_parsing(char **word, t_list *lst)
 		*word = parse_tokens(((t_token *)lst->content)->str);
 }
 
-void	join_no_space(char **words, int i)
+void	join_no_space(char **words, int *i, int *size)
 {
 	char	*tmp;
 
-	tmp = ft_strdup(words[i]);
-	words[i] = NULL;
-	gc_free(words[i]);
-	words[i - 1] = ft_strjoin(words[i - 1], tmp);
+	tmp = ft_strdup(words[*i]);
+	words[*i] = NULL;
+	gc_free(words[*i]);
+	words[*i - 1] = ft_strjoin(words[*i - 1], tmp);
+	*i -= 1;
+	*size -= 1;
 }
 
 char	**array_from_list(void)
@@ -57,11 +34,9 @@ char	**array_from_list(void)
 	while (i < size && g_shell.error == false)
 	{
 		chose_parsing(&words[i], lst);
-		if (!((t_token *)lst->content)->sp && ((t_token *)lst->content)->id >= 1)
-		{
-			join_no_space(words, i);
-			i--;
-		}
+		if (!((t_token *)lst->content)->sp
+			&& ((t_token *)lst->content)->id >= 1)
+			join_no_space(words, &i, &size);
 		if (words[i] == NULL)
 			break ;
 		if (g_shell.error == false)
@@ -81,7 +56,7 @@ char	**parse_line(char *line)
 	get_lexer(line);
 	g_shell.error = false;
 	array = array_from_list();
-	if (DEBUG && array)
+	if (P_ARRAY && array)
 		display_array(array);
 	return (array);
 }

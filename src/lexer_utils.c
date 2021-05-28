@@ -49,7 +49,6 @@ void	join_last_token(t_token *token)
 	lst = g_shell.tokens;
 	while (lst)
 	{
-		printf("JOIN TOKEN\n");
 		actual = lst->content;
 		if (actual->id == token->id - 1)
 			actual->str = ft_strjoin(actual->str, token->str);

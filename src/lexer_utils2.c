@@ -27,54 +27,60 @@ int	quotes_token_len(char *line, t_lexer *lexer)
 	return (-1);
 }
 
-int	bslash_token_len(char *line, t_lexer *lexer)
+static void	no_room_infos(char *line, int i, t_infos *infos)
 {
-	int		len;
-	int		i;
-	bool	was_quotes;
-
-	was_quotes = false;
-	len = 1;
-	i = lexer->i + 1;
-	// printf("slash string [%s]\ncurrent char [%c]\n", line + i, line[i]);
-	if (DEBUG)
-		printf("blash token\n");
-	while(line[i] == '\\')
+	while (line[i] == '\\')
 	{
 		i++;
-		len++;
+		infos->len += 1;
 	}
 	if (line[i] == '\"')
 	{
 		i++;
-		len++;
-		was_quotes = true;
+		infos->len += 1;
+		infos->was_quotes = true;
 	}
-	printf("slash string [%s]\ncurrent char [%c]\n", line + i, line[i]);
+}
+
+/*
+//alors le == en != est ok tier mais j'ai peur que ça pète autre chose :)
+*/
+
+int	bslash_token_len(char *line, t_lexer *lexer)
+{
+	int		i;
+	t_infos	infos;
+
+	infos.was_quotes = false;
+	infos.len = 1;
+	i = lexer->i + 1;
+	if (DEBUG)
+		printf("blash token\n");
+	no_room_infos(line, i, &infos);
 	while (line[i])
 	{
 		if (line[i] == ' ' || line[i] == '"')
 		{
-			//alors le == en != est ok tier mais j'ai peur que ça pète autre chose :)
 			if (i && (line[i - 1] != '\\' || line[i - 1] == '\"'))
-				return (len - 1);
-			//seems to be ok for now
-			if (was_quotes)
-				len += 1;
-			return (len);
+				return (infos.len - 1);
+			if (infos.was_quotes)
+				infos.len += 1;
+			return (infos.len);
 		}
 		i++;
-		len++;
+		infos.len++;
 	}
-	return (len);
+	return (infos.len);
 }
 
 int	get_token_len(char *line, t_lexer *lexer)
 {
-	int	i;
+	int		i;
+	bool	print;
 
+	print = false;
 	i = lexer->i;
-	if (DEBUG)
+	if (print)
 		printf("actual char [%c] during line [%s]\n", line[i], line + i);
 	if (line[i] == '\"')
 		return (quotes_token_len(line, lexer));

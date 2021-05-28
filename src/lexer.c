@@ -55,8 +55,10 @@ int	else_token_l(char *line, t_lexer *lexer)
 
 void	handle_space(char *line, t_token *token, t_lexer *lexer)
 {
-	int	token_l;
+	int		token_l;
+	bool	trash;
 
+	trash = false;
 	if (lexer->had_quotes)
 		lexer->had_quotes = false;
 	token->sp = false;
@@ -66,7 +68,6 @@ void	handle_space(char *line, t_token *token, t_lexer *lexer)
 		lexer->i++;
 	}
 	token_l = get_token_len(line, lexer);
-	printf("token len : %d\n", token_l);
 	if (token_l == -1)
 		return (token_l_error(line, lexer));
 	token->id = lexer->id++;
@@ -75,7 +76,7 @@ void	handle_space(char *line, t_token *token, t_lexer *lexer)
 	lexer->i += token_l;
 	if (lexer->i > (int)ft_strlen(line))
 		lexer->i = ft_strlen(line);
-	if (DEBUG)
+	if (DEBUG && trash)
 		printf("actual rest [%s]\n", line + lexer->i);
 }
 
