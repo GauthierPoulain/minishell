@@ -14,13 +14,6 @@ int	syntax_error(void)
 	return (126);
 }
 
-static void	exec(t_command cmd, char *envp[])
-{
-	display_array(envp);
-	execve(cmd.path, cmd.argv, envp);
-	close_subprocess(errno);
-}
-
 void	subprocess(t_command cmd, int *status)
 {
 	g_shell.child = fork();
@@ -30,7 +23,8 @@ void	subprocess(t_command cmd, int *status)
 	{
 		signal(SIGQUIT, close_subprocess);
 		signal(SIGINT, close_subprocess);
-		exec(cmd, get_envp());
+		execve(cmd.path, cmd.argv, get_envp());
+		close_subprocess(errno);
 	}
 	else
 	{
@@ -55,7 +49,6 @@ void	run_command(t_command *cmd, int *status)
 			*status = commant_not_found(cmd->prog);
 		else
 			subprocess(*cmd, status);
-	// reset_pipe_output();
 		if (cmd->need_pipe || cmd->need_redirect)
 			close_pipe();
 		g_shell.child = 0;

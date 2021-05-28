@@ -307,5 +307,6 @@ char		*bslash_nquotes(char *word, int *i, int r_back);
 int			check_slash(char *word, int i);
 void		reset_pipe_output(void);
 t_list		*get_commands(char **argv);
+void		fill_cmd_structs(t_list *lst);
 
 #endif

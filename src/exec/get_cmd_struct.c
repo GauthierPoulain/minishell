@@ -39,41 +39,6 @@ t_command	*init_command_struct(void)
 	return (cmd);
 }
 
-void	fill_cmd_structs(t_list *lst)
-{
-	t_command	*cmd;
-
-	while (lst)
-	{
-		cmd = lst->content;
-		cmd->prog = cmd->argv[0];
-		cmd->path = which(cmd->prog);
-		if (!ft_strcmp(cmd->operator, ";"))
-		{
-		}
-		if (!ft_strcmp(cmd->operator, "|"))
-		{
-			cmd->need_pipe = true;
-		}
-		else if (!ft_strcmp(cmd->operator, ">"))
-		{
-			((t_command *)lst->next)->skip_exec = true;
-			cmd->need_redirect = true;
-		}
-		else if (!ft_strcmp(cmd->operator, ">>"))
-		{
-			((t_command *)lst->next)->skip_exec = true;
-			cmd->need_redirect = true;
-			cmd->redirect_append = true;
-		}
-		else if (!ft_strcmp(cmd->operator, "<"))
-		{
-			((t_command *)lst->next)->skip_exec = true;
-		}
-		lst = lst->next;
-	}
-}
-
 bool	check_struct(t_list	*lst)
 {
 	t_command	*cmd;
