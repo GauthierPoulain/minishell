@@ -20,6 +20,7 @@ static char	*count_and_trim(char *word, size_t size)
 	}
 	word = ft_substr(word, first, size + 1 - lasts);
 	word = parse_tokens(word);
+	printf("after treating dquotes [%s]\n", word);
 	return (word);
 }
 

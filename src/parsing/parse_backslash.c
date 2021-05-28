@@ -36,6 +36,7 @@ char	*treat_backslash(char *word, int *i, int *trans)
 	int		back;
 
 	back = bslash_f_count(word, *i);
+	printf("back is : %d\n", back);
 	if (back % 2 && ft_strlen(word) == *i + (size_t)back)
 		return (error_bslash(i));
 	if (*i == 0)

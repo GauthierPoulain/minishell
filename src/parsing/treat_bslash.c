@@ -1,4 +1,4 @@
-#include "../../includes/minishell.h"
+#include "../includes/minishell.h"
 
 char	*bslash_nquotes(char *word, int *i, int r_back)
 {
