@@ -55,7 +55,8 @@ int	bslash_token_len(char *line, t_lexer *lexer)
 	{
 		if (line[i] == ' ' || line[i] == '"')
 		{
-			if (i && (line[i - 1] == '\\' || line[i - 1] == '\"'))
+			//alors le == en != est ok tier mais j'ai peur que ça pète autre chose :)
+			if (i && (line[i - 1] != '\\' || line[i - 1] == '\"'))
 				return (len - 1);
 			//seems to be ok for now
 			if (was_quotes)
