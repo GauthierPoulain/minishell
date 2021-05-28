@@ -27,5 +27,6 @@ static char	*count_and_trim(char *word, size_t size)
 char	*parse_d_quotes(char *word)
 {
 	word = count_and_trim(word, ft_strlen(word));
+	printf("new word after quotes parsing [%s]\n", word);
 	return (word);
 }

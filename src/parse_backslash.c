@@ -62,8 +62,10 @@ char	*bslash_filled(char *word, int *i, int *trans, int back)
 {
 	char	*new;
 	int		r_back;
+	int		tmp;
 
 	r_back = back / 2;
+	tmp = *i;
 	new = ft_calloc_char(r_back + 1, '\\');
 	new = ft_strjoin(new, word + back + *i);
 	*i += r_back;
@@ -73,9 +75,13 @@ char	*bslash_filled(char *word, int *i, int *trans, int back)
 		*trans = 0;
 	while (word[*i] == '\\')
 		*i += 1;
+	if (*i == (int)ft_strlen(word))
+		*i = tmp;
 	if (word[*i] == '\"')
+	{
 		new = bslash_nquotes(word, i, r_back);
-	new = parse_tokens(new);
+		new = parse_tokens(new);
+	}
 	printf("NEW [%s]\n", new);
 	return (new);
 }
