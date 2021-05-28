@@ -31,6 +31,33 @@ char	*special_trim_quotes(char *word)
 	return (new);
 }
 
+char	*bslash_nquotes(char *word, int *i, int r_back)
+{
+	int		f_quotes;
+	int		l_quotes;
+	int		size;
+	char	*new;
+
+	f_quotes = 0;
+	l_quotes = 0;
+	while (word[*i] == '\"')
+	{
+		printf("SALUT\n");
+		*i += 1;
+		f_quotes++;
+	}
+	size = ft_strlen(word + *i);
+	while (word[size] == '\"')
+	{
+		l_quotes++;
+		size--;
+	}
+	new = ft_substr(word, f_quotes + r_back, ft_strlen(word + *i) + 1 - l_quotes);
+	new = parse_d_quotes(new);
+	printf("after the magical sub : [%s]\n", new);
+	return (new);
+}
+
 char	*bslash_filled(char *word, int *i, int *trans, int back)
 {
 	char	*new;
@@ -44,10 +71,10 @@ char	*bslash_filled(char *word, int *i, int *trans, int back)
 		*trans = 1;
 	else
 		*trans = 0;
-	// if (new[*i] == '\"')
-	// {
-	// 	new = special_trim_quotes(ft_strdup(word + *i));
-	// }
+	while (word[*i] == '\\')
+		*i += 1;
+	if (word[*i] == '\"')
+		new = bslash_nquotes(word, i, r_back);
 	printf("NEW [%s]\n", new);
 	return (new);
 }
