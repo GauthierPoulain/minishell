@@ -125,15 +125,13 @@ typedef struct s_command
 	char	*path;
 	char	**argv;
 	bool	need_pipe;
-	bool	pipe_stderr;
 	bool	need_redirect;
-	bool	redirect_from_file;
 	char	*redirect_path;
-	bool	redirect_to_fd;
-	int		redirect_fd;
 	bool	listen_stderr;
 	bool	listen_stdout;
 	bool	redirect_append;
+	char	*operator;
+	bool	skip_exec;
 }				t_command;
 
 typedef struct s_minishell
@@ -235,7 +233,7 @@ void		set_env(char *key, char *value);
 void		unset_env(char *key);
 char		*get_env(char *key);
 void		init_env(const char **envp);
-int			run_command(char **argv);
+int			run_line(char **argv);
 int			check_type_at(int i);
 void		get_lexer(char *line);
 void		init_lexer(t_lexer *lexer);
@@ -276,7 +274,6 @@ void		signal_nothing(int code);
 void		redir_sig_to_child(int signal);
 int			builtin_exit(char **argv);
 void		close_subprocess(int code);
-t_command	init_cmd_struct(char **argv);
 void		set_output(t_command cmd);
 void		reset_output(void);
 void		manage_output(t_command cmd);
@@ -295,5 +292,6 @@ int			else_token_l(char *line, t_lexer *lexer);
 void		write_redirect(t_command cmd, char *buffer, bool erease, int len);
 void		close_pipe(void);
 void		reset_pipe_output(void);
+t_list		*get_commands(char **argv);
 
 #endif

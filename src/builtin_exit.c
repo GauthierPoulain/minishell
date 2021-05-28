@@ -5,6 +5,7 @@ int	builtin_exit(char **argv)
 	int		ret;
 
 	ret = 0;
+	ft_putstr("exit\n");
 	if (argv[1])
 		ret = ft_atoi(argv[1]);
 	if (g_shell.outputmngr)
