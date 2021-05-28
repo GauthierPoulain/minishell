@@ -18,7 +18,7 @@ int	exec_builtin(char *prog, char **argv)
 	else if (!ft_strcmp(prog, "pwd"))
 		return (builtin_pwd());
 	else if (!ft_strcmp(prog, "env"))
-		return (builtin_env());
+		return (builtin_env(false));
 	else if (!ft_strcmp(prog, "echo"))
 		return (builtin_echo(argv));
 	else if (!ft_strcmp(prog, "which"))

@@ -230,7 +230,7 @@ void		process_input(char *line);
 int			builtin_cd(char **argv);
 int			builtin_pwd(void);
 char		*get_pwd(void);
-int			builtin_env(void);
+int			builtin_env(bool print_export);
 int			builtin_echo(char **str);
 char		**get_envp(void);
 int			builtin_which(char **argv);
