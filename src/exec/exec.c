@@ -16,6 +16,7 @@ int	syntax_error(void)
 
 static void	exec(t_command cmd, char *envp[])
 {
+	display_array(envp);
 	execve(cmd.path, cmd.argv, envp);
 	close_subprocess(errno);
 }

@@ -10,6 +10,7 @@ void	display_array(char **array)
 		printf("(%s)\n", array[i]);
 		i++;
 	}
+	printf("(%s)\n", array[i]);
 }
 
 int	check_occurence(char *str, char c)
