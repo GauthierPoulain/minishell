@@ -92,22 +92,22 @@ SRCS_MS = \
 	./src/debugging.c \
 	./src/env.c \
 	./src/history.c \
-	./src/lexer_utils.c \
-	./src/lexer_utils2.c \
-	./src/lexer.c \
 	./src/minishell.c \
-	./src/parse_backslash.c \
-	./src/parse_tokens.c \
-	./src/parsing_utils.c \
-	./src/parsing.c \
-	./src/handle_d_quotes.c \
 	./src/process_input.c \
 	./src/read_line.c \
 	./src/signals_catcher.c \
 	./src/termcap.c \
 	./src/termctl.c \
-	./src/treat_dollars.c \
-	./src/treat_bslash.c \
+	./src/lexing/lexer_utils.c \
+	./src/lexing/lexer_utils2.c \
+	./src/lexing/lexer.c \
+	./src/parsing/handle_d_quotes.c \
+	./src/parsing/parse_backslash.c \
+	./src/parsing/parse_tokens.c \
+	./src/parsing/parsing_utils.c \
+	./src/parsing/parsing.c \
+	./src/parsing/treat_bslash.c \
+	./src/parsing/treat_dollars.c \
 
 SRCS = $(SRCS_LIB) $(SRCS_MS)
 

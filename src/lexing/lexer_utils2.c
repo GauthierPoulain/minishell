@@ -1,4 +1,4 @@
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 int	quotes_token_len(char *line, t_lexer *lexer)
 {
@@ -91,6 +91,7 @@ int	get_token_len(char *line, t_lexer *lexer)
 
 void	token_l_error(char *line, t_lexer *lexer)
 {
+	printf("tokenl\n");
 	ft_putstr_fd(2, "Syntax error");
 	ft_lstclear(&g_shell.tokens);
 	lexer->i = ft_strlen(line);
