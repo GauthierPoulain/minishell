@@ -106,6 +106,8 @@ SRCS_MS = \
 	./src/signals_catcher.c \
 	./src/termcap.c \
 	./src/termctl.c \
+	./src/treat_dollars.c \
+	./src/treat_bslash.c \
 
 SRCS = $(SRCS_LIB) $(SRCS_MS)
 

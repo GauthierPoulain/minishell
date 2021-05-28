@@ -13,30 +13,22 @@ static size_t	bslash_f_count(char *word, int i)
 	return (j);
 }
 
-char	*bslash_filled(char *word, int *i, int *trans, int back)
+char	*special_trim_quotes(char *word)
 {
+	int		first;
+	int		lasts;
+	int		size;
 	char	*new;
-	int		r_back;
 
-	r_back = back / 2;
-	new = ft_calloc_char(r_back + 1, '\\');
-	new = ft_strjoin(new, word + back + *i);
-	*i += r_back;
-	if (back % 4 == 1 || back % 4 == 3)
-		*trans = 1;
-	else
-		*trans = 0;
+	first = 0;
+	lasts = 0;
+	size = ft_strlen(word);
+	while (word[first] == '\"')
+		first++;
+	while (word[--size] == '\"')
+		lasts++;
+	new = ft_substr(word, first, size + 2 - lasts);
 	return (new);
-}
-
-static char	*error_bslash(int *i)
-{
-	*i = 0;
-	ft_putstr_fd(2, "Syntax error\n");
-	ft_lstclear(&g_shell.tokens);
-	g_shell.last_return = 1;
-	g_shell.error = true;
-	return ("");
 }
 
 char	*treat_backslash(char *word, int *i, int *trans)
