@@ -56,7 +56,7 @@ int	builtin_cd(char **argv)
 			path = argv[1];
 	}
 	else
-		path = getenv("HOME");
+		path = get_env("HOME");
 	err_code = check_err(path);
 	if (!err_code)
 	{
