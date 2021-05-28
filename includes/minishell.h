@@ -19,6 +19,7 @@
 # include <unistd.h>
 
 # define	DEBUG				1
+# define	P_ARRAY				0
 # define	PRINT_TERMCAP		0
 
 # define	KEY_BUFFER_SIZE		4096
@@ -118,6 +119,12 @@ typedef struct s_pipes
 	int		to_father[2];
 	int		to_son[2];
 }				t_pipes;
+
+typedef struct s_infos
+{
+	int	len;
+	int	was_quotes;
+}				t_infos;
 
 typedef struct s_command
 {
@@ -294,6 +301,13 @@ void		token_l_error(char *line, t_lexer *lexer);
 int			else_token_l(char *line, t_lexer *lexer);
 void		write_redirect(t_command cmd, char *buffer, bool erease, int len);
 void		close_pipe(void);
+char		*treat_doll_slash(char *word, int i, int back);
+char		*replace_dolls(char *word, int i);
+char		*treat_doll(char *word, int *i, int *trans);
+char		*error_bslash(int *i);
+char		*bslash_filled(char *word, int *i, int *trans, int back);
+char		*bslash_nquotes(char *word, int *i, int r_back);
+int			check_slash(char *word, int i);
 void		reset_pipe_output(void);
 
 #endif
