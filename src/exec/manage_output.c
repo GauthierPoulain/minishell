@@ -72,6 +72,7 @@ void	manage_output(t_command cmd)
 	if (cmd.need_pipe)
 		write(g_shell.pipes.to_father[1], &g_shell.pipe_output.size, 8);
 	if (cmd.need_pipe)
-		write(g_shell.pipes.to_father[1], g_shell.pipe_output.ptr, g_shell.pipe_output.size);
+		write(g_shell.pipes.to_father[1], g_shell.pipe_output.ptr,
+			g_shell.pipe_output.size);
 	close_subprocess(0);
 }

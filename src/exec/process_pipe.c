@@ -31,7 +31,8 @@ void	process_pipe(t_command cmd, char *buffer, int len)
 		write_redirect(cmd, buffer, false, len);
 	else if (cmd.need_pipe)
 	{
-		g_shell.pipe_output.ptr = ft_memjoin(g_shell.pipe_output.ptr, g_shell.pipe_output.size, buffer, len);
+		g_shell.pipe_output.ptr = ft_memjoin(g_shell.pipe_output.ptr,
+				g_shell.pipe_output.size, buffer, len);
 		g_shell.pipe_output.size += len;
 	}
 	ft_bzero(buffer, GNL_BUFFER_SIZE + 1);
