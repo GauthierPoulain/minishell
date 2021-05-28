@@ -33,6 +33,16 @@ void	chose_parsing(char **word, t_list *lst)
 		*word = parse_tokens(((t_token *)lst->content)->str);
 }
 
+void	join_no_space(char **words, int i)
+{
+	char	*tmp;
+
+	tmp = ft_strdup(words[i]);
+	words[i] = NULL;
+	gc_free(words[i]);
+	words[i - 1] = ft_strjoin(words[i - 1], tmp);
+}
+
 char	**array_from_list(void)
 {
 	int		size;
@@ -47,6 +57,11 @@ char	**array_from_list(void)
 	while (i < size && g_shell.error == false)
 	{
 		chose_parsing(&words[i], lst);
+		if (!((t_token *)lst->content)->sp && ((t_token *)lst->content)->id >= 1)
+		{
+			join_no_space(words, i);
+			i--;
+		}
 		if (words[i] == NULL)
 			break ;
 		if (g_shell.error == false)
