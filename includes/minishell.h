@@ -23,7 +23,9 @@
 # define	PRINT_TERMCAP		0
 
 # define	KEY_BUFFER_SIZE		4096
-# define	GNL_BUFFER_SIZE		1024
+# define	GNL_BUFFER_SIZE		10
+
+# define	READ_CUT_CARAC		-128
 
 # define	KEY_UP				"[A"
 # define	KEY_DOWN			"[B"
@@ -64,6 +66,12 @@ typedef struct s_list
 	void			*content;
 	struct s_list	*next;
 }				t_list;
+
+typedef struct s_buffer
+{
+	char	*ptr;
+	size_t	size;
+}				t_buffer;
 
 typedef struct s_env
 {
@@ -130,8 +138,8 @@ typedef struct s_command
 	char	*redirect_path;
 	bool	redirect_to_fd;
 	int		redirect_fd;
-	bool	redirect_stderr;
-	bool	redirect_stdout;
+	bool	listen_stderr;
+	bool	listen_stdout;
 	bool	redirect_append;
 }				t_command;
 
@@ -153,9 +161,9 @@ typedef struct s_minishell
 	pid_t			outputmngr;
 	int				saved_stdout;
 	int				saved_stderr;
-	bool			read_pipe;
 	t_reader		reader;
 	bool			error;
+	t_buffer		pipe_output;
 }				t_minishell;
 
 extern t_minishell	g_shell;
@@ -201,7 +209,9 @@ char		*ft_strreplace(char *str, char *substr, char *replace);
 char		*ft_substr(char const *s, unsigned int start, size_t len);
 void		gc_free_tab(char **arr);
 size_t		ft_tab_len(char **car);
-void		*ft_calloc_char(size_t size, char c);
+void		*ft_calloc_char(size_t size, int c);
+int			ft_memcmp(const char *s1, const char *s2, size_t size);
+char		*ft_memchr(const char *s, int c, int pos, size_t size);
 
 char		*ft_strndup(char *s1, size_t n);
 char		*ft_strtrim_spaces(char *str);
@@ -277,7 +287,7 @@ t_command	init_cmd_struct(char **argv);
 void		set_output(t_command cmd);
 void		reset_output(void);
 void		manage_output(t_command cmd);
-void		cut_eof(char *str);
+void		cut_eof(t_buffer *buff);
 void		process_pipe(t_command cmd, char *buffer, int len);
 int			exec_builtin(char *prog, char **argv);
 void		wait_outputmanager(t_command cmd);
@@ -298,5 +308,6 @@ char		*error_bslash(int *i);
 char		*bslash_filled(char *word, int *i, int *trans, int back);
 char		*bslash_nquotes(char *word, int *i, int r_back);
 int			check_slash(char *word, int i);
+void		reset_pipe_output(void);
 
 #endif

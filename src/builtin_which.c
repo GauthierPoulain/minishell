@@ -31,7 +31,7 @@ char	*which(char *prog)
 
 	if (is_builtin(prog))
 		return ("builtin");
-	else if (is_a_file(prog))
+	else if (!ft_isalnum(*prog) && is_a_file(prog))
 		return (prog);
 	else if (get_env("PATH"))
 	{

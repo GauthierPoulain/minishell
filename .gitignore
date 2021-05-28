@@ -8,3 +8,6 @@ minishell
 *.dSYM
 salut
 *.hex
+*.gcov
+*.gcno
+*.gcda

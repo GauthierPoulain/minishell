@@ -1,12 +1,12 @@
 #include "../../includes/minishell.h"
 
-void	cut_eof(char *str)
+void	cut_eof(t_buffer *buff)
 {
-	char	*pos;
-
-	pos = ft_strchr(str, EOF);
-	if (pos)
-		*pos = 0;
+	while (buff->size > 0 && buff->ptr[buff->size - 1] == READ_CUT_CARAC)
+	{
+		buff->ptr[buff->size - 1] = 0;
+		buff->size--;
+	}
 }
 
 int	exec_builtin(char *prog, char **argv)
@@ -41,4 +41,10 @@ void	wait_outputmanager(t_command cmd)
 		while (read(g_shell.pipes.to_father[0], &buff, 1) > 0 && buff != EOF)
 			;
 	}
+}
+
+void	reset_pipe_output(void)
+{
+	gc_free(g_shell.pipe_output.ptr);
+	g_shell.pipe_output.size = 0;
 }

@@ -9,15 +9,18 @@ void	*ft_calloc(size_t size)
 	return (ptr);
 }
 
-void	*ft_calloc_char(size_t size, char c)
+void	*ft_calloc_char(size_t size, int c)
 {
 	char	*ptr;
-	char	*uwu;
+	size_t	pos;
 
 	ptr = ft_calloc(size);
-	uwu = ptr;
 	size--;
-	while (size--)
-		*ptr++ = c;
-	return (uwu);
+	pos = 0;
+	while (pos < size)
+	{
+		ptr[pos] = c;
+		pos++;
+	}
+	return (ptr);
 }
