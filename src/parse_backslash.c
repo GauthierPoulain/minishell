@@ -75,6 +75,7 @@ char	*bslash_filled(char *word, int *i, int *trans, int back)
 		*i += 1;
 	if (word[*i] == '\"')
 		new = bslash_nquotes(word, i, r_back);
+	new = parse_tokens(new);
 	printf("NEW [%s]\n", new);
 	return (new);
 }
