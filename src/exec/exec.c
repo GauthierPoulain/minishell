@@ -14,27 +14,9 @@ int	syntax_error(void)
 	return (126);
 }
 
-static void	exec(t_command cmd, int envsize)
+static void	exec(t_command cmd)
 {
-	char	*envp[envsize + 1];
-	t_list	*actual;
-	t_env	*content;
-	int		i;
-
-	i = 0;
-	actual = g_shell.env;
-	while (actual)
-	{
-		content = actual->content;
-		if (content->value)
-		{
-			envp[i] = ft_strjoin(ft_strjoin(content->key, "="), content->value);
-			i++;
-		}
-		actual = actual->next;
-	}
-	envp[i] = NULL;
-	execve(cmd.path, cmd.argv, envp);
+	execve(cmd.path, cmd.argv, get_envp());
 	close_subprocess(errno);
 }
 
@@ -50,7 +32,7 @@ void	subprocess(t_command cmd, int *status)
 	{
 		signal(SIGQUIT, close_subprocess);
 		signal(SIGINT, close_subprocess);
-		exec(cmd, ft_lstsize(g_shell.env));
+		exec(cmd);
 	}
 	else
 	{
