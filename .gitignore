@@ -6,8 +6,8 @@ minishell
 *.log
 .DS_Store
 *.dSYM
-salut
 *.hex
 *.gcov
 *.gcno
 *.gcda
+*.swp

@@ -4,7 +4,12 @@ static void	subprocess_exec(t_command cmd, int pipes[2])
 {
 	int	fd;
 
-	close(pipes[1]);
+	if (cmd.need_pipe || cmd.need_redirect)
+	{
+		fd = open("/dev/tty", O_RDWR);
+		ioctl(fd, TIOCNOTTY, NULL);
+		close(fd);
+	}
 	if (g_shell.pipe_output.ptr)
 		dup2(pipes[0], STDIN_FILENO);
 	if (cmd.file_input)
