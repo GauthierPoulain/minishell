@@ -1,34 +1,50 @@
 #include "../../includes/minishell.h"
 
-int	commant_not_found(char *cmd)
+static void	subprocess_exec(t_command cmd, int pipes[2])
 {
-	ft_putstr_fd(2, "minishell: command not found: ");
-	ft_putstr_fd(2, cmd);
-	ft_putstr_fd(2, "\n");
-	return (127);
+	int	fd;
+
+	close(pipes[1]);
+	if (g_shell.pipe_output.ptr)
+		dup2(pipes[0], STDIN_FILENO);
+	if (cmd.file_input)
+	{
+		fd = open(cmd.redirect_path, O_RDONLY);
+		if (fd == -1)
+		{
+			ft_putstr_fd(2, "can't open input file\n");
+			close_subprocess(1);
+		}
+		dup2(fd, STDIN_FILENO);
+	}
+	signal(SIGQUIT, close_subprocess);
+	signal(SIGINT, close_subprocess);
+	execve(cmd.path, cmd.argv, get_envp());
+	close(pipes[0]);
+	close_subprocess(errno);
 }
 
-int	syntax_error(void)
+static void	subprocess(t_command cmd, int *status)
 {
-	ft_putstr_fd(2, "minishell: syntax error\n");
-	return (126);
-}
+	int	pipes[2];
 
-void	subprocess(t_command cmd, int *status)
-{
+	if (g_shell.pipe_output.ptr)
+		if (pipe(pipes) != 0)
+			close_shell("pipe error");
 	g_shell.child = fork();
 	if (g_shell.child < 0)
 		close_shell("fork error");
 	else if (g_shell.child == 0)
-	{
-		signal(SIGQUIT, close_subprocess);
-		signal(SIGINT, close_subprocess);
-		execve(cmd.path, cmd.argv, get_envp());
-		close_subprocess(errno);
-	}
+		subprocess_exec(cmd, pipes);
 	else
 	{
 		signals_listeners_to_child();
+		if (g_shell.pipe_output.ptr)
+		{
+			close(pipes[0]);
+			write(pipes[1], g_shell.pipe_output.ptr, g_shell.pipe_output.size);
+			close(pipes[1]);
+		}
 		wait(status);
 		*status = (((*status) & 0xff00) >> 8);
 	}
@@ -48,6 +64,7 @@ void	run_command(t_command *cmd, int *status)
 		else
 			subprocess(*cmd, status);
 	}
+	reset_pipe_output();
 	if (cmd->need_pipe || cmd->need_redirect)
 		close_pipe();
 	g_shell.child = 0;

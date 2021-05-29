@@ -15,12 +15,6 @@ void	set_output(t_command cmd)
 		dup2(g_shell.pipes.to_son[1], 1);
 	if (cmd.listen_stderr)
 		dup2(g_shell.pipes.to_son[1], 2);
-	if (cmd.need_redirect)
-	{
-	}
-	else if (cmd.need_pipe)
-	{
-	}
 }
 
 void	reset_output(void)

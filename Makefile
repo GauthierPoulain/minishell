@@ -75,6 +75,7 @@ SRCS_LIB = \
 
 SRCS_MS = \
 	./src/exec/exec.c \
+	./src/exec/errors.c \
 	./src/exec/fill_cmd_struct.c \
 	./src/exec/get_cmd_struct.c \
 	./src/exec/pipe_managment.c \

@@ -1,43 +1,25 @@
 #include "../../includes/minishell.h"
 
-static void	get_redirect_path(t_list *cmd)
-{
-	t_command	*actual;
-	t_command	*next;
-	int			i;
-
-	actual = cmd->content;
-	next = cmd->next->content;
-	actual->redirect_path = next->argv[0];
-	i = 1;
-	while (next->argv[i])
-	{
-		actual->additional_content = ft_strjoinf1(actual->additional_content,
-				next->argv[i]);
-		i++;
-	}
-}
-
 static void	parse_operators2(t_command *cmd, t_list *lst)
 {
 	if (!ft_strcmp(cmd->operator, ">"))
 	{
 		((t_command *)lst->next->content)->skip_exec = true;
 		cmd->need_redirect = true;
-		get_redirect_path(lst);
+		cmd->redirect_path = ((t_command *)lst->next->content)->argv[0];
 	}
 	else if (!ft_strcmp(cmd->operator, ">>"))
 	{
 		((t_command *)lst->next->content)->skip_exec = true;
 		cmd->need_redirect = true;
 		cmd->redirect_append = true;
-		get_redirect_path(lst);
+		cmd->redirect_path = ((t_command *)lst->next->content)->argv[0];
 	}
 	else if (!ft_strcmp(cmd->operator, "<"))
 	{
 		((t_command *)lst->next->content)->skip_exec = true;
 		cmd->file_input = true;
-		get_redirect_path(lst);
+		cmd->redirect_path = ((t_command *)lst->next->content)->argv[0];
 	}
 }
 
@@ -53,8 +35,7 @@ void	fill_cmd_structs(t_list *lst)
 		if (!cmd->operator)
 			;
 		if (!ft_strcmp(cmd->operator, ";"))
-		{
-		}
+			;
 		else if (!ft_strcmp(cmd->operator, "|"))
 		{
 			cmd->need_pipe = true;

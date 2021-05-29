@@ -140,7 +140,6 @@ typedef struct s_command
 	char	*operator;
 	bool	skip_exec;
 	bool	file_input;
-	char	*additional_content;
 }				t_command;
 
 typedef struct s_minishell
@@ -161,6 +160,7 @@ typedef struct s_minishell
 	pid_t			outputmngr;
 	int				saved_stdout;
 	int				saved_stderr;
+	int				saved_stdin;
 	t_reader		reader;
 	bool			error;
 	t_buffer		pipe_output;
@@ -311,5 +311,7 @@ int			check_slash(char *word, int i);
 void		reset_pipe_output(void);
 t_list		*get_commands(char **argv);
 void		fill_cmd_structs(t_list *lst);
+int			commant_not_found(char *cmd);
+int			syntax_error(void);
 
 #endif
