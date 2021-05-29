@@ -20,6 +20,7 @@ static void	init_shell(void)
 	g_shell.pipes.to_father[1] = -1;
 	g_shell.pipes.to_son[0] = -1;
 	g_shell.pipes.to_son[1] = -1;
+	g_shell.need_pipe = false;
 }
 
 void	pre_prompt(void)

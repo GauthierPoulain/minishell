@@ -23,7 +23,7 @@
 # define	PRINT_TERMCAP		0
 
 # define	KEY_BUFFER_SIZE		4096
-# define	GNL_BUFFER_SIZE		10
+# define	GNL_BUFFER_SIZE		1024
 
 # define	READ_CUT_CARAC		-128
 
@@ -42,7 +42,7 @@
 #  define	O_DIRECTORY			__O_DIRECTORY
 # endif
 
-# define	_END "\033[1;0m"
+# define	_END				"\033[1;0m"
 
 # define	_DEFAULT			"\033[1;39m"
 # define	_RED				"\033[1;31m"
@@ -139,6 +139,8 @@ typedef struct s_command
 	bool	redirect_append;
 	char	*operator;
 	bool	skip_exec;
+	bool	file_input;
+	char	*additional_content;
 }				t_command;
 
 typedef struct s_minishell
@@ -162,6 +164,7 @@ typedef struct s_minishell
 	t_reader		reader;
 	bool			error;
 	t_buffer		pipe_output;
+	bool			need_pipe;
 }				t_minishell;
 
 extern t_minishell	g_shell;

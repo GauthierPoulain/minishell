@@ -5,12 +5,14 @@ void	fetch_pipe_output(void)
 	t_buffer	buffer;
 
 	buffer.ptr = ft_calloc(12);
+	printf("wait read\n");
 	read(g_shell.pipes.to_father[0], buffer.ptr, 8);
 	buffer.size = *buffer.ptr;
 	printf("size = %zu\n", buffer.size);
 	buffer.ptr = ft_calloc(sizeof(char) * (buffer.size + 1));
 	read(g_shell.pipes.to_father[0], buffer.ptr, buffer.size);
 	write(1, buffer.ptr, buffer.size);
+	g_shell.need_pipe = false;
 }
 
 void	close_pipe(void)
@@ -24,7 +26,8 @@ void	close_pipe(void)
 				READ_CUT_CARAC),
 			GNL_BUFFER_SIZE);
 		reset_output();
-		fetch_pipe_output();
+		if (g_shell.need_pipe)
+			fetch_pipe_output();
 		waitpid(g_shell.outputmngr, NULL, 0);
 		close(g_shell.pipes.to_father[0]);
 		close(g_shell.pipes.to_father[1]);

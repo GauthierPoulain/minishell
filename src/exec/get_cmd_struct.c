@@ -36,6 +36,8 @@ t_command	*init_command_struct(void)
 	cmd->redirect_path = NULL;
 	cmd->argv = NULL;
 	cmd->skip_exec = false;
+	cmd->file_input = false;
+	cmd->additional_content = NULL;
 	return (cmd);
 }
 

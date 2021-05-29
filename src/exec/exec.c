@@ -40,6 +40,8 @@ void	run_command(t_command *cmd, int *status)
 	printf("NEW CMD\n");
 	display_array(cmd->argv);
 	printf("operator = %s\n", cmd->operator);
+	printf("need pipe ? %d\n", cmd->need_pipe);
+	g_shell.need_pipe = cmd->need_pipe;
 	wait_outputmanager(*cmd);
 	if (!ft_strcmp(cmd->path, "builtin"))
 		*status = exec_builtin(cmd->prog, cmd->argv);
@@ -49,10 +51,10 @@ void	run_command(t_command *cmd, int *status)
 			*status = commant_not_found(cmd->prog);
 		else
 			subprocess(*cmd, status);
-		if (cmd->need_pipe || cmd->need_redirect)
-			close_pipe();
-		g_shell.child = 0;
 	}
+	if (cmd->need_pipe || cmd->need_redirect)
+		close_pipe();
+	g_shell.child = 0;
 }
 
 int	run_line(char **argv)
