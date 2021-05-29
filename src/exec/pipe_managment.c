@@ -2,16 +2,12 @@
 
 void	fetch_pipe_output(void)
 {
-	t_buffer	buffer;
-
-	buffer.ptr = ft_calloc(12);
-	printf("wait read\n");
-	read(g_shell.pipes.to_father[0], buffer.ptr, 8);
-	buffer.size = *buffer.ptr;
-	printf("size = %zu\n", buffer.size);
-	buffer.ptr = ft_calloc(sizeof(char) * (buffer.size + 1));
-	read(g_shell.pipes.to_father[0], buffer.ptr, buffer.size);
-	write(1, buffer.ptr, buffer.size);
+	g_shell.pipe_output.ptr = ft_calloc(12);
+	read(g_shell.pipes.to_father[0], g_shell.pipe_output.ptr, 8);
+	g_shell.pipe_output.size = *g_shell.pipe_output.ptr;
+	g_shell.pipe_output.ptr = ft_calloc(sizeof(char) * (g_shell.pipe_output.size + 1));
+	read(g_shell.pipes.to_father[0], g_shell.pipe_output.ptr, g_shell.pipe_output.size);
+	write(1, g_shell.pipe_output.ptr, g_shell.pipe_output.size);
 	g_shell.need_pipe = false;
 }
 

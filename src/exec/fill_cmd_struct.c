@@ -48,8 +48,6 @@ void	fill_cmd_structs(t_list *lst)
 	while (lst)
 	{
 		cmd = lst->content;
-		printf("next = %p\n", lst->next);
-		printf("salut\n");
 		cmd->prog = cmd->argv[0];
 		cmd->path = which(cmd->prog);
 		if (!cmd->operator)

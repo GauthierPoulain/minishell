@@ -37,10 +37,6 @@ void	subprocess(t_command cmd, int *status)
 void	run_command(t_command *cmd, int *status)
 {
 	*status = 0;
-	printf("NEW CMD\n");
-	display_array(cmd->argv);
-	printf("operator = %s\n", cmd->operator);
-	printf("need pipe ? %d\n", cmd->need_pipe);
 	g_shell.need_pipe = cmd->need_pipe;
 	wait_outputmanager(*cmd);
 	if (!ft_strcmp(cmd->path, "builtin"))
