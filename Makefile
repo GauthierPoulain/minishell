@@ -28,7 +28,7 @@ MAKE = make --no-print-directory
 CFLAGS = -Wall -Wextra -Werror
 # CFLAGS += -O3 -fno-builtin
 CFLAGS += -g
-# CFLAGS += -fsanitize=address
+CFLAGS += -fsanitize=address
 
 CLIBS = -ltermcap
 
@@ -82,6 +82,7 @@ SRCS_MS = \
 	./src/exec/manage_output.c \
 	./src/exec/process_pipe.c \
 	./src/exec/utils.c \
+	./src/process_key.c \
 	./src/builtin_cd.c \
 	./src/builtin_echo.c \
 	./src/builtin_env.c \

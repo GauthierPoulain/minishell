@@ -165,6 +165,7 @@ typedef struct s_minishell
 	bool			error;
 	t_buffer		pipe_output;
 	bool			need_pipe;
+	bool			find_ctrld;
 }				t_minishell;
 
 extern t_minishell	g_shell;
