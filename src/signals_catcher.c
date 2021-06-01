@@ -12,6 +12,7 @@ void	SIGINT_catcher(int code)
 	g_shell.history.act_pos = 0;
 	g_shell.reader.pos = 0;
 	g_shell.reader.size = 0;
+	close_pipe();
 	pre_prompt();
 }
 
@@ -20,6 +21,7 @@ void	SIGQUIT_catcher(int code)
 	(void)code;
 	if (!isatty(STDIN_FILENO))
 		close_subprocess(131);
+	signal(SIGQUIT, SIGQUIT_catcher);
 }
 
 void	redir_sig_to_child(int code)
@@ -28,11 +30,9 @@ void	redir_sig_to_child(int code)
 		g_shell.last_return = 130;
 	else if (code == SIGQUIT)
 		g_shell.last_return = 131;
-	kill(g_shell.child, code);
 	if (g_shell.outputmngr)
-		close_pipe();
-	g_shell.child = 0;
-	g_shell.outputmngr = 0;
+		kill(g_shell.outputmngr, SIGUSR1);
+	close_pipe();
 }
 
 void	signals_listeners_to_child(void)
