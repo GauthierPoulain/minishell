@@ -42,6 +42,10 @@
 #  define	O_DIRECTORY			__O_DIRECTORY
 # endif
 
+# ifndef PATH_MAX
+#  define PATH_MAX	4096
+# endif
+
 # define	_END				"\033[1;0m"
 
 # define	_DEFAULT			"\033[1;39m"
@@ -281,7 +285,6 @@ void		cursor_op(char *op);
 void		add_signals_listeners(void);
 void		signals_listeners_to_child(void);
 void		SIGQUIT_catcher_subprocess(int code);
-void		signal_nothing(int code);
 void		redir_sig_to_child(int signal);
 int			builtin_exit(char **argv);
 void		close_subprocess(int code);
@@ -314,5 +317,6 @@ t_list		*get_commands(char **argv);
 void		fill_cmd_structs(t_list *lst);
 int			commant_not_found(char *cmd);
 int			syntax_error(void);
+bool		is_a_file(char *path);
 
 #endif

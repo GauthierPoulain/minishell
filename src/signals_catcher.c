@@ -3,6 +3,8 @@
 void	SIGINT_catcher(int code)
 {
 	(void)code;
+	if (!isatty(STDIN_FILENO))
+		close_subprocess(130);
 	signal(SIGINT, SIGINT_catcher);
 	g_shell.actual_str = ft_calloc(sizeof(char *));
 	ft_putchar('\n');
@@ -13,9 +15,11 @@ void	SIGINT_catcher(int code)
 	pre_prompt();
 }
 
-void	signal_nothing(int code)
+void	SIGQUIT_catcher(int code)
 {
 	(void)code;
+	if (!isatty(STDIN_FILENO))
+		close_subprocess(131);
 }
 
 void	redir_sig_to_child(int code)
@@ -40,5 +44,5 @@ void	signals_listeners_to_child(void)
 void	add_signals_listeners(void)
 {
 	signal(SIGINT, SIGINT_catcher);
-	signal(SIGQUIT, signal_nothing);
+	signal(SIGQUIT, SIGQUIT_catcher);
 }

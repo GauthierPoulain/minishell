@@ -1,6 +1,6 @@
 #include "../includes/minishell.h"
 
-static bool	is_a_file(char *path)
+bool	is_a_file(char *path)
 {
 	struct stat	path_stat;
 	int			ret;

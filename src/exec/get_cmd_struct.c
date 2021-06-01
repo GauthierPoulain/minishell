@@ -16,8 +16,11 @@ char	**tab_add(char **argv, char *str)
 
 bool	is_operator(char *c)
 {
-	return (!ft_strcmp(c, ";") || !ft_strcmp(c, ">") || !ft_strcmp(c, ">>")
-		|| !ft_strcmp(c, "|") || !ft_strcmp(c, "<"));
+	return (!ft_strcmp(c, ";")
+		|| !ft_strcmp(c, ">")
+		|| !ft_strcmp(c, ">>")
+		|| !ft_strcmp(c, "|")
+		|| !ft_strcmp(c, "<"));
 }
 
 t_command	*init_command_struct(void)

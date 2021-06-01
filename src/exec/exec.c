@@ -4,28 +4,31 @@ static void	subprocess_exec(t_command cmd, int pipes[2])
 {
 	int	fd;
 
+	signal(SIGQUIT, close_subprocess);
+	signal(SIGINT, close_subprocess);
+	if (g_shell.pipe_output.ptr)
+		close(pipes[1]);
 	if (cmd.need_pipe || cmd.need_redirect)
 	{
 		fd = open("/dev/tty", O_RDWR);
 		ioctl(fd, TIOCNOTTY, NULL);
 		close(fd);
 	}
-	if (g_shell.pipe_output.ptr)
-		dup2(pipes[0], STDIN_FILENO);
 	if (cmd.file_input)
 	{
-		fd = open(cmd.redirect_path, O_RDONLY);
-		if (fd == -1)
+		if (!is_a_file(cmd.redirect_path))
 		{
 			ft_putstr_fd(2, "can't open input file\n");
 			close_subprocess(1);
 		}
+		fd = open(cmd.redirect_path, O_RDONLY);
 		dup2(fd, STDIN_FILENO);
 	}
-	signal(SIGQUIT, close_subprocess);
-	signal(SIGINT, close_subprocess);
+	if (g_shell.pipe_output.ptr)
+		dup2(pipes[0], STDIN_FILENO);
 	execve(cmd.path, cmd.argv, get_envp());
-	close(pipes[0]);
+	if (g_shell.pipe_output.ptr)
+		close(pipes[0]);
 	close_subprocess(errno);
 }
 
@@ -47,6 +50,7 @@ static void	subprocess(t_command cmd, int *status)
 		if (g_shell.pipe_output.ptr)
 		{
 			close(pipes[0]);
+			printf("%s\n", g_shell.pipe_output.ptr);
 			write(pipes[1], g_shell.pipe_output.ptr, g_shell.pipe_output.size);
 			close(pipes[1]);
 		}
@@ -70,6 +74,7 @@ void	run_command(t_command *cmd, int *status)
 			subprocess(*cmd, status);
 	}
 	reset_pipe_output();
+	ft_putstr_fd(g_shell.saved_stdout, "done\n");
 	if (cmd->need_pipe || cmd->need_redirect)
 		close_pipe();
 	g_shell.child = 0;

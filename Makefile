@@ -28,7 +28,7 @@ MAKE = make --no-print-directory
 CFLAGS = -Wall -Wextra -Werror
 # CFLAGS += -O3 -fno-builtin
 CFLAGS += -g
-CFLAGS += -fsanitize=address
+# CFLAGS += -fsanitize=address
 
 CLIBS = -ltermcap
 
@@ -167,8 +167,8 @@ else
 	--leak-check=full \
 	--show-reachable=yes \
 	--track-origins=yes \
+	--gen-suppressions=no \
 	--error-limit=no \
-	--gen-suppressions=all \
 	-s \
 	--suppressions=./valgrind.supp \
 	./$(NAME)

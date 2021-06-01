@@ -6,9 +6,9 @@ void	write_redirect(t_command cmd, char *buffer, bool erease, int len)
 
 	if (erease)
 		fd = open(cmd.redirect_path, O_WRONLY | O_APPEND | O_CREAT | O_TRUNC,
-				0775);
+				0644);
 	else
-		fd = open(cmd.redirect_path, O_WRONLY | O_APPEND | O_CREAT, 0775);
+		fd = open(cmd.redirect_path, O_WRONLY | O_APPEND | O_CREAT, 0644);
 	write(fd, buffer, len);
 	close(fd);
 }
