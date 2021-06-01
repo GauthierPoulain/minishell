@@ -33,7 +33,7 @@ char	*bslash_filled(char *word, int *i, int *trans, int back)
 	int		tmp;
 
 	r_back = back / 2;
-	if (g_shell.is_in_quotes == true)
+	if (g_shell.is_in_quotes == false)
 		r_back++;
 	tmp = *i;
 	new = ft_calloc_char(r_back + 1, '\\');
