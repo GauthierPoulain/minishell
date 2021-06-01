@@ -3,6 +3,7 @@
 void	fetch_pipe_output(void)
 {
 	t_buffer	buff;
+
 	reset_pipe_output();
 	buff.ptr = ft_calloc(sizeof(char) * (GNL_BUFFER_SIZE + 1));
 	buff.size = 1;

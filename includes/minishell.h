@@ -304,7 +304,7 @@ int			get_token_len(char *line, t_lexer *lexer);
 int			bslash_token_len(char *line, t_lexer *lexer);
 void		token_l_error(char *line, t_lexer *lexer);
 int			else_token_l(char *line, t_lexer *lexer);
-void		write_redirect(char *path, char *buffer, bool erease, int len);
+int			write_redirect(char *path, char *buffer, bool erease, int len);
 void		close_pipe(void);
 char		*treat_doll_slash(char *word, int i, int back);
 char		*replace_dolls(char *word, int i);
@@ -322,5 +322,7 @@ bool		is_a_file(char *path);
 char		*parse_s_quotes(char *word);
 void		*ft_memjoin(void *s1, size_t l1, void *s2, size_t l2);
 void		get_input_part2(t_command cmd, t_buffer *res);
+void		print_buffer_in_file(t_command *cmd);
+void		print_buffer_in_fd(int fd);
 
 #endif

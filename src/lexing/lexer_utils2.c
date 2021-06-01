@@ -76,7 +76,7 @@ int	bslash_token_len(char *line, t_lexer *lexer)
 int	s_quotes_len(char *line, t_lexer *lexer)
 {
 	int	len;
-	int i;
+	int	i;
 
 	len = 1;
 	printf("squotes\n");

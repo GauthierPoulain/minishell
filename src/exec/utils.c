@@ -39,3 +39,32 @@ void	reset_pipe_output(void)
 	gc_free(g_shell.pipe_output.ptr);
 	g_shell.pipe_output.size = 0;
 }
+
+void	print_buffer_in_file(t_command *cmd)
+{
+	if (!cmd->redirect_append)
+		write_redirect(cmd->redirect_path, "", true, 0);
+	while (g_shell.pipe_output.size > 0)
+	{
+		if (g_shell.pipe_output.size < GNL_BUFFER_SIZE)
+			g_shell.pipe_output.size -= write_redirect(cmd->redirect_path,
+					g_shell.pipe_output.ptr, false, g_shell.pipe_output.size);
+		else
+			g_shell.pipe_output.size -= write_redirect(cmd->redirect_path,
+					g_shell.pipe_output.ptr, false, GNL_BUFFER_SIZE);
+	}
+}
+
+void	print_buffer_in_fd(int fd)
+{
+	while (g_shell.pipe_output.size > 0)
+	{
+		if (g_shell.pipe_output.size < GNL_BUFFER_SIZE)
+			g_shell.pipe_output.size -= write(fd, g_shell.pipe_output.ptr,
+					g_shell.pipe_output.size);
+		else
+			g_shell.pipe_output.size -= write(fd, g_shell.pipe_output.ptr,
+					GNL_BUFFER_SIZE);
+	}
+	close(fd);
+}
