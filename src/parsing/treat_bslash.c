@@ -36,9 +36,9 @@ char	*bslash_filled(char *word, int *i, int *trans, int back)
 	if (g_shell.is_in_quotes == false)
 		r_back++;
 	tmp = *i;
-	new = ft_calloc_char(r_back + 1, '\\');
+	new = ft_calloc_char(r_back, '\\');
 	new = ft_strjoin(new, word + back + *i);
-	*i += r_back;
+	*i += r_back - 1;
 	if (back % 4 == 1 || back % 4 == 3)
 		*trans = 1;
 	else
