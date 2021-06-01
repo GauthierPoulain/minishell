@@ -319,6 +319,7 @@ void		fill_cmd_structs(t_list *lst);
 int			commant_not_found(char *cmd);
 int			syntax_error(void);
 bool		is_a_file(char *path);
+char		*parse_s_quotes(char *word);
 void		*ft_memjoin(void *s1, size_t l1, void *s2, size_t l2);
 void		get_input_part2(t_command cmd, t_buffer *res);
 

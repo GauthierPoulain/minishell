@@ -73,17 +73,37 @@ int	bslash_token_len(char *line, t_lexer *lexer)
 	return (infos.len);
 }
 
+int	s_quotes_len(char *line, t_lexer *lexer)
+{
+	int	len;
+	int i;
+
+	len = 1;
+	printf("squotes\n");
+	i = lexer->i + 1;
+	while (line[i])
+	{
+		if (line[i] == '\'')
+			return (len + 1);
+		i++;
+		len++;
+	}
+	return (-1);
+}
+
 int	get_token_len(char *line, t_lexer *lexer)
 {
 	int		i;
 	bool	print;
 
-	print = false;
+	print = true;
 	i = lexer->i;
 	if (print)
 		printf("actual char [%c] during line [%s]\n", line[i], line + i);
 	if (line[i] == '\"')
 		return (quotes_token_len(line, lexer));
+	else if (line[i] == '\'')
+		return (s_quotes_len(line, lexer));
 	else if (line[i] == '\\')
 		return (bslash_token_len(line, lexer));
 	return (else_token_l(line, lexer));

@@ -4,6 +4,8 @@ void	chose_parsing(char **word, t_list *lst)
 {
 	if (((t_token *)lst->content)->type == 4)
 		*word = parse_d_quotes(((t_token *)lst->content)->str);
+	else if (((t_token *)lst->content)->type == 6)
+		*word = parse_s_quotes(((t_token *)lst->content)->str);
 	else
 		*word = parse_tokens(((t_token *)lst->content)->str);
 }
