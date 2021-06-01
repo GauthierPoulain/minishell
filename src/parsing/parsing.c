@@ -35,16 +35,11 @@ char	**array_from_list(void)
 	{
 		chose_parsing(&words[i], lst);
 		if (g_shell.error == true)
-			break ;
+			return (NULL);
 		if (!((t_token *)lst->content)->sp
 			&& ((t_token *)lst->content)->id >= 1)
 			join_no_space(words, &i, &size);
-		if (words[i] == NULL)
-			break ;
-		if (g_shell.error == false)
-			lst = lst->next;
-		else
-			return (NULL);
+		lst = lst->next;
 		i++;
 	}
 	words[i] = NULL;
