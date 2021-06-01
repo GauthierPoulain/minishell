@@ -33,6 +33,8 @@ char	*bslash_filled(char *word, int *i, int *trans, int back)
 	int		tmp;
 
 	r_back = back / 2;
+	if (g_shell.is_in_quotes == false)
+		r_back++;
 	tmp = *i;
 	new = ft_calloc_char(r_back + 1, '\\');
 	new = ft_strjoin(new, word + back + *i);
@@ -41,8 +43,6 @@ char	*bslash_filled(char *word, int *i, int *trans, int back)
 		*trans = 1;
 	else
 		*trans = 0;
-	// while (word[*i] == '\\')
-	// 	*i += 1;
 	if (*i == (int)ft_strlen(word))
 		*i = tmp;
 	if (word[*i] == '\"')
@@ -50,6 +50,7 @@ char	*bslash_filled(char *word, int *i, int *trans, int back)
 		new = bslash_nquotes(word, i, r_back);
 		new = parse_tokens(new);
 	}
+	g_shell.is_in_quotes = false;
 	return (new);
 }
 

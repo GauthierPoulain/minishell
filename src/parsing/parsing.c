@@ -4,6 +4,8 @@ void	chose_parsing(char **word, t_list *lst)
 {
 	if (((t_token *)lst->content)->type == 4)
 		*word = parse_d_quotes(((t_token *)lst->content)->str);
+	else if (((t_token *)lst->content)->type == 6)
+		*word = parse_s_quotes(((t_token *)lst->content)->str);
 	else
 		*word = parse_tokens(((t_token *)lst->content)->str);
 }
@@ -35,16 +37,11 @@ char	**array_from_list(void)
 	{
 		chose_parsing(&words[i], lst);
 		if (g_shell.error == true)
-			break ;
+			return (NULL);
 		if (!((t_token *)lst->content)->sp
 			&& ((t_token *)lst->content)->id >= 1)
 			join_no_space(words, &i, &size);
-		if (words[i] == NULL)
-			break ;
-		if (g_shell.error == false)
-			lst = lst->next;
-		else
-			return (NULL);
+		lst = lst->next;
 		i++;
 	}
 	words[i] = NULL;
@@ -57,6 +54,8 @@ char	**parse_line(char *line)
 
 	get_lexer(line);
 	g_shell.error = false;
+	g_shell.is_in_quotes = false;
+	g_shell.is_in_s_quotes = false;
 	array = array_from_list();
 	if (P_ARRAY && array)
 		display_array(array);

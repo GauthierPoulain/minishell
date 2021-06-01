@@ -3,9 +3,11 @@
 /*
 //	token 0 = arguments
 //	token 1 = options
-//	token 2 = '$'
-//	token 3 = '\'
-//	token 4 = '"'
+//	token 2 = $
+//	token 3 = \
+//	token 4 = "
+//	token 5 = /
+//	token 6 = '
 */
 
 static int	get_token_info(t_token *token, char *line, int start, int end)
@@ -21,6 +23,8 @@ static int	get_token_info(t_token *token, char *line, int start, int end)
 		token->type = 4;
 	else if (token->str[0] == '/')
 		token->type = 5;
+	else if (token->str[0] == '\'')
+		token->type = 6;
 	else
 		token->type = 0;
 	return (0);
@@ -42,7 +46,7 @@ int	else_token_l(char *line, t_lexer *lexer)
 			i++;
 			len++;
 		}
-		else if (line[i] == ' ' || line[i] == '\"')
+		else if (line[i] == ' ' || line[i] == '\"' || line[i] == '\'')
 			return (len);
 		else
 		{
@@ -58,7 +62,7 @@ void	handle_space(char *line, t_token *token, t_lexer *lexer)
 	int		token_l;
 	bool	trash;
 
-	trash = false;
+	trash = true;
 	if (lexer->had_quotes)
 		lexer->had_quotes = false;
 	token->sp = false;
@@ -90,10 +94,12 @@ void	get_lexer(char *line)
 	{
 		token = gc_malloc(sizeof(t_token));
 		if (line[lexer.i] == ' ' || line[lexer.i] == '\\'
-			|| lexer.i == 0 || line[lexer.i] == '"' || lexer.had_quotes)
+			|| lexer.i == 0 || line[lexer.i] == '"' || lexer.had_quotes
+				|| line[lexer.i] == '\'')
 			handle_space(line, token, &lexer);
 		if (line[lexer.i] != '"' && line[lexer.i] != ' '
-			&&line[lexer.i] != '\\' && !lexer.had_quotes)
+			&& line[lexer.i] != '\\' && !lexer.had_quotes
+				&& line[lexer.i] != '\'')
 			lexer.i++;
 	}
 	if (DEBUG)

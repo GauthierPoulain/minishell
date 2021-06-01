@@ -1,16 +1,16 @@
 #include "../../includes/minishell.h"
 
-static char	*count_and_trim(char *word, size_t size)
+static char	*trim_s_quotes(char *word, size_t size)
 {
 	int	first;
 	int	lasts;
 
 	first = 0;
 	lasts = 0;
-	g_shell.is_in_quotes = true;
-	while (word[first] == '\"')
+	g_shell.is_in_s_quotes = true;
+	while (word[first] == '\'')
 		first++;
-	while (word[--size] == '\"')
+	while (word[--size] == '\'')
 		lasts++;
 	if (first != lasts)
 	{
@@ -21,12 +21,11 @@ static char	*count_and_trim(char *word, size_t size)
 	}
 	word = ft_substr(word, first, size + 1 - lasts);
 	word = parse_tokens(word);
-	g_shell.is_in_quotes = false;
+	g_shell.is_in_s_quotes = false;
 	return (word);
 }
 
-char	*parse_d_quotes(char *word)
+char	*parse_s_quotes(char *word)
 {
-	word = count_and_trim(word, ft_strlen(word));
-	return (word);
+	return (trim_s_quotes(word, ft_strlen(word)));
 }
