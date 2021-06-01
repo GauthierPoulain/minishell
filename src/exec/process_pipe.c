@@ -25,8 +25,20 @@ void	*ft_memjoin(void *s1, size_t l1, void *s2, size_t l2)
 	return (res);
 }
 
-void	process_pipe(t_command cmd, char *buffer, int len)
+void	process_pipe(t_command cmd, char *buffer, int len, t_list *lst)
 {
+	(void)lst;
+	// {
+	// 	while (lst && !ft_strcmp(((t_command *)lst->content)->operator, ""))
+	// 	{
+
+	// 		lst = lst->next;
+	// 	}
+		
+	// }
+
+	// faire la redirection vers plusieurs fichiers avec > et >>
+
 	if (cmd.need_redirect)
 		write_redirect(cmd, buffer, false, len);
 	else if (cmd.need_pipe)

@@ -288,13 +288,13 @@ void		SIGQUIT_catcher_subprocess(int code);
 void		redir_sig_to_child(int signal);
 int			builtin_exit(char **argv);
 void		close_subprocess(int code);
-void		set_output(t_command cmd);
+void		set_output(t_command cmd, t_list *lst);
 void		reset_output(void);
-void		manage_output(t_command cmd);
+void		manage_output(t_command cmd, t_list *lst);
 void		cut_eof(t_buffer *buff);
-void		process_pipe(t_command cmd, char *buffer, int len);
+void		process_pipe(t_command cmd, char *buffer, int len, t_list *lst);
 int			exec_builtin(char *prog, char **argv);
-void		wait_outputmanager(t_command cmd);
+void		wait_outputmanager(t_command cmd, t_list *lst);
 int			bslash_token_len(char *line, t_lexer *lexer);
 int			quotes_token_len(char *line, t_lexer *lexer);
 char		*parse_tokens(char *word);
@@ -319,5 +319,6 @@ int			commant_not_found(char *cmd);
 int			syntax_error(void);
 bool		is_a_file(char *path);
 void		*ft_memjoin(void *s1, size_t l1, void *s2, size_t l2);
+void		get_input_part2(t_command cmd, t_buffer *res);
 
 #endif

@@ -1,10 +1,7 @@
 #include "../../includes/minishell.h"
 
-t_buffer *get_multiple_input(t_command cmd)
+t_buffer	*get_multiple_input(t_command cmd)
 {
-	int			fd;
-	char		*buffer;
-	int			len;
 	t_buffer	*res;
 
 	res = gc_malloc(sizeof(t_buffer));
@@ -13,26 +10,16 @@ t_buffer *get_multiple_input(t_command cmd)
 	if (g_shell.pipe_output.ptr)
 	{
 		res->ptr = ft_calloc(sizeof(char) * g_shell.pipe_output.size);
-		res->ptr = ft_memjoin(res->ptr, res->size, g_shell.pipe_output.ptr, g_shell.pipe_output.size);
+		res->ptr = ft_memjoin(res->ptr, res->size, g_shell.pipe_output.ptr,
+				g_shell.pipe_output.size);
 		res->size += g_shell.pipe_output.size;
 	}
 	if (cmd.redirect_path && is_a_file(cmd.redirect_path))
-	{
-		buffer = ft_calloc(sizeof(char) * (GNL_BUFFER_SIZE + 1));
-		fd = open(cmd.redirect_path, O_RDONLY);
-		len = 1;
-		while (len > 0)
-		{
-			len = read(fd, buffer, GNL_BUFFER_SIZE);
-			res->ptr = ft_memjoin(res->ptr, res->size, buffer, len);
-			res->size += len;
-		}
-		close(fd);
-	}
+		get_input_part2(cmd, res);
 	return (res);
 }
 
-static void	subprocess_exec(t_command cmd, int pipes[2])
+static void	subprocess_exec(t_command cmd, int pipes[2], bool read_pipe)
 {
 	int	fd;
 
@@ -44,8 +31,11 @@ static void	subprocess_exec(t_command cmd, int pipes[2])
 		ioctl(fd, TIOCNOTTY, NULL);
 		close(fd);
 	}
-	close(pipes[1]);
-	dup2(pipes[0], STDIN_FILENO);
+	if (read_pipe)
+	{
+		close(pipes[1]);
+		dup2(pipes[0], STDIN_FILENO);
+	}
 	execve(cmd.path, cmd.argv, get_envp());
 	close_subprocess(errno);
 }
@@ -54,33 +44,36 @@ static void	subprocess(t_command cmd, int *status)
 {
 	int			pipes[2];
 	t_buffer	*data;
+	bool		read_pipe;
 
 	if (pipe(pipes))
 		close_shell("pipe error");
+	data = get_multiple_input(cmd);
+	read_pipe = data->size > 0;
 	g_shell.child = fork();
 	if (g_shell.child < 0)
 		close_shell("fork error");
 	else if (g_shell.child == 0)
-		subprocess_exec(cmd, pipes);
+		subprocess_exec(cmd, pipes, read_pipe);
 	else
 	{
 		signals_listeners_to_child();
-		data = get_multiple_input(cmd);
-		if (data->size >= 0)
+		if (read_pipe)
+		{
 			write(pipes[1], data->ptr, data->size);
-		close(pipes[1]);
+			close(pipes[1]);
+		}
 		reset_pipe_output();
 		wait(status);
 		*status = (((*status) & 0xff00) >> 8);
 	}
 }
 
-void	run_command(t_command *cmd, int *status)
+void	run_command(t_command *cmd, int *status, t_list *lst)
 {
-	printf("NEW RUN\n");
 	*status = 0;
 	g_shell.need_pipe = cmd->need_pipe;
-	wait_outputmanager(*cmd);
+	wait_outputmanager(*cmd, lst);
 	if (!ft_strcmp(cmd->path, "builtin"))
 		*status = exec_builtin(cmd->prog, cmd->argv);
 	else
@@ -109,7 +102,7 @@ int	run_line(char **argv)
 	{
 		cmd = cmds->content;
 		if (!cmd->skip_exec)
-			run_command(cmd, &status);
+			run_command(cmd, &status, cmds);
 		cmds = cmds->next;
 	}
 	add_signals_listeners();
