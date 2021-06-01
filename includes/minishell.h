@@ -23,7 +23,7 @@
 # define	PRINT_TERMCAP		0
 
 # define	KEY_BUFFER_SIZE		4096
-# define	GNL_BUFFER_SIZE		1024
+# define	GNL_BUFFER_SIZE		5
 
 # define	KEY_UP				"[A"
 # define	KEY_DOWN			"[B"
