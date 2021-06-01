@@ -7,6 +7,7 @@ static char	*count_and_trim(char *word, size_t size)
 
 	first = 0;
 	lasts = 0;
+	g_shell.is_in_quotes = true;
 	while (word[first] == '\"')
 		first++;
 	while (word[--size] == '\"')
