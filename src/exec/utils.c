@@ -52,12 +52,14 @@ void	print_buffer_in_file(t_command *cmd)
 	{
 		if (cpy.size < GNL_BUFFER_SIZE)
 		{
-			cpy.size -= write_redirect(cmd->redirect_path, cpy.ptr, false, cpy.size);
+			cpy.size -= write_redirect(cmd->redirect_path, cpy.ptr,
+					false, cpy.size);
 			cpy.ptr += cpy.size;
 		}
 		else
 		{
-			cpy.size -= write_redirect(cmd->redirect_path, cpy.ptr, false, GNL_BUFFER_SIZE);
+			cpy.size -= write_redirect(cmd->redirect_path, cpy.ptr,
+					false, GNL_BUFFER_SIZE);
 			cpy.ptr += GNL_BUFFER_SIZE;
 		}
 	}
