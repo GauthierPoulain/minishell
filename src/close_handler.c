@@ -28,6 +28,5 @@ int	close_shell(char *msg)
 void	close_subprocess(int code)
 {
 	gc_clean();
-	ft_putchar(0);
 	exit(code);
 }

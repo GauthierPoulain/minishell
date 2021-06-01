@@ -4,7 +4,7 @@ void	set_output(t_command cmd)
 {
 	g_shell.saved_stdout = dup(1);
 	g_shell.saved_stderr = dup(2);
-	if (pipe(g_shell.pipes.to_father) != 0 || pipe(g_shell.pipes.to_son) != 0)
+	if (pipe(g_shell.pipes.to_father) || pipe(g_shell.pipes.to_son))
 		close_shell("pipe error");
 	g_shell.outputmngr = fork();
 	if (g_shell.outputmngr < 0)
@@ -47,8 +47,6 @@ void	manage_output(t_command cmd)
 
 	close(g_shell.pipes.to_son[1]);
 	close(g_shell.pipes.to_father[0]);
-	g_shell.pipe_output.ptr = ft_strdup("");
-	g_shell.pipe_output.size = 0;
 	if (cmd.need_redirect && !cmd.redirect_append)
 		write_redirect(cmd, "", true, 0);
 	buff.size = 0;
@@ -60,5 +58,10 @@ void	manage_output(t_command cmd)
 	close(g_shell.pipes.to_father[1]);
 	loop(buff, new_buff, cmd);
 	close(g_shell.pipes.to_son[0]);
+	if (cmd.need_pipe)
+		write(g_shell.pipes.to_father[1], &g_shell.pipe_output.size, 8);
+	if (cmd.need_pipe)
+		write(g_shell.pipes.to_father[1], g_shell.pipe_output.ptr,
+			g_shell.pipe_output.size);
 	close_subprocess(0);
 }
