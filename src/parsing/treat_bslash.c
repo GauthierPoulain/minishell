@@ -41,8 +41,8 @@ char	*bslash_filled(char *word, int *i, int *trans, int back)
 		*trans = 1;
 	else
 		*trans = 0;
-	while (word[*i] == '\\')
-		*i += 1;
+	// while (word[*i] == '\\')
+	// 	*i += 1;
 	if (*i == (int)ft_strlen(word))
 		*i = tmp;
 	if (word[*i] == '\"')
