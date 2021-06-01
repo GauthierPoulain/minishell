@@ -57,8 +57,6 @@ int	main(int argc, const char **argv, const char **envp)
 		while (true)
 		{
 			pre_prompt();
-			if (g_shell.pipe_output.ptr)
-				write(1, g_shell.pipe_output.ptr, g_shell.pipe_output.size);
 			g_shell.history.act_pos = 0;
 			process_input(ft_strtrim_spaces(read_term()));
 		}
