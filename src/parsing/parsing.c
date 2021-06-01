@@ -34,6 +34,8 @@ char	**array_from_list(void)
 	while (i < size && g_shell.error == false)
 	{
 		chose_parsing(&words[i], lst);
+		if (g_shell.error == true)
+			break ;
 		if (!((t_token *)lst->content)->sp
 			&& ((t_token *)lst->content)->id >= 1)
 			join_no_space(words, &i, &size);
