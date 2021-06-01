@@ -19,8 +19,7 @@ void	close_pipe(void)
 		close(g_shell.pipes.to_son[1]);
 		close(g_shell.pipes.to_father[1]);
 		reset_output();
-		if (g_shell.need_pipe)
-			fetch_pipe_output();
+		fetch_pipe_output();
 		waitpid(g_shell.outputmngr, NULL, 0);
 		g_shell.outputmngr = 0;
 	}
