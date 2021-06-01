@@ -303,7 +303,7 @@ int			get_token_len(char *line, t_lexer *lexer);
 int			bslash_token_len(char *line, t_lexer *lexer);
 void		token_l_error(char *line, t_lexer *lexer);
 int			else_token_l(char *line, t_lexer *lexer);
-void		write_redirect(t_command cmd, char *buffer, bool erease, int len);
+void		write_redirect(char *path, char *buffer, bool erease, int len);
 void		close_pipe(void);
 char		*treat_doll_slash(char *word, int i, int back);
 char		*replace_dolls(char *word, int i);

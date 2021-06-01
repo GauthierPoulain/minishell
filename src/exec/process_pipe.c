@@ -1,14 +1,14 @@
 #include "../../includes/minishell.h"
 
-void	write_redirect(t_command cmd, char *buffer, bool erease, int len)
+void	write_redirect(char *path, char *buffer, bool erease, int len)
 {
 	int		fd;
 
 	if (erease)
-		fd = open(cmd.redirect_path, O_WRONLY | O_APPEND | O_CREAT | O_TRUNC,
+		fd = open(path, O_WRONLY | O_APPEND | O_CREAT | O_TRUNC,
 				0644);
 	else
-		fd = open(cmd.redirect_path, O_WRONLY | O_APPEND | O_CREAT, 0644);
+		fd = open(path, O_WRONLY | O_APPEND | O_CREAT, 0644);
 	write(fd, buffer, len);
 	close(fd);
 }
@@ -25,22 +25,24 @@ void	*ft_memjoin(void *s1, size_t l1, void *s2, size_t l2)
 	return (res);
 }
 
+static void	write_recursivly(char *buffer, int len, t_list *lst)
+{
+	t_command	*act;
+
+	while (lst
+		&& (!ft_strcmp(((t_command *)lst->content)->operator, ">")
+			|| !ft_strcmp(((t_command *)lst->content)->operator, ">>")))
+	{
+		act = lst->content;
+		write_redirect(act->redirect_path, buffer, false, len);
+		lst = lst->next;
+	}
+}
+
 void	process_pipe(t_command cmd, char *buffer, int len, t_list *lst)
 {
-	(void)lst;
-	// {
-	// 	while (lst && !ft_strcmp(((t_command *)lst->content)->operator, ""))
-	// 	{
-
-	// 		lst = lst->next;
-	// 	}
-		
-	// }
-
-	// faire la redirection vers plusieurs fichiers avec > et >>
-
 	if (cmd.need_redirect)
-		write_redirect(cmd, buffer, false, len);
+		write_recursivly(buffer, len, lst);
 	else if (cmd.need_pipe)
 	{
 		g_shell.pipe_output.ptr = ft_memjoin(g_shell.pipe_output.ptr,

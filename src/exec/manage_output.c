@@ -41,6 +41,21 @@ static void	loop(t_buffer buff, t_buffer new_buff, t_command cmd, t_list *lst)
 	}
 }
 
+static void	init_write_recursivly(t_list *lst)
+{
+	t_command	*act;
+
+	while (lst
+		&& (!ft_strcmp(((t_command *)lst->content)->operator, ">")
+			|| !ft_strcmp(((t_command *)lst->content)->operator, ">>")))
+	{
+		act = lst->content;
+		if (!act->redirect_append)
+			write_redirect(act->redirect_path, "", true, 0);
+		lst = lst->next;
+	}
+}
+
 void	manage_output(t_command cmd, t_list *lst)
 {
 	t_buffer	buff;
@@ -48,8 +63,7 @@ void	manage_output(t_command cmd, t_list *lst)
 
 	reset_pipe_output();
 	close(g_shell.pipes.to_son[1]);
-	if (cmd.need_redirect && !cmd.redirect_append)
-		write_redirect(cmd, "", true, 0);
+	init_write_recursivly(lst);
 	buff.size = 0;
 	new_buff.size = 1;
 	buff.ptr = ft_calloc(sizeof(char) * (GNL_BUFFER_SIZE + 1));
