@@ -170,6 +170,7 @@ typedef struct s_minishell
 	t_buffer		pipe_output;
 	bool			need_pipe;
 	bool			find_ctrld;
+	bool			keep_reading;
 }				t_minishell;
 
 extern t_minishell	g_shell;

@@ -25,6 +25,7 @@ static void	subprocess_exec(t_command cmd, int pipes[2], bool read_pipe)
 
 	signal(SIGQUIT, close_subprocess);
 	signal(SIGINT, close_subprocess);
+	signal(SIGTERM, close_subprocess);
 	if (cmd.need_pipe || cmd.need_redirect)
 	{
 		fd = open("/dev/tty", O_RDWR);
@@ -60,11 +61,19 @@ static void	subprocess(t_command cmd, int *status)
 		signals_listeners_to_child();
 		if (read_pipe)
 		{
-			write(pipes[1], data->ptr, data->size);
+			while (g_shell.pipe_output.size > 0)
+			{
+				if (g_shell.pipe_output.size < GNL_BUFFER_SIZE)
+					g_shell.pipe_output.size -= write(pipes[1],
+						g_shell.pipe_output.ptr, g_shell.pipe_output.size);
+				else
+					g_shell.pipe_output.size -= write(pipes[1],
+						g_shell.pipe_output.ptr, GNL_BUFFER_SIZE);
+			}
 			close(pipes[1]);
 		}
 		reset_pipe_output();
-		wait(status);
+		waitpid(g_shell.child, status, 0);
 		*status = (((*status) & 0xff00) >> 8);
 	}
 }
@@ -83,6 +92,7 @@ void	run_command(t_command *cmd, int *status)
 		else
 			subprocess(*cmd, status);
 	}
+	reset_pipe_output();
 	if (cmd->need_pipe || cmd->need_redirect)
 		close_pipe();
 	g_shell.child = 0;

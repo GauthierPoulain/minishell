@@ -28,35 +28,47 @@ void	reset_output(void)
 	close(g_shell.saved_stderr);
 }
 
-static void	loop(t_buffer buff, t_buffer new_buff, t_command cmd)
+static void	loop(t_buffer buff, t_command cmd)
 {
-	while (new_buff.size > 0)
+	while (g_shell.keep_reading && buff.size > 0)
 	{
-		new_buff.size = read(g_shell.pipes.to_son[0], new_buff.ptr,
+		buff.size = read(g_shell.pipes.to_son[0], buff.ptr,
 				GNL_BUFFER_SIZE);
 		process_pipe(cmd, buff.ptr, buff.size);
-		buff.size = new_buff.size;
-		ft_memcpy(buff.ptr, new_buff.ptr, new_buff.size);
-		ft_bzero(new_buff.ptr, GNL_BUFFER_SIZE + 1);
+		ft_bzero(buff.ptr, GNL_BUFFER_SIZE + 1);
 	}
+}
+
+static void	toggle_reading(int code)
+{
+	(void)code;
+	g_shell.keep_reading = false;
+	close(g_shell.pipes.to_son[0]);
+	close(g_shell.pipes.to_son[1]);
 }
 
 void	manage_output(t_command cmd)
 {
 	t_buffer	buff;
-	t_buffer	new_buff;
 
+	g_shell.keep_reading = true;
+	signal(SIGUSR1, toggle_reading);
 	reset_pipe_output();
 	close(g_shell.pipes.to_son[1]);
-	buff.size = 0;
-	new_buff.size = 1;
+	buff.size = 1;
 	buff.ptr = ft_calloc(sizeof(char) * (GNL_BUFFER_SIZE + 1));
-	new_buff.ptr = ft_calloc(sizeof(char) * (GNL_BUFFER_SIZE + 1));
 	ft_putchar_fd(g_shell.pipes.to_father[1], EOF);
-	loop(buff, new_buff, cmd);
-	write(g_shell.pipes.to_father[1], &g_shell.pipe_output.size, 8);
-	write(g_shell.pipes.to_father[1], g_shell.pipe_output.ptr,
-		g_shell.pipe_output.size);
+	loop(buff, cmd);
+	close(g_shell.pipes.to_son[1]);
+	while (g_shell.pipe_output.size > 0)
+	{
+		if (g_shell.pipe_output.size < GNL_BUFFER_SIZE)
+			g_shell.pipe_output.size -= write(g_shell.pipes.to_father[1],
+				g_shell.pipe_output.ptr, g_shell.pipe_output.size);
+		else
+			g_shell.pipe_output.size -= write(g_shell.pipes.to_father[1],
+				g_shell.pipe_output.ptr, GNL_BUFFER_SIZE);
+	}
 	close(g_shell.pipes.to_father[1]);
 	close_subprocess(0);
 }
