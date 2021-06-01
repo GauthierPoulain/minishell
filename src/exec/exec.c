@@ -69,11 +69,11 @@ static void	subprocess(t_command cmd, int *status)
 	}
 }
 
-void	run_command(t_command *cmd, int *status, t_list *lst)
+void	run_command(t_command *cmd, int *status)
 {
 	*status = 0;
 	g_shell.need_pipe = cmd->need_pipe;
-	wait_outputmanager(*cmd, lst);
+	wait_outputmanager(*cmd);
 	if (!ft_strcmp(cmd->path, "builtin"))
 		*status = exec_builtin(cmd->prog, cmd->argv);
 	else
@@ -103,7 +103,14 @@ int	run_line(char **argv)
 	{
 		cmd = cmds->content;
 		if (!cmd->skip_exec)
-			run_command(cmd, &status, cmds);
+			run_command(cmd, &status);
+		if (!ft_strcmp(cmd->operator, ">") || !ft_strcmp(cmd->operator, ">>"))
+		{
+			if (!cmd->redirect_append)
+				write_redirect(cmd->redirect_path, "", true, 0);
+			write_redirect(cmd->redirect_path, g_shell.pipe_output.ptr,
+				false, g_shell.pipe_output.size);
+		}
 		cmds = cmds->next;
 	}
 	add_signals_listeners();

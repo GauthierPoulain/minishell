@@ -25,25 +25,9 @@ void	*ft_memjoin(void *s1, size_t l1, void *s2, size_t l2)
 	return (res);
 }
 
-static void	write_recursivly(char *buffer, int len, t_list *lst)
+void	process_pipe(t_command cmd, char *buffer, int len)
 {
-	t_command	*act;
-
-	while (lst
-		&& (!ft_strcmp(((t_command *)lst->content)->operator, ">")
-			|| !ft_strcmp(((t_command *)lst->content)->operator, ">>")))
-	{
-		act = lst->content;
-		write_redirect(act->redirect_path, buffer, false, len);
-		lst = lst->next;
-	}
-}
-
-void	process_pipe(t_command cmd, char *buffer, int len, t_list *lst)
-{
-	if (cmd.need_redirect)
-		write_recursivly(buffer, len, lst);
-	else if (cmd.need_pipe)
+	if (cmd.need_redirect || cmd.need_pipe)
 	{
 		g_shell.pipe_output.ptr = ft_memjoin(g_shell.pipe_output.ptr,
 				g_shell.pipe_output.size, buffer, len);
