@@ -118,8 +118,22 @@ int	run_line(char **argv)
 		{
 			if (!cmd->redirect_append)
 				write_redirect(cmd->redirect_path, "", true, 0);
-			write_redirect(cmd->redirect_path, g_shell.pipe_output.ptr,
-				false, g_shell.pipe_output.size);
+			while (g_shell.pipe_output.size > 0)
+			{
+				printf("write in file\n");
+				if (g_shell.pipe_output.size < GNL_BUFFER_SIZE)
+				{
+					write_redirect(cmd->redirect_path, g_shell.pipe_output.ptr,
+						false, g_shell.pipe_output.size);
+					g_shell.pipe_output.size -= g_shell.pipe_output.size;
+				}
+				else
+				{
+					write_redirect(cmd->redirect_path, g_shell.pipe_output.ptr,
+						false, GNL_BUFFER_SIZE);
+					g_shell.pipe_output.size -= GNL_BUFFER_SIZE;
+				}
+			}
 		}
 		cmds = cmds->next;
 	}

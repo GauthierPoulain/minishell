@@ -1,14 +1,5 @@
 #include "../../includes/minishell.h"
 
-void	cut_eof(t_buffer *buff)
-{
-	while (buff->size > 0 && buff->ptr[buff->size - 1] == READ_CUT_CARAC)
-	{
-		buff->ptr[buff->size - 1] = 0;
-		buff->size--;
-	}
-}
-
 int	exec_builtin(char *prog, char **argv)
 {
 	if (!ft_strcmp(prog, "exit"))

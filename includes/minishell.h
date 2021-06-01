@@ -18,14 +18,12 @@
 # include <term.h>
 # include <unistd.h>
 
-# define	DEBUG				1
+# define	DEBUG				0
 # define	P_ARRAY				0
 # define	PRINT_TERMCAP		0
 
 # define	KEY_BUFFER_SIZE		4096
 # define	GNL_BUFFER_SIZE		1024
-
-# define	READ_CUT_CARAC		-128
 
 # define	KEY_UP				"[A"
 # define	KEY_DOWN			"[B"
@@ -294,7 +292,6 @@ void		close_subprocess(int code);
 void		set_output(t_command cmd);
 void		reset_output(void);
 void		manage_output(t_command cmd);
-void		cut_eof(t_buffer *buff);
 void		process_pipe(t_command cmd, char *buffer, int len);
 int			exec_builtin(char *prog, char **argv);
 void		wait_outputmanager(t_command cmd);
@@ -324,8 +321,5 @@ bool		is_a_file(char *path);
 char		*parse_s_quotes(char *word);
 void		*ft_memjoin(void *s1, size_t l1, void *s2, size_t l2);
 void		get_input_part2(t_command cmd, t_buffer *res);
-
-void		init_write_recursivly(t_list *lst);
-void		write_recursivly(char *buffer, int len, t_list *lst);
 
 #endif

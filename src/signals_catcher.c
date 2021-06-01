@@ -30,6 +30,8 @@ void	redir_sig_to_child(int code)
 		g_shell.last_return = 130;
 	else if (code == SIGQUIT)
 		g_shell.last_return = 131;
+	if (g_shell.child)
+		kill(g_shell.child, code);
 	if (g_shell.outputmngr)
 		kill(g_shell.outputmngr, SIGUSR1);
 	close_pipe();

@@ -43,8 +43,6 @@ static void	toggle_reading(int code)
 {
 	(void)code;
 	g_shell.keep_reading = false;
-	close(g_shell.pipes.to_son[0]);
-	close(g_shell.pipes.to_son[1]);
 }
 
 void	manage_output(t_command cmd)
@@ -62,6 +60,7 @@ void	manage_output(t_command cmd)
 	close(g_shell.pipes.to_son[1]);
 	while (g_shell.pipe_output.size > 0)
 	{
+		printf("write output\n");
 		if (g_shell.pipe_output.size < GNL_BUFFER_SIZE)
 			g_shell.pipe_output.size -= write(g_shell.pipes.to_father[1],
 				g_shell.pipe_output.ptr, g_shell.pipe_output.size);

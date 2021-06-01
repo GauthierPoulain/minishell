@@ -103,7 +103,7 @@ int	get_token_len(char *line, t_lexer *lexer)
 
 	print = true;
 	i = lexer->i;
-	if (print)
+	if (print && DEBUG)
 		printf("actual char [%c] during line [%s]\n", line[i], line + i);
 	if (line[i] == '\"')
 		return (quotes_token_len(line, lexer));
