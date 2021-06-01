@@ -75,7 +75,6 @@ SRCS_LIB = \
 
 SRCS_MS = \
 	./src/exec/exec.c \
-	./src/exec/write_redirect.c \
 	./src/exec/exec2.c \
 	./src/exec/errors.c \
 	./src/exec/fill_cmd_struct.c \

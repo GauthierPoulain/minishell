@@ -1,6 +1,6 @@
 #include "../../includes/minishell.h"
 
-void	write_redirect(char *path, char *buffer, bool erease, int len)
+int	write_redirect(char *path, char *buffer, bool erease, int len)
 {
 	int		fd;
 
@@ -11,6 +11,7 @@ void	write_redirect(char *path, char *buffer, bool erease, int len)
 		fd = open(path, O_WRONLY | O_APPEND | O_CREAT, 0644);
 	write(fd, buffer, len);
 	close(fd);
+	return (len);
 }
 
 void	*ft_memjoin(void *s1, size_t l1, void *s2, size_t l2)

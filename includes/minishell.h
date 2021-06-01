@@ -25,8 +25,6 @@
 # define	KEY_BUFFER_SIZE		4096
 # define	GNL_BUFFER_SIZE		1024
 
-# define	READ_CUT_CARAC		-128
-
 # define	KEY_UP				"[A"
 # define	KEY_DOWN			"[B"
 # define	KEY_RIGHT			"[C"
@@ -173,6 +171,7 @@ typedef struct s_minishell
 	bool			keep_reading;
 	bool			is_in_quotes;
 	bool			is_in_s_quotes;
+	bool			is_running;
 }				t_minishell;
 
 extern t_minishell	g_shell;
@@ -294,7 +293,6 @@ void		close_subprocess(int code);
 void		set_output(t_command cmd);
 void		reset_output(void);
 void		manage_output(t_command cmd);
-void		cut_eof(t_buffer *buff);
 void		process_pipe(t_command cmd, char *buffer, int len);
 int			exec_builtin(char *prog, char **argv);
 void		wait_outputmanager(t_command cmd);
@@ -306,7 +304,7 @@ int			get_token_len(char *line, t_lexer *lexer);
 int			bslash_token_len(char *line, t_lexer *lexer);
 void		token_l_error(char *line, t_lexer *lexer);
 int			else_token_l(char *line, t_lexer *lexer);
-void		write_redirect(char *path, char *buffer, bool erease, int len);
+int			write_redirect(char *path, char *buffer, bool erease, int len);
 void		close_pipe(void);
 char		*treat_doll_slash(char *word, int i, int back);
 char		*replace_dolls(char *word, int i);
@@ -324,8 +322,7 @@ bool		is_a_file(char *path);
 char		*parse_s_quotes(char *word);
 void		*ft_memjoin(void *s1, size_t l1, void *s2, size_t l2);
 void		get_input_part2(t_command cmd, t_buffer *res);
-
-void		init_write_recursivly(t_list *lst);
-void		write_recursivly(char *buffer, int len, t_list *lst);
+void		print_buffer_in_file(t_command *cmd);
+void		print_buffer_in_fd(int fd);
 
 #endif

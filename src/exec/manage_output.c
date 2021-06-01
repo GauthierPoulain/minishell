@@ -43,8 +43,6 @@ static void	toggle_reading(int code)
 {
 	(void)code;
 	g_shell.keep_reading = false;
-	close(g_shell.pipes.to_son[0]);
-	close(g_shell.pipes.to_son[1]);
 }
 
 void	manage_output(t_command cmd)
@@ -64,10 +62,10 @@ void	manage_output(t_command cmd)
 	{
 		if (g_shell.pipe_output.size < GNL_BUFFER_SIZE)
 			g_shell.pipe_output.size -= write(g_shell.pipes.to_father[1],
-				g_shell.pipe_output.ptr, g_shell.pipe_output.size);
+					g_shell.pipe_output.ptr, g_shell.pipe_output.size);
 		else
 			g_shell.pipe_output.size -= write(g_shell.pipes.to_father[1],
-				g_shell.pipe_output.ptr, GNL_BUFFER_SIZE);
+					g_shell.pipe_output.ptr, GNL_BUFFER_SIZE);
 	}
 	close(g_shell.pipes.to_father[1]);
 	close_subprocess(0);

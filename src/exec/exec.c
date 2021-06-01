@@ -60,18 +60,7 @@ static void	subprocess(t_command cmd, int *status)
 	{
 		signals_listeners_to_child();
 		if (read_pipe)
-		{
-			while (g_shell.pipe_output.size > 0)
-			{
-				if (g_shell.pipe_output.size < GNL_BUFFER_SIZE)
-					g_shell.pipe_output.size -= write(pipes[1],
-						g_shell.pipe_output.ptr, g_shell.pipe_output.size);
-				else
-					g_shell.pipe_output.size -= write(pipes[1],
-						g_shell.pipe_output.ptr, GNL_BUFFER_SIZE);
-			}
-			close(pipes[1]);
-		}
+			print_buffer_in_fd(pipes[1]);
 		reset_pipe_output();
 		waitpid(g_shell.child, status, 0);
 		*status = (((*status) & 0xff00) >> 8);
@@ -104,6 +93,7 @@ int	run_line(char **argv)
 	t_command	*cmd;
 	int			status;
 
+	g_shell.is_running = true;
 	cmds = get_commands(argv);
 	if (!cmds)
 		return (syntax_error());
@@ -115,14 +105,10 @@ int	run_line(char **argv)
 		if (!cmd->skip_exec)
 			run_command(cmd, &status);
 		if (!ft_strcmp(cmd->operator, ">") || !ft_strcmp(cmd->operator, ">>"))
-		{
-			if (!cmd->redirect_append)
-				write_redirect(cmd->redirect_path, "", true, 0);
-			write_redirect(cmd->redirect_path, g_shell.pipe_output.ptr,
-				false, g_shell.pipe_output.size);
-		}
+			print_buffer_in_file(cmd);
 		cmds = cmds->next;
 	}
+	g_shell.is_running = false;
 	add_signals_listeners();
 	set_input_mode();
 	return (status);
