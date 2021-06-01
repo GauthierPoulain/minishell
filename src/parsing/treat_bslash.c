@@ -22,7 +22,10 @@ char	*bslash_nquotes(char *word, int *i, int r_back)
 	}
 	new = ft_substr(word, f_quotes + r_back,
 			ft_strlen(word + *i) + 1 - l_quotes);
+	g_shell.had_bslash = true;
 	new = parse_d_quotes(new);
+	g_shell.had_bslash = false;
+	printf("after parse inside slash : [%s]\n", new);
 	return (new);
 }
 
@@ -45,8 +48,10 @@ char	*bslash_filled(char *word, int *i, int *trans, int back)
 		*trans = 0;
 	if (*i == (int)ft_strlen(word))
 		*i = tmp;
-	if (word[*i] == '\"')
+	printf("word i [%c]\n", word[*i]);
+	if (word[*i + 1] == '\"')
 	{
+		printf("je suis la\n");
 		new = bslash_nquotes(word, i, r_back);
 		new = parse_tokens(new);
 	}

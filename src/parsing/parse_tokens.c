@@ -34,7 +34,7 @@ char	*treat_quotes(char *word, int *i)
 		lasts++;
 	if (first != lasts)
 	{
-		ft_putstr_fd(2, "Syntax error\n");
+		ft_putstr_fd(2, "Syntax error iiiii\n");
 		ft_lstclear(&g_shell.tokens);
 		g_shell.last_return = 1;
 		return (NULL);
@@ -60,7 +60,7 @@ char	*parse_tokens(char *word)
 		printf("actual new [%s] and i : %d\n", new, i);
 		if (new[i] && new[i] == '$')
 			new = treat_doll(new, &i, &trans);
-		if (new[i] == '\"')
+		if (new[i] == '\"' && !g_shell.had_bslash)
 			treat_quotes(new, &i);
 		if ((new[i] && new[i] != '$')
 			|| (new[i] && new[i] == '$' && new[i + 1] == '/'))

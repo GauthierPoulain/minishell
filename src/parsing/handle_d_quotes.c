@@ -12,7 +12,7 @@ static char	*count_and_trim(char *word, size_t size)
 		first++;
 	while (word[--size] == '\"')
 		lasts++;
-	if (first != lasts)
+	if (first != lasts && !g_shell.had_bslash)
 	{
 		ft_putstr_fd(2, "Syntax error\n");
 		ft_lstclear(&g_shell.tokens);

@@ -173,6 +173,7 @@ typedef struct s_minishell
 	bool			keep_reading;
 	bool			is_in_quotes;
 	bool			is_in_s_quotes;
+	bool			had_bslash;
 }				t_minishell;
 
 extern t_minishell	g_shell;
