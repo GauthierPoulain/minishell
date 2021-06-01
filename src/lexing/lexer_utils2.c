@@ -81,9 +81,14 @@ int	s_quotes_len(char *line, t_lexer *lexer)
 	len = 1;
 	printf("squotes\n");
 	i = lexer->i + 1;
+	while (line[i] == '\'')
+	{
+		i++;
+		len++;
+	}
 	while (line[i])
 	{
-		if (line[i] == '\'')
+		if (line[i] == '\'' && line[i + 1] != '\'')
 			return (len + 1);
 		i++;
 		len++;
