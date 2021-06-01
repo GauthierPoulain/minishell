@@ -55,11 +55,11 @@ int	bslash_token_len(char *line, t_lexer *lexer)
 	infos.len = 1;
 	i = lexer->i + 1;
 	if (DEBUG)
-		printf("blash token\n");
+		printf("blash token\n[%s]\n", line + i);
 	no_room_infos(line, i, &infos);
 	while (line[i])
 	{
-		if (line[i] == ' ' || line[i] == '"')
+		if (line[i] == ' ')
 		{
 			if (i && (line[i - 1] != '\\' || line[i - 1] == '\"'))
 				return (infos.len - 1);
