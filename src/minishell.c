@@ -23,6 +23,7 @@ static void	init_shell(void)
 	g_shell.need_pipe = false;
 	g_shell.saved_stdout = dup(1);
 	g_shell.saved_stderr = dup(2);
+	g_shell.is_running = false;
 }
 
 void	pre_prompt(void)

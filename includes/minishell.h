@@ -18,7 +18,7 @@
 # include <term.h>
 # include <unistd.h>
 
-# define	DEBUG				0
+# define	DEBUG				1
 # define	P_ARRAY				0
 # define	PRINT_TERMCAP		0
 
@@ -171,6 +171,7 @@ typedef struct s_minishell
 	bool			keep_reading;
 	bool			is_in_quotes;
 	bool			is_in_s_quotes;
+	bool			is_running;
 }				t_minishell;
 
 extern t_minishell	g_shell;

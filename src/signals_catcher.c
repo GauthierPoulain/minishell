@@ -12,8 +12,9 @@ void	SIGINT_catcher(int code)
 	g_shell.history.act_pos = 0;
 	g_shell.reader.pos = 0;
 	g_shell.reader.size = 0;
+	if (!g_shell.outputmngr)
+		pre_prompt();
 	close_pipe();
-	pre_prompt();
 }
 
 void	SIGQUIT_catcher(int code)
@@ -34,7 +35,6 @@ void	redir_sig_to_child(int code)
 		kill(g_shell.child, code);
 	if (g_shell.outputmngr)
 		kill(g_shell.outputmngr, SIGUSR1);
-	close_pipe();
 }
 
 void	signals_listeners_to_child(void)

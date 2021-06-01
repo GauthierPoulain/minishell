@@ -5,6 +5,7 @@ As beautiful as a shell
 ![make](https://github.com/gauthierpoulain/minishell/workflows/make/badge.svg)
 ![norminette](https://github.com/gauthierpoulain/minishell/workflows/norminette/badge.svg)
 
+[![forthebadge](https://forthebadge.com/images/badges/made-with-c.svg)](https://forthebadge.com)
 ## by:
 
 - ckurt

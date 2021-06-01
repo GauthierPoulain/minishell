@@ -8,7 +8,6 @@ void	fetch_pipe_output(void)
 	buff.size = 1;
 	while (buff.size > 0)
 	{
-		printf("fetch output\n");
 		buff.size = read(g_shell.pipes.to_father[0], buff.ptr, GNL_BUFFER_SIZE);
 		g_shell.pipe_output.ptr = ft_memjoin(g_shell.pipe_output.ptr,
 				g_shell.pipe_output.size, buff.ptr, buff.size);

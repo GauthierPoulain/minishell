@@ -104,6 +104,7 @@ int	run_line(char **argv)
 	t_command	*cmd;
 	int			status;
 
+	g_shell.is_running = true;
 	cmds = get_commands(argv);
 	if (!cmds)
 		return (syntax_error());
@@ -120,7 +121,6 @@ int	run_line(char **argv)
 				write_redirect(cmd->redirect_path, "", true, 0);
 			while (g_shell.pipe_output.size > 0)
 			{
-				printf("write in file\n");
 				if (g_shell.pipe_output.size < GNL_BUFFER_SIZE)
 				{
 					write_redirect(cmd->redirect_path, g_shell.pipe_output.ptr,
@@ -137,6 +137,7 @@ int	run_line(char **argv)
 		}
 		cmds = cmds->next;
 	}
+	g_shell.is_running = false;
 	add_signals_listeners();
 	set_input_mode();
 	return (status);
