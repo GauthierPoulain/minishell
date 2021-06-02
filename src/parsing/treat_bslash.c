@@ -56,6 +56,7 @@ char	*bslash_filled(char *word, int *i, int *trans, int back)
 	{
 		g_shell.had_bslash = true;
 		new = bslash_nquotes(new, tmp, r_back);
+		*trans = 0;
 		// if (*i >= (int)ft_strlen(new))
 			// *i = (int)ft_strlen(new);
 		// printf("i after modif %d\n", *i);
