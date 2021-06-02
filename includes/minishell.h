@@ -18,9 +18,15 @@
 # include <term.h>
 # include <unistd.h>
 
-# define	DEBUG				1
-# define	P_ARRAY				0
-# define	PRINT_TERMCAP		0
+# ifdef		RELEASE
+#  define		DEBUG			0
+#  define		P_ARRAY			0
+#  define		PRINT_TERMCAP	0
+# else
+#  define		DEBUG			1
+#  define		P_ARRAY			0
+#  define		PRINT_TERMCAP	0
+# endif
 
 # define	KEY_BUFFER_SIZE		4096
 # define	GNL_BUFFER_SIZE		1024

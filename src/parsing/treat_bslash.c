@@ -87,7 +87,7 @@ char	*bslash_filled(char *word, int *i, int *trans, int back)
 char	*error_bslash(int *i)
 {
 	*i = 0;
-	ft_putstr_fd(2, "Syntax error\n");
+	ft_putstr_fd(STDERR_FILENO, "Syntax error\n");
 	ft_lstclear(&g_shell.tokens);
 	g_shell.last_return = 1;
 	g_shell.error = true;

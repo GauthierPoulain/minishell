@@ -34,7 +34,7 @@ char	*treat_quotes(char *word, int *i)
 		lasts++;
 	if (first != lasts)
 	{
-		ft_putstr_fd(2, "Syntax error iiiii\n");
+		ft_putstr_fd(STDERR_FILENO, "Syntax error iiiii\n");
 		ft_lstclear(&g_shell.tokens);
 		g_shell.last_return = 1;
 		return (NULL);

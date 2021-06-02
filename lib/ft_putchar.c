@@ -7,5 +7,5 @@ int	ft_putchar_fd(int fd, int c)
 
 int	ft_putchar(int c)
 {
-	return (ft_putchar_fd(1, c));
+	return (ft_putchar_fd(STDOUT_FILENO, c));
 }

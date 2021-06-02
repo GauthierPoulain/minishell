@@ -1,12 +1,25 @@
 #include "../includes/minishell.h"
 
+static bool	skip_n(char **argv, int *i)
+{
+	bool	ret;
+
+	ret = false;
+	while (argv[*i] && !ft_strcmp(argv[*i], "-n"))
+	{
+		ret = true;
+		*i += 1;
+	}
+	return (ret);
+}
+
 int	builtin_echo(char **str)
 {
 	int		i;
 
-	if (str[0] && str[1] && !ft_strcmp(str[1], "-n"))
+	i = 1;
+	if (str[0] && skip_n(str, &i))
 	{
-		i = 2;
 		while (str[i])
 		{
 			ft_putstr(str[i++]);
@@ -16,7 +29,6 @@ int	builtin_echo(char **str)
 	}
 	else
 	{
-		i = 1;
 		while (str[i])
 		{
 			ft_putstr(str[i++]);

@@ -2,9 +2,9 @@
 
 void	print_err(char *msg)
 {
-	ft_putstr_fd(2, "exit: ");
-	ft_putstr_fd(2, msg);
-	ft_putstr_fd(2, "\n");
+	ft_putstr_fd(STDERR_FILENO, "exit: ");
+	ft_putstr_fd(STDERR_FILENO, msg);
+	ft_putstr_fd(STDERR_FILENO, "\n");
 }
 
 int	close_shell(char *msg)

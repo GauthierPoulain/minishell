@@ -91,7 +91,7 @@ int	run_line(char **argv)
 		return (syntax_error());
 	reset_input_mode();
 	status = 0;
-	while (cmds && !status)
+	while (cmds)
 	{
 		cmd = cmds->content;
 		if (!cmd->skip_exec)

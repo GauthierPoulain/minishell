@@ -2,8 +2,8 @@
 
 void	set_output(t_command cmd)
 {
-	g_shell.saved_stdout = dup(1);
-	g_shell.saved_stderr = dup(2);
+	g_shell.saved_stdout = dup(STDOUT_FILENO);
+	g_shell.saved_stderr = dup(STDERR_FILENO);
 	if (pipe(g_shell.pipes.to_father) || pipe(g_shell.pipes.to_son))
 		close_shell("pipe error");
 	g_shell.outputmngr = fork();
@@ -14,16 +14,16 @@ void	set_output(t_command cmd)
 	else
 	{
 		if (cmd.listen_stdout)
-			dup2(g_shell.pipes.to_son[1], 1);
+			dup2(g_shell.pipes.to_son[1], STDIN_FILENO);
 		if (cmd.listen_stderr)
-			dup2(g_shell.pipes.to_son[1], 2);
+			dup2(g_shell.pipes.to_son[1], STDERR_FILENO);
 	}
 }
 
 void	reset_output(void)
 {
-	dup2(g_shell.saved_stdout, 1);
-	dup2(g_shell.saved_stderr, 2);
+	dup2(g_shell.saved_stdout, STDOUT_FILENO);
+	dup2(g_shell.saved_stderr, STDERR_FILENO);
 	close(g_shell.saved_stdout);
 	close(g_shell.saved_stderr);
 }

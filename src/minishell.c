@@ -21,8 +21,8 @@ static void	init_shell(void)
 	g_shell.pipes.to_son[0] = -1;
 	g_shell.pipes.to_son[1] = -1;
 	g_shell.need_pipe = false;
-	g_shell.saved_stdout = dup(1);
-	g_shell.saved_stderr = dup(2);
+	g_shell.saved_stdout = dup(STDOUT_FILENO);
+	g_shell.saved_stderr = dup(STDERR_FILENO);
 	g_shell.is_running = false;
 }
 

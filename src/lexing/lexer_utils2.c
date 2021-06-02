@@ -118,7 +118,7 @@ int	get_token_len(char *line, t_lexer *lexer)
 void	token_l_error(char *line, t_lexer *lexer)
 {
 	printf("tokenl\n");
-	ft_putstr_fd(2, "Syntax error");
+	ft_putstr_fd(STDERR_FILENO, "Syntax error");
 	ft_lstclear(&g_shell.tokens);
 	lexer->i = ft_strlen(line);
 	g_shell.error = true;

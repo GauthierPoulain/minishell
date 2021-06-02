@@ -56,14 +56,14 @@ int	builtin_which(char **argv)
 	prog_path = which(argv[1]);
 	if (prog_path)
 	{
-		ft_putstr_fd(1, prog_path);
-		ft_putstr_fd(1, "\n");
+		ft_putstr_fd(STDOUT_FILENO, prog_path);
+		ft_putstr_fd(STDOUT_FILENO, "\n");
 		return (0);
 	}
 	else
 	{
-		ft_putstr_fd(2, argv[1]);
-		ft_putstr_fd(2, " not found\n");
+		ft_putstr_fd(STDERR_FILENO, argv[1]);
+		ft_putstr_fd(STDERR_FILENO, " not found\n");
 		return (1);
 	}
 }
