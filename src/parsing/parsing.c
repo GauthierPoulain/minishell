@@ -8,7 +8,8 @@ void	chose_parsing(char **word, t_list *lst)
 		*word = parse_s_quotes(((t_token *)lst->content)->str);
 	else
 	{
-		printf("ALED OUI\n");
+		if (DEBUG)
+			printf("ALED OUI\n");
 		*word = parse_tokens(((t_token *)lst->content)->str);
 	}
 }
@@ -41,7 +42,8 @@ char	**array_from_list(void)
 		chose_parsing(&words[i], lst);
 		if (g_shell.error == true)
 			return (NULL);
-		printf("addr : %p\n", lst->content);
+		if (DEBUG)
+			printf("addr : %p\n", lst->content);
 		if (!((t_token *)lst->content)->sp
 			&& ((t_token *)lst->content)->id >= 1)
 			join_no_space(words, &i, &size);

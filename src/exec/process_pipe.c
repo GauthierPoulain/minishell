@@ -21,7 +21,6 @@ void	*ft_memjoin(void *s1, size_t l1, void *s2, size_t l2)
 	res = ft_calloc(sizeof(char) * (l1 + l2));
 	if (s1)
 		ft_memcpy(res, s1, l1);
-	gc_free(s1);
 	ft_memcpy(res + l1, s2, l2);
 	return (res);
 }

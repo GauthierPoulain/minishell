@@ -5,7 +5,8 @@ int	builtin_exit(char **argv)
 	int		ret;
 
 	ret = 0;
-	ft_putstr("exit\n");
+	if (isatty(STDIN_FILENO))
+		ft_putstr("exit\n");
 	if (argv && argv[1])
 		ret = ft_atoi(argv[1]);
 	close_pipe();

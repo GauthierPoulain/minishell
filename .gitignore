@@ -12,3 +12,6 @@ minishell
 *.gcda
 *.swp
 salut
+minishell-tester/*
+!minishell-tester/test.sh
+!minishell-tester/README.md
