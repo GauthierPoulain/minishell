@@ -17,7 +17,8 @@ char	*bslash_nquotes(char *word, int i, int r_back)
 	if (g_shell.had_bslash)
 		f_quotes--;
 	size = ft_strlen(word + i);
-	while (word[size] == '\"')
+	printf("size LA : %d\n", size);
+	while (word[size] == '\"' && size)
 	{
 		l_quotes++;
 		size--;
