@@ -8,6 +8,14 @@ int	commant_not_found(char *cmd)
 	return (127);
 }
 
+int	file_not_found(char *file)
+{
+	ft_putstr_fd(2, "minishell: file not found: ");
+	ft_putstr_fd(2, file);
+	ft_putstr_fd(2, "\n");
+	return (1);
+}
+
 int	syntax_error(void)
 {
 	ft_putstr_fd(2, "minishell: syntax error\n");

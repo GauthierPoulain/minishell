@@ -25,8 +25,6 @@
 # define	KEY_BUFFER_SIZE		4096
 # define	GNL_BUFFER_SIZE		1024
 
-# define	READ_CUT_CARAC		-128
-
 # define	KEY_UP				"[A"
 # define	KEY_DOWN			"[B"
 # define	KEY_RIGHT			"[C"
@@ -169,11 +167,11 @@ typedef struct s_minishell
 	bool			error;
 	t_buffer		pipe_output;
 	bool			need_pipe;
-	bool			find_ctrld;
 	bool			keep_reading;
 	bool			is_in_quotes;
 	bool			is_in_s_quotes;
 	bool			had_bslash;
+	bool			is_running;
 }				t_minishell;
 
 extern t_minishell	g_shell;
@@ -295,7 +293,6 @@ void		close_subprocess(int code);
 void		set_output(t_command cmd);
 void		reset_output(void);
 void		manage_output(t_command cmd);
-void		cut_eof(t_buffer *buff);
 void		process_pipe(t_command cmd, char *buffer, int len);
 int			exec_builtin(char *prog, char **argv);
 void		wait_outputmanager(t_command cmd);
@@ -307,7 +304,7 @@ int			get_token_len(char *line, t_lexer *lexer);
 int			bslash_token_len(char *line, t_lexer *lexer);
 void		token_l_error(char *line, t_lexer *lexer);
 int			else_token_l(char *line, t_lexer *lexer);
-void		write_redirect(char *path, char *buffer, bool erease, int len);
+int			write_redirect(char *path, char *buffer, bool erease, int len);
 void		close_pipe(void);
 char		*treat_doll_slash(char *word, int i, int back);
 char		*replace_dolls(char *word, int i);
@@ -318,15 +315,18 @@ char		*bslash_nquotes(char *word, int i, int r_back);
 int			check_slash(char *word, int i);
 void		reset_pipe_output(void);
 t_list		*get_commands(char **argv);
-void		fill_cmd_structs(t_list *lst);
+bool		fill_cmd_structs(t_list *lst);
 int			commant_not_found(char *cmd);
 int			syntax_error(void);
 bool		is_a_file(char *path);
 char		*parse_s_quotes(char *word);
 void		*ft_memjoin(void *s1, size_t l1, void *s2, size_t l2);
 void		get_input_part2(t_command cmd, t_buffer *res);
-
-void		init_write_recursivly(t_list *lst);
-void		write_recursivly(char *buffer, int len, t_list *lst);
+void		print_buffer_in_file(t_command *cmd, bool print);
+void		print_buffer_in_fd(t_buffer buff, int fd);
+int			file_not_found(char *file);
+t_buffer	*get_multiple_input(t_command cmd);
+bool		is_operator(char *c);
+void		check_write_redirect(t_command *cmd, t_list *cmds);
 
 #endif

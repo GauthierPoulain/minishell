@@ -61,7 +61,8 @@ int	bslash_token_len(char *line, t_lexer *lexer)
 	{
 		if ((line[i] == ' ' || line[i] == '"') && line[i + 1] != '$')
 		{
-			if (i && (line[i - 1] != '\\' || line[i - 1] == '\"') && line[i + 1] != '\"')
+			if (i && (line[i - 1] != '\\' || line[i - 1] == '\"')
+				&& line[i + 1] != '\"')
 				return (infos.len - 1);
 			if (infos.was_quotes)
 				infos.len += 1;
@@ -76,7 +77,7 @@ int	bslash_token_len(char *line, t_lexer *lexer)
 int	s_quotes_len(char *line, t_lexer *lexer)
 {
 	int	len;
-	int i;
+	int	i;
 
 	len = 1;
 	printf("squotes\n");
@@ -103,7 +104,7 @@ int	get_token_len(char *line, t_lexer *lexer)
 
 	print = true;
 	i = lexer->i;
-	if (print)
+	if (print && DEBUG)
 		printf("actual char [%c] during line [%s]\n", line[i], line + i);
 	if (line[i] == '\"')
 		return (quotes_token_len(line, lexer));
