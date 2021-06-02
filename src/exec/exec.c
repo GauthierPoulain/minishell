@@ -45,7 +45,7 @@ static int	subprocess(t_command cmd)
 	if (pipe(pipes))
 		close_shell("pipe error");
 	data = get_multiple_input(cmd);
-	read_pipe = data->size > 0;
+	read_pipe = data->ptr != 0;
 	g_shell.child = fork();
 	if (g_shell.child < 0)
 		close_shell("fork error");
@@ -82,6 +82,7 @@ int	run_line(char **argv)
 	t_command	*cmd;
 	int			status;
 
+	g_shell.pipe_output.ptr = NULL;
 	g_shell.is_running = true;
 	cmds = get_commands(argv);
 	if (!cmds)
@@ -93,8 +94,7 @@ int	run_line(char **argv)
 		cmd = cmds->content;
 		if (!cmd->skip_exec)
 			run_command(cmd, &status);
-		if (!ft_strcmp(cmd->operator, ">") || !ft_strcmp(cmd->operator, ">>"))
-			print_buffer_in_file(cmd);
+		check_write_redirect(cmd, cmds);
 		cmds = cmds->next;
 	}
 	g_shell.is_running = false;

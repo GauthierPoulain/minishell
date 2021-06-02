@@ -14,15 +14,6 @@ char	**tab_add(char **argv, char *str)
 	return (save);
 }
 
-bool	is_operator(char *c)
-{
-	return (!ft_strcmp(c, ";")
-		|| !ft_strcmp(c, ">")
-		|| !ft_strcmp(c, ">>")
-		|| !ft_strcmp(c, "|")
-		|| !ft_strcmp(c, "<"));
-}
-
 t_command	*init_command_struct(void)
 {
 	t_command	*cmd;
@@ -57,6 +48,17 @@ bool	check_struct(t_list	*lst)
 	return (true);
 }
 
+void	check_operator(t_command *actual, char **argv, int i)
+{
+	if (!actual->argv)
+	{
+		actual->operator = ft_strdup("noop");
+		actual->argv = tab_add(actual->argv, "");
+	}
+	else
+		actual->operator = ft_strdup(argv[i]);
+}
+
 t_list	*get_commands(char **argv)
 {
 	t_list		*lst;
@@ -70,7 +72,7 @@ t_list	*get_commands(char **argv)
 	{
 		if (is_operator(argv[i]))
 		{
-			actual->operator = ft_strdup(argv[i]);
+			check_operator(actual, argv, i);
 			ft_lstadd_back(&lst, ft_lstnew(actual));
 			actual = init_command_struct();
 		}
@@ -80,8 +82,7 @@ t_list	*get_commands(char **argv)
 	}
 	if (actual->argv)
 		ft_lstadd_back(&lst, ft_lstnew(actual));
-	if (!check_struct(lst))
+	if (!check_struct(lst) || !fill_cmd_structs(lst))
 		return (NULL);
-	fill_cmd_structs(lst);
 	return (lst);
 }

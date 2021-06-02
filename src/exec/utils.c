@@ -37,11 +37,10 @@ void	wait_outputmanager(t_command cmd)
 void	reset_pipe_output(void)
 {
 	gc_free(g_shell.pipe_output.ptr);
-	g_shell.pipe_output.ptr = NULL;
 	g_shell.pipe_output.size = 0;
 }
 
-void	print_buffer_in_file(t_command *cmd)
+void	print_buffer_in_file(t_command *cmd, bool print)
 {
 	t_buffer	cpy;
 
@@ -49,7 +48,7 @@ void	print_buffer_in_file(t_command *cmd)
 	cpy.size = g_shell.pipe_output.size;
 	if (!cmd->redirect_append)
 		write_redirect(cmd->redirect_path, "", true, 0);
-	while (cpy.size > 0)
+	while (print && cpy.size > 0)
 	{
 		if (cpy.size < GNL_BUFFER_SIZE)
 		{
@@ -69,15 +68,18 @@ void	print_buffer_in_file(t_command *cmd)
 void	print_buffer_in_fd(t_buffer buff, int fd)
 {
 	t_buffer	cpy;
+	bool		stop;
 
+	stop = false;
 	cpy.ptr = buff.ptr;
 	cpy.size = buff.size;
-	while (cpy.size > 0)
+	while (!stop && cpy.size >= 0)
 	{
 		if (cpy.size < GNL_BUFFER_SIZE)
 		{
 			cpy.size -= write(fd, cpy.ptr, cpy.size);
 			cpy.ptr += cpy.size;
+			stop = true;
 		}
 		else
 		{

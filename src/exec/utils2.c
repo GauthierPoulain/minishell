@@ -17,3 +17,12 @@ t_buffer	*get_multiple_input(t_command cmd)
 		get_input_part2(cmd, res);
 	return (res);
 }
+
+bool	is_operator(char *c)
+{
+	return (!ft_strcmp(c, ";")
+		|| !ft_strcmp(c, ">")
+		|| !ft_strcmp(c, ">>")
+		|| !ft_strcmp(c, "|")
+		|| !ft_strcmp(c, "<"));
+}

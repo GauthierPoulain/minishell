@@ -315,16 +315,18 @@ char		*bslash_nquotes(char *word, int *i, int r_back);
 int			check_slash(char *word, int i);
 void		reset_pipe_output(void);
 t_list		*get_commands(char **argv);
-void		fill_cmd_structs(t_list *lst);
+bool		fill_cmd_structs(t_list *lst);
 int			commant_not_found(char *cmd);
 int			syntax_error(void);
 bool		is_a_file(char *path);
 char		*parse_s_quotes(char *word);
 void		*ft_memjoin(void *s1, size_t l1, void *s2, size_t l2);
 void		get_input_part2(t_command cmd, t_buffer *res);
-void		print_buffer_in_file(t_command *cmd);
+void		print_buffer_in_file(t_command *cmd, bool print);
 void		print_buffer_in_fd(t_buffer buff, int fd);
 int			file_not_found(char *file);
 t_buffer	*get_multiple_input(t_command cmd);
+bool		is_operator(char *c);
+void		check_write_redirect(t_command *cmd, t_list *cmds);
 
 #endif
