@@ -31,6 +31,8 @@ int	child_supervisor(t_buffer *data, bool read_pipe, int pipes[2])
 		print_buffer_in_fd(*data, pipes[1]);
 	reset_pipe_output();
 	waitpid(g_shell.child, &status, 0);
+	close(pipes[0]);
+	close(pipes[1]);
 	return (((status) & 0xff00) >> 8);
 }
 
