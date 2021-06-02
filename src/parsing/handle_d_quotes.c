@@ -19,7 +19,10 @@ static char	*count_and_trim(char *word, size_t size)
 		g_shell.last_return = 1;
 		return (NULL);
 	}
+	if (g_shell.had_bslash)
+		first--;
 	word = ft_substr(word, first, size + 1 - lasts);
+	printf("sub during count and trim -%s-\n", word);
 	word = parse_tokens(word);
 	g_shell.is_in_quotes = false;
 	return (word);
