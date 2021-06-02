@@ -48,23 +48,21 @@ char	*parse_tokens(char *word)
 {
 	int		i;
 	int		trans;
-	char	*new;
 
 	i = 0;
 	trans = 0;
-	new = word;
-	while (new[i])
+	while (word[i])
 	{
-		if (new[i] == '\\')
-			new = treat_backslash(new, &i, &trans);
-		printf("actual new [%s] and i : %d\n", new, i);
-		if (new[i] && new[i] == '$')
-			new = treat_doll(new, &i, &trans);
-		if (new[i] == '\"' && !g_shell.had_bslash)
-			treat_quotes(new, &i);
-		if ((new[i] && new[i] != '$')
-			|| (new[i] && new[i] == '$' && new[i + 1] == '/'))
+		if (word[i] == '\\')
+			word = treat_backslash(word, &i, &trans);
+		printf("actual word [%s] and i : %d\n also strlen %zu\n", word, i, ft_strlen(word));
+		if (word[i] && word[i] == '$')
+			word = treat_doll(word, &i, &trans);
+		if (word[i] == '\"' && !g_shell.had_bslash)
+			treat_quotes(word, &i);
+		if ((word[i] && word[i] != '$')
+			|| (word[i] && word[i] == '$' && word[i + 1] == '/'))
 			i++;
 	}
-	return (new);
+	return (word);
 }

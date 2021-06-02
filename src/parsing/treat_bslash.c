@@ -42,23 +42,28 @@ char	*bslash_filled(char *word, int *i, int *trans, int back)
 	tmp = *i;
 	new = ft_calloc_char(r_back, '\\');
 	new = ft_strjoin(new, word + back + *i);
-	*i += r_back;
+	printf("NEW [%s]\nWORD [%s]\n", new, word);
+	*i = r_back;
 	if (back % 4 == 1 || back % 4 == 3)
 		*trans = 1;
 	else
 		*trans = 0;
-	if (*i == (int)ft_strlen(word))
-		*i = tmp;
-	printf("word i [%c]\n", word[*i]);
-	if (back > 1)
-		*i += 1;
-	printf("word i [%c]\n", word[*i]);
-	if (word[*i] == '\"')
+	if (*i >= (int)ft_strlen(new))
+		*i = tmp + r_back;
+	printf("new i [%c]\n", new[*i]);
+	// if (back > 1)
+	// 	*i += 1;
+	printf("new i [%c]\n", new[*i]);
+	if (new[*i] == '\"')
 	{
-		new = bslash_nquotes(word, i, r_back);
-		if (*i >= (int)ft_strlen(word))
-			*i = (int)ft_strlen(word);
+		new = bslash_nquotes(new, i, r_back);
+		// if (*i >= (int)ft_strlen(new))
+			// *i = (int)ft_strlen(new);
+		*i = r_back + tmp;
+		printf("i after modif %d\n", *i);
 	}
+	*i = r_back + tmp;
+	printf("i value before :%d\nstrlen :%zu\n", *i, ft_strlen(new));
 	g_shell.is_in_quotes = false;
 	return (new);
 }
