@@ -13,17 +13,20 @@ void	set_output(t_command cmd)
 		manage_output(cmd);
 	else
 	{
-		if (cmd.listen_stdout)
-			dup2(g_shell.pipes.to_son[1], STDOUT_FILENO);
-		if (cmd.listen_stderr)
-			dup2(g_shell.pipes.to_son[1], STDERR_FILENO);
+		if (cmd.listen_stdout && dup2(g_shell.pipes.to_son[1],
+				STDOUT_FILENO) == -1)
+			close_shell("dup2 failure");
+		if (cmd.listen_stderr && dup2(g_shell.pipes.to_son[1],
+				STDERR_FILENO) == -1)
+			close_shell("dup2 failure");
 	}
 }
 
 void	reset_output(void)
 {
-	dup2(g_shell.saved_stdout, STDOUT_FILENO);
-	dup2(g_shell.saved_stderr, STDERR_FILENO);
+	if (dup2(g_shell.saved_stdout, STDOUT_FILENO) == -1
+		|| dup2(g_shell.saved_stderr, STDERR_FILENO) == -1)
+		close_shell("dup2 failure");
 	close(g_shell.saved_stdout);
 	close(g_shell.saved_stderr);
 }

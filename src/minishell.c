@@ -12,7 +12,8 @@ static void	init_shell(void)
 	g_shell.env = NULL;
 	g_shell.history.lst = NULL;
 	ft_lstadd_front(&g_shell.history.lst, ft_lstnew(NULL));
-	tcgetattr(STDIN_FILENO, &g_shell.save);
+	if (isatty(STDIN_FILENO))
+		tcgetattr(STDIN_FILENO, &g_shell.save);
 	g_shell.use_termcaps = false;
 	g_shell.child = 0;
 	g_shell.outputmngr = 0;
@@ -50,6 +51,7 @@ int	main(int argc, char **argv, char **envp)
 	(void)argc;
 	(void)argv;
 	init_shell();
+	fprintf(stderr, "salut\n");
 	init_env(envp);
 	set_input_mode();
 	add_signals_listeners();

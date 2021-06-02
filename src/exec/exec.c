@@ -16,7 +16,9 @@ static void	subprocess_exec(t_command cmd, int pipes[2], bool read_pipe)
 	if (read_pipe)
 	{
 		close(pipes[1]);
-		dup2(pipes[0], STDIN_FILENO);
+		if (dup2(pipes[0], STDIN_FILENO) == -1)
+			close_shell("dup2 failure");
+		
 	}
 	execve(cmd.path, cmd.argv, get_envp());
 	close_subprocess(errno);
