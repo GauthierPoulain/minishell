@@ -167,7 +167,6 @@ typedef struct s_minishell
 	bool			error;
 	t_buffer		pipe_output;
 	bool			need_pipe;
-	bool			find_ctrld;
 	bool			keep_reading;
 	bool			is_in_quotes;
 	bool			is_in_s_quotes;

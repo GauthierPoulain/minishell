@@ -33,13 +33,7 @@ static bool	check_end(char *c)
 		return (true);
 	}
 	else if (*c == 4)
-	{
-		if (g_shell.find_ctrld)
-			return (true);
-		g_shell.find_ctrld = true;
-	}
-	else
-		g_shell.find_ctrld = false;
+		ft_putchar(7);
 	return (false);
 }
 
@@ -51,6 +45,8 @@ bool	process_key(char *c, t_reader *reader, char ***str)
 		return (false);
 	else if (*c == 127 && reader->pos > 0)
 		unprint_char(str, reader);
+	else if (*c == 127)
+		ft_putchar(7);
 	else if (*c == 27 && *(c + 1))
 	{
 		if (PRINT_TERMCAP)

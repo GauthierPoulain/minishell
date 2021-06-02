@@ -108,7 +108,7 @@ char	*read_term(void)
 	while (reading && read(STDIN_FILENO, buffer, buffer_len) >= 0)
 	{
 		if (!*g_shell.actual_str && *buffer == 4)
-			close_shell(NULL);
+			builtin_exit(NULL);
 		reading = process_key(buffer, &g_shell.reader, &g_shell.actual_str);
 		ft_bzero(buffer, buffer_len);
 	}

@@ -6,10 +6,9 @@ int	builtin_exit(char **argv)
 
 	ret = 0;
 	ft_putstr("exit\n");
-	if (argv[1])
+	if (argv && argv[1])
 		ret = ft_atoi(argv[1]);
-	if (g_shell.outputmngr)
-		close_pipe();
+	close_pipe();
 	gc_clean();
 	exit(ret);
 }
