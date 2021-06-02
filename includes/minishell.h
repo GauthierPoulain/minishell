@@ -314,7 +314,7 @@ char		*replace_dolls(char *word, int i);
 char		*treat_doll(char *word, int *i, int *trans);
 char		*error_bslash(int *i);
 char		*bslash_filled(char *word, int *i, int *trans, int back);
-char		*bslash_nquotes(char *word, int *i, int r_back);
+char		*bslash_nquotes(char *word, int i, int r_back);
 int			check_slash(char *word, int i);
 void		reset_pipe_output(void);
 t_list		*get_commands(char **argv);

@@ -54,15 +54,20 @@ char	*parse_tokens(char *word)
 	while (word[i])
 	{
 		if (word[i] == '\\')
+		{
+			printf("JE SUIS UN BSLASH EN FAIT\n");
 			word = treat_backslash(word, &i, &trans);
+		}
 		printf("actual word [%s] and i : %d\n also strlen %zu\n", word, i, ft_strlen(word));
 		if (word[i] && word[i] == '$')
 			word = treat_doll(word, &i, &trans);
+		printf("actual word [%s] and i : %d\n also strlen %zu\n", word, i, ft_strlen(word));
 		if (word[i] == '\"' && !g_shell.had_bslash)
 			treat_quotes(word, &i);
 		if ((word[i] && word[i] != '$')
 			|| (word[i] && word[i] == '$' && word[i + 1] == '/'))
 			i++;
+		g_shell.had_bslash = false;
 	}
 	return (word);
 }

@@ -1,6 +1,6 @@
 #include "../../includes/minishell.h"
 
-char	*bslash_nquotes(char *word, int *i, int r_back)
+char	*bslash_nquotes(char *word, int i, int r_back)
 {
 	int		f_quotes;
 	int		l_quotes;
@@ -9,23 +9,24 @@ char	*bslash_nquotes(char *word, int *i, int r_back)
 
 	f_quotes = 0;
 	l_quotes = 0;
-	while (word[*i] == '\"')
+	while (word[i] == '\"')
 	{
-		*i += 1;
+		i += 1;
 		f_quotes++;
 	}
-	size = ft_strlen(word + *i);
+	if (g_shell.had_bslash)
+		f_quotes--;
+	size = ft_strlen(word + i);
 	while (word[size] == '\"')
 	{
 		l_quotes++;
 		size--;
 	}
+	printf("before sub : [%s]\n", word);
 	new = ft_substr(word, f_quotes + r_back - 1,
-			ft_strlen(word + *i) + 1 - l_quotes);
+			ft_strlen(word + i) + 1 - l_quotes);
 	printf("substr part [%s]\n", new);
-	g_shell.had_bslash = true;
-	new = parse_d_quotes(new);
-	g_shell.had_bslash = false;
+	// new = parse_tokens(new + i);
 	printf("after parse inside slash : [%s]\n", new);
 	return (new);
 }
@@ -39,34 +40,46 @@ char	*bslash_filled(char *word, int *i, int *trans, int back)
 	r_back = back / 2;
 	if (g_shell.is_in_quotes == false)
 		r_back++;
-	tmp = *i;
 	new = ft_calloc_char(r_back, '\\');
 	new = ft_strjoin(new, word + back + *i);
 	printf("NEW [%s]\nWORD [%s]\n", new, word);
-	*i = r_back;
+	tmp = r_back - 1;
 	if (back % 4 == 1 || back % 4 == 3)
 		*trans = 1;
 	else
 		*trans = 0;
-	if (*i >= (int)ft_strlen(new))
-		*i = tmp + r_back;
-	printf("new i [%c]\n", new[*i]);
-	// if (back > 1)
-	// 	*i += 1;
-	printf("new i [%c]\n", new[*i]);
-	if (new[*i] == '\"')
+	// if (*i >= (int)ft_strlen(new))
+	// 	*i = tmp + r_back;
+	printf("i [%d]\n", tmp);
+	printf("new i [%c]\n", new[tmp]);
+	if (new[tmp] == '\"')
 	{
-		new = bslash_nquotes(new, i, r_back);
+		g_shell.had_bslash = true;
+		new = bslash_nquotes(new, tmp, r_back);
 		// if (*i >= (int)ft_strlen(new))
 			// *i = (int)ft_strlen(new);
-		*i = r_back + tmp;
-		printf("i after modif %d\n", *i);
+		// printf("i after modif %d\n", *i);
 	}
-	*i = r_back + tmp;
+	*i += tmp;
 	printf("i value before :%d\nstrlen :%zu\n", *i, ft_strlen(new));
 	g_shell.is_in_quotes = false;
 	return (new);
 }
+
+// *i += r_back;
+// 	if (back % 4 == 1 || back % 4 == 3)
+// 		*trans = 1;
+// 	else
+// 		*trans = 0;
+// 	if (*i == (int)ft_strlen(word))
+// 		*i = tmp;
+// 	if (word[*i] == '\"')
+// 	{
+// 		new = bslash_nquotes(word, i, r_back);
+// 		new = parse_tokens(new);
+// 	}
+// 	g_shell.is_in_quotes = false;
+// 	return (new);
 
 char	*error_bslash(int *i)
 {
