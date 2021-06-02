@@ -14,7 +14,7 @@ void	set_output(t_command cmd)
 	else
 	{
 		if (cmd.listen_stdout)
-			dup2(g_shell.pipes.to_son[1], STDIN_FILENO);
+			dup2(g_shell.pipes.to_son[1], STDOUT_FILENO);
 		if (cmd.listen_stderr)
 			dup2(g_shell.pipes.to_son[1], STDERR_FILENO);
 	}

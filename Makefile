@@ -28,7 +28,7 @@ MAKE = make --no-print-directory
 CFLAGS = -Wall -Wextra -Werror
 CFLAGS += -DRELEASE
 # CFLAGS += -O3 -fno-builtin
-# CFLAGS += -g
+CFLAGS += -g
 # CFLAGS += -fsanitize=address
 
 CLIBS = -ltermcap
@@ -175,7 +175,7 @@ else
 	--error-limit=no \
 	-s \
 	--suppressions=./valgrind.supp \
-	./$(NAME)
+	./$(NAME) 2>&-
 endif
 
 .PHONY: all clean fclean re run norm leaks valgrind

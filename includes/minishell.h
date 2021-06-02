@@ -255,7 +255,7 @@ int			builtin_unset(char **argv);
 void		set_env(char *key, char *value);
 void		unset_env(char *key);
 char		*get_env(char *key);
-void		init_env(const char **envp);
+void		init_env(char **envp);
 int			run_line(char **argv);
 int			check_type_at(int i);
 void		get_lexer(char *line);
