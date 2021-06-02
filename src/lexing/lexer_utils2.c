@@ -27,16 +27,16 @@ int	quotes_token_len(char *line, t_lexer *lexer)
 	return (-1);
 }
 
-static void	no_room_infos(char *line, int i, t_infos *infos)
+static void	no_room_infos(char *line, int *i, t_infos *infos)
 {
-	while (line[i] == '\\')
+	while (line[*i] == '\\')
 	{
-		i++;
+		*i += 1;
 		infos->len += 1;
 	}
-	if (line[i] == '\"')
+	if (line[*i] == '\"')
 	{
-		i++;
+		*i += 1;
 		infos->len += 1;
 		infos->was_quotes = true;
 	}
@@ -56,10 +56,10 @@ int	bslash_token_len(char *line, t_lexer *lexer)
 	i = lexer->i + 1;
 	if (DEBUG)
 		printf("blash token\n[%s]\n", line + i);
-	no_room_infos(line, i, &infos);
+	no_room_infos(line, &i, &infos);
 	while (line[i])
 	{
-		if (line[i] == ' ' || line[i] == '"')
+		if ((line[i] == ' ' || line[i] == '"') && line[i + 1] != '$')
 		{
 			if (i && (line[i - 1] != '\\' || line[i - 1] == '\"')
 				&& line[i + 1] != '\"')
