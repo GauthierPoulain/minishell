@@ -58,6 +58,6 @@ void	manage_output(t_command cmd)
 	ft_putchar_fd(g_shell.pipes.to_father[1], EOF);
 	loop(buff, cmd);
 	close(g_shell.pipes.to_son[1]);
-	print_buffer_in_fd(g_shell.pipes.to_father[1]);
+	print_buffer_in_fd(g_shell.pipe_output, g_shell.pipes.to_father[1]);
 	close_subprocess(0);
 }

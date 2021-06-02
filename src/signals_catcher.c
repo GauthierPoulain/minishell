@@ -12,9 +12,11 @@ void	SIGINT_catcher(int code)
 	g_shell.history.act_pos = 0;
 	g_shell.reader.pos = 0;
 	g_shell.reader.size = 0;
-	if (!g_shell.outputmngr)
+	if (!g_shell.is_running)
 		pre_prompt();
 	close_pipe();
+	add_signals_listeners();
+	set_input_mode();
 }
 
 void	SIGQUIT_catcher(int code)

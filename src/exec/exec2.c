@@ -14,6 +14,6 @@ void	get_input_part2(t_command cmd, t_buffer *res)
 		len = read(fd, buffer, GNL_BUFFER_SIZE);
 		res->ptr = ft_memjoin(res->ptr, res->size, buffer, len);
 		res->size += len;
+		ft_bzero(buffer, GNL_BUFFER_SIZE + 1);
 	}
-	close(fd);
 }

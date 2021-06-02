@@ -6,9 +6,7 @@ bool	is_a_file(char *path)
 	int			ret;
 
 	ret = stat(path, &path_stat);
-	if (ret != 0)
-		return (false);
-	return (S_ISREG(path_stat.st_mode));
+	return (ret == 0 && S_ISREG(path_stat.st_mode));
 }
 
 static bool	is_builtin(char *prog)

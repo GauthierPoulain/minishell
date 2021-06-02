@@ -323,6 +323,8 @@ char		*parse_s_quotes(char *word);
 void		*ft_memjoin(void *s1, size_t l1, void *s2, size_t l2);
 void		get_input_part2(t_command cmd, t_buffer *res);
 void		print_buffer_in_file(t_command *cmd);
-void		print_buffer_in_fd(int fd);
+void		print_buffer_in_fd(t_buffer buff, int fd);
+int			file_not_found(char *file);
+t_buffer	*get_multiple_input(t_command cmd);
 
 #endif

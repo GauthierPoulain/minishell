@@ -37,6 +37,7 @@ void	wait_outputmanager(t_command cmd)
 void	reset_pipe_output(void)
 {
 	gc_free(g_shell.pipe_output.ptr);
+	g_shell.pipe_output.ptr = NULL;
 	g_shell.pipe_output.size = 0;
 }
 
@@ -65,12 +66,12 @@ void	print_buffer_in_file(t_command *cmd)
 	}
 }
 
-void	print_buffer_in_fd(int fd)
+void	print_buffer_in_fd(t_buffer buff, int fd)
 {
 	t_buffer	cpy;
 
-	cpy.ptr = g_shell.pipe_output.ptr;
-	cpy.size = g_shell.pipe_output.size;
+	cpy.ptr = buff.ptr;
+	cpy.size = buff.size;
 	while (cpy.size > 0)
 	{
 		if (cpy.size < GNL_BUFFER_SIZE)
