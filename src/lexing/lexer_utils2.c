@@ -60,8 +60,9 @@ int	bslash_token_len(char *line, t_lexer *lexer)
 	printf("line bslash [%s]\n", line + i);
 	while (line[i])
 	{
-		if (line[i] == ' ' || line[i] == '"')
+		if ((line[i] == ' ' || line[i] == '"') && line[i + 1] != '$')
 		{
+			printf("LINE [%s]\nletter [%c]\nwas quotes: %d\n", line, line[i], infos.was_quotes);
 			if (i && (line[i - 1] != '\\' || line[i - 1] == '\"') && line[i + 1] != '\"')
 				return (infos.len - 1);
 			if (infos.was_quotes)
