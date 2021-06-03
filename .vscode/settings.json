@@ -7,5 +7,8 @@
 		"**/.DS_Store": true,
 		"**/**.o": true,
 		"**/**.tmp": true
+	},
+	"files.associations": {
+		"minishell.h": "c"
 	}
 }

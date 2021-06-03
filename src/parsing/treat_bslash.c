@@ -26,7 +26,7 @@ char	*bslash_nquotes(char *word, int *i, int r_back)
 	return (new);
 }
 
-char	*bslash_filled(char *word, int *i, int *trans, int back)
+char	*bslash_filled(char *word, int *i, int back)
 {
 	char	*new;
 	int		r_back;
@@ -40,9 +40,9 @@ char	*bslash_filled(char *word, int *i, int *trans, int back)
 	new = ft_strjoin(new, word + back + *i);
 	*i += r_back - 1;
 	if (back % 4 == 1 || back % 4 == 3)
-		*trans = 1;
+		g_shell.trans = 1;
 	else
-		*trans = 0;
+		g_shell.trans = 0;
 	if (*i == (int)ft_strlen(word))
 		*i = tmp;
 	if (word[*i] == '\"')

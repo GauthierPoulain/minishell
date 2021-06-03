@@ -175,6 +175,7 @@ typedef struct s_minishell
 	bool			is_in_s_quotes;
 	char			*next_token_str;
 	t_token			*curr_token;
+	int				trans;
 }				t_minishell;
 
 extern t_minishell	g_shell;
@@ -262,7 +263,7 @@ char		*parse_env_var(char *word);
 size_t		get_word_len(char *word, int i);
 void		join_last_token(t_token *token);
 int			set_dollar_type(t_token *token, char *line, int start);
-char		*treat_backslash(char *word, int *i, int *trans);
+char		*treat_backslash(char *word, int *i);
 char		**parse_line(char *line);
 void		display_array(char **array);
 int			check_occurence(char *str, char c);
@@ -312,9 +313,9 @@ void		write_redirect(char *path, char *buffer, bool erease, int len);
 void		close_pipe(void);
 char		*treat_doll_slash(char *word, int i, int back);
 char		*replace_dolls(char *word, int i);
-char		*treat_doll(char *word, int *i, int *trans);
+char		*treat_doll(char *word, int *i);
 char		*error_bslash(int *i);
-char		*bslash_filled(char *word, int *i, int *trans, int back);
+char		*bslash_filled(char *word, int *i, int back);
 char		*bslash_nquotes(char *word, int *i, int r_back);
 int			check_slash(char *word, int i);
 void		reset_pipe_output(void);
