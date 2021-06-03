@@ -174,6 +174,7 @@ typedef struct s_minishell
 	bool			is_in_quotes;
 	bool			is_in_s_quotes;
 	char			*next_token_str;
+	t_token			*curr_token;
 }				t_minishell;
 
 extern t_minishell	g_shell;

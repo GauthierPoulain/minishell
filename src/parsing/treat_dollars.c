@@ -42,7 +42,7 @@ char	*treat_doll(char *word, int *i, int *trans)
 {
 	int		slash;
 
-	if (*trans == 1 || g_shell.is_in_s_quotes)
+	if (*trans == 1 || g_shell.is_in_s_quotes || !g_shell.curr_token->sp)
 	{
 		*trans = 0;
 		*i += 1;
