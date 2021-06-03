@@ -32,7 +32,7 @@ static int	get_token_info(t_token *token, char *line, int start, int end)
 
 int	else_token_l(char *line, t_lexer *lexer)
 {
-	printf("else token len\n");
+	printf("else token l\n");
 	int	len;
 	int	i;
 
