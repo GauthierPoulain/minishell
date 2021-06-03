@@ -57,7 +57,7 @@ char	*get_env(char *key)
 	return (NULL);
 }
 
-void	init_env(const char **envp)
+void	init_env(char **envp)
 {
 	char	**env;
 	char	**spres;

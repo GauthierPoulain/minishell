@@ -7,7 +7,11 @@ void	chose_parsing(char **word, t_list *lst)
 	else if (((t_token *)lst->content)->type == 6)
 		*word = parse_s_quotes(((t_token *)lst->content)->str);
 	else
+	{
+		if (DEBUG)
+			printf("ALED OUI\n");
 		*word = parse_tokens(((t_token *)lst->content)->str);
+	}
 }
 
 void	join_no_space(char **words, int *i, int *size)
@@ -33,7 +37,7 @@ char	**array_from_list(void)
 	size = ft_lstsize(g_shell.tokens);
 	words = gc_malloc(sizeof(char *) * (size + 1));
 	lst = g_shell.tokens;
-	while (i < size && g_shell.error == false)
+	while (i < size && lst && g_shell.error == false)
 	{
 		g_shell.curr_token = (t_token *)lst->content;
 		if (lst->next)
@@ -43,6 +47,8 @@ char	**array_from_list(void)
 		g_shell.next_token_str = NULL;
 		if (g_shell.error == true)
 			return (NULL);
+		if (DEBUG)
+			printf("addr : %p\n", lst->content);
 		if (!((t_token *)lst->content)->sp
 			&& ((t_token *)lst->content)->id >= 1)
 			join_no_space(words, &i, &size);

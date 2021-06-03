@@ -34,7 +34,7 @@ char	*treat_quotes(char *word, int *i)
 		lasts++;
 	if (first != lasts)
 	{
-		ft_putstr_fd(2, "Syntax error QUOTES\n");
+		ft_putstr_fd(STDERR_FILENO, "Syntax error iiiii\n");
 		ft_lstclear(&g_shell.tokens);
 		g_shell.last_return = 1;
 		return (NULL);
@@ -48,12 +48,10 @@ char	*parse_tokens(char *word)
 {
 	int		i;
 	int		trans;
-	char	*new;
 
 	i = 0;
 	trans = 0;
-	new = word;
-	while (new[i])
+	while (word[i])
 	{
 		if (new[i] == '\\')
 			new = treat_backslash(new, &i);
@@ -65,6 +63,7 @@ char	*parse_tokens(char *word)
 		if ((new[i] && new[i] != '$')
 			|| (new[i] && new[i] == '$' && new[i + 1] == '/'))
 			i++;
+		g_shell.had_bslash = false;
 	}
-	return (new);
+	return (word);
 }

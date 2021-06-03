@@ -1,24 +1,5 @@
 #include "../../includes/minishell.h"
 
-t_buffer	*get_multiple_input(t_command cmd)
-{
-	t_buffer	*res;
-
-	res = gc_malloc(sizeof(t_buffer));
-	res->ptr = NULL;
-	res->size = 0;
-	if (g_shell.pipe_output.ptr)
-	{
-		res->ptr = ft_calloc(sizeof(char) * g_shell.pipe_output.size);
-		res->ptr = ft_memjoin(res->ptr, res->size, g_shell.pipe_output.ptr,
-				g_shell.pipe_output.size);
-		res->size += g_shell.pipe_output.size;
-	}
-	if (cmd.redirect_path && is_a_file(cmd.redirect_path))
-		get_input_part2(cmd, res);
-	return (res);
-}
-
 static void	subprocess_exec(t_command cmd, int pipes[2], bool read_pipe)
 {
 	int	fd;
@@ -35,47 +16,47 @@ static void	subprocess_exec(t_command cmd, int pipes[2], bool read_pipe)
 	if (read_pipe)
 	{
 		close(pipes[1]);
-		dup2(pipes[0], STDIN_FILENO);
+		if (dup2(pipes[0], STDIN_FILENO) == -1)
+			close_shell("dup2 failure");
 	}
 	execve(cmd.path, cmd.argv, get_envp());
 	close_subprocess(errno);
 }
 
-static void	subprocess(t_command cmd, int *status)
+int	child_supervisor(t_buffer *data, bool read_pipe, int pipes[2])
+{
+	int			status;
+
+	signals_listeners_to_child();
+	if (read_pipe)
+		print_buffer_in_fd(*data, pipes[1]);
+	reset_pipe_output();
+	waitpid(g_shell.child, &status, 0);
+	close(pipes[0]);
+	close(pipes[1]);
+	return (((status) & 0xff00) >> 8);
+}
+
+static int	subprocess(t_command cmd)
 {
 	int			pipes[2];
 	t_buffer	*data;
 	bool		read_pipe;
 
+	if (cmd.file_input && !is_a_file(cmd.redirect_path))
+		return (file_not_found(cmd.redirect_path));
 	if (pipe(pipes))
 		close_shell("pipe error");
 	data = get_multiple_input(cmd);
-	read_pipe = data->size > 0;
+	read_pipe = data->ptr != 0;
 	g_shell.child = fork();
 	if (g_shell.child < 0)
 		close_shell("fork error");
 	else if (g_shell.child == 0)
 		subprocess_exec(cmd, pipes, read_pipe);
 	else
-	{
-		signals_listeners_to_child();
-		if (read_pipe)
-		{
-			while (g_shell.pipe_output.size > 0)
-			{
-				if (g_shell.pipe_output.size < GNL_BUFFER_SIZE)
-					g_shell.pipe_output.size -= write(pipes[1],
-						g_shell.pipe_output.ptr, g_shell.pipe_output.size);
-				else
-					g_shell.pipe_output.size -= write(pipes[1],
-						g_shell.pipe_output.ptr, GNL_BUFFER_SIZE);
-			}
-			close(pipes[1]);
-		}
-		reset_pipe_output();
-		waitpid(g_shell.child, status, 0);
-		*status = (((*status) & 0xff00) >> 8);
-	}
+		return (child_supervisor(data, read_pipe, pipes));
+	return (0);
 }
 
 void	run_command(t_command *cmd, int *status)
@@ -90,7 +71,7 @@ void	run_command(t_command *cmd, int *status)
 		if (!cmd->path)
 			*status = commant_not_found(cmd->prog);
 		else
-			subprocess(*cmd, status);
+			*status = subprocess(*cmd);
 	}
 	reset_pipe_output();
 	if (cmd->need_pipe || cmd->need_redirect)
@@ -104,25 +85,22 @@ int	run_line(char **argv)
 	t_command	*cmd;
 	int			status;
 
+	g_shell.pipe_output.ptr = NULL;
+	g_shell.is_running = true;
 	cmds = get_commands(argv);
 	if (!cmds)
 		return (syntax_error());
 	reset_input_mode();
 	status = 0;
-	while (cmds && !status)
+	while (cmds)
 	{
 		cmd = cmds->content;
 		if (!cmd->skip_exec)
 			run_command(cmd, &status);
-		if (!ft_strcmp(cmd->operator, ">") || !ft_strcmp(cmd->operator, ">>"))
-		{
-			if (!cmd->redirect_append)
-				write_redirect(cmd->redirect_path, "", true, 0);
-			write_redirect(cmd->redirect_path, g_shell.pipe_output.ptr,
-				false, g_shell.pipe_output.size);
-		}
+		check_write_redirect(cmd, cmds);
 		cmds = cmds->next;
 	}
+	g_shell.is_running = false;
 	add_signals_listeners();
 	set_input_mode();
 	return (status);

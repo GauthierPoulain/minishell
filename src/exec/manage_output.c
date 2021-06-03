@@ -2,8 +2,8 @@
 
 void	set_output(t_command cmd)
 {
-	g_shell.saved_stdout = dup(1);
-	g_shell.saved_stderr = dup(2);
+	g_shell.saved_stdout = dup(STDOUT_FILENO);
+	g_shell.saved_stderr = dup(STDERR_FILENO);
 	if (pipe(g_shell.pipes.to_father) || pipe(g_shell.pipes.to_son))
 		close_shell("pipe error");
 	g_shell.outputmngr = fork();
@@ -13,17 +13,20 @@ void	set_output(t_command cmd)
 		manage_output(cmd);
 	else
 	{
-		if (cmd.listen_stdout)
-			dup2(g_shell.pipes.to_son[1], 1);
-		if (cmd.listen_stderr)
-			dup2(g_shell.pipes.to_son[1], 2);
+		if (cmd.listen_stdout && dup2(g_shell.pipes.to_son[1],
+				STDOUT_FILENO) == -1)
+			close_shell("dup2 failure");
+		if (cmd.listen_stderr && dup2(g_shell.pipes.to_son[1],
+				STDERR_FILENO) == -1)
+			close_shell("dup2 failure");
 	}
 }
 
 void	reset_output(void)
 {
-	dup2(g_shell.saved_stdout, 1);
-	dup2(g_shell.saved_stderr, 2);
+	if (dup2(g_shell.saved_stdout, STDOUT_FILENO) == -1
+		|| dup2(g_shell.saved_stderr, STDERR_FILENO) == -1)
+		close_shell("dup2 failure");
 	close(g_shell.saved_stdout);
 	close(g_shell.saved_stderr);
 }
@@ -43,8 +46,6 @@ static void	toggle_reading(int code)
 {
 	(void)code;
 	g_shell.keep_reading = false;
-	close(g_shell.pipes.to_son[0]);
-	close(g_shell.pipes.to_son[1]);
 }
 
 void	manage_output(t_command cmd)
@@ -60,15 +61,6 @@ void	manage_output(t_command cmd)
 	ft_putchar_fd(g_shell.pipes.to_father[1], EOF);
 	loop(buff, cmd);
 	close(g_shell.pipes.to_son[1]);
-	while (g_shell.pipe_output.size > 0)
-	{
-		if (g_shell.pipe_output.size < GNL_BUFFER_SIZE)
-			g_shell.pipe_output.size -= write(g_shell.pipes.to_father[1],
-				g_shell.pipe_output.ptr, g_shell.pipe_output.size);
-		else
-			g_shell.pipe_output.size -= write(g_shell.pipes.to_father[1],
-				g_shell.pipe_output.ptr, GNL_BUFFER_SIZE);
-	}
-	close(g_shell.pipes.to_father[1]);
+	print_buffer_in_fd(g_shell.pipe_output, g_shell.pipes.to_father[1]);
 	close_subprocess(0);
 }

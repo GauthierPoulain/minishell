@@ -26,6 +26,7 @@ CC = clang
 MAKE = make --no-print-directory
 
 CFLAGS = -Wall -Wextra -Werror
+CFLAGS += -DRELEASE
 # CFLAGS += -O3 -fno-builtin
 CFLAGS += -g
 CFLAGS += -fsanitize=address
@@ -75,7 +76,6 @@ SRCS_LIB = \
 
 SRCS_MS = \
 	./src/exec/exec.c \
-	./src/exec/write_redirect.c \
 	./src/exec/exec2.c \
 	./src/exec/errors.c \
 	./src/exec/fill_cmd_struct.c \
@@ -84,6 +84,7 @@ SRCS_MS = \
 	./src/exec/manage_output.c \
 	./src/exec/process_pipe.c \
 	./src/exec/utils.c \
+	./src/exec/utils2.c \
 	./src/process_key.c \
 	./src/builtin_cd.c \
 	./src/builtin_echo.c \
@@ -174,7 +175,7 @@ else
 	--error-limit=no \
 	-s \
 	--suppressions=./valgrind.supp \
-	./$(NAME)
+	./$(NAME) 2>&-
 endif
 
 .PHONY: all clean fclean re run norm leaks valgrind

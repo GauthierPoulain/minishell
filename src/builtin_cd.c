@@ -4,18 +4,18 @@ static int	cd_err(int code, char *path)
 {
 	if (code == 0)
 		return (0);
-	ft_putstr_fd(2, "cd: ");
+	ft_putstr_fd(STDERR_FILENO, "cd: ");
 	if (code == 1)
 	{
-		ft_putstr_fd(2, "no such file or directory: ");
-		ft_putstr_fd(2, path);
+		ft_putstr_fd(STDERR_FILENO, "no such file or directory: ");
+		ft_putstr_fd(STDERR_FILENO, path);
 	}
 	else if (code == 2)
 	{
-		ft_putstr_fd(2, "not a directory: ");
-		ft_putstr_fd(2, path);
+		ft_putstr_fd(STDERR_FILENO, "not a directory: ");
+		ft_putstr_fd(STDERR_FILENO, path);
 	}
-	ft_putstr_fd(2, "\n");
+	ft_putstr_fd(STDERR_FILENO, "\n");
 	return (1);
 }
 

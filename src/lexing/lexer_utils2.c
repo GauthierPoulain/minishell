@@ -63,10 +63,11 @@ int	bslash_token_len(char *line, t_lexer *lexer)
 int	s_quotes_len(char *line, t_lexer *lexer)
 {
 	int	len;
-	int i;
+	int	i;
 
 	len = 1;
-	printf("squotes\n");
+	if (DEBUG)
+		printf("squotes\n");
 	i = lexer->i + 1;
 	while (line[i] == '\'')
 	{
@@ -90,7 +91,7 @@ int	get_token_len(char *line, t_lexer *lexer)
 
 	print = true;
 	i = lexer->i;
-	if (print)
+	if (print && DEBUG)
 		printf("actual char [%c] during line [%s]\n", line[i], line + i);
 	if (line[i] == '\"')
 		return (quotes_token_len(line, lexer));
@@ -104,7 +105,7 @@ int	get_token_len(char *line, t_lexer *lexer)
 void	token_l_error(char *line, t_lexer *lexer)
 {
 	printf("tokenl\n");
-	ft_putstr_fd(2, "Syntax error");
+	ft_putstr_fd(STDERR_FILENO, "Syntax error");
 	ft_lstclear(&g_shell.tokens);
 	lexer->i = ft_strlen(line);
 	g_shell.error = true;

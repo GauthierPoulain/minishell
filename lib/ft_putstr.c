@@ -7,5 +7,5 @@ void	ft_putstr_fd(int fd, char *str)
 
 void	ft_putstr(char *str)
 {
-	ft_putstr_fd(1, str);
+	ft_putstr_fd(STDOUT_FILENO, str);
 }

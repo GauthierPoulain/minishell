@@ -12,7 +12,8 @@ static void	init_shell(void)
 	g_shell.env = NULL;
 	g_shell.history.lst = NULL;
 	ft_lstadd_front(&g_shell.history.lst, ft_lstnew(NULL));
-	tcgetattr(STDIN_FILENO, &g_shell.save);
+	if (isatty(STDIN_FILENO))
+		tcgetattr(STDIN_FILENO, &g_shell.save);
 	g_shell.use_termcaps = false;
 	g_shell.child = 0;
 	g_shell.outputmngr = 0;
@@ -21,8 +22,9 @@ static void	init_shell(void)
 	g_shell.pipes.to_son[0] = -1;
 	g_shell.pipes.to_son[1] = -1;
 	g_shell.need_pipe = false;
-	g_shell.saved_stdout = dup(1);
-	g_shell.saved_stderr = dup(2);
+	g_shell.saved_stdout = dup(STDOUT_FILENO);
+	g_shell.saved_stderr = dup(STDERR_FILENO);
+	g_shell.is_running = false;
 }
 
 void	pre_prompt(void)
@@ -44,7 +46,7 @@ void	pre_prompt(void)
 	ft_putcolor(" ", _DARKGRAY);
 }
 
-int	main(int argc, const char **argv, const char **envp)
+int	main(int argc, char **argv, char **envp)
 {
 	(void)argc;
 	(void)argv;
@@ -52,16 +54,18 @@ int	main(int argc, const char **argv, const char **envp)
 	init_env(envp);
 	set_input_mode();
 	add_signals_listeners();
-	if (isatty(STDIN_FILENO))
+	if (argc >= 2 && !ft_strcmp(argv[1], "-c"))
+		process_input(argv[2]);
+	else if (isatty(STDIN_FILENO))
 	{
 		while (true)
 		{
 			pre_prompt();
 			g_shell.history.act_pos = 0;
-			process_input(ft_strtrim_spaces(read_term()));
+			process_input(read_term());
 		}
 	}
 	else
-		process_input(ft_strtrim_spaces(read_term()));
+		process_input(read_term());
 	close_shell(NULL);
 }
