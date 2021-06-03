@@ -3,12 +3,21 @@
 static bool	skip_n(char **argv, int *i)
 {
 	bool	ret;
+	char	*save;
 
 	ret = false;
-	while (argv[*i] && !ft_strcmp(argv[*i], "-n"))
+	while (argv[*i] && argv[*i][0] == '-')
 	{
-		ret = true;
-		*i += 1;
+		save = argv[*i] + 1;
+		while (save && *save == 'n')
+			save++;
+		if (*save == 0)
+		{
+			*i += 1;
+			ret = true;
+		}
+		else
+			return (ret);
 	}
 	return (ret);
 }

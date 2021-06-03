@@ -51,7 +51,6 @@ int	main(int argc, char **argv, char **envp)
 	(void)argc;
 	(void)argv;
 	init_shell();
-	fprintf(stderr, "salut\n");
 	init_env(envp);
 	set_input_mode();
 	add_signals_listeners();

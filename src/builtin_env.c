@@ -12,7 +12,7 @@ int	builtin_env(bool print_export)
 		if (content && (print_export || content->value))
 		{
 			if (print_export)
-				ft_putstr("export ");
+				ft_putstr("declare -x ");
 			ft_putstr(content->key);
 			if (content->value)
 			{
