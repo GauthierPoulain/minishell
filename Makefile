@@ -179,4 +179,8 @@ else
 	./$(NAME) 2>&-
 endif
 
-.PHONY: all clean fclean re run norm leaks valgrind
+update:
+	@git pull
+	@${MAKE} all
+
+.PHONY: all clean fclean re run norm leaks valgrind update

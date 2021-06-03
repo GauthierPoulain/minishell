@@ -42,7 +42,8 @@ int	bslash_token_len(char *line, t_lexer *lexer)
 	if (DEBUG)
 		printf("blash token\n[%s]\n", line + i);
 	no_room_infos(line, &i, &infos);
-	printf("line bslash [%s]\n", line + i);
+	if (DEBUG)
+		printf("line bslash [%s]\n", line + i);
 	while (line[i] && line[i] == '\\')
 	{
 		i++;
@@ -95,7 +96,8 @@ int	get_token_len(char *line, t_lexer *lexer)
 
 void	token_l_error(char *line, t_lexer *lexer)
 {
-	printf("tokenl\n");
+	if (DEBUG)
+		printf("tokenl\n");
 	ft_putstr_fd(STDERR_FILENO, "Syntax error");
 	ft_lstclear(&g_shell.tokens);
 	lexer->i = ft_strlen(line);

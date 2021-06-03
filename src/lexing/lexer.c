@@ -86,7 +86,8 @@ void	get_lexer(char *line)
 	while (lexer.i < (int)ft_strlen(line))
 	{
 		token = gc_malloc(sizeof(t_token));
-		printf("CHAR [%c]\n", line[lexer.i]);
+		if (DEBUG)
+			printf("CHAR [%c]\n", line[lexer.i]);
 		if (line[lexer.i] == ' ' || line[lexer.i] == '\\'
 			|| lexer.i == 0 || line[lexer.i] == '"' || lexer.had_quotes
 			|| line[lexer.i] == '\'' || (lexer.i && line[lexer.i - 1] == '\\'))

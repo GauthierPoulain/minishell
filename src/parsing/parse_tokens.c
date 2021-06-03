@@ -57,7 +57,8 @@ char	*parse_tokens(char *word)
 	{
 		if (new[i] == '\\')
 			new = treat_backslash(new, &i);
-		printf("actual new [%s] and i : %d\n", new, i);
+		if (DEBUG)
+			printf("actual new [%s] and i : %d\n", new, i);
 		if (new[i] == '$')
 			new = treat_doll(new, &i);
 		if (new[i] == '\"')

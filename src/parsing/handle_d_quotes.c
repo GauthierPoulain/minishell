@@ -21,7 +21,8 @@ static char	*count_and_trim(char *word, size_t size)
 	if (g_shell.had_bslash)
 		first--;
 	word = ft_substr(word, first, size + 1 - lasts);
-	printf("substr [%s]\n", word);
+	if (DEBUG)
+		printf("substr [%s]\n", word);
 	word = parse_tokens(word);
 	return (word);
 }
