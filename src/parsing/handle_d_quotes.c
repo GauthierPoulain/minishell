@@ -7,14 +7,13 @@ static char	*count_and_trim(char *word, size_t size)
 
 	first = 0;
 	lasts = 0;
-	g_shell.is_in_quotes = true;
 	while (word[first] == '\"')
 		first++;
 	while (word[--size] == '\"')
 		lasts++;
 	if (first != lasts && !g_shell.had_bslash)
 	{
-		ft_putstr_fd(STDERR_FILENO, "Syntax error\n");
+		ft_putstr_fd(2, "Syntax errorasd\n");
 		ft_lstclear(&g_shell.tokens);
 		g_shell.last_return = 1;
 		return (NULL);
@@ -22,10 +21,8 @@ static char	*count_and_trim(char *word, size_t size)
 	if (g_shell.had_bslash)
 		first--;
 	word = ft_substr(word, first, size + 1 - lasts);
-	if (DEBUG)
-		printf("sub during count and trim -%s-\n", word);
+	printf("substr [%s]\n", word);
 	word = parse_tokens(word);
-	g_shell.is_in_quotes = false;
 	return (word);
 }
 

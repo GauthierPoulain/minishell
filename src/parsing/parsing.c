@@ -39,7 +39,12 @@ char	**array_from_list(void)
 	lst = g_shell.tokens;
 	while (i < size && lst && g_shell.error == false)
 	{
+		g_shell.curr_token = (t_token *)lst->content;
+		if (lst->next)
+			g_shell.next_token_str = ((t_token *)lst->next->content)->str;
 		chose_parsing(&words[i], lst);
+		g_shell.curr_token = NULL;
+		g_shell.next_token_str = NULL;
 		if (g_shell.error == true)
 			return (NULL);
 		if (DEBUG)

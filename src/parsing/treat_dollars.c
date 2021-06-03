@@ -38,15 +38,14 @@ char	*replace_dolls(char *word, int i)
 	return (ret);
 }
 
-char	*treat_doll(char *word, int *i, int *trans)
+char	*treat_doll(char *word, int *i)
 {
 	int		slash;
 
-	if (DEBUG)
-		printf("JE SUIS UN DOLLAR\ntrans : %d, quotes = %d\n", *trans, g_shell.is_in_s_quotes);
-	if (*trans == 1 || g_shell.is_in_s_quotes)
+	printf("trans: %d\nis in quotes: %d\nhas space: %d\n", g_shell.trans, g_shell.is_in_s_quotes, g_shell.curr_token->sp);
+	if ((g_shell.trans == 1 && !g_shell.curr_token->sp) || (g_shell.is_in_s_quotes && !g_shell.curr_token->sp))
 	{
-		*trans = 0;
+		g_shell.trans = 0;
 		*i += 1;
 		return (word);
 	}

@@ -32,6 +32,7 @@ static int	get_token_info(t_token *token, char *line, int start, int end)
 
 int	else_token_l(char *line, t_lexer *lexer)
 {
+	printf("else token len\n");
 	int	len;
 	int	i;
 
@@ -39,14 +40,7 @@ int	else_token_l(char *line, t_lexer *lexer)
 	i = lexer->i;
 	while (line[i])
 	{
-		if (line[i] == '\\')
-		{
-			if (line[i + 1] == '\"')
-				return (len);
-			i++;
-			len++;
-		}
-		else if (line[i] == ' ' || line[i] == '\"' || line[i] == '\'')
+		if (ft_ischarset(line[i], " \"\'\\"))
 			return (len);
 		else
 		{
@@ -93,13 +87,14 @@ void	get_lexer(char *line)
 	while (lexer.i < (int)ft_strlen(line))
 	{
 		token = gc_malloc(sizeof(t_token));
-		if (line[lexer.i] == ' ' || line[lexer.i] == '\\' || lexer.i == 0
-			|| line[lexer.i] == '"' || lexer.had_quotes
-			|| line[lexer.i] == '\'' || line[lexer.i] == '$')
+		printf("CHAR [%c]\n", line[lexer.i]);
+		if (line[lexer.i] == ' ' || line[lexer.i] == '\\'
+			|| lexer.i == 0 || line[lexer.i] == '"' || lexer.had_quotes
+				|| line[lexer.i] == '\'' || (lexer.i && line[lexer.i - 1] == '\\'))
 			handle_space(line, token, &lexer);
 		if (line[lexer.i] != '"' && line[lexer.i] != ' '
 			&& line[lexer.i] != '\\' && !lexer.had_quotes
-			&& line[lexer.i] != '\'')
+				&& line[lexer.i] != '\'' && line[lexer.i - 1] != '\\')
 			lexer.i++;
 	}
 	if (DEBUG)
