@@ -7,21 +7,20 @@ static char	*count_and_trim(char *word, size_t size)
 
 	first = 0;
 	lasts = 0;
-	g_shell.is_in_quotes = true;
 	while (word[first] == '\"')
 		first++;
 	while (word[--size] == '\"')
 		lasts++;
 	if (first != lasts)
 	{
-		ft_putstr_fd(2, "Syntax error\n");
+		ft_putstr_fd(2, "Syntax errorasd\n");
 		ft_lstclear(&g_shell.tokens);
 		g_shell.last_return = 1;
 		return (NULL);
 	}
 	word = ft_substr(word, first, size + 1 - lasts);
+	printf("substr [%s]\n", word);
 	word = parse_tokens(word);
-	g_shell.is_in_quotes = false;
 	return (word);
 }
 

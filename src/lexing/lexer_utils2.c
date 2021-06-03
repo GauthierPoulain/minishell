@@ -34,12 +34,6 @@ static void	no_room_infos(char *line, int *i, t_infos *infos)
 		*i += 1;
 		infos->len += 1;
 	}
-	if (line[*i] == '\"')
-	{
-		*i += 1;
-		infos->len += 1;
-		infos->was_quotes = true;
-	}
 }
 
 /*

@@ -47,7 +47,7 @@ int	else_token_l(char *line, t_lexer *lexer)
 		// 	i++;
 		// 	len++;
 		// }
-		if (line[i] == ' ' || line[i] == '\"' || line[i] == '\'' || line[i] == '\\')
+		if (ft_ischarset(line[i], " \"\'\\"))
 			return (len);
 		else
 		{
