@@ -42,7 +42,8 @@ char	*treat_doll(char *word, int *i, int *trans)
 {
 	int		slash;
 
-	printf("JE SUIS UN DOLLAR\ntrans : %d, quotes = %d\n", *trans, g_shell.is_in_s_quotes);
+	if (DEBUG)
+		printf("JE SUIS UN DOLLAR\ntrans : %d, quotes = %d\n", *trans, g_shell.is_in_s_quotes);
 	if (*trans == 1 || g_shell.is_in_s_quotes)
 	{
 		*trans = 0;

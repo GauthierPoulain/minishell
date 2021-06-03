@@ -80,7 +80,8 @@ int	s_quotes_len(char *line, t_lexer *lexer)
 	int	i;
 
 	len = 1;
-	printf("squotes\n");
+	if (DEBUG)
+		printf("squotes\n");
 	i = lexer->i + 1;
 	while (line[i] == '\'')
 	{
