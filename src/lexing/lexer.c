@@ -32,7 +32,6 @@ static int	get_token_info(t_token *token, char *line, int start, int end)
 
 int	else_token_l(char *line, t_lexer *lexer)
 {
-	printf("else token len\n");
 	int	len;
 	int	i;
 
@@ -90,11 +89,11 @@ void	get_lexer(char *line)
 		printf("CHAR [%c]\n", line[lexer.i]);
 		if (line[lexer.i] == ' ' || line[lexer.i] == '\\'
 			|| lexer.i == 0 || line[lexer.i] == '"' || lexer.had_quotes
-				|| line[lexer.i] == '\'' || (lexer.i && line[lexer.i - 1] == '\\'))
+			|| line[lexer.i] == '\'' || (lexer.i && line[lexer.i - 1] == '\\'))
 			handle_space(line, token, &lexer);
 		if (line[lexer.i] != '"' && line[lexer.i] != ' '
 			&& line[lexer.i] != '\\' && !lexer.had_quotes
-				&& line[lexer.i] != '\'' && line[lexer.i - 1] != '\\')
+			&& line[lexer.i] != '\'' && line[lexer.i - 1] != '\\')
 			lexer.i++;
 	}
 	if (DEBUG)

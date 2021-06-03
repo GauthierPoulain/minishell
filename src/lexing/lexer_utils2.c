@@ -27,15 +27,6 @@ int	quotes_token_len(char *line, t_lexer *lexer)
 	return (-1);
 }
 
-static void	no_room_infos(char *line, int *i, t_infos *infos)
-{
-	while (line[*i] == '\\')
-	{
-		*i += 1;
-		infos->len += 1;
-	}
-}
-
 /*
 //alors le == en != est ok tier mais j'ai peur que ça pète autre chose :)
 */

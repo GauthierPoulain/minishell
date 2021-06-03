@@ -106,6 +106,7 @@ SRCS_MS = \
 	./src/termctl.c \
 	./src/lexing/lexer_utils.c \
 	./src/lexing/lexer_utils2.c \
+	./src/lexing/lexer_utils3.c \
 	./src/lexing/lexer.c \
 	./src/parsing/handle_d_quotes.c \
 	./src/parsing/parse_backslash.c \

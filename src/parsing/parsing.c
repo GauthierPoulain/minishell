@@ -26,6 +26,16 @@ void	join_no_space(char **words, int *i, int *size)
 	*size -= 1;
 }
 
+static void	things(t_list *lst, char **words, int i)
+{
+	g_shell.curr_token = (t_token *)lst->content;
+	if (lst->next)
+		g_shell.next_token_str = ((t_token *)lst->next->content)->str;
+	chose_parsing(&words[i], lst);
+	g_shell.curr_token = NULL;
+	g_shell.next_token_str = NULL;
+}
+
 char	**array_from_list(void)
 {
 	int		size;
@@ -39,16 +49,9 @@ char	**array_from_list(void)
 	lst = g_shell.tokens;
 	while (i < size && lst && g_shell.error == false)
 	{
-		g_shell.curr_token = (t_token *)lst->content;
-		if (lst->next)
-			g_shell.next_token_str = ((t_token *)lst->next->content)->str;
-		chose_parsing(&words[i], lst);
-		g_shell.curr_token = NULL;
-		g_shell.next_token_str = NULL;
+		things(lst, words, i);
 		if (g_shell.error == true)
 			return (NULL);
-		if (DEBUG)
-			printf("addr : %p\n", lst->content);
 		if (!((t_token *)lst->content)->sp
 			&& ((t_token *)lst->content)->id >= 1)
 			join_no_space(words, &i, &size);

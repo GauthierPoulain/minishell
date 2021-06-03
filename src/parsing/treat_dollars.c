@@ -42,8 +42,11 @@ char	*treat_doll(char *word, int *i)
 {
 	int		slash;
 
-	printf("trans: %d\nis in quotes: %d\nhas space: %d\n", g_shell.trans, g_shell.is_in_s_quotes, g_shell.curr_token->sp);
-	if ((g_shell.trans == 1 && !g_shell.curr_token->sp) || (g_shell.is_in_s_quotes && !g_shell.curr_token->sp))
+	if (DEBUG)
+		printf("trans: %d\nis in quotes: %d\nhas space: %d\n",
+			g_shell.trans, g_shell.is_in_s_quotes, g_shell.curr_token->sp);
+	if ((g_shell.trans == 1 && !g_shell.curr_token->sp)
+		|| (g_shell.is_in_s_quotes && !g_shell.curr_token->sp))
 	{
 		g_shell.trans = 0;
 		*i += 1;
