@@ -12,3 +12,4 @@ minishell
 *.gcda
 *.swp
 salut
+minishell_tester/
