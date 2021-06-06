@@ -8,6 +8,7 @@
 //	token 4 = "
 //	token 5 = /
 //	token 6 = '
+//	token 10 = ;
 */
 
 static int	get_token_info(t_token *token, char *line, int start, int end)
@@ -25,6 +26,8 @@ static int	get_token_info(t_token *token, char *line, int start, int end)
 		token->type = 5;
 	else if (token->str[0] == '\'')
 		token->type = 6;
+	else if (token->str[0] == ';')
+		token->type = 10;
 	else
 		token->type = 0;
 	return (0);
@@ -39,8 +42,12 @@ int	else_token_l(char *line, t_lexer *lexer)
 	i = lexer->i;
 	while (line[i])
 	{
-		if (ft_ischarset(line[i], " \"\'\\"))
+		if (ft_ischarset(line[i], " ;\"\'\\"))
+		{
+			if (len == 0 && line[i] == ';')
+				len++;
 			return (len);
+		}
 		else
 		{
 			i++;

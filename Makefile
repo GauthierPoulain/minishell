@@ -26,7 +26,7 @@ CC = clang
 MAKE = make --no-print-directory
 
 CFLAGS = -Wall -Wextra -Werror
-CFLAGS += -DRELEASE
+# CFLAGS += -DRELEASE
 # CFLAGS += -O3 -fno-builtin
 CFLAGS += -g
 CFLAGS += -fsanitize=address
