@@ -50,7 +50,6 @@
 #  define PATH_MAX				4096
 # endif
 
-
 # define	_DEFAULT			"\033[1;39m"
 # define	_RED				"\033[1;31m"
 # define	_GREEN				"\033[1;32m"
