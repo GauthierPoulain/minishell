@@ -50,7 +50,6 @@
 #  define PATH_MAX				4096
 # endif
 
-# define	_END				"\033[1;0m"
 
 # define	_DEFAULT			"\033[1;39m"
 # define	_RED				"\033[1;31m"
@@ -68,6 +67,8 @@
 # define	_LIGHTMAGENTA		"\033[1;95m"
 # define	_LIGHTCYAN			"\033[1;96m"
 # define	_WHITE				"\033[1;97m"
+
+# define	_END				"\033[1;0m"
 
 typedef struct s_list
 {
