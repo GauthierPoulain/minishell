@@ -164,11 +164,15 @@ typedef struct s_minishell
 	char			**actual_str;
 	bool			use_termcaps;
 	t_pipes			pipes;
+	pid_t			child;
+	pid_t			outputmngr;
 	int				saved_stdout;
 	int				saved_stderr;
 	int				saved_stdin;
 	t_reader		reader;
 	bool			error;
+	t_buffer		pipe_output;
+	bool			need_pipe;
 	bool			keep_reading;
 	bool			is_in_quotes;
 	bool			is_in_s_quotes;
