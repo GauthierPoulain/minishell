@@ -13,6 +13,7 @@ static char	*count_and_trim(char *word, size_t size)
 		lasts++;
 	if (first != lasts && !g_shell.had_bslash)
 	{
+		g_shell.error = true;
 		ft_putstr_fd(2, "Syntax errorasd\n");
 		ft_lstclear(&g_shell.tokens);
 		g_shell.last_return = 1;
