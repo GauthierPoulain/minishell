@@ -12,8 +12,7 @@ static void	init_shell(void)
 	g_shell.env = NULL;
 	g_shell.history.lst = NULL;
 	ft_lstadd_front(&g_shell.history.lst, ft_lstnew(NULL));
-	if (isatty(STDIN_FILENO))
-		tcgetattr(STDIN_FILENO, &g_shell.save);
+	tcgetattr(STDIN_FILENO, &g_shell.save);
 	g_shell.use_termcaps = false;
 	g_shell.child = 0;
 	g_shell.outputmngr = 0;
