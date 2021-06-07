@@ -335,7 +335,7 @@ void		print_buffer_in_file(t_command *cmd, bool print);
 void		print_buffer_in_fd(t_buffer buff, int fd);
 int			file_not_found(char *file);
 t_buffer	*get_multiple_input(t_command cmd);
-bool		is_operator(char *c);
+int			is_operator(char *c);
 void		check_write_redirect(t_command *cmd, t_list *cmds);
 void		no_room_infos(char *line, int *i, t_infos *infos);
 t_list		*split_commands(char *line);
