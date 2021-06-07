@@ -16,7 +16,7 @@ static char	*trim_s_quotes(char *word, size_t size)
 	{
 		ft_putstr_fd(STDERR_FILENO, "Syntax error quotes\n");
 		ft_lstclear(&g_shell.tokens);
-		g_shell.last_return = 1;
+		g_shell.last_return = 2;
 		return (NULL);
 	}
 	word = ft_substr(word, first, size + 1 - lasts);

@@ -16,7 +16,7 @@ static char	*count_and_trim(char *word, size_t size)
 		g_shell.error = true;
 		ft_putstr_fd(STDERR_FILENO, "Syntax errorasd\n");
 		ft_lstclear(&g_shell.tokens);
-		g_shell.last_return = 1;
+		g_shell.last_return = 2;
 		return (NULL);
 	}
 	if (g_shell.had_bslash)

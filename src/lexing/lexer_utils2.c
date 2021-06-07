@@ -102,6 +102,6 @@ void	token_l_error(char *line, t_lexer *lexer)
 	ft_lstclear(&g_shell.tokens);
 	lexer->i = ft_strlen(line);
 	g_shell.error = true;
-	g_shell.last_return = 1;
+	g_shell.last_return = 2;
 	return ;
 }

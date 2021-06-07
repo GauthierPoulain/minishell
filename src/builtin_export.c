@@ -28,7 +28,7 @@ int	builtin_export(char **argv)
 						set_env(export[0], NULL);
 				}
 				else
-				set_env(export[0], export[1]);
+				set_env(export[0], ft_strtrim_spaces(export[1]));
 			}
 			i++;
 		}

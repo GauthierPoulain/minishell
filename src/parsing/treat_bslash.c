@@ -59,7 +59,7 @@ char	*error_bslash(int *i)
 	*i = 0;
 	ft_putstr_fd(STDERR_FILENO, "Syntax error BSLASH\n");
 	ft_lstclear(&g_shell.tokens);
-	g_shell.last_return = 1;
+	g_shell.last_return = 2;
 	g_shell.error = true;
 	return ("");
 }
