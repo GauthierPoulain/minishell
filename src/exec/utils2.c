@@ -18,11 +18,11 @@ t_buffer	*get_multiple_input(t_command cmd)
 	return (res);
 }
 
-int	is_operator(char *c)
+bool	is_operator(char *c)
 {
-	if ((*c == '>' && *(c + 1) == '>'))
-		return (2);
-	else if (ft_ischarset(*c, ";><|"))
-		return (1);
-	return (0);
+	return (!ft_strcmp(c, ";")
+		|| !ft_strcmp(c, ">")
+		|| !ft_strcmp(c, ">>")
+		|| !ft_strcmp(c, "<")
+		|| !ft_strcmp(c, "|"));
 }

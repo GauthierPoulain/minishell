@@ -75,10 +75,16 @@ SRCS_LIB = \
 	./lib/ft_memcmp.c \
 
 SRCS_MS = \
-	./src/execv2/process_input.c \
-	./src/execv2/errors.c \
-	./src/execv2/utils.c \
-	./src/split_commands.c \
+	./src/exec/exec.c \
+	./src/exec/exec2.c \
+	./src/exec/errors.c \
+	./src/exec/fill_cmd_struct.c \
+	./src/exec/get_cmd_struct.c \
+	./src/exec/pipe_managment.c \
+	./src/exec/manage_output.c \
+	./src/exec/process_pipe.c \
+	./src/exec/utils.c \
+	./src/exec/utils2.c \
 	./src/process_key.c \
 	./src/builtin_cd.c \
 	./src/builtin_echo.c \
@@ -93,6 +99,7 @@ SRCS_MS = \
 	./src/env.c \
 	./src/history.c \
 	./src/minishell.c \
+	./src/process_input.c \
 	./src/read_line.c \
 	./src/signals_catcher.c \
 	./src/termcap.c \

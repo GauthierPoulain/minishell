@@ -22,7 +22,8 @@ void	set_input_mode(void)
 
 void	reset_input_mode(void)
 {
-	tcsetattr(STDIN_FILENO, TCSANOW, &g_shell.save);
+	if (g_shell.use_termcaps)
+		tcsetattr(STDIN_FILENO, TCSANOW, &g_shell.save);
 	g_shell.use_termcaps = false;
 }
 

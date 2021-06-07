@@ -17,7 +17,7 @@ void	SIGINT_catcher(int code)
 		g_shell.last_return = 1;
 		pre_prompt();
 	}
-	// close_pipe();
+	close_pipe();
 	add_signals_listeners();
 	set_input_mode();
 }
