@@ -98,7 +98,7 @@ void	token_l_error(char *line, t_lexer *lexer)
 {
 	if (DEBUG)
 		printf("tokenl\n");
-	ft_putstr_fd(STDERR_FILENO, "Syntax error");
+	ft_putstr_fd(STDERR_FILENO, "Syntax error tokenl\n");
 	ft_lstclear(&g_shell.tokens);
 	lexer->i = ft_strlen(line);
 	g_shell.error = true;
