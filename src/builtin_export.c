@@ -1,8 +1,21 @@
 #include "../includes/minishell.h"
 
-int	builtin_export(char **argv)
+static void	run_export(char *argv)
 {
 	char	**export;
+
+	export = ft_split(argv, '=');
+	if (!export[1])
+	{
+		if (!get_env(export[0]))
+			set_env(export[0], NULL);
+	}
+	else
+		set_env(export[0], ft_strtrim_spaces(export[1]));
+}
+
+int	builtin_export(char **argv)
+{
 	int		i;
 	int		ret;
 
@@ -20,16 +33,7 @@ int	builtin_export(char **argv)
 				ret = 1;
 			}	
 			else
-			{
-				export = ft_split(argv[i], '=');
-				if (!export[1])
-				{
-					if (!get_env(export[0]))
-						set_env(export[0], NULL);
-				}
-				else
-				set_env(export[0], ft_strtrim_spaces(export[1]));
-			}
+				run_export(argv[i]);
 			i++;
 		}
 	}
