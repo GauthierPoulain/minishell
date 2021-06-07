@@ -75,7 +75,7 @@ SRCS_LIB = \
 	./lib/ft_memcmp.c \
 
 SRCS_MS = \
-	./src/execv2/process_input.c \
+	./src/execv2/exec.c \
 	./src/execv2/errors.c \
 	./src/execv2/utils.c \
 	./src/split_commands.c \

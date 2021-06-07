@@ -52,7 +52,7 @@ void	run_command(t_command cmd, int *status)
 		*status = commant_not_found(cmd.prog);
 }
 
-void	get_command(t_command *cmd, char *line)
+bool	get_command(t_command *cmd, char *line)
 {
 	int		i;
 
@@ -66,8 +66,11 @@ void	get_command(t_command *cmd, char *line)
 	}
 	ft_lstclear(&g_shell.tokens);
 	cmd->argv = parse_line(line);
+	if (!cmd->argv)
+		return (false);
 	cmd->prog = cmd->argv[0];
 	cmd->path = which(cmd->prog);
+	return (true);
 }
 
 void	process_input(char *line)
@@ -97,7 +100,8 @@ void	process_input(char *line)
 	while (cmds)
 	{
 		g_shell.last_return = 0;
-		get_command(&cmd, cmds->content);
+		if (!get_command(&cmd, cmds->content))  // solution temporaire pour bloquer aux erreurs de syntaxe
+			return ;
 		run_command(cmd, &status);
 		if (!g_shell.last_return)
 			g_shell.last_return = status;

@@ -24,7 +24,6 @@ static bool	check_char(t_splitter *splitter, char *c, int *i)
 	return (true);
 }
 
-
 t_list	*split_commands(char *line)
 {
 	t_splitter	splitter;
