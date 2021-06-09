@@ -75,7 +75,5 @@ t_ptoken	*parse_line(char *line)
 	g_shell.is_in_quotes = false;
 	g_shell.is_in_s_quotes = false;
 	array = array_from_list();
-	// if (P_ARRAY && array)
-	// 	display_array(array);
 	return (array);
 }
