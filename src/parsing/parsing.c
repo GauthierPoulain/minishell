@@ -57,8 +57,8 @@ char	**array_from_list(void)
 			return (NULL);
 		if (!((t_token *)lst->content)->sp
 			&& ((t_token *)lst->content)->id >= 1
-				&& ((t_token *)lst->content)->type != 10
-					&& !g_shell.had_semi)
+			&& ((t_token *)lst->content)->type != 10
+			&& !g_shell.had_semi)
 			join_no_space(words, &i, &size);
 		lst = lst->next;
 		i++;

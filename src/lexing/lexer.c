@@ -105,7 +105,7 @@ void	get_lexer(char *line)
 			handle_space(line, token, &lexer);
 		if (line[lexer.i] != '"' && line[lexer.i] != ' '
 			&& line[lexer.i] != '\\' && !lexer.had_quotes
-			&& line[lexer.i] != '\'' && line[lexer.i - 1] != '\\' 
+			&& line[lexer.i] != '\'' && line[lexer.i - 1] != '\\'
 			&& line[lexer.i] != ';' && !lexer.had_semi)
 			lexer.i++;
 	}
