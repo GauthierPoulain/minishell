@@ -35,7 +35,8 @@ int	builtin_exit(char **argv)
 		ft_putstr("exit\n");
 	if (argv && argv[1] && *argv[1] && check_int_overflow(argv[1]))
 		ret = 255;
-	else if (argv && argv[1] && *argv[1] && ((argv[1][1] && !ft_isdigit(argv[1][1]))
+	else if (argv && argv[1] && *argv[1] && ((argv[1][1]
+			&& !ft_isdigit(argv[1][1]))
 			|| (!argv[1][1] && !ft_isdigit(argv[1][0]))))
 		ret = 255;
 	else if (argv && argv[1] && argv[2])

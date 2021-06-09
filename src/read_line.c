@@ -44,7 +44,7 @@ char	**add_char(char **str, char *c, int pos)
 	return (res);
 }
 
-void	unprint_char(char ***str, t_reader *reader)
+void	unprint_char(char ***str, t_reader *reader, bool gvalue)
 {
 	if (reader->pos < reader->size)
 	{
@@ -65,9 +65,11 @@ void	unprint_char(char ***str, t_reader *reader)
 		reader->size--;
 		reader->pos--;
 	}
+	if (gvalue)
+		g_shell.tmpterm = *str;
 }
 
-void	print_char(char ***str, char *c, t_reader *reader)
+void	print_char(char ***str, char *c, t_reader *reader, bool gvalue)
 {
 	if (reader->pos < reader->size)
 	{
@@ -87,6 +89,8 @@ void	print_char(char ***str, char *c, t_reader *reader)
 		reader->size++;
 		reader->pos++;
 	}
+	if (gvalue)
+		g_shell.tmpterm = *str;
 }
 
 char	*read_term(void)
@@ -97,6 +101,7 @@ char	*read_term(void)
 	int			buffer_len;
 
 	buffer_len = 1;
+	g_shell.tmpterm = NULL;
 	if (g_shell.use_termcaps)
 		buffer_len = KEY_BUFFER_SIZE;
 	buffer = ft_calloc(sizeof(char) * (buffer_len + 1));

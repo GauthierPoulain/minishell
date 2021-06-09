@@ -44,7 +44,7 @@ bool	process_key(char *c, t_reader *reader, char ***str)
 	if (check_end(c))
 		return (false);
 	else if (*c == 127 && reader->pos > 0)
-		unprint_char(str, reader);
+		unprint_char(str, reader, true);
 	else if (*c == 127)
 		ft_putchar(7);
 	else if (*c == 27 && *(c + 1))
@@ -58,7 +58,7 @@ bool	process_key(char *c, t_reader *reader, char ***str)
 		key = NULL;
 		while (get_this_char(&c, &key) && *key)
 			if (ft_isprint(*key))
-				print_char(str, key, reader);
+				print_char(str, key, reader, true);
 		g_shell.history.act_pos = 0;
 	}
 	return (true);

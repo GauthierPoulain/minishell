@@ -70,7 +70,8 @@ t_list	*get_commands(char **argv)
 	actual = init_command_struct();
 	while (argv[i])
 	{
-		if (is_operator(argv[i]))
+		if (is_operator(argv[i]) && ft_strlen(argv[i])
+			== (size_t)is_operator(argv[i]))
 		{
 			check_operator(actual, argv, i);
 			ft_lstadd_back(&lst, ft_lstnew(actual));

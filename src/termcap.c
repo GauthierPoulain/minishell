@@ -49,7 +49,7 @@ void	put_in_term(char **line, char ***str, t_reader *reader)
 	{
 		while (*line)
 		{
-			print_char(str, *line, reader);
+			print_char(str, *line, reader, false);
 			line++;
 		}
 	}
