@@ -55,9 +55,16 @@ char	**array_from_list(void)
 			return (NULL);
 		if (!((t_token *)lst->content)->sp
 			&& ((t_token *)lst->content)->id >= 1
-			&& ((t_token *)lst->content)->type != 10
 			&& check_type_at(i - 1) != 10)
+		{
+			if (((t_token *)lst->content)->type == 10
+				&& g_shell.trans)
 			join_no_space(words, &i, &size);
+			else if (((t_token *)lst->content)->type == 10)
+				;
+			else
+				join_no_space(words, &i, &size);
+		}
 		lst = lst->next;
 		i++;
 	}
