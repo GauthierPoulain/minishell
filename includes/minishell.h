@@ -135,6 +135,12 @@ typedef struct s_infos
 	int	was_quotes;
 }				t_infos;
 
+typedef struct s_ptoken
+{
+	char	*str;
+	bool	is_escaped;
+}				t_ptoken;
+
 typedef struct s_command
 {
 	char	*prog;
@@ -271,11 +277,11 @@ size_t		get_word_len(char *word, int i);
 void		join_last_token(t_token *token);
 int			set_dollar_type(t_token *token, char *line, int start);
 char		*treat_backslash(char *word, int *i);
-char		**parse_line(char *line);
+t_ptoken	*parse_line(char *line);
 void		display_array(char **array);
 int			check_occurence(char *str, char c);
 int			quotes_token_len(char *line, t_lexer *lexer);
-char		**array_from_list(void);
+t_ptoken	*array_from_list(void);
 void		display_array(char **array);
 void		set_input_mode(void);
 void		reset_input_mode(void);

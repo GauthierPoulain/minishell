@@ -1,56 +1,58 @@
 #include "../../includes/minishell.h"
 
-void	chose_parsing(char **word, t_list *lst)
+void	chose_parsing(t_ptoken *p_token, t_list *lst)
 {
 	if (((t_token *)lst->content)->type == 4)
-		*word = parse_d_quotes(((t_token *)lst->content)->str);
+		p_token->str = parse_d_quotes(((t_token *)lst->content)->str);
 	else if (((t_token *)lst->content)->type == 6)
-		*word = parse_s_quotes(((t_token *)lst->content)->str);
+		p_token->str = parse_s_quotes(((t_token *)lst->content)->str);
 	else
 	{
 		if (DEBUG)
 			printf("ALED OUI\n");
-		*word = parse_tokens(((t_token *)lst->content)->str);
+		p_token->str = parse_tokens(((t_token *)lst->content)->str);
 	}
 }
 
-void	join_no_space(char **words, int *i, int *size)
+void	join_no_space(t_ptoken *p_tokens, int *i, int *size)
 {
 	char	*tmp;
 
 	printf("JOINED MA BOI\n");
-	tmp = ft_strdup(words[*i]);
-	words[*i] = NULL;
-	gc_free(words[*i]);
-	words[*i - 1] = ft_strjoin(words[*i - 1], tmp);
+	tmp = ft_strdup(p_tokens[*i].str);
+	p_tokens->str[*i] = NULL;
+	gc_free(p_tokens->str[*i]);
+	p_tokens->str[*i - 1] = ft_strjoin(p_tokens->str[*i - 1], tmp);
 	*i -= 1;
 	*size -= 1;
 }
 
-static void	things(t_list *lst, char **words, int i)
+static void	things(t_list *lst, t_ptoken *p_tokens, int i)
 {
 	g_shell.curr_token = (t_token *)lst->content;
 	if (lst->next)
 		g_shell.next_token_str = ((t_token *)lst->next->content)->str;
-	chose_parsing(&words[i], lst);
+	chose_parsing(p_tokens, lst);
 	g_shell.curr_token = NULL;
 	g_shell.next_token_str = NULL;
 }
 
-char	**array_from_list(void)
+t_ptoken	*array_from_list(void)
 {
-	int		size;
-	int		i;
-	t_list	*lst;
-	char	**words;
+	int				size;
+	int				i;
+	t_list			*lst;
+	char			**words;
+	t_ptoken	*array;
 
 	i = 0;
 	size = ft_lstsize(g_shell.tokens);
-	words = gc_malloc(sizeof(char *) * (size + 1));
+	array = ft_calloc(sizeof(t_ptoken) * (size + 1));
 	lst = g_shell.tokens;
 	while (i < size && lst && g_shell.error == false)
 	{
-		things(lst, words, i);
+		array->is_escaped = false;
+		things(lst, array, i);
 		if (g_shell.error == true)
 			return (NULL);
 		if (!((t_token *)lst->content)->sp
@@ -59,7 +61,10 @@ char	**array_from_list(void)
 		{
 			if (((t_token *)lst->content)->type == 10
 				&& g_shell.trans)
-			join_no_space(words, &i, &size);
+			{
+				join_no_space(words, &i, &size);
+				array->is_escaped = true;
+			}
 			else if (((t_token *)lst->content)->type == 10)
 				;
 			else
@@ -68,13 +73,12 @@ char	**array_from_list(void)
 		lst = lst->next;
 		i++;
 	}
-	words[i] = NULL;
-	return (words);
+	return (array);
 }
 
-char	**parse_line(char *line)
+t_ptoken	*parse_line(char *line)
 {
-	char	**array;
+	t_ptoken	*array;
 
 	get_lexer(line);
 	g_shell.error = false;
