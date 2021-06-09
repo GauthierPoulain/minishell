@@ -68,10 +68,11 @@ t_list	*get_commands(t_ptoken *argv)
 	lst = NULL;
 	i = 0;
 	actual = init_command_struct();
-	while ((argv + i))
+	while ((argv + i)->str)
 	{
+		printf("salut ^^ %d\n", (argv + i)->is_escaped);
 		if (is_operator((argv + i)->str) && ft_strlen((argv + i)->str)
-			== (size_t)is_operator((argv + i)->str))
+			== (size_t)is_operator((argv + i)->str) && !(argv + i)->is_escaped)
 		{
 			check_operator(actual, argv, i);
 			ft_lstadd_back(&lst, ft_lstnew(actual));

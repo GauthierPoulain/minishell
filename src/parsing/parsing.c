@@ -20,19 +20,20 @@ void	join_no_space(t_ptoken *p_tokens, int *i, int *size)
 
 	printf("JOINED MA BOI\n");
 	tmp = ft_strdup(p_tokens[*i].str);
-	p_tokens->str[*i] = NULL;
-	gc_free(p_tokens->str[*i]);
-	p_tokens->str[*i - 1] = ft_strjoin(p_tokens->str[*i - 1], tmp);
+	(p_tokens + *i)->str = NULL;
+	gc_free((p_tokens + *i)->str);
+	(p_tokens + (*i - 1))->str = ft_strjoin((p_tokens + (*i - 1))->str, tmp);
 	*i -= 1;
 	*size -= 1;
 }
 
 static void	things(t_list *lst, t_ptoken *p_tokens, int i)
 {
+	(void)i;
 	g_shell.curr_token = (t_token *)lst->content;
 	if (lst->next)
 		g_shell.next_token_str = ((t_token *)lst->next->content)->str;
-	chose_parsing(p_tokens, lst);
+	chose_parsing(p_tokens + i, lst);
 	g_shell.curr_token = NULL;
 	g_shell.next_token_str = NULL;
 }
@@ -50,7 +51,8 @@ t_ptoken	*array_from_list(void)
 	lst = g_shell.tokens;
 	while (i < size && lst && g_shell.error == false)
 	{
-		array->is_escaped = false;
+		(array + i)->is_escaped = false;
+		(array + i)->str = NULL;
 		things(lst, array, i);
 		if (g_shell.error == true)
 			return (NULL);
@@ -73,7 +75,7 @@ t_ptoken	*parse_line(char *line)
 	g_shell.is_in_quotes = false;
 	g_shell.is_in_s_quotes = false;
 	array = array_from_list();
-	if (P_ARRAY && array)
-		display_array(array);
+	// if (P_ARRAY && array)
+	// 	display_array(array);
 	return (array);
 }
