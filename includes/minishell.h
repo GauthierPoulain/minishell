@@ -179,7 +179,6 @@ typedef struct s_minishell
 	bool			is_in_s_quotes;
 	bool			had_bslash;
 	bool			is_running;
-	bool			had_semi;
 	char			*next_token_str;
 	t_token			*curr_token;
 	int				trans;
