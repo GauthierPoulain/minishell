@@ -10,6 +10,8 @@ void	chose_parsing(char **word, t_list *lst)
 	{
 		if (DEBUG)
 			printf("ALED OUI\n");
+		if (((t_token *)lst->content)->str[0] == ';')
+			g_shell.had_semi = true;
 		*word = parse_tokens(((t_token *)lst->content)->str);
 	}
 }
@@ -18,6 +20,7 @@ void	join_no_space(char **words, int *i, int *size)
 {
 	char	*tmp;
 
+	g_shell.had_semi = false;
 	tmp = ft_strdup(words[*i]);
 	words[*i] = NULL;
 	gc_free(words[*i]);
@@ -54,7 +57,8 @@ char	**array_from_list(void)
 			return (NULL);
 		if (!((t_token *)lst->content)->sp
 			&& ((t_token *)lst->content)->id >= 1
-				&& ((t_token *)lst->content)->type != 10)
+				&& ((t_token *)lst->content)->type != 10
+					&& !g_shell.had_semi)
 			join_no_space(words, &i, &size);
 		lst = lst->next;
 		i++;

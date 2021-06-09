@@ -44,10 +44,10 @@ int	else_token_l(char *line, t_lexer *lexer)
 	{
 		if (ft_ischarset(line[i], " ;\"\'\\"))
 		{
+			if (line[i] == ';')
+				lexer->had_semi = true;
 			if (len == 0 && line[i] == ';')
-			{
 				len++;
-			}
 			return (len);
 		}
 		else
@@ -64,6 +64,7 @@ void	handle_space(char *line, t_token *token, t_lexer *lexer)
 	int		token_l;
 	bool	trash;
 
+	lexer->had_semi = false;
 	trash = true;
 	if (lexer->had_quotes)
 		lexer->had_quotes = false;
@@ -99,11 +100,13 @@ void	get_lexer(char *line)
 			printf("CHAR [%c]\n", line[lexer.i]);
 		if (line[lexer.i] == ' ' || line[lexer.i] == '\\'
 			|| lexer.i == 0 || line[lexer.i] == '"' || lexer.had_quotes
-			|| line[lexer.i] == '\'' || (lexer.i && line[lexer.i - 1] == '\\') || line[lexer.i] == ';')
+			|| line[lexer.i] == '\'' || (lexer.i && line[lexer.i - 1] == '\\')
+			|| line[lexer.i] == ';' || lexer.had_semi)
 			handle_space(line, token, &lexer);
 		if (line[lexer.i] != '"' && line[lexer.i] != ' '
 			&& line[lexer.i] != '\\' && !lexer.had_quotes
-			&& line[lexer.i] != '\'' && line[lexer.i - 1] != '\\' && line[lexer.i] != ';')
+			&& line[lexer.i] != '\'' && line[lexer.i - 1] != '\\' 
+			&& line[lexer.i] != ';' && !lexer.had_semi)
 			lexer.i++;
 	}
 	if (DEBUG)

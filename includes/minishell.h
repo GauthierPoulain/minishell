@@ -24,7 +24,7 @@
 #  define		PRINT_TERMCAP	0
 # else
 #  define		DEBUG			1
-#  define		P_ARRAY			0
+#  define		P_ARRAY			1
 #  define		PRINT_TERMCAP	0
 # endif
 
@@ -106,6 +106,7 @@ typedef struct s_lexer
 	int		j;
 	int		id;
 	bool	had_quotes;
+	bool	had_semi;
 }				t_lexer;
 
 typedef struct s_token
@@ -178,6 +179,7 @@ typedef struct s_minishell
 	bool			is_in_s_quotes;
 	bool			had_bslash;
 	bool			is_running;
+	bool			had_semi;
 	char			*next_token_str;
 	t_token			*curr_token;
 	int				trans;

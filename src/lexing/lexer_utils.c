@@ -6,6 +6,7 @@ void	init_lexer(t_lexer *lexer)
 	lexer->j = 0;
 	lexer->id = 0;
 	lexer->had_quotes = false;
+	lexer->had_semi = false;
 }
 
 int	check_type_at(int i)
