@@ -19,5 +19,5 @@ int	file_not_found(char *file)
 int	syntax_error(void)
 {
 	ft_putstr_fd(STDERR_FILENO, "minishell: syntax error\n");
-	return (126);
+	return (2);
 }
