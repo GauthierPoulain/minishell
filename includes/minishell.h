@@ -279,6 +279,7 @@ int			set_dollar_type(t_token *token, char *line, int start);
 char		*treat_backslash(char *word, int *i);
 t_ptoken	*parse_line(char *line);
 void		join_if_needed(t_ptoken *array, int *i, int *size, t_list *lst);
+void		join_no_space(t_ptoken *p_tokens, int *i, int *size);
 void		display_array(char **array);
 int			check_occurence(char *str, char c);
 int			quotes_token_len(char *line, t_lexer *lexer);
