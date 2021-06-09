@@ -48,7 +48,7 @@ bool	check_struct(t_list	*lst)
 	return (true);
 }
 
-void	check_operator(t_command *actual, char **argv, int i)
+void	check_operator(t_command *actual, t_ptoken *argv, int i)
 {
 	if (!actual->argv)
 	{
@@ -56,10 +56,10 @@ void	check_operator(t_command *actual, char **argv, int i)
 		actual->argv = tab_add(actual->argv, "");
 	}
 	else
-		actual->operator = ft_strdup(argv[i]);
+		actual->operator = ft_strdup((argv + i)->str);
 }
 
-t_list	*get_commands(char **argv)
+t_list	*get_commands(t_ptoken *argv)
 {
 	t_list		*lst;
 	t_command	*actual;
@@ -68,17 +68,17 @@ t_list	*get_commands(char **argv)
 	lst = NULL;
 	i = 0;
 	actual = init_command_struct();
-	while (argv[i])
+	while ((argv + i))
 	{
-		if (is_operator(argv[i]) && ft_strlen(argv[i])
-			== (size_t)is_operator(argv[i]))
+		if (is_operator((argv + i)->str) && ft_strlen((argv + i)->str)
+			== (size_t)is_operator((argv + i)->str))
 		{
 			check_operator(actual, argv, i);
 			ft_lstadd_back(&lst, ft_lstnew(actual));
 			actual = init_command_struct();
 		}
 		else
-			actual->argv = tab_add(actual->argv, argv[i]);
+			actual->argv = tab_add(actual->argv, (argv + i)->str);
 		i++;
 	}
 	if (actual->argv)
