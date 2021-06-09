@@ -50,6 +50,7 @@ char	**array_from_list(void)
 	size = ft_lstsize(g_shell.tokens);
 	words = gc_malloc(sizeof(char *) * (size + 1));
 	lst = g_shell.tokens;
+	g_shell.had_semi = false;
 	while (i < size && lst && g_shell.error == false)
 	{
 		things(lst, words, i);
