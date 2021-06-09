@@ -42,8 +42,7 @@ t_ptoken	*array_from_list(void)
 	int				size;
 	int				i;
 	t_list			*lst;
-	char			**words;
-	t_ptoken	*array;
+	t_ptoken		*array;
 
 	i = 0;
 	size = ft_lstsize(g_shell.tokens);
@@ -62,13 +61,13 @@ t_ptoken	*array_from_list(void)
 			if (((t_token *)lst->content)->type == 10
 				&& g_shell.trans)
 			{
-				join_no_space(words, &i, &size);
+				join_no_space(array, &i, &size);
 				array->is_escaped = true;
 			}
 			else if (((t_token *)lst->content)->type == 10)
 				;
 			else
-				join_no_space(words, &i, &size);
+				join_no_space(array, &i, &size);
 		}
 		lst = lst->next;
 		i++;
