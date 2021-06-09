@@ -56,8 +56,6 @@ t_ptoken	*array_from_list(void)
 		things(lst, array, i);
 		if (g_shell.error == true)
 			return (NULL);
-		if (get_token_at(i - 1))
-			printf("current : [%s]\nsp : %d\nid : %d\ntype at : %d\ni : %d\n", get_token_at(((t_token *)lst->content)->id - 1)->str, get_token_at(((t_token *)lst->content)->id - 1)->sp, get_token_at(((t_token *)lst->content)->id - 1)->id, get_token_at(((t_token *)lst->content)->id - 1)->type, i);
 		if (!((t_token *)lst->content)->sp
 			&& ((t_token *)lst->content)->id >= 1
 			&& !(array + (i - 1))->is_escaped)

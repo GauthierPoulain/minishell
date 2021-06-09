@@ -91,6 +91,11 @@ int	get_token_len(char *line, t_lexer *lexer)
 		return (s_quotes_len(line, lexer));
 	else if (line[i] == '\\')
 		return (bslash_token_len(line, lexer));
+	else if (line[i] == '>' || line[i] == '|' || line[i] == '<')
+	{
+		lexer->had_semi = true;
+		return (is_operator(line + lexer->i));
+	}
 	return (else_token_l(line, lexer));
 }
 

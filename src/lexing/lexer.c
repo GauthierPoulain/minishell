@@ -28,6 +28,8 @@ static int	get_token_info(t_token *token, char *line, int start, int end)
 		token->type = 6;
 	else if (token->str[0] == ';')
 		token->type = 10;
+	else if (!ft_strcmp(token->str, ">>"))
+		token->type = 11;
 	else
 		token->type = 0;
 	return (0);
@@ -42,7 +44,7 @@ int	else_token_l(char *line, t_lexer *lexer)
 	i = lexer->i;
 	while (line[i])
 	{
-		if (ft_ischarset(line[i], " ;\"\'\\"))
+		if (ft_ischarset(line[i], " ;><|\"\'\\"))
 		{
 			if (line[i] == ';')
 				lexer->had_semi = true;
@@ -75,6 +77,7 @@ void	handle_space(char *line, t_token *token, t_lexer *lexer)
 		lexer->i++;
 	}
 	token_l = get_token_len(line, lexer);
+	printf("token len %d\n", token_l);
 	if (token_l == -1)
 		return (token_l_error(line, lexer));
 	token->id = lexer->id++;
@@ -101,12 +104,15 @@ void	get_lexer(char *line)
 		if (line[lexer.i] == ' ' || line[lexer.i] == '\\'
 			|| lexer.i == 0 || line[lexer.i] == '"' || lexer.had_quotes
 			|| line[lexer.i] == '\'' || (lexer.i && line[lexer.i - 1] == '\\')
-			|| line[lexer.i] == ';' || lexer.had_semi)
+			|| line[lexer.i] == ';' || line[lexer.i] == '>' || lexer.had_semi
+			|| line[lexer.i] == '|' || line[lexer.i] == '<')
 			handle_space(line, token, &lexer);
 		if (line[lexer.i] != '"' && line[lexer.i] != ' '
 			&& line[lexer.i] != '\\' && !lexer.had_quotes
 			&& line[lexer.i] != '\'' && line[lexer.i - 1] != '\\'
-			&& line[lexer.i] != ';' && !lexer.had_semi)
+			&& line[lexer.i] != ';' && !lexer.had_semi
+			&& line[lexer.i] != '>' && line[lexer.i] != '|'
+			&& line[lexer.i] != '<')
 			lexer.i++;
 	}
 	if (DEBUG)
