@@ -57,18 +57,7 @@ t_ptoken	*array_from_list(void)
 		if (!((t_token *)lst->content)->sp
 			&& ((t_token *)lst->content)->id >= 1
 			&& check_type_at(i - 1) != 10)
-		{
-			if (((t_token *)lst->content)->type == 10
-				&& g_shell.trans)
-			{
-				join_no_space(array, &i, &size);
-				array->is_escaped = true;
-			}
-			else if (((t_token *)lst->content)->type == 10)
-				;
-			else
-				join_no_space(array, &i, &size);
-		}
+			join_if_needed(array, &i, &size, lst);
 		lst = lst->next;
 		i++;
 	}

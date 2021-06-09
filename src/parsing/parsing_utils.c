@@ -41,3 +41,17 @@ size_t	get_word_len(char *word, int i)
 	}
 	return (j);
 }
+
+void	join_if_needed(t_ptoken *array, int *i, int *size, t_list *lst)
+{
+	if (((t_token *)lst->content)->type == 10
+		&& g_shell.trans)
+	{
+		join_no_space(array, i, size);
+		array->is_escaped = true;
+	}
+	else if (((t_token *)lst->content)->type == 10)
+		;
+	else
+		join_no_space(array, i, size);
+}
