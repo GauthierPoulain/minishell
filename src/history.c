@@ -20,6 +20,8 @@ char	**get_in_history(int pos)
 	int		id;
 	t_list	*lst;
 
+	if (pos == 0)
+		return (g_shell.tmpterm);
 	lst = g_shell.history.lst;
 	id = 0;
 	while (lst)
@@ -45,7 +47,7 @@ void	remove_line(char ***str, t_reader *reader)
 	{
 		tmp_reader.pos = ft_tab_len(*str);
 		tmp_reader.size = ft_tab_len(*str);
-		unprint_char(str, &tmp_reader);
+		unprint_char(str, &tmp_reader, false);
 	}
 	reader->pos = 0;
 	reader->size = 0;

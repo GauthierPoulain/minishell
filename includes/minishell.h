@@ -183,6 +183,7 @@ typedef struct s_minishell
 	char			*next_token_str;
 	t_token			*curr_token;
 	int				trans;
+	char			**tmpterm;
 }				t_minishell;
 
 extern t_minishell	g_shell;
@@ -281,8 +282,8 @@ void		set_input_mode(void);
 void		reset_input_mode(void);
 char		*read_term(void);
 bool		process_key(char *c, t_reader *reader, char ***str);
-void		unprint_char(char ***str, t_reader *reader);
-void		print_char(char ***str, char *c, t_reader *reader);
+void		unprint_char(char ***str, t_reader *reader, bool gvalue);
+void		print_char(char ***str, char *c, t_reader *reader, bool gvalue);
 char		*get_str_rterm(char **str);
 int			get_next_line(int fd, char **line);
 void		history_add(char **line);
