@@ -47,11 +47,9 @@ char	*treat_quotes(char *word, int *i)
 char	*parse_tokens(char *word)
 {
 	int		i;
-	int		trans;
 	char	*new;
 
 	i = 0;
-	trans = 0;
 	new = word;
 	while (new[i])
 	{

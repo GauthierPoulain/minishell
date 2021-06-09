@@ -9,7 +9,7 @@ void	init_lexer(t_lexer *lexer)
 	lexer->had_semi = false;
 }
 
-int	check_type_at(int i)
+t_token	*get_token_at(int i)
 {
 	t_list	*lst;
 	t_token	*token;
@@ -19,10 +19,10 @@ int	check_type_at(int i)
 	{
 		token = lst->content;
 		if (token->id == i)
-			return (token->type);
+			return (token);
 		lst = lst->next;
 	}
-	return (-1);
+	return (NULL);
 }
 
 void	display_tokens(void)
@@ -59,7 +59,7 @@ void	join_last_token(t_token *token)
 
 int	set_dollar_type(t_token *token, char *line, int start)
 {
-	if (check_type_at(token->id - 1) == 2 && line[start - 1] != ' ')
+	if (get_token_at(token->id - 1)->type == 2 && line[start - 1] != ' ')
 	{
 		join_last_token(token);
 		token->type = 2;

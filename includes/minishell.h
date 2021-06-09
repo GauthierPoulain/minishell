@@ -268,7 +268,7 @@ void		unset_env(char *key);
 char		*get_env(char *key);
 void		init_env(char **envp);
 int			run_line(t_ptoken *argv);
-int			check_type_at(int i);
+t_token		*get_token_at(int i);
 void		get_lexer(char *line);
 void		init_lexer(t_lexer *lexer);
 void		display_tokens(void);

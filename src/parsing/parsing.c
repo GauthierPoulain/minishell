@@ -11,6 +11,7 @@ void	chose_parsing(t_ptoken *p_token, t_list *lst)
 		if (DEBUG)
 			printf("ALED OUI\n");
 		p_token->str = parse_tokens(((t_token *)lst->content)->str);
+		printf("token during parsing %s\n", p_token->str);
 	}
 }
 
@@ -19,7 +20,7 @@ void	join_no_space(t_ptoken *p_tokens, int *i, int *size)
 	char	*tmp;
 
 	printf("JOINED MA BOI\n");
-	tmp = ft_strdup(p_tokens[*i].str);
+	tmp = ft_strdup((p_tokens + *i)->str);
 	(p_tokens + *i)->str = NULL;
 	gc_free((p_tokens + *i)->str);
 	(p_tokens + (*i - 1))->str = ft_strjoin((p_tokens + (*i - 1))->str, tmp);
@@ -29,7 +30,6 @@ void	join_no_space(t_ptoken *p_tokens, int *i, int *size)
 
 static void	things(t_list *lst, t_ptoken *p_tokens, int i)
 {
-	(void)i;
 	g_shell.curr_token = (t_token *)lst->content;
 	if (lst->next)
 		g_shell.next_token_str = ((t_token *)lst->next->content)->str;
@@ -56,9 +56,18 @@ t_ptoken	*array_from_list(void)
 		things(lst, array, i);
 		if (g_shell.error == true)
 			return (NULL);
+		if (get_token_at(i - 1))
+			printf("current : [%s]\nsp : %d\nid : %d\ntype at : %d\ni : %d\n", get_token_at(((t_token *)lst->content)->id - 1)->str, get_token_at(((t_token *)lst->content)->id - 1)->sp, get_token_at(((t_token *)lst->content)->id - 1)->id, get_token_at(((t_token *)lst->content)->id - 1)->type, i);
 		if (!((t_token *)lst->content)->sp
 			&& ((t_token *)lst->content)->id >= 1
-			&& check_type_at(i - 1) != 10)
+			&& !(array + (i - 1))->is_escaped)
+		{
+			if (get_token_at(((t_token *)lst->content)->id - 1)->type != 10)
+				join_if_needed(array, &i, &size, lst);
+		}
+		else if (!((t_token *)lst->content)->sp
+			&& ((t_token *)lst->content)->id >= 1
+			&& (array + (i - 1))->is_escaped)
 			join_if_needed(array, &i, &size, lst);
 		lst = lst->next;
 		i++;

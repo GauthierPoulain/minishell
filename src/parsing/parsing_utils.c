@@ -44,11 +44,13 @@ size_t	get_word_len(char *word, int i)
 
 void	join_if_needed(t_ptoken *array, int *i, int *size, t_list *lst)
 {
+	printf("JE SUIS LA\ntrans[%d]\n", g_shell.trans);
 	if (((t_token *)lst->content)->type == 10
 		&& g_shell.trans)
 	{
 		join_no_space(array, i, size);
 		(array + *i)->is_escaped = true;
+		g_shell.trans = 0;
 	}
 	else if (((t_token *)lst->content)->type == 10)
 		;
