@@ -79,7 +79,7 @@ void	run_command(t_command *cmd, int *status)
 	g_shell.child = 0;
 }
 
-int	run_line(char **argv)
+int	run_line(t_ptoken *argv)
 {
 	t_list		*cmds;
 	t_command	*cmd;

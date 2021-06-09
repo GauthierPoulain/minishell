@@ -2,13 +2,13 @@
 
 void	process_input(char *line)
 {
-	char	**argv;
-	int		tmp;
+	t_ptoken	*argv;
+	int			tmp;
 
 	tmp = 0;
 	line = ft_strreplace(line, "~", get_env("HOME"));
 	argv = parse_line(line);
-	if (!argv || !*argv)
+	if (!argv)
 		return ;
 	ft_lstclear(&g_shell.tokens);
 	if (ft_strlen(line) > 0)
