@@ -26,6 +26,7 @@ int	count_quotes(t_ptoken *array)
 	count = 0;
 	while ((array + i)->str)
 	{
+		printf("During count : [%s]\n", (array + i)->str);
 		if (!ft_strcmp((array + i)->str, "\"") && !(array + i)->is_escaped)
 			count++;
 		i++;
@@ -62,6 +63,23 @@ t_ptoken	*array_from_list(void)
 	return (array);
 }
 
+void	clear_ptoken(t_ptoken *array)
+{
+	int	i;
+
+	i = 0;
+	while ((array + i)->str)
+	{
+		(array + i)->is_escaped = false;
+		(array + i)->need_join = false;
+		(array + i)->squotes = false;
+		(array + i)->str = NULL;
+		gc_free((array + i)->str);
+		i++;
+	}
+	gc_free((array + i));
+}
+
 t_ptoken	*parse_line(char *line)
 {
 	t_ptoken	*array;
@@ -77,6 +95,8 @@ t_ptoken	*parse_line(char *line)
 	if (count_quotes(array) % 2)
 	{
 		syntax_error();
+		clear_ptoken(array);
+		ft_lstclear(&g_shell.tokens);
 		return (NULL);
 	}
 	treat_array(array);
