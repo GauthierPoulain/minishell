@@ -59,7 +59,7 @@ void	join_last_token(t_token *token)
 
 int	set_dollar_type(t_token *token, char *line, int start)
 {
-	if (get_token_at(token->id - 1)->type == 2 && line[start - 1] != ' ')
+	if (get_token_at(token->id - 1)->type == 2 && !ft_isspace(line[start - 1]))
 	{
 		join_last_token(token);
 		token->type = 2;
