@@ -17,6 +17,22 @@ void	swap_rest(t_ptoken *array, int i, int size)
 	}
 }
 
+int	count_quotes(t_ptoken *array)
+{
+	int	i;
+	int	count;
+
+	i = 0;
+	count = 0;
+	while ((array + i)->str)
+	{
+		if (!ft_strcmp((array + i)->str, "\"") && !(array + i)->is_escaped)
+			count++;
+		i++;
+	}
+	return (count);
+}
+
 t_ptoken	*array_from_list(void)
 {
 	int				size;
@@ -49,12 +65,20 @@ t_ptoken	*array_from_list(void)
 t_ptoken	*parse_line(char *line)
 {
 	t_ptoken	*array;
+	int			nb;
 
 	get_lexer(line);
 	g_shell.error = false;
 	g_shell.is_in_quotes = false;
 	g_shell.is_in_s_quotes = false;
 	array = array_from_list();
+	nb = count_quotes(array);
+	printf("Quotes nb : %d===========\n", nb);
+	if (count_quotes(array) % 2)
+	{
+		syntax_error();
+		return (NULL);
+	}
 	treat_array(array);
 	return (array);
 }
