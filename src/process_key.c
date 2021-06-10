@@ -40,7 +40,6 @@ static bool	check_end(char *c)
 bool	process_key(char *c, t_reader *reader, char ***str)
 {
 	char	*key;
-
 	if (check_end(c))
 		return (false);
 	else if (*c == 127 && reader->pos > 0)
