@@ -59,5 +59,5 @@ char	*error_bslash(void)
 	ft_lstclear(&g_shell.tokens);
 	g_shell.last_return = 2;
 	g_shell.error = true;
-	return ("");
+	return (NULL);
 }
