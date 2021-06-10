@@ -62,10 +62,10 @@ int	main(int argc, char **argv, char **envp)
 		{
 			pre_prompt();
 			g_shell.history.act_pos = 0;
-			process_input(read_term());
+			process_input(ft_strtrim_spaces(read_term()));
 		}
 	}
 	else
-		process_input(read_term());
+		process_input(ft_strtrim_spaces(read_term()));
 	close_shell(NULL);
 }
