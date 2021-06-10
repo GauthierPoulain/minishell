@@ -77,7 +77,8 @@ t_list	*get_commands(t_ptoken *argv)
 			ft_lstadd_back(&lst, ft_lstnew(actual));
 			actual = init_command_struct();
 		}
-		else if (ft_strcmp("\"", (argv +i)->str) && ft_strcmp("\'", (argv + i)->str))
+		else if (!(argv + i)->is_escaped && ft_strcmp("\"", (argv +i)->str) && 
+			ft_strcmp("\'", (argv + i)->str))
 			actual->argv = tab_add(actual->argv, (argv + i)->str);
 		i++;
 	}
