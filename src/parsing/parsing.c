@@ -52,7 +52,8 @@ t_ptoken	*array_from_list(void)
 		if (check_things(lst))
 		{
 			if (!(array + (i - 1))->is_escaped
-				&& get_token_at(((t_token *)lst->content)->id - 1)->type != 10)
+				&& get_token_at(((t_token *)lst->content)->id - 1)->type != 10
+				&& get_token_at(((t_token *)lst->content)->id - 1)->type != 4)
 				join_if_needed(array, &i, &size, lst);
 			else if ((array + (i - 1))->is_escaped)
 				join_if_needed(array, &i, &size, lst);
@@ -61,6 +62,18 @@ t_ptoken	*array_from_list(void)
 		i++;
 	}
 	return (array);
+}
+
+void	display_ptoken(t_ptoken *array)
+{
+	int	i;
+
+	i = 0;
+	while ((array + i)->str)
+	{
+		printf("(%s)\n", (array + i)->str);
+		i++;
+	}
 }
 
 t_ptoken	*parse_line(char *line)
@@ -72,5 +85,6 @@ t_ptoken	*parse_line(char *line)
 	g_shell.is_in_quotes = false;
 	g_shell.is_in_s_quotes = false;
 	array = array_from_list();
+	display_ptoken(array);
 	return (array);
 }

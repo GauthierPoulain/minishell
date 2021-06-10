@@ -18,10 +18,10 @@ int	do_both(t_list *lst, t_ptoken *array, int i)
 
 int	check_things(t_list *lst)
 {
-	// if (get_token_at(((t_token *)lst->content)->id - 1)->type == 3
-	// 	&& !((t_token *)lst->content)->sp && ((t_token *)lst->content)->id >= 1
-	// 		&& ((t_token *)lst->content)->type == 4)
-	// 		return (1);
+	if (((t_token *)lst->content)->id >= 1)
+		if (get_token_at(((t_token *)lst->content)->id - 1)->type == 3
+			&& !((t_token *)lst->content)->sp && ((t_token *)lst->content)->type == 4)
+				return (1);
 	if (!((t_token *)lst->content)->sp && ((t_token *)lst->content)->id >= 1
 		&& ((t_token *)lst->content)->type != 4)
 		return (1);
