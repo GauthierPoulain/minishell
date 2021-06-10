@@ -31,19 +31,19 @@ char	*special_trim_quotes(char *word)
 	return (new);
 }
 
-char	*treat_backslash(char *word, int *i)
+char	*treat_backslash(t_ptoken *word, int *i)
 {
 	int		back;
 
-	back = bslash_f_count(word, *i);
+	back = bslash_f_count(word->str, *i);
 	if (DEBUG)
 		printf("back is : %d\n", back);
-	if (back % 2 && ft_strlen(word) == *i + (size_t)back
+	if (back % 2 && ft_strlen(word->str) == *i + (size_t)back
 		&& !g_shell.next_token_str)
 		return (error_bslash(i));
 	if (*i == 0)
 		return (bslash_filled(word, i, back));
 	else
-		return (ft_strjoin(ft_strndup(word, *i),
+		return (ft_strjoin(ft_strndup(word->str, *i),
 				bslash_filled(word, i, back)));
 }

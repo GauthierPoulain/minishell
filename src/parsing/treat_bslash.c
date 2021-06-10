@@ -1,6 +1,6 @@
 #include "../../includes/minishell.h"
 
-char	*bslash_nquotes(char *word, int *i, int r_back)
+char	*bslash_nquotes(t_ptoken *word, int *i, int r_back)
 {
 	int		f_quotes;
 	int		l_quotes;
@@ -9,24 +9,24 @@ char	*bslash_nquotes(char *word, int *i, int r_back)
 
 	f_quotes = 0;
 	l_quotes = 0;
-	while (word[*i] == '\"')
+	while (word->str[*i] == '\"')
 	{
 		*i += 1;
 		f_quotes++;
 	}
-	size = ft_strlen(word + *i);
-	while (word[size] == '\"')
+	size = ft_strlen(word->str + *i);
+	while (word->str[size] == '\"')
 	{
 		l_quotes++;
 		size--;
 	}
-	new = ft_substr(word, f_quotes + r_back,
-			ft_strlen(word + *i) + 1 - l_quotes);
-	new = parse_d_quotes(new);
+	new = ft_substr(word->str, f_quotes + r_back,
+			ft_strlen(word->str + *i) + 1 - l_quotes);
+	new = parse_d_quotes(word);
 	return (new);
 }
 
-char	*bslash_filled(char *word, int *i, int back)
+char	*bslash_filled(t_ptoken *word, int *i, int back)
 {
 	char	*new;
 	int		r_back;
@@ -37,18 +37,18 @@ char	*bslash_filled(char *word, int *i, int back)
 		r_back++;
 	tmp = *i;
 	new = ft_calloc_char(r_back, '\\');
-	new = ft_strjoin(new, word + back + *i);
+	new = ft_strjoin(new, word->str + back + *i);
 	*i += r_back - 1;
 	if (back % 4 == 1 || back % 4 == 3)
 		g_shell.trans = 1;
 	else
 		g_shell.trans = 0;
-	if (*i == (int)ft_strlen(word))
+	if (*i == (int)ft_strlen(word->str))
 		*i = tmp;
-	if (word[*i] == '\"')
+	if (word->str[*i] == '\"')
 	{
 		new = bslash_nquotes(word, i, r_back);
-		new = parse_tokens(new);
+		new = parse_tokens(word);
 	}
 	g_shell.is_in_quotes = false;
 	return (new);
