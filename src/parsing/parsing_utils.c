@@ -33,7 +33,7 @@ size_t	get_word_len(char *word, int i)
 	j = 0;
 	while (word[i])
 	{
-		if (word[i] == ' ' || word[i] == '$'
+		if (ft_isspace(word[i]) || word[i] == '$'
 			|| word[i] == '\\' || word[i] == '\"')
 			return (j);
 		i++;
