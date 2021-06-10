@@ -44,7 +44,8 @@ void	treat_array(t_ptoken *array)
 	while (i < size)
 	{
 		printf("yo\n");
-		if (!(array + i)->is_escaped && !ft_strcmp((array + i)->str, "\""))
+		if (!(array + i)->is_escaped && !ft_strcmp((array + i)->str, "\"")
+			&& i > 1)
 		{
 			printf("SWAP\n");
 			(array + i)->str = NULL;
@@ -55,4 +56,21 @@ void	treat_array(t_ptoken *array)
 		}
 		i++;
 	}
+}
+
+void	clear_ptoken(t_ptoken *array)
+{
+	int	i;
+
+	i = 0;
+	while ((array + i)->str)
+	{
+		(array + i)->is_escaped = false;
+		(array + i)->need_join = false;
+		(array + i)->squotes = false;
+		(array + i)->str = NULL;
+		gc_free((array + i)->str);
+		i++;
+	}
+	gc_free((array + i));
 }
