@@ -57,10 +57,6 @@ char	*parse_tokens(t_ptoken *word)
 			new = treat_backslash(word, &i);
 		if (DEBUG)
 			printf("actual new [%s] and i : %d\n", new, i);
-		// if (new[i] == '$')
-		// 	new = treat_doll(new, &i);
-		if (new[i] == '\"')
-			treat_quotes(word, &i);
 		if ((new[i] && new[i] != '$')
 			|| (new[i] && new[i] == '$' && new[i + 1] == '/'))
 			i++;
