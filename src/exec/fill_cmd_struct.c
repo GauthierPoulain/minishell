@@ -6,20 +6,20 @@ static void	parse_operators2(t_command *cmd, t_list *lst)
 	{
 		((t_command *)lst->next->content)->skip_exec = true;
 		cmd->need_redirect = true;
-		cmd->redirect_path = ((t_command *)lst->next->content)->argv[0];
+		cmd->redirect_path = ((t_command *)lst->next->content)->token->str;
 	}
 	else if (!ft_strcmp(cmd->operator, ">>"))
 	{
 		((t_command *)lst->next->content)->skip_exec = true;
 		cmd->need_redirect = true;
 		cmd->redirect_append = true;
-		cmd->redirect_path = ((t_command *)lst->next->content)->argv[0];
+		cmd->redirect_path = ((t_command *)lst->next->content)->token->str;
 	}
 	else if (!ft_strcmp(cmd->operator, "<"))
 	{
 		((t_command *)lst->next->content)->skip_exec = true;
 		cmd->file_input = true;
-		cmd->redirect_path = ((t_command *)lst->next->content)->argv[0];
+		cmd->redirect_path = ((t_command *)lst->next->content)->token->str;
 	}
 }
 
