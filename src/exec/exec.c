@@ -81,52 +81,6 @@ int	run_command(t_command *cmd)
 	return (status);
 }
 
-t_ptoken	*replace_env_var(t_ptoken *token)
-{
-	char	*doll;
-	int		i;
-
-	doll = ft_strchr(token->str, '$');
-	if (token->squotes || !doll)
-		return (token);
-	i = doll - token->str;
-	treat_doll(token, &i);
-	return (token);
-}
-
-static char	**tab_add(char **argv, char *str)
-{
-	char	**res;
-	char	**save;
-
-	res = ft_calloc(sizeof(char *) * (ft_tab_len(argv) + 2));
-	save = res;
-	if (argv)
-		while (*argv)
-		{
-			*res = ft_strdup(*argv);
-			res++;
-			argv++;
-		}
-	*res = ft_strdup(str);
-	return (save);
-}
-
-char	**get_argv(t_ptoken *argv)
-{
-	char	**res;
-
-	res = NULL;
-	while (argv && argv->str)
-	{
-		// if (!argv->squotes)
-			replace_env_var(argv);
-		res = tab_add(res, argv->str);
-		argv++;
-	}
-	return (res);
-}
-
 void	run_line(t_ptoken *argv)
 {
 	t_list		*cmds;

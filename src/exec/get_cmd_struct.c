@@ -13,7 +13,7 @@ size_t	ft_toktab_len(t_ptoken *car)
 	return (res);
 }
 
-static t_ptoken	*tab_add(t_ptoken *argv, t_ptoken str)
+static t_ptoken	*toktab_add(t_ptoken *argv, t_ptoken str)
 {
 	t_ptoken	*res;
 	t_ptoken	*save;
@@ -23,11 +23,9 @@ static t_ptoken	*tab_add(t_ptoken *argv, t_ptoken str)
 	save = res;
 	while (argv && argv->str)
 	{
-		// *res++ = *argv++;
 		res->is_escaped = argv->is_escaped;
 		res->squotes = argv->squotes;
 		res->str = ft_strdup(argv->str);
-		printf("ahhh %s\n", argv->str);
 		res++;
 		argv++;
 	}
@@ -83,7 +81,7 @@ void	check_operator(t_command *actual, t_ptoken *argv, int i)
 		tmp.is_escaped = false;
 		tmp.squotes = false;
 		tmp.str = ft_strdup("");
-		actual->token = tab_add(actual->token, tmp);
+		actual->token = toktab_add(actual->token, tmp);
 	}
 	else
 		actual->operator = ft_strdup((argv + i)->str);
@@ -111,12 +109,10 @@ t_list	*get_commands(t_ptoken *argv)
 		else if (!ft_strcmp("\"", (argv + i)->str) || !ft_strcmp("\'", (argv + i)->str))
 		{
 			if ((argv + i)->is_escaped)
-				actual->token = tab_add(actual->token, *(argv + i));
+				actual->token = toktab_add(actual->token, *(argv + i));
 		}
 		else
-	{
-		actual->token = tab_add(actual->token, *(argv + i));
-	}	
+			actual->token = toktab_add(actual->token, *(argv + i));	
 		i++;
 	}
 	if (actual->token)

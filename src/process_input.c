@@ -6,7 +6,8 @@ void	process_input(char *line)
 	int			tmp;
 
 	tmp = 0;
-	line = ft_strreplace(line, "~", get_env("HOME"));
+	if (!line || ft_strlen(ft_strtrim_spaces(line)) <= 0)
+		return ;
 	argv = parse_line(line);
 	if (!argv)
 		return ;

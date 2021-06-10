@@ -1,67 +1,101 @@
 #include "../../includes/minishell.h"
 
-char	*treat_doll_slash(char *word, int i, int back)
+char	*treat_doll_slash(char *word, int *i, int back)
 {
 	char	*env_value;
 	char	*ret;
 
-	env_value = get_env(ft_strndup(word + i + 1, back));
+	env_value = get_env(ft_strndup(word + (*i) + 1, back));
 	back++;
 	if (env_value)
 	{
-		ret = ft_strndup(word, i);
+		ret = ft_strndup(word, *i);
 		ret = ft_strjoin(ret, env_value);
-		ret = ft_strjoin(ret, word + i + back);
+		ret = ft_strjoin(ret, word + (*i) + back);
 	}
 	else
 	{
-		ret = ft_strndup(word, i);
-		ret = ft_strjoin(ret, word + i + back);
+		ret = ft_strndup(word, *i);
+		ret = ft_strjoin(ret, word + (*i) + back);
 	}
 	return (ret);
 }
 
-char	*replace_dolls(t_ptoken *word, int i)
+char	*replace_dolls(t_ptoken *word, int *i)
 {
 	char	*ret;
 	char	*env_value;
 	int		len;
 
-	ret = ft_strndup(word->str, i);
+	ret = ft_strndup(word->str, *i);
 	len = get_word_len(word->str, ft_strlen(ret) + 1);
-	if (word->str[i + 1] == '?')
+	if (word->str[*i + 1] == '?')
 		env_value = ft_itoa(g_shell.last_return);
 	else
-		env_value = get_env(ft_strndup(word->str + i + 1, len));
+		env_value = get_env(ft_strndup(word->str + *i + 1, len));
+
 	ret = ft_strjoin(ret, env_value);
-	ret = ft_strjoin(ret, word->str + i + len + 1);
-	printf("ret = %s\n", ret);
+	ret = ft_strjoin(ret, word->str + (*i) + len + 1);
 	word->str = ret;
+	if (len > (int)ft_strlen(env_value))
+		*i += len;
+	else
+		*i += ft_strlen(env_value);
 	return (ret);
+}
+
+void	*ft_memmove(void *dst, const void *src, size_t len)
+{
+	int			i;
+	char		*bdst;
+	const char	*bsrc;
+
+	if (!dst && !src)
+		return (NULL);
+	i = 0;
+	bsrc = src;
+	bdst = dst;
+	if (src > dst)
+	{
+		while ((unsigned long)i < len)
+		{
+			bdst[i] = bsrc[i];
+			i++;
+		}
+	}
+	else
+		while (len--)
+			bdst[len] = bsrc[len];
+	return (dst);
 }
 
 char	*treat_doll(t_ptoken *word, int *i)
 {
 	int		slash;
+	char	*tmp;
 
-	// if (DEBUG)
-	// 	printf("trans: %d\nis in quotes: %d\nhas space: %d\n",
-	// 		g_shell.trans, g_shell.is_in_s_quotes, g_shell.curr_token->sp);
-	// if ((g_shell.trans == 1 && !g_shell.curr_token->sp)
-	// 	|| (g_shell.is_in_s_quotes && !g_shell.curr_token->sp))
-	// {
-	// 	g_shell.trans = 0;
-	// 	*i += 1;
-	// 	return (word->str);
-	// }
-	if (DEBUG)
-		printf("word [%s]\n", word->str);
-	if (word->str[(*i) + 1] == '/')
+	if (word->str[(*i) + 1] == '\\')
+	{
+		tmp = ft_strndup(word->str, (*i) + 1);
+		tmp = ft_strjoin(tmp, word->str + (*i) + 2);
+		word->str = tmp;
+		*i += 1;
+		*i += get_word_len(word->str, *i);
 		return (word->str);
-	slash = check_slash(word, (*i) + 1);
-	if (slash)
-		return (treat_doll_slash(word->str, (*i), slash));
+	}
+	else if (word->str[(*i) + 1] == '/')
+	{
+		*i += 1;
+		*i += get_word_len(word->str, *i);
+		return (word->str);
+	}
 	else
-		return (replace_dolls(word, (*i)));
-	// return (word->str);
+	{
+		slash = check_slash(word, (*i) + 1);
+		if (slash)
+			return (treat_doll_slash(word->str, i, slash));
+		else
+			return (replace_dolls(word, i));
+	}
+	return (word->str);
 }

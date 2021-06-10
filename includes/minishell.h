@@ -330,8 +330,8 @@ void		token_l_error(char *line, t_lexer *lexer);
 int			else_token_l(char *line, t_lexer *lexer);
 int			write_redirect(char *path, char *buffer, bool erease, int len);
 void		close_pipe(void);
-char		*treat_doll_slash(char *word, int i, int back);
-char		*replace_dolls(t_ptoken *word, int i);
+char		*treat_doll_slash(char *word, int *i, int back);
+char		*replace_dolls(t_ptoken *word, int *i);
 char		*treat_doll(t_ptoken *word, int *i);
 char		*error_bslash(int *i);
 char		*bslash_filled(t_ptoken *word, int *i, int back);
@@ -365,5 +365,6 @@ void		join_no_space(t_ptoken *p_tokens, int *i, int *size);
 void		chose_parsing(t_ptoken *p_token, t_list *lst);
 void		swap_rest(t_ptoken *array, int i, int size);
 char		**get_argv(t_ptoken *argv);
+char		**tab_add(char **argv, char *str);
 
 #endif
