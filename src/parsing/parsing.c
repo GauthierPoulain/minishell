@@ -3,14 +3,14 @@
 void	chose_parsing(t_ptoken *p_token, t_list *lst)
 {
 	if (((t_token *)lst->content)->type == 4)
-		p_token->str = parse_d_quotes(((t_token *)lst->content)->str);
+		p_token->str = parse_d_quotes(lst->content);
 	else if (((t_token *)lst->content)->type == 6)
-		p_token->str = parse_s_quotes(((t_token *)lst->content)->str);
+		p_token->str = parse_s_quotes(lst->content);
 	else
 	{
 		if (DEBUG)
 			printf("ALED OUI\n");
-		p_token->str = parse_tokens(((t_token *)lst->content)->str);
+		p_token->str = parse_tokens(lst->content);
 		printf("token during parsing %s\n", p_token->str);
 	}
 }

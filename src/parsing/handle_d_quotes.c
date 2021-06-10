@@ -1,15 +1,15 @@
 #include "../../includes/minishell.h"
 
-static char	*count_and_trim(char *word, size_t size)
+static char	*count_and_trim(t_ptoken *word, size_t size)
 {
 	int	first;
 	int	lasts;
 
 	first = 0;
 	lasts = 0;
-	while (word[first] == '\"')
+	while (word->str[first] == '\"')
 		first++;
-	while (word[--size] == '\"')
+	while (word->str[--size] == '\"')
 		lasts++;
 	if (first != lasts && !g_shell.had_bslash)
 	{
@@ -21,15 +21,15 @@ static char	*count_and_trim(char *word, size_t size)
 	}
 	if (g_shell.had_bslash)
 		first--;
-	word = ft_substr(word, first, size + 1 - lasts);
+	word->str = ft_substr(word->str, first, size + 1 - lasts);
 	if (DEBUG)
-		printf("substr [%s]\n", word);
-	word = parse_tokens(word);
-	return (word);
+		printf("substr [%s]\n", word->str);
+	word->str = parse_tokens(word);
+	return (word->str);
 }
 
-char	*parse_d_quotes(char *word)
+char	*parse_d_quotes(t_ptoken *word)
 {
-	word = count_and_trim(word, ft_strlen(word));
-	return (word);
+	word->str = count_and_trim(word, ft_strlen(word->str));
+	return (word->str);
 }

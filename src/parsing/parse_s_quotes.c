@@ -1,6 +1,6 @@
 #include "../../includes/minishell.h"
 
-static char	*trim_s_quotes(char *word, size_t size)
+static char	*trim_s_quotes(t_ptoken *word, size_t size)
 {
 	int	first;
 	int	lasts;
@@ -8,9 +8,9 @@ static char	*trim_s_quotes(char *word, size_t size)
 	first = 0;
 	lasts = 0;
 	g_shell.is_in_s_quotes = true;
-	while (word[first] == '\'')
+	while (word->str[first] == '\'')
 		first++;
-	while (word[--size] == '\'')
+	while (word->str[--size] == '\'')
 		lasts++;
 	if (first != lasts)
 	{
@@ -19,13 +19,13 @@ static char	*trim_s_quotes(char *word, size_t size)
 		g_shell.last_return = 2;
 		return (NULL);
 	}
-	word = ft_substr(word, first, size + 1 - lasts);
-	word = parse_tokens(word);
+	word->str = ft_substr(word->str, first, size + 1 - lasts);
+	word->str = parse_tokens(word);
 	g_shell.is_in_s_quotes = false;
-	return (word);
+	return (word->str);
 }
 
-char	*parse_s_quotes(char *word)
+char	*parse_s_quotes(t_ptoken *word)
 {
-	return (trim_s_quotes(word, ft_strlen(word)));
+	return (trim_s_quotes(word, ft_strlen(word->str)));
 }

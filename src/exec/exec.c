@@ -94,6 +94,7 @@ int	run_line(t_ptoken *argv)
 	status = 0;
 	while (cmds)
 	{
+		// cmd->argv = 
 		cmd = cmds->content;
 		if (!cmd->skip_exec)
 			run_command(cmd, &status);

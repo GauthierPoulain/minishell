@@ -1,22 +1,22 @@
 #include "../../includes/minishell.h"
 
-int	check_slash(char *word, int i)
+int	check_slash(t_ptoken *word, int i)
 {
 	int	j;
 
 	j = i;
-	while (word[i])
+	while (word->str[i])
 	{
-		if (word[i] == '$')
+		if (word->str[i] == '$')
 			return (0);
-		else if (word[i] == '/')
+		else if (word->str[i] == '/')
 			return (i - j);
 		i++;
 	}
 	return (0);
 }
 
-char	*treat_quotes(char *word, int *i)
+char	*treat_quotes(t_ptoken *word, int *i)
 {
 	int	first;
 	int	lasts;
@@ -24,13 +24,13 @@ char	*treat_quotes(char *word, int *i)
 
 	first = 0;
 	lasts = 0;
-	size = ft_strlen(word + *i);
-	while (word[*i] == '\"')
+	size = ft_strlen(word->str + *i);
+	while (word->str[*i] == '\"')
 	{
 		*i += 1;
 		first++;
 	}
-	while (word[--size] == '\"')
+	while (word->str[--size] == '\"')
 		lasts++;
 	if (first != lasts)
 	{
@@ -39,28 +39,28 @@ char	*treat_quotes(char *word, int *i)
 		g_shell.last_return = 2;
 		return (NULL);
 	}
-	word = ft_substr(word, first, size + 1 - lasts);
-	word = parse_tokens(word);
-	return (word);
+	word->str = ft_substr(word->str, first, size + 1 - lasts);
+	word->str = parse_tokens(word);
+	return (word->str);
 }
 
-char	*parse_tokens(char *word)
+char	*parse_tokens(t_ptoken *word)
 {
 	int		i;
 	char	*new;
 
 	i = 0;
-	new = word;
+	new = word->str;
 	while (new[i])
 	{
 		if (new[i] == '\\')
-			new = treat_backslash(new, &i);
+			new = treat_backslash(word, &i);
 		if (DEBUG)
 			printf("actual new [%s] and i : %d\n", new, i);
-		if (new[i] == '$')
-			new = treat_doll(new, &i);
+		// if (new[i] == '$')
+		// 	new = treat_doll(new, &i);
 		if (new[i] == '\"')
-			treat_quotes(new, &i);
+			treat_quotes(word, &i);
 		if ((new[i] && new[i] != '$')
 			|| (new[i] && new[i] == '$' && new[i + 1] == '/'))
 			i++;

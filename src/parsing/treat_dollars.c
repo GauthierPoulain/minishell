@@ -38,7 +38,7 @@ char	*replace_dolls(char *word, int i)
 	return (ret);
 }
 
-char	*treat_doll(char *word, int *i)
+char	*treat_doll(t_ptoken *word, int *i)
 {
 	int		slash;
 
@@ -50,16 +50,16 @@ char	*treat_doll(char *word, int *i)
 	{
 		g_shell.trans = 0;
 		*i += 1;
-		return (word);
+		return (word->str);
 	}
 	if (DEBUG)
-		printf("word [%s]\n", word);
-	if (word[(*i) + 1] == '/')
-		return (word);
+		printf("word [%s]\n", word->str);
+	if (word->str[(*i) + 1] == '/')
+		return (word->str);
 	slash = check_slash(word, (*i) + 1);
 	if (slash)
-		return (treat_doll_slash(word, (*i), slash));
+		return (treat_doll_slash(word->str, (*i), slash));
 	else
-		return (replace_dolls(word, (*i)));
-	return (word);
+		return (replace_dolls(word->str, (*i)));
+	return (word->str);
 }

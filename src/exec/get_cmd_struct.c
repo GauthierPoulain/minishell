@@ -70,7 +70,6 @@ t_list	*get_commands(t_ptoken *argv)
 	actual = init_command_struct();
 	while ((argv + i)->str)
 	{
-		printf("salut ^^ %d\n", (argv + i)->is_escaped);
 		if (is_operator((argv + i)->str) && ft_strlen((argv + i)->str)
 			== (size_t)is_operator((argv + i)->str) && !(argv + i)->is_escaped)
 		{
@@ -78,7 +77,7 @@ t_list	*get_commands(t_ptoken *argv)
 			ft_lstadd_back(&lst, ft_lstnew(actual));
 			actual = init_command_struct();
 		}
-		else
+		else if (ft_strcmp("\"", (argv +i)->str) && ft_strcmp("\'", (argv + i)->str))
 			actual->argv = tab_add(actual->argv, (argv + i)->str);
 		i++;
 	}
