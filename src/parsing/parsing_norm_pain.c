@@ -9,6 +9,7 @@ void	init_things(int *size, int *i)
 int	do_both(t_list *lst, t_ptoken *array, int i)
 {
 	(array + i)->is_escaped = false;
+	(array + i)->need_join = false;
 	(array + i)->str = NULL;
 	things(lst, array, i);
 	if (g_shell.error)
