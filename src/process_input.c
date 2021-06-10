@@ -5,6 +5,7 @@ void	process_input(char *line)
 	t_ptoken	*argv;
 	int			tmp;
 
+	print_debug_termcap(line);
 	tmp = 0;
 	if (!line || ft_strlen(ft_strtrim_spaces(line)) <= 0)
 		return ;

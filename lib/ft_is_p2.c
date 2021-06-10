@@ -2,6 +2,7 @@
 
 bool	ft_isspace(char c)
 {
+	printf("chqrrr %d %c\n", c, c);
 	return ((c >= 9 && c <= 13) || c == ' ');
 }
 
