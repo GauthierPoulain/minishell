@@ -12,6 +12,16 @@ void	display_ptoken(t_ptoken *array)
 	}
 }
 
+int	get_array_size(t_ptoken *array)
+{
+	int	i;
+
+	i = 0;
+	while ((array + i)->str)
+		i++;
+	return (i);
+}
+
 void	chose_parsing(t_ptoken *p_token, t_list *lst)
 {
 	// if (((t_token *)lst->content)->type == 4)
@@ -47,11 +57,14 @@ void	things(t_list *lst, t_ptoken *p_tokens, int i)
 	g_shell.next_token_str = NULL;
 }
 
-void	swap_rest(t_ptoken *array, int i)
+void	swap_rest(t_ptoken *array, int i, int size)
 {
-	while ((array + i)->str)
+	while (i < size)
 	{
+		printf("Before swap : [%s], [%s]\n", (array + i)->str, (array + (i - 1))->str);
+		// ft_swap((&array + i), (&array + (i - 1)));
 		ft_swap((array + i), (array + (i - 1)));
+		printf("After  swap : [%s], [%s]\n", (array + i)->str, (array + (i - 1))->str);
 		i++;
 	}
 }
@@ -62,13 +75,8 @@ void	treat_array(t_ptoken *array)
 	int		size;
 	// char	*buf;
 
-	size = 0;
-	i = 0;
-	while ((array + i)->str)
-	{
-		size++;
-		i++;
-	}
+	size = get_array_size(array);
+	printf("size %d\n", size);
 	i = 0;
 	while (i < size)
 	{
@@ -77,7 +85,8 @@ void	treat_array(t_ptoken *array)
 		{
 			printf("SWAP\n");
 			(array + i)->str = NULL;
-			swap_rest(array, i + 1);
+			swap_rest(array, i + 1, size);
+			// join_no_space(array, &i, &size);
 		}
 		i++;
 	}

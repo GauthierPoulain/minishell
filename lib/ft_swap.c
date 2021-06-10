@@ -1,10 +1,10 @@
 #include "../includes/minishell.h"
 
-void	ft_swap(void *a, void *b)
+void	ft_swap(t_ptoken *a, t_ptoken *b)
 {
-	void	*tmp;
+	t_ptoken	tmp;
 
-	tmp = a;
-	a = b;
-	b = tmp;
+	tmp = *a;
+	*a = *b;
+	*b = tmp;
 }
