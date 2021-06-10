@@ -2,9 +2,9 @@
 
 void	chose_parsing(t_ptoken *p_token, t_list *lst)
 {
-	if (((t_token *)lst->content)->type == 4)
-		p_token->str = parse_d_quotes(((t_token *)lst->content)->str);
-	else if (((t_token *)lst->content)->type == 6)
+	// if (((t_token *)lst->content)->type == 4)
+	// 	p_token->str = parse_d_quotes(((t_token *)lst->content)->str);
+	if (((t_token *)lst->content)->type == 6)
 		p_token->str = parse_s_quotes(((t_token *)lst->content)->str);
 	else
 	{
