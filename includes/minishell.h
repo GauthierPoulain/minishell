@@ -349,5 +349,9 @@ int			is_operator(char *c);
 void		check_write_redirect(t_command *cmd, t_list *cmds);
 void		no_room_infos(char *line, int *i, t_infos *infos);
 t_list		*split_commands(char *line);
+int			check_things(t_list *lst);
+int			do_both(t_list *lst, t_ptoken *array, int i);
+void		init_things(int *size, int *i);
+void		things(t_list *lst, t_ptoken *p_tokens, int i);
 
 #endif

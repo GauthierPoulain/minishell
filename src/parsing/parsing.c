@@ -28,7 +28,7 @@ void	join_no_space(t_ptoken *p_tokens, int *i, int *size)
 	*size -= 1;
 }
 
-static void	things(t_list *lst, t_ptoken *p_tokens, int i)
+void	things(t_list *lst, t_ptoken *p_tokens, int i)
 {
 	g_shell.curr_token = (t_token *)lst->content;
 	if (lst->next)
@@ -45,28 +45,21 @@ t_ptoken	*array_from_list(void)
 	t_list			*lst;
 	t_ptoken		*array;
 
-	i = 0;
-	size = ft_lstsize(g_shell.tokens);
+	init_things(&size, &i);
 	array = ft_calloc(sizeof(t_ptoken) * (size + 1));
 	lst = g_shell.tokens;
 	while (i < size && lst && g_shell.error == false)
 	{
-		(array + i)->is_escaped = false;
-		(array + i)->str = NULL;
-		things(lst, array, i);
-		if (g_shell.error == true)
+		if (do_both(lst, array, i))
 			return (NULL);
-		if (!((t_token *)lst->content)->sp
-			&& ((t_token *)lst->content)->id >= 1
-			&& !(array + (i - 1))->is_escaped)
+		if (check_things(lst))
 		{
-			if (get_token_at(((t_token *)lst->content)->id - 1)->type != 10)
+			if (!(array + (i - 1))->is_escaped
+				&& get_token_at(((t_token *)lst->content)->id - 1)->type != 10)
+				join_if_needed(array, &i, &size, lst);
+			else if ((array + (i - 1))->is_escaped)
 				join_if_needed(array, &i, &size, lst);
 		}
-		else if (!((t_token *)lst->content)->sp
-			&& ((t_token *)lst->content)->id >= 1
-			&& (array + (i - 1))->is_escaped)
-			join_if_needed(array, &i, &size, lst);
 		lst = lst->next;
 		i++;
 	}
