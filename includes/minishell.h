@@ -106,6 +106,7 @@ typedef struct s_lexer
 	int		j;
 	int		id;
 	bool	had_quotes;
+	bool	had_squotes;
 	bool	had_semi;
 }				t_lexer;
 

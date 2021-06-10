@@ -102,7 +102,7 @@ void	get_lexer(char *line)
 		if (DEBUG)
 			printf("CHAR [%c]\n", line[lexer.i]);
 		if (line[lexer.i] == ' ' || line[lexer.i] == '\\'
-			|| lexer.i == 0 || line[lexer.i] == '"' || lexer.had_quotes
+			|| lexer.i == 0 || line[lexer.i] == '"' || lexer.had_quotes || lexer.had_squotes
 			|| line[lexer.i] == '\'' || (lexer.i && line[lexer.i - 1] == '\\')
 			|| line[lexer.i] == ';' || line[lexer.i] == '>' || lexer.had_semi
 			|| line[lexer.i] == '|' || line[lexer.i] == '<')
@@ -112,7 +112,7 @@ void	get_lexer(char *line)
 			&& line[lexer.i] != '\'' && line[lexer.i - 1] != '\\'
 			&& line[lexer.i] != ';' && !lexer.had_semi
 			&& line[lexer.i] != '>' && line[lexer.i] != '|'
-			&& line[lexer.i] != '<')
+			&& line[lexer.i] != '<' && !lexer.had_squotes)
 			lexer.i++;
 	}
 	if (DEBUG)

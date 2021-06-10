@@ -86,9 +86,15 @@ int	get_token_len(char *line, t_lexer *lexer)
 	if (print && DEBUG)
 		printf("actual char [%c] during line [%s]\n", line[i], line + i);
 	if (line[i] == '\"')
-		return (quotes_token_len(line, lexer));
+	{
+		lexer->had_quotes = true;
+		return (1);
+	}
 	else if (line[i] == '\'')
-		return (s_quotes_len(line, lexer));
+	{
+		lexer->had_squotes = true;
+		return (1);
+	}
 	else if (line[i] == '\\')
 		return (bslash_token_len(line, lexer));
 	else if (line[i] == '>' || line[i] == '|' || line[i] == '<')
