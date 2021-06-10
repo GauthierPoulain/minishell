@@ -141,6 +141,7 @@ typedef struct s_ptoken
 	char	*str;
 	bool	is_escaped;
 	bool	squotes;
+	bool	need_join;
 }				t_ptoken;
 
 typedef struct s_command
@@ -240,6 +241,7 @@ size_t		ft_tab_len(char **car);
 void		*ft_calloc_char(size_t size, int c);
 int			ft_memcmp(const char *s1, const char *s2, size_t size);
 char		*ft_memchr(const char *s, int c, int pos, size_t size);
+void		ft_swap(t_ptoken *a, t_ptoken *b);
 
 char		*ft_strndup(char *s1, size_t n);
 char		*ft_strtrim_spaces(char *str);

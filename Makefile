@@ -73,6 +73,7 @@ SRCS_LIB = \
 	./lib/gc_malloc.c \
 	./lib/get_next_line.c \
 	./lib/ft_memcmp.c \
+	./lib/ft_swap.c \
 
 SRCS_MS = \
 	./src/exec/exec.c \

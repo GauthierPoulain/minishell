@@ -1,5 +1,27 @@
 #include "../../includes/minishell.h"
 
+void	display_ptoken(t_ptoken *array)
+{
+	int	i;
+
+	i = 0;
+	while ((array + i)->str)
+	{
+		printf("(%s)\n", (array + i)->str);
+		i++;
+	}
+}
+
+int	get_array_size(t_ptoken *array)
+{
+	int	i;
+
+	i = 0;
+	while ((array + i)->str)
+		i++;
+	return (i);
+}
+
 void	chose_parsing(t_ptoken *p_token, t_list *lst)
 {
 	// if (((t_token *)lst->content)->type == 4)
@@ -35,6 +57,41 @@ void	things(t_list *lst, t_ptoken *p_tokens, int i)
 	g_shell.next_token_str = NULL;
 }
 
+void	swap_rest(t_ptoken *array, int i, int size)
+{
+	while (i < size)
+	{
+		printf("Before swap : [%s], [%s]\n", (array + i)->str, (array + (i - 1))->str);
+		// ft_swap((&array + i), (&array + (i - 1)));
+		ft_swap((array + i), (array + (i - 1)));
+		printf("After  swap : [%s], [%s]\n", (array + i)->str, (array + (i - 1))->str);
+		i++;
+	}
+}
+
+void	treat_array(t_ptoken *array)
+{
+	int		i;
+	int		size;
+	// char	*buf;
+
+	size = get_array_size(array);
+	printf("size %d\n", size);
+	i = 0;
+	while (i < size)
+	{
+		printf("yo\n");
+		if (!(array + i)->is_escaped && !ft_strcmp((array + i)->str, "\""))
+		{
+			printf("SWAP\n");
+			(array + i)->str = NULL;
+			swap_rest(array, i + 1, size);
+			// join_no_space(array, &i, &size);
+		}
+		i++;
+	}
+}
+
 t_ptoken	*array_from_list(void)
 {
 	int				size;
@@ -61,19 +118,10 @@ t_ptoken	*array_from_list(void)
 		lst = lst->next;
 		i++;
 	}
+	display_ptoken(array);
+	treat_array(array);
+	display_ptoken(array);
 	return (array);
-}
-
-void	display_ptoken(t_ptoken *array)
-{
-	int	i;
-
-	i = 0;
-	while ((array + i)->str)
-	{
-		printf("(%s)\n", (array + i)->str);
-		i++;
-	}
 }
 
 t_ptoken	*parse_line(char *line)
@@ -85,6 +133,5 @@ t_ptoken	*parse_line(char *line)
 	g_shell.is_in_quotes = false;
 	g_shell.is_in_s_quotes = false;
 	array = array_from_list();
-	display_ptoken(array);
 	return (array);
 }
