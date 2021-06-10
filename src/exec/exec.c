@@ -59,50 +59,100 @@ static int	subprocess(t_command cmd)
 	return (0);
 }
 
-void	run_command(t_command *cmd, int *status)
+int	run_command(t_command *cmd)
 {
-	*status = 0;
+	int status;
+
 	g_shell.need_pipe = cmd->need_pipe;
 	wait_outputmanager(*cmd);
 	if (!ft_strcmp(cmd->path, "builtin"))
-		*status = exec_builtin(cmd->prog, cmd->argv);
+		status = exec_builtin(cmd->prog, cmd->argv);
 	else
 	{
 		if (!cmd->path)
-			*status = commant_not_found(cmd->prog);
+			status = commant_not_found(cmd->prog);
 		else
-			*status = subprocess(*cmd);
+			status = subprocess(*cmd);
 	}
 	reset_pipe_output();
 	if (cmd->need_pipe || cmd->need_redirect)
 		close_pipe();
 	g_shell.child = 0;
+	return (status);
 }
 
-int	run_line(t_ptoken *argv)
+t_ptoken	*replace_env_var(t_ptoken *token)
+{
+	char	*doll;
+	int		i;
+
+	doll = ft_strchr(token->str, '$');
+	if (token->squotes || !doll)
+		return (token);
+	i = doll - token->str;
+	treat_doll(token, &i);
+	return (token);
+}
+
+static char	**tab_add(char **argv, char *str)
+{
+	char	**res;
+	char	**save;
+
+	res = ft_calloc(sizeof(char *) * (ft_tab_len(argv) + 2));
+	save = res;
+	if (argv)
+		while (*argv)
+		{
+			*res = ft_strdup(*argv);
+			res++;
+			argv++;
+		}
+	*res = ft_strdup(str);
+	return (save);
+}
+
+char	**get_argv(t_ptoken *argv)
+{
+	char	**res;
+
+	res = NULL;
+	while (argv && argv->str)
+	{
+		// if (!argv->squotes)
+			replace_env_var(argv);
+		res = tab_add(res, argv->str);
+		argv++;
+	}
+	return (res);
+}
+
+void	run_line(t_ptoken *argv)
 {
 	t_list		*cmds;
 	t_command	*cmd;
-	int			status;
 
 	g_shell.pipe_output.ptr = NULL;
 	g_shell.is_running = true;
 	cmds = get_commands(argv);
 	if (!cmds)
-		return (syntax_error());
+	{
+		g_shell.last_return = syntax_error();
+		return ;
+	}
 	reset_input_mode();
-	status = 0;
 	while (cmds)
 	{
-		// cmd->argv = 
 		cmd = cmds->content;
+		cmd->argv = get_argv(cmd->token);
+		cmd->prog = cmd->argv[0];
+		cmd->path = which(cmd->prog);
 		if (!cmd->skip_exec)
-			run_command(cmd, &status);
+			g_shell.last_return = run_command(cmd);
 		check_write_redirect(cmd, cmds);
 		cmds = cmds->next;
 	}
 	g_shell.is_running = false;
 	add_signals_listeners();
 	set_input_mode();
-	return (status);
 }

@@ -1,16 +1,40 @@
 #include "../../includes/minishell.h"
 
-char	**tab_add(char **argv, char *str)
+size_t	ft_toktab_len(t_ptoken *car)
 {
-	char	**res;
-	char	**save;
+	size_t	res;
 
-	res = ft_calloc(sizeof(char *) * (ft_tab_len(argv) + 2));
+	res = 0;
+	while (car && car->str)
+	{
+		car++;
+		res++;
+	}
+	return (res);
+}
+
+static t_ptoken	*tab_add(t_ptoken *argv, t_ptoken str)
+{
+	t_ptoken	*res;
+	t_ptoken	*save;
+
+	printf("tab len = %zu\n", ft_toktab_len(argv) + 2);
+	res = ft_calloc(sizeof(t_ptoken) * (ft_toktab_len(argv) + 2));
 	save = res;
-	if (argv)
-		while (*argv)
-			*res++ = ft_strdup(*argv++);
-	*res = ft_strdup(str);
+	while (argv && argv->str)
+	{
+		// *res++ = *argv++;
+		res->is_escaped = argv->is_escaped;
+		res->squotes = argv->squotes;
+		res->str = ft_strdup(argv->str);
+		printf("ahhh %s\n", argv->str);
+		res++;
+		argv++;
+	}
+	res->is_escaped = str.is_escaped;
+	res->squotes = str.squotes;
+	res->str = ft_strdup(str.str);
+	// *res = *str;
 	return (save);
 }
 
@@ -31,6 +55,7 @@ t_command	*init_command_struct(void)
 	cmd->argv = NULL;
 	cmd->skip_exec = false;
 	cmd->file_input = false;
+	cmd->token = NULL;
 	return (cmd);
 }
 
@@ -50,10 +75,15 @@ bool	check_struct(t_list	*lst)
 
 void	check_operator(t_command *actual, t_ptoken *argv, int i)
 {
-	if (!actual->argv)
+	t_ptoken	tmp;
+
+	if (!actual->token)
 	{
 		actual->operator = ft_strdup("noop");
-		actual->argv = tab_add(actual->argv, "");
+		tmp.is_escaped = false;
+		tmp.squotes = false;
+		tmp.str = ft_strdup("");
+		actual->token = tab_add(actual->token, tmp);
 	}
 	else
 		actual->operator = ft_strdup((argv + i)->str);
@@ -81,13 +111,15 @@ t_list	*get_commands(t_ptoken *argv)
 		else if (!ft_strcmp("\"", (argv + i)->str) || !ft_strcmp("\'", (argv + i)->str))
 		{
 			if ((argv + i)->is_escaped)
-				actual->argv = tab_add(actual->argv, (argv + i)->str);
+				actual->token = tab_add(actual->token, *(argv + i));
 		}
 		else
-			actual->argv = tab_add(actual->argv, (argv + i)->str);
+	{
+		actual->token = tab_add(actual->token, *(argv + i));
+	}	
 		i++;
 	}
-	if (actual->argv)
+	if (actual->token)
 		ft_lstadd_back(&lst, ft_lstnew(actual));
 	if (!check_struct(lst) || !fill_cmd_structs(lst))
 		return (NULL);

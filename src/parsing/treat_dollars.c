@@ -21,20 +21,22 @@ char	*treat_doll_slash(char *word, int i, int back)
 	return (ret);
 }
 
-char	*replace_dolls(char *word, int i)
+char	*replace_dolls(t_ptoken *word, int i)
 {
 	char	*ret;
 	char	*env_value;
 	int		len;
 
-	ret = ft_strndup(word, i);
-	len = get_word_len(word, ft_strlen(ret) + 1);
-	if (word[i + 1] == '?')
+	ret = ft_strndup(word->str, i);
+	len = get_word_len(word->str, ft_strlen(ret) + 1);
+	if (word->str[i + 1] == '?')
 		env_value = ft_itoa(g_shell.last_return);
 	else
-		env_value = get_env(ft_strndup(word + i + 1, len));
+		env_value = get_env(ft_strndup(word->str + i + 1, len));
 	ret = ft_strjoin(ret, env_value);
-	ret = ft_strjoin(ret, word + i + len + 1);
+	ret = ft_strjoin(ret, word->str + i + len + 1);
+	printf("ret = %s\n", ret);
+	word->str = ret;
 	return (ret);
 }
 
@@ -42,16 +44,16 @@ char	*treat_doll(t_ptoken *word, int *i)
 {
 	int		slash;
 
-	if (DEBUG)
-		printf("trans: %d\nis in quotes: %d\nhas space: %d\n",
-			g_shell.trans, g_shell.is_in_s_quotes, g_shell.curr_token->sp);
-	if ((g_shell.trans == 1 && !g_shell.curr_token->sp)
-		|| (g_shell.is_in_s_quotes && !g_shell.curr_token->sp))
-	{
-		g_shell.trans = 0;
-		*i += 1;
-		return (word->str);
-	}
+	// if (DEBUG)
+	// 	printf("trans: %d\nis in quotes: %d\nhas space: %d\n",
+	// 		g_shell.trans, g_shell.is_in_s_quotes, g_shell.curr_token->sp);
+	// if ((g_shell.trans == 1 && !g_shell.curr_token->sp)
+	// 	|| (g_shell.is_in_s_quotes && !g_shell.curr_token->sp))
+	// {
+	// 	g_shell.trans = 0;
+	// 	*i += 1;
+	// 	return (word->str);
+	// }
 	if (DEBUG)
 		printf("word [%s]\n", word->str);
 	if (word->str[(*i) + 1] == '/')
@@ -60,6 +62,6 @@ char	*treat_doll(t_ptoken *word, int *i)
 	if (slash)
 		return (treat_doll_slash(word->str, (*i), slash));
 	else
-		return (replace_dolls(word->str, (*i)));
-	return (word->str);
+		return (replace_dolls(word, (*i)));
+	// return (word->str);
 }

@@ -12,10 +12,5 @@ void	process_input(char *line)
 		return ;
 	ft_lstclear(&g_shell.tokens);
 	if (ft_strlen(line) > 0)
-	{
-		g_shell.last_return = 0;
-		tmp = run_line(argv);
-		if (!g_shell.last_return)
-			g_shell.last_return = tmp;
-	}
+		run_line(argv);
 }
