@@ -366,5 +366,6 @@ void		chose_parsing(t_ptoken *p_token, t_list *lst);
 void		swap_rest(t_ptoken *array, int i, int size);
 char		**get_argv(t_ptoken *argv);
 char		**tab_add(char **argv, char *str);
+void		clear_ptoken(t_ptoken *array);
 
 #endif

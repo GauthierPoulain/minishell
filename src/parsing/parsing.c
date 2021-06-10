@@ -63,23 +63,6 @@ t_ptoken	*array_from_list(void)
 	return (array);
 }
 
-void	clear_ptoken(t_ptoken *array)
-{
-	int	i;
-
-	i = 0;
-	while ((array + i)->str)
-	{
-		(array + i)->is_escaped = false;
-		(array + i)->need_join = false;
-		(array + i)->squotes = false;
-		(array + i)->str = NULL;
-		gc_free((array + i)->str);
-		i++;
-	}
-	gc_free((array + i));
-}
-
 t_ptoken	*parse_line(char *line)
 {
 	t_ptoken	*array;
