@@ -32,8 +32,6 @@ bool	fill_cmd_structs(t_list *lst)
 		cmd = lst->content;
 		if (cmd->operator && !ft_strcmp(cmd->operator, "noop"))
 			return (false);
-		cmd->prog = cmd->argv[0];
-		cmd->path = which(cmd->prog);
 		if (!cmd->operator)
 			;
 		else if (!ft_strcmp(cmd->operator, ";"))

@@ -145,18 +145,19 @@ typedef struct s_ptoken
 
 typedef struct s_command
 {
-	char	*prog;
-	char	*path;
-	char	**argv;
-	bool	need_pipe;
-	bool	need_redirect;
-	char	*redirect_path;
-	bool	listen_stderr;
-	bool	listen_stdout;
-	bool	redirect_append;
-	char	*operator;
-	bool	skip_exec;
-	bool	file_input;
+	char		*prog;
+	char		*path;
+	t_ptoken	*token;
+	char		**argv;
+	bool		need_pipe;
+	bool		need_redirect;
+	char		*redirect_path;
+	bool		listen_stderr;
+	bool		listen_stdout;
+	bool		redirect_append;
+	char		*operator;
+	bool		skip_exec;
+	bool		file_input;
 }				t_command;
 
 typedef struct s_minishell
@@ -269,7 +270,7 @@ void		set_env(char *key, char *value);
 void		unset_env(char *key);
 char		*get_env(char *key);
 void		init_env(char **envp);
-int			run_line(t_ptoken *argv);
+void		run_line(t_ptoken *argv);
 t_token		*get_token_at(int i);
 void		get_lexer(char *line);
 void		init_lexer(t_lexer *lexer);
@@ -328,7 +329,7 @@ int			else_token_l(char *line, t_lexer *lexer);
 int			write_redirect(char *path, char *buffer, bool erease, int len);
 void		close_pipe(void);
 char		*treat_doll_slash(char *word, int i, int back);
-char		*replace_dolls(char *word, int i);
+char		*replace_dolls(t_ptoken *word, int i);
 char		*treat_doll(t_ptoken *word, int *i);
 char		*error_bslash(int *i);
 char		*bslash_filled(t_ptoken *word, int *i, int back);
@@ -355,5 +356,6 @@ int			check_things(t_list *lst);
 int			do_both(t_list *lst, t_ptoken *array, int i);
 void		init_things(int *size, int *i);
 void		things(t_list *lst, t_ptoken *p_tokens, int i);
+char		**get_argv(t_ptoken *argv);
 
 #endif

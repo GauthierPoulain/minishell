@@ -57,7 +57,7 @@ char	*parse_tokens(t_ptoken *word)
 			new = treat_backslash(word, &i);
 		if (DEBUG)
 			printf("actual new [%s] and i : %d\n", new, i);
-		if ((new[i] && new[i] != '$')
+		if ((new[i])
 			|| (new[i] && new[i] == '$' && new[i + 1] == '/'))
 			i++;
 		g_shell.had_bslash = false;
