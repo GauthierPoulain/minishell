@@ -26,37 +26,35 @@ char	*bslash_nquotes(t_ptoken *word, int *i, int r_back)
 	return (new);
 }
 
-char	*bslash_filled(t_ptoken *word, int *i, int back)
+char	*bslash_filled(t_ptoken *word, int back)
 {
 	char	*new;
 	int		r_back;
-	int		tmp;
 
+	(void)word;
 	r_back = back / 2;
 	if (g_shell.is_in_quotes == false)
 		r_back++;
-	tmp = *i;
 	new = ft_calloc_char(r_back, '\\');
-	new = ft_strjoin(new, word->str + back + *i);
-	*i += r_back - 1;
+	// new = ft_strjoin(new, word->str + back + *i);
+	// *i += r_back - 1;
 	if (back % 4 == 1 || back % 4 == 3)
 		g_shell.trans = 1;
 	else
 		g_shell.trans = 0;
-	if (*i == (int)ft_strlen(word->str))
-		*i = tmp;
-	if (word->str[*i] == '\"')
-	{
-		new = bslash_nquotes(word, i, r_back);
-		new = parse_tokens(word);
-	}
-	g_shell.is_in_quotes = false;
+	// if (*i == (int)ft_strlen(word->str))
+	// 	*i = tmp;
+	// if (word->str[*i] == '\"')
+	// {
+	// 	new = bslash_nquotes(word, i, r_back);
+	// 	new = parse_tokens(word);
+	// }
+	// g_shell.is_in_quotes = false;
 	return (new);
 }
 
-char	*error_bslash(int *i)
+char	*error_bslash(void)
 {
-	*i = 0;
 	ft_putstr_fd(STDERR_FILENO, "Syntax error BSLASH\n");
 	ft_lstclear(&g_shell.tokens);
 	g_shell.last_return = 2;
