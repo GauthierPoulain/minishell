@@ -73,7 +73,8 @@ t_ptoken	*parse_line(char *line)
 	g_shell.is_in_quotes = false;
 	g_shell.is_in_s_quotes = false;
 	array = array_from_list();
-	nb = count_quotes(array);
+	nb = count_quotes(array); 
+	display_ptoken(array);
 	printf("Quotes nb : %d===========\n", nb);
 	if (count_quotes(array) % 2)
 	{

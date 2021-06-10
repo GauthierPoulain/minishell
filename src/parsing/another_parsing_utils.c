@@ -19,6 +19,10 @@ void	things(t_list *lst, t_ptoken *p_tokens, int i)
 	if (lst->next)
 		g_shell.next_token_str = ((t_token *)lst->next->content)->str;
 	chose_parsing(p_tokens + i, lst);
+	if (g_shell.is_in_quotes)
+		(p_tokens + i)->is_in_quotes = true;
+	else
+		(p_tokens + i)->is_in_quotes = false;
 	g_shell.curr_token = NULL;
 	g_shell.next_token_str = NULL;
 }

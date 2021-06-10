@@ -113,7 +113,10 @@ void	get_lexer(char *line)
 		if (DEBUG)
 			printf("CHAR [%c]\n", line[lexer.i]);
 		if (normed_condition(lexer, line))
+		{
+			printf("OH JE SUIS BIEN LA [%c]\n", line[lexer.i + 1]);
 			handle_space(line, token, &lexer);
+		}
 		if (!ft_isspace(line[lexer.i]) && line[lexer.i] != '"'
 			&& line[lexer.i] != '\\' && !lexer.had_quotes
 			&& line[lexer.i] != '\'' && line[lexer.i - 1] != '\\'
