@@ -1,95 +1,37 @@
 #include "../../includes/minishell.h"
 
-void	display_ptoken(t_ptoken *array)
-{
-	int	i;
-
-	i = 0;
-	while ((array + i)->str)
-	{
-		printf("(%s)\n", (array + i)->str);
-		i++;
-	}
-}
-
-int	get_array_size(t_ptoken *array)
-{
-	int	i;
-
-	i = 0;
-	while ((array + i)->str)
-		i++;
-	return (i);
-}
-
 void	chose_parsing(t_ptoken *p_token, t_list *lst)
 {
-	// if (((t_token *)lst->content)->type == 4)
-	// 	p_token->str = parse_d_quotes(((t_token *)lst->content)->str);
-	// if (((t_token *)lst->content)->type == 6)
-	// 	p_token->str = parse_s_quotes(((t_token *)lst->content)->str);
 	if (DEBUG)
 		printf("ALED OUI\n");
 	p_token->str = parse_tokens(lst->content);
 	printf("token during parsing %s\n", p_token->str);
 }
 
-void	join_no_space(t_ptoken *p_tokens, int *i, int *size)
-{
-	char	*tmp;
-
-	printf("JOINED MA BOI\n");
-	tmp = ft_strdup((p_tokens + *i)->str);
-	(p_tokens + *i)->str = NULL;
-	gc_free((p_tokens + *i)->str);
-	(p_tokens + (*i - 1))->str = ft_strjoin((p_tokens + (*i - 1))->str, tmp);
-	*i -= 1;
-	*size -= 1;
-}
-
-void	things(t_list *lst, t_ptoken *p_tokens, int i)
-{
-	g_shell.curr_token = (t_token *)lst->content;
-	if (lst->next)
-		g_shell.next_token_str = ((t_token *)lst->next->content)->str;
-	chose_parsing(p_tokens + i, lst);
-	g_shell.curr_token = NULL;
-	g_shell.next_token_str = NULL;
-}
-
 void	swap_rest(t_ptoken *array, int i, int size)
 {
 	while (i < size)
 	{
-		printf("Before swap : [%s], [%s]\n", (array + i)->str, (array + (i - 1))->str);
-		// ft_swap((&array + i), (&array + (i - 1)));
 		ft_swap((array + i), (array + (i - 1)));
-		printf("After  swap : [%s], [%s]\n", (array + i)->str, (array + (i - 1))->str);
 		i++;
 	}
 }
 
-void	treat_array(t_ptoken *array)
+int	count_quotes(t_ptoken *array)
 {
-	int		i;
-	int		size;
-	// char	*buf;
+	int	i;
+	int	count;
 
-	size = get_array_size(array);
-	printf("size %d\n", size);
 	i = 0;
-	while (i < size)
+	count = 0;
+	while ((array + i)->str)
 	{
-		printf("yo\n");
-		if (!(array + i)->is_escaped && !ft_strcmp((array + i)->str, "\""))
-		{
-			printf("SWAP\n");
-			(array + i)->str = NULL;
-			swap_rest(array, i + 1, size);
-			// join_no_space(array, &i, &size);
-		}
+		printf("During count : [%s]\n", (array + i)->str);
+		if (!ft_strcmp((array + i)->str, "\"") && !(array + i)->is_escaped)
+			count++;
 		i++;
 	}
+	return (count);
 }
 
 t_ptoken	*array_from_list(void)
@@ -118,20 +60,45 @@ t_ptoken	*array_from_list(void)
 		lst = lst->next;
 		i++;
 	}
-	display_ptoken(array);
-	treat_array(array);
-	display_ptoken(array);
 	return (array);
+}
+
+void	clear_ptoken(t_ptoken *array)
+{
+	int	i;
+
+	i = 0;
+	while ((array + i)->str)
+	{
+		(array + i)->is_escaped = false;
+		(array + i)->need_join = false;
+		(array + i)->squotes = false;
+		(array + i)->str = NULL;
+		gc_free((array + i)->str);
+		i++;
+	}
+	gc_free((array + i));
 }
 
 t_ptoken	*parse_line(char *line)
 {
 	t_ptoken	*array;
+	int			nb;
 
 	get_lexer(line);
 	g_shell.error = false;
 	g_shell.is_in_quotes = false;
 	g_shell.is_in_s_quotes = false;
 	array = array_from_list();
+	nb = count_quotes(array);
+	printf("Quotes nb : %d===========\n", nb);
+	if (count_quotes(array) % 2)
+	{
+		syntax_error();
+		clear_ptoken(array);
+		ft_lstclear(&g_shell.tokens);
+		return (NULL);
+	}
+	treat_array(array);
 	return (array);
 }

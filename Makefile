@@ -119,6 +119,7 @@ SRCS_MS = \
 	./src/parsing/treat_dollars.c \
 	./src/parsing/parse_s_quotes.c \
 	./src/parsing/parsing_norm_pain.c \
+	./src/parsing/another_parsing_utils.c \
 
 SRCS = $(SRCS_LIB) $(SRCS_MS)
 

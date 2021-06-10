@@ -358,6 +358,12 @@ int			check_things(t_list *lst);
 int			do_both(t_list *lst, t_ptoken *array, int i);
 void		init_things(int *size, int *i);
 void		things(t_list *lst, t_ptoken *p_tokens, int i);
+void		display_ptoken(t_ptoken *array);
+int			get_array_size(t_ptoken *array);
+void		treat_array(t_ptoken *array);
+void		join_no_space(t_ptoken *p_tokens, int *i, int *size);
+void		chose_parsing(t_ptoken *p_token, t_list *lst);
+void		swap_rest(t_ptoken *array, int i, int size);
 char		**get_argv(t_ptoken *argv);
 char		**tab_add(char **argv, char *str);
 
