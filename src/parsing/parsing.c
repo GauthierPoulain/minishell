@@ -69,6 +69,16 @@ void	swap_rest(t_ptoken *array, int i, int size)
 	}
 }
 
+void	join_test(t_ptoken *array, int *i, int *size)
+{
+	char	*buf;
+
+	buf = ft_strdup((array + *i)->str);
+	(array + *i)->str = NULL;
+	(array + (*i - 1))->str = ft_strjoin((array + (*i - 1))->str, buf);
+	swap_rest(array, *i + 1, *size);
+}
+
 void	treat_array(t_ptoken *array)
 {
 	int		i;
@@ -86,7 +96,10 @@ void	treat_array(t_ptoken *array)
 			printf("SWAP\n");
 			(array + i)->str = NULL;
 			swap_rest(array, i + 1, size);
+			join_test(array, &i, &size);
 			// join_no_space(array, &i, &size);
+			display_ptoken(array);
+			i = 0;
 		}
 		i++;
 	}
