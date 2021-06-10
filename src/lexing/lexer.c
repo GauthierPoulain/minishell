@@ -90,6 +90,18 @@ void	handle_space(char *line, t_token *token, t_lexer *lexer)
 		printf("actual rest [%s]\n", line + lexer->i);
 }
 
+static int	normed_condition(t_lexer lexer, char *line)
+{
+	if (line[lexer.i] == ' ' || line[lexer.i] == '\\'
+		|| lexer.i == 0 || line[lexer.i] == '"'
+		|| lexer.had_quotes || lexer.had_squotes
+		|| line[lexer.i] == '\'' || (lexer.i && line[lexer.i - 1] == '\\')
+		|| line[lexer.i] == ';' || line[lexer.i] == '>' || lexer.had_semi
+		|| line[lexer.i] == '|' || line[lexer.i] == '<')
+		return (1);
+	return (0);
+}
+
 void	get_lexer(char *line)
 {
 	t_lexer	lexer;
@@ -101,11 +113,7 @@ void	get_lexer(char *line)
 		token = gc_malloc(sizeof(t_token));
 		if (DEBUG)
 			printf("CHAR [%c]\n", line[lexer.i]);
-		if (line[lexer.i] == ' ' || line[lexer.i] == '\\'
-			|| lexer.i == 0 || line[lexer.i] == '"' || lexer.had_quotes || lexer.had_squotes
-			|| line[lexer.i] == '\'' || (lexer.i && line[lexer.i - 1] == '\\')
-			|| line[lexer.i] == ';' || line[lexer.i] == '>' || lexer.had_semi
-			|| line[lexer.i] == '|' || line[lexer.i] == '<')
+		if (normed_condition(lexer, line))
 			handle_space(line, token, &lexer);
 		if (line[lexer.i] != '"' && line[lexer.i] != ' '
 			&& line[lexer.i] != '\\' && !lexer.had_quotes
