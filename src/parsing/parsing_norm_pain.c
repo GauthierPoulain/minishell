@@ -21,14 +21,15 @@ int	do_both(t_list *lst, t_ptoken *array, int i)
 
 int	check_things(t_list *lst)
 {
-	if (((t_token *)lst->content)->id >= 1)
-		if (get_token_at(((t_token *)lst->content)->id - 1)->type == 3
-			&& !((t_token *)lst->content)->sp
-			&& (((t_token *)lst->content)->type == 4)
-			&& ((t_token *)lst->content)->type == 6)
-				return (1);
-	if (!((t_token *)lst->content)->sp && ((t_token *)lst->content)->id >= 1
-		&& ((t_token *)lst->content)->type != 4 && ((t_token *)lst->content)->type != 6)
+	// if (((t_token *)lst->content)->id >= 1)
+	// 	if (get_token_at(((t_token *)lst->content)->id - 1)->type == 3
+	// 		&& !((t_token *)lst->content)->sp
+	// 		&& ((t_token *)lst->content)->type == 4
+	// 		&& ((t_token *)lst->content)->type == 6)
+	// 			return (1);
+	if (!((t_token *)lst->content)->sp && !g_shell.is_in_s_quotes
+		&& !g_shell.is_in_quotes && g_shell.trans && ((t_token *)lst->content)->id >= 1
+		/*&& ((t_token *)lst->content)->type != 4 && ((t_token *)lst->content)->type != 6*/)
 		return (1);
 	else if (get_token_at(((t_token *)lst->content)->id)->type == 4)
 	{
