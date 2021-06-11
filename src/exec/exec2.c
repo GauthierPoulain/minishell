@@ -67,7 +67,7 @@ char	**get_argv(t_ptoken *argv)
 	res = NULL;
 	while (argv && argv->str)
 	{
-		if (!argv->is_in_quotes)
+		if (!argv->is_in_quotes && !argv->is_in_squotes && !argv->is_escaped)
 			if (argv->str[0] == '~' && (argv->str[1] == 0
 					|| argv->str[1] == '/'))
 				argv->str = ft_strreplace(argv->str, "~", get_env("HOME"));

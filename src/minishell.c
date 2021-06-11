@@ -44,7 +44,7 @@ void	pre_prompt(void)
 			ft_putcolor(" in ", _DARKGRAY);
 			ft_putcolor(ft_strreplace(get_pwd(), get_env("HOME"), "~"), _CYAN);
 		}
-		ft_putstr(" ");
+		ft_putstr("\n");
 	}
 	if (g_shell.last_return != 0)
 	{
