@@ -30,6 +30,7 @@ CFLAGS = -Wall -Wextra -Werror
 # CFLAGS += -O3 -fno-builtin
 CFLAGS += -g
 CFLAGS += -fsanitize=address
+# CFLAGS += --coverage
 
 CLIBS = -ltermcap
 
@@ -141,8 +142,8 @@ clean:
 	@$(RM) $(OBJS)
 
 fclean: clean
-	@printf "[ $(_RED)$(_BOLD)removing$(_END) ] $(_BLUE)$(_BOLD)tmp files$(_END)\n"
-	@$(RM) -rf *.dSYM
+	@printf "[ $(_RED)$(_BOLD)removing$(_END) ] $(_BLUE)$(_BOLD)debug files$(_END)\n"
+	@find . \( -name "*.dSYM" -o -name "*.gcda" -o -name "*.gcno" -o -name "*.gcov" \) -delete
 	@printf "[ $(_RED)$(_BOLD)removing$(_END) ] $(_BLUE)$(_BOLD)$(NAME)$(_END)\n"
 	@$(RM) $(NAME)
 

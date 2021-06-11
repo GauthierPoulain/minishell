@@ -67,7 +67,8 @@ static void	loop(t_command **actual, t_ptoken *argv, int *i, t_list **lst)
 {
 	// printf("escaped [%s] ? %d\n", (argv + *i)->str, (argv + *i)->is_escaped);
 	if (is_operator((argv + *i)->str) && ft_strlen((argv + *i)->str)
-		== (size_t)is_operator((argv + *i)->str) && !(argv + *i)->is_escaped)
+		== (size_t)is_operator((argv + *i)->str) && !(argv + *i)->is_escaped
+		&& !(argv + *i)->is_in_quotes && !(argv + *i)->is_in_squotes)
 		check_op_omg(actual, argv, i, lst);
 	else if (!ft_strcmp("\"", (argv + *i)->str) || !ft_strcmp("\'",
 			(argv + *i)->str))
