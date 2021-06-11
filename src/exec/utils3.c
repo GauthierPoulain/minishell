@@ -20,7 +20,8 @@ void	check_op_omg(t_command **actual, t_ptoken *argv, int *i, t_list **lst)
 	if ((argv + (*i + 1))->str && is_operator((argv + (*i + 1))->str)
 		&& ft_strlen((argv + (*i + 1))->str)
 		== (size_t)is_operator((argv + (*i + 1))->str)
-		&& !(argv + (*i + 1))->is_escaped)
+		&& !(argv + (*i + 1))->is_escaped && !(argv + (*i + 1))->is_in_quotes
+		&& !(argv + (*i + 1))->is_in_squotes)
 	{
 		(argv + *i)->str = ft_strjoin((argv + *i)->str,
 				(argv + (*i + 1))->str);
