@@ -40,21 +40,6 @@ void	check_write_redirect(t_command *cmd, t_list *cmds)
 	}
 }
 
-t_ptoken	*replace_env_var(t_ptoken *token)
-{
-	char	*doll;
-	int		i;
-
-	doll = ft_strchr(token->str, '$');
-	i = doll - token->str;
-	while (!token->is_in_squotes && doll)
-	{
-		doll = treat_doll(token, &i);
-		doll = ft_strchr(doll + i, '$');
-	}
-	return (token);
-}
-
 char	**tab_add(char **argv, char *str)
 {
 	char	**res;
@@ -82,11 +67,11 @@ char	**get_argv(t_ptoken *argv)
 	res = NULL;
 	while (argv && argv->str)
 	{
-		if (!argv->is_in_quotes)
+		if (!argv->is_in_quotes && !argv->is_in_squotes && !argv->is_escaped)
 			if (argv->str[0] == '~' && (argv->str[1] == 0
 					|| argv->str[1] == '/'))
 				argv->str = ft_strreplace(argv->str, "~", get_env("HOME"));
-		printf("is in quotes ? %d\n", argv->is_in_squotes);
+		// printf("is in escaped %s ? %d\n", argv->str, argv->is_escaped);
 		if (!argv->is_in_squotes && !argv->is_escaped)
 			replace_env_var(argv);
 		res = tab_add(res, argv->str);

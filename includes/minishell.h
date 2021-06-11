@@ -372,5 +372,10 @@ void		clear_ptoken(t_ptoken *array);
 size_t		ft_toktab_len(t_ptoken *car);
 int			child_supervisor(t_buffer *data, bool read_pipe, int pipes[2]);
 bool		check_struct(t_list	*lst);
+t_ptoken	*replace_env_var(t_ptoken *token);
+void		check_op_omg(t_command **actual, t_ptoken *argv, int *i,
+				t_list **lst);
+void		check_operator(t_command *actual, t_ptoken *argv, int i);
+t_command	*init_command_struct(void);
 
 #endif

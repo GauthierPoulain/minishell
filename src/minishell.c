@@ -31,19 +31,29 @@ void	pre_prompt(void)
 {
 	if (get_env("USER"))
 	{
-		ft_putcolor(get_env("USER"), _CYAN);
-		ft_putcolor(" in ", _DARKGRAY);
-		ft_putcolor(ft_strreplace(get_pwd(), get_env("HOME"), "~"), _CYAN);
-		ft_putcolor("\n", _DARKGRAY);
+		if (g_shell.last_return != 0)
+		{
+			ft_putcolor(get_env("USER"), _YELLOW);
+			ft_putcolor(" in ", _DARKGRAY);
+			ft_putcolor(ft_strreplace(get_pwd(),
+					get_env("HOME"), "~"), _YELLOW);
+		}
+		else
+		{
+			ft_putcolor(get_env("USER"), _CYAN);
+			ft_putcolor(" in ", _DARKGRAY);
+			ft_putcolor(ft_strreplace(get_pwd(), get_env("HOME"), "~"), _CYAN);
+		}
+		ft_putstr("\n");
 	}
-	if (g_shell.last_return == 0)
-		ft_putcolor("›", _GREEN);
-	else
+	if (g_shell.last_return != 0)
 	{
 		ft_putcolor(ft_itoa(g_shell.last_return), _RED);
-		ft_putcolor(" ›", _RED);
+		ft_putcolor(" ᐅ", _RED);
 	}
-	ft_putcolor(" ", _DARKGRAY);
+	else
+		ft_putcolor("ᐅ", _GREEN);
+	ft_putstr(" ");
 }
 
 int	main(int argc, char **argv, char **envp)
