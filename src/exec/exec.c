@@ -77,7 +77,10 @@ static void	loop(t_list *cmds)
 	{
 		cmd = cmds->content;
 		cmd->argv = get_argv(cmd->token);
-		cmd->prog = cmd->argv[0];
+		if (cmd->argv)
+			cmd->prog = cmd->argv[0];
+		else
+			cmd->prog = ft_strdup("");
 		cmd->path = which(cmd->prog);
 		nxt = fill_cmd_structs(cmd, cmds);
 		if (nxt)
