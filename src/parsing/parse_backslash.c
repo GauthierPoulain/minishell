@@ -40,7 +40,7 @@ char	*treat_backslash(t_ptoken *word)
 	back = bslash_f_count(word->str);
 	if (back % 2)
 	{
-		if (!g_shell.is_in_quotes)
+		if (!word->is_in_quotes)
 			word->escapes = true;
 		g_shell.error = true;
 	}

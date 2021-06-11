@@ -27,7 +27,7 @@ int	count_quotes(t_ptoken *array)
 	while ((array + i)->str)
 	{
 		if ((!ft_strcmp((array + i)->str, "\"") && !(array + i)->is_escaped && !(array + i)->is_in_squotes)
-			|| (i && (array + (i - 1))->is_in_squotes))
+			|| (i && (array + (i - 1))->is_in_squotes && !ft_strcmp((array + i)->str, "\"")))
 			quotes++;
 		i++;
 	}
@@ -35,7 +35,7 @@ int	count_quotes(t_ptoken *array)
 	while ((array + i)->str)
 	{
 		if ((!ft_strcmp((array + i)->str, "\'") && !(array + i)->is_escaped && !(array + i)->is_in_quotes)
-			|| (i && (array + (i - 1))->is_in_quotes))
+			|| (i && (array + (i - 1))->is_in_quotes && !ft_strcmp((array + i)->str, "\'")))
 			s_quotes++;
 		i++;
 	}
@@ -77,10 +77,22 @@ t_ptoken	*array_from_list(void)
 		token = lst->content;
 		do_both(lst, array, i);
 		(array + i)->str = token->str;
-		if (token->type != 3)
+		if (g_shell.is_in_quotes)
+			(array + i)->is_in_quotes = true;
+		else
+			(array + i)->is_in_quotes = false;
+		if (g_shell.is_in_s_quotes)
+			(array + i)->is_in_squotes = true;
+		else
+			(array + i)->is_in_squotes = false;
+		if (token->type != 3 && (i && !(array + (i - 1))->is_in_quotes))
 			g_shell.error = false;
 		if (token->type == 3 && !g_shell.is_in_s_quotes)
+		{
+			printf("parse slash\n");
 			(array + i)->str = treat_backslash((array + i));
+			printf("after [%s]\n", (array + i)->str);
+		}
 		if (token->id)
 			if ((array + (i - 1))->escapes)
 				(array + i)->is_escaped = true;
@@ -93,14 +105,6 @@ t_ptoken	*array_from_list(void)
 				g_shell.is_in_s_quotes = !g_shell.is_in_s_quotes;
 		}
 		printf("Je suis le token [%s]\n", token->str);
-		if (g_shell.is_in_quotes)
-			(array + i)->is_in_quotes = true;
-		else
-			(array + i)->is_in_quotes = false;
-		if (g_shell.is_in_s_quotes)
-			(array + i)->is_in_squotes = true;
-		else
-			(array + i)->is_in_squotes = false;
 		lst = lst->next;
 		i++;
 	}
