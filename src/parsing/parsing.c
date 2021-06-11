@@ -109,6 +109,6 @@ t_ptoken	*parse_line(char *line)
 		ft_lstclear(&g_shell.tokens);
 		return (NULL);
 	}
-	treat_array(array);
+	// treat_array(array);
 	return (array);
 }
