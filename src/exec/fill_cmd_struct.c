@@ -23,26 +23,17 @@ static void	parse_operators2(t_command *cmd, t_list *lst)
 	}
 }
 
-bool	fill_cmd_structs(t_list *lst)
+bool	fill_cmd_structs(t_command *cmd, t_list *lst)
 {
-	t_command	*cmd;
-
-	while (lst)
-	{
-		cmd = lst->content;
-		if (cmd->operator && !ft_strcmp(cmd->operator, "noop"))
-			return (false);
-		if (!cmd->operator)
-			;
-		else if (!ft_strcmp(cmd->operator, ";"))
-			;
-		else if (!ft_strcmp(cmd->operator, "|"))
-		{
-			cmd->need_pipe = true;
-		}
-		else
-			parse_operators2(cmd, lst);
-		lst = lst->next;
-	}
+	if (cmd->operator && !ft_strcmp(cmd->operator, "noop"))
+		return (false);
+	if (!cmd->operator)
+		;
+	else if (!ft_strcmp(cmd->operator, ";"))
+		;
+	else if (!ft_strcmp(cmd->operator, "|"))
+		cmd->need_pipe = true;
+	else
+		parse_operators2(cmd, lst);
 	return (true);
 }

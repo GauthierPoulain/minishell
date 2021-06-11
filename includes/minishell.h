@@ -341,7 +341,7 @@ char		*bslash_nquotes(t_ptoken *word, int *i, int r_back);
 int			check_slash(t_ptoken *word, int i);
 void		reset_pipe_output(void);
 t_list		*get_commands(t_ptoken *argv);
-bool		fill_cmd_structs(t_list *lst);
+bool		fill_cmd_structs(t_command *cmd, t_list *lst);
 int			commant_not_found(char *cmd);
 int			syntax_error(void);
 bool		is_a_file(char *path);

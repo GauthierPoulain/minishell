@@ -70,16 +70,22 @@ int	run_command(t_command *cmd)
 static void	loop(t_list *cmds)
 {
 	t_command	*cmd;
+	bool		nxt;
 
-	while (cmds)
+	nxt = true;
+	while (nxt && cmds)
 	{
 		cmd = cmds->content;
 		cmd->argv = get_argv(cmd->token);
 		cmd->prog = cmd->argv[0];
 		cmd->path = which(cmd->prog);
-		if (!cmd->skip_exec)
-			g_shell.last_return = run_command(cmd);
-		check_write_redirect(cmd, cmds);
+		nxt = fill_cmd_structs(cmd, cmds);
+		if (nxt)
+		{
+			if (!cmd->skip_exec)
+				g_shell.last_return = run_command(cmd);
+			check_write_redirect(cmd, cmds);
+		}
 		cmds = cmds->next;
 	}
 }

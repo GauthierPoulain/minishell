@@ -82,7 +82,7 @@ char	**get_argv(t_ptoken *argv)
 	res = NULL;
 	while (argv && argv->str)
 	{
-		printf("is in quotes ? %d\n", argv->is_in_quotes);
+		// printf("is in quotes ? %d\n", argv->is_in_quotes);
 		if (!argv->is_in_quotes)
 			if (argv->str[0] == '~' && (argv->str[1] == 0
 					|| argv->str[1] == '/'))
