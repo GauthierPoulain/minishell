@@ -47,7 +47,7 @@ t_ptoken	*replace_env_var(t_ptoken *token)
 
 	doll = ft_strchr(token->str, '$');
 	i = doll - token->str;
-	while (!token->squotes && doll)
+	while (!token->is_in_squotes && doll)
 	{
 		doll = treat_doll(token, &i);
 		doll = ft_strchr(doll + i, '$');
@@ -82,13 +82,12 @@ char	**get_argv(t_ptoken *argv)
 	res = NULL;
 	while (argv && argv->str)
 	{
-		// printf("is in quotes ? %d\n", argv->is_in_quotes);
 		if (!argv->is_in_quotes)
 			if (argv->str[0] == '~' && (argv->str[1] == 0
 					|| argv->str[1] == '/'))
 				argv->str = ft_strreplace(argv->str, "~", get_env("HOME"));
-		// if (!argv->squotes)
-		if (!argv->is_escaped)
+		printf("is in quotes ? %d\n", argv->is_in_squotes);
+		if (!argv->is_in_squotes && !argv->is_escaped)
 			replace_env_var(argv);
 		res = tab_add(res, argv->str);
 		argv++;

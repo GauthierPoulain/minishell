@@ -11,14 +11,14 @@ static t_ptoken	*toktab_add(t_ptoken *argv, t_ptoken str)
 	while (argv && argv->str)
 	{
 		res->is_escaped = argv->is_escaped;
-		res->squotes = argv->squotes;
+		res->is_in_squotes = argv->is_in_squotes;
 		res->is_in_quotes = argv->is_in_quotes;
 		res->str = ft_strdup(argv->str);
 		res++;
 		argv++;
 	}
 	res->is_escaped = str.is_escaped;
-	res->squotes = str.squotes;
+	res->is_in_squotes = str.is_in_squotes;
 	res->is_in_quotes = str.is_in_quotes;
 	res->str = ft_strdup(str.str);
 	// *res = *str;
@@ -54,7 +54,7 @@ void	check_operator(t_command *actual, t_ptoken *argv, int i)
 	{
 		actual->operator = ft_strdup("noop");
 		tmp.is_escaped = false;
-		tmp.squotes = false;
+		tmp.is_in_squotes = false;
 		tmp.is_in_quotes = false;
 		tmp.str = ft_strdup("");
 		actual->token = toktab_add(actual->token, tmp);

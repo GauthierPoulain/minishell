@@ -65,7 +65,8 @@ void	clear_ptoken(t_ptoken *array)
 	{
 		(array + i)->is_escaped = false;
 		(array + i)->need_join = false;
-		(array + i)->squotes = false;
+		(array + i)->is_in_squotes = false;
+		(array + i)->is_in_quotes = false;
 		(array + i)->str = NULL;
 		gc_free((array + i)->str);
 		i++;
