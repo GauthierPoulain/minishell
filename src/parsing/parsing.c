@@ -63,9 +63,9 @@ t_ptoken	*array_from_list(void)
 		if (check_things(lst))
 		{
 			if (!(array + (i - 1))->is_escaped
-				/*&& get_token_at(((t_token *)lst->content)->id - 1)->type != 10
+				&& get_token_at(((t_token *)lst->content)->id - 1)->type != 10
 				&& get_token_at(((t_token *)lst->content)->id - 1)->type != 4
-				&& get_token_at(((t_token *)lst->content)->id - 1)->type != 6*/)
+				&& get_token_at(((t_token *)lst->content)->id - 1)->type != 6)
 				{
 					printf("OWOWOWOWOOWOWOWOWOWO\n");
 					join_if_needed(array, &i, &size, lst);
