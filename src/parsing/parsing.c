@@ -66,14 +66,20 @@ t_ptoken	*array_from_list(void)
 		if (token->type != 3)
 			g_shell.error = false;
 		if (token->type == 3)
+		{
+			printf("Oh oui bb\n");
 			(array + i)->str = treat_backslash((array + i));
+		}
 		if (token->type == 4 || token->type == 6
 			|| token->type == 10)
 		{
+			if (token->type == 4 && !(array + (i - 1))->escapes)
+				g_shell.is_in_quotes = !g_shell.is_in_quotes;
 			if (token->id)
 				if ((array + (i - 1))->escapes)
 					(array + i)->is_escaped = true;
 		}
+		printf("Je suis le token [%s]\n", token->str);
 		// if (do_both(lst, array, i))
 		// 	return (NULL);
 		// if (check_things(lst))
