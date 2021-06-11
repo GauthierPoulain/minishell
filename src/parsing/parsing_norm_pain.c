@@ -27,11 +27,13 @@ int	check_things(t_list *lst)
 	if (!((t_token *)lst->content)->sp && ((t_token *)lst->content)->id >= 1
 		&& ((t_token *)lst->content)->type != 4)
 		return (1);
-	else if (((t_token *)lst->content)->id >= 1 && (g_shell.is_in_quotes || get_token_at(((t_token *)lst->content)->id)->type == 4))
+	else if (get_token_at(((t_token *)lst->content)->id)->type == 4)
 	{
-		if (!g_shell.is_in_quotes)
+		if (((t_token *)lst->content)->id >= 1)
 			g_shell.is_in_quotes = !g_shell.is_in_quotes;
 	}
+	// else if (g_shell.is_in_quotes)
+	// 	;
 	return (0);
 }
 

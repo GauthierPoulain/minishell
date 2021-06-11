@@ -57,6 +57,10 @@ t_ptoken	*array_from_list(void)
 			else if ((array + (i - 1))->is_escaped)
 				join_if_needed(array, &i, &size, lst);
 		}
+		if (g_shell.is_in_quotes)
+			(array + i)->is_in_quotes = true;
+		else
+			(array + i)->is_in_quotes = false;
 		lst = lst->next;
 		i++;
 	}
@@ -83,6 +87,6 @@ t_ptoken	*parse_line(char *line)
 		ft_lstclear(&g_shell.tokens);
 		return (NULL);
 	}
-	treat_array(array);
+	// treat_array(array);
 	return (array);
 }

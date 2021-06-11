@@ -35,6 +35,7 @@ char	*bslash_filled(t_ptoken *word, int back)
 	r_back = back / 2;
 	if (g_shell.is_in_quotes == false)
 		r_back++;
+	printf("r_back : %d\n", r_back);
 	new = ft_calloc_char(r_back, '\\');
 	// new = ft_strjoin(new, word->str + back + *i);
 	// *i += r_back - 1;
