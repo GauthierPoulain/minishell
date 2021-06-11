@@ -84,9 +84,9 @@ t_ptoken	*array_from_list(void)
 		if (token->type == 4 || token->type == 6
 			|| token->type == 10)
 		{
-			if (token->type == 4 && !(array + (i - 1))->escapes)
+			if ((i == 0 && token->type == 4) || (token->type == 4 && !(array + (i - 1))->escapes))
 				g_shell.is_in_quotes = !g_shell.is_in_quotes;
-			if (token->type == 6 && !(array + (i - 1))->escapes)
+			if ((i == 0 && token->type == 6) || (token->type == 6 && !(array + (i - 1))->escapes))
 				g_shell.is_in_s_quotes = !g_shell.is_in_s_quotes;
 		}
 		printf("Je suis le token [%s]\n", token->str);
@@ -134,6 +134,7 @@ t_ptoken	*parse_line(char *line)
 		ft_lstclear(&g_shell.tokens);
 		return (NULL);
 	}
+	printf("je suis la fin\n");
 	display_ptoken(array);
 	// treat_array(array);
 	return (array);
