@@ -36,20 +36,10 @@ char	*bslash_filled(t_ptoken *word, int back)
 	if (g_shell.is_in_quotes == false)
 		r_back++;
 	new = ft_calloc_char(r_back, '\\');
-	// new = ft_strjoin(new, word->str + back + *i);
-	// *i += r_back - 1;
 	if (back % 4 == 1 || back % 4 == 3)
 		g_shell.trans = 1;
 	else
 		g_shell.trans = 0;
-	// if (*i == (int)ft_strlen(word->str))
-	// 	*i = tmp;
-	// if (word->str[*i] == '\"')
-	// {
-	// 	new = bslash_nquotes(word, i, r_back);
-	// 	new = parse_tokens(word);
-	// }
-	// g_shell.is_in_quotes = false;
 	return (new);
 }
 

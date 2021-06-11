@@ -26,14 +26,16 @@ int	count_quotes(t_ptoken *array)
 	s_quotes = 0;
 	while ((array + i)->str)
 	{
-		if (!ft_strcmp((array + i)->str, "\"") && !(array + i)->is_escaped && !(array + i)->is_in_squotes && (array + (i - 1))->is_in_squotes)
+		if (!ft_strcmp((array + i)->str, "\"") && !(array + i)->is_escaped && !(array + i)->is_in_squotes
+			&& (i && (array + (i - 1))->is_in_squotes))
 			quotes++;
 		i++;
 	}
 	i = 0;
 	while ((array + i)->str)
 	{
-		if (!ft_strcmp((array + i)->str, "\'") && !(array + i)->is_escaped && !(array + i)->is_in_quotes)
+		if (!ft_strcmp((array + i)->str, "\'") && !(array + i)->is_escaped && !(array + i)->is_in_quotes
+			&& (i && (array + (i - 1))->is_in_quotes))
 			s_quotes++;
 		i++;
 	}
@@ -77,7 +79,7 @@ t_ptoken	*array_from_list(void)
 		(array + i)->str = token->str;
 		if (token->type != 3)
 			g_shell.error = false;
-		if (token->type == 3)
+		if (token->type == 3 && !g_shell.is_in_s_quotes)
 			(array + i)->str = treat_backslash((array + i));
 		if (token->id)
 			if ((array + (i - 1))->escapes)
