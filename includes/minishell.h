@@ -142,7 +142,6 @@ typedef struct s_ptoken
 	bool	is_escaped;
 	bool	is_in_quotes;
 	bool	is_in_squotes;
-	bool	squotes;
 	bool	need_join;
 }				t_ptoken;
 
