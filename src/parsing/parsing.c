@@ -87,7 +87,6 @@ t_ptoken	*parse_line(char *line)
 {
 	t_ptoken	*array;
 	int			nb;
-	// int			ret;
 
 	get_lexer(line);
 	g_shell.error = false;
@@ -103,7 +102,6 @@ t_ptoken	*parse_line(char *line)
 	nb = count_quotes(array); ;
 	display_ptoken(array);
 	printf("Quotes nb : %d===========\n", nb);
-	// printf("blash ret : %d===========\n", ret);
 	if (nb % 2)
 	{
 		syntax_error();
