@@ -18,17 +18,28 @@ void	swap_rest(t_ptoken *array, int i, int size)
 int	count_quotes(t_ptoken *array)
 {
 	int	i;
-	int	count;
+	int	quotes;
+	int	s_quotes;
 
 	i = 0;
-	count = 0;
+	quotes = 0;
+	s_quotes = 0;
 	while ((array + i)->str)
 	{
 		if (!ft_strcmp((array + i)->str, "\"") && !(array + i)->is_escaped)
-			count++;
+			quotes++;
 		i++;
 	}
-	return (count);
+	i = 0;
+	while ((array + i)->str)
+	{
+		if (!ft_strcmp((array + i)->str, "\'") && !(array + i)->is_escaped)
+			s_quotes++;
+		i++;
+	}
+	if (s_quotes % 2 || quotes % 2)
+		return (1);
+	return (0);
 }
 
 // int	count_backslash(t_ptoken *array)
@@ -70,14 +81,16 @@ t_ptoken	*array_from_list(void)
 			printf("Oh oui bb\n");
 			(array + i)->str = treat_backslash((array + i));
 		}
+		if (token->id)
+			if ((array + (i - 1))->escapes)
+				(array + i)->is_escaped = true;
 		if (token->type == 4 || token->type == 6
 			|| token->type == 10)
 		{
 			if (token->type == 4 && !(array + (i - 1))->escapes)
 				g_shell.is_in_quotes = !g_shell.is_in_quotes;
-			if (token->id)
-				if ((array + (i - 1))->escapes)
-					(array + i)->is_escaped = true;
+			if (token->type == 6 && !(array + (i - 1))->escapes)
+				g_shell.is_in_s_quotes = !g_shell.is_in_s_quotes;
 		}
 		printf("Je suis le token [%s]\n", token->str);
 		// if (do_both(lst, array, i))
@@ -117,7 +130,7 @@ t_ptoken	*array_from_list(void)
 t_ptoken	*parse_line(char *line)
 {
 	t_ptoken	*array;
-	int			nb;
+	int			ret;
 
 	get_lexer(line);
 	g_shell.error = false;
@@ -130,10 +143,10 @@ t_ptoken	*parse_line(char *line)
 		ft_lstclear(&g_shell.tokens);
 		return (NULL);
 	}
-	nb = count_quotes(array);
+	ret = count_quotes(array);
 	display_ptoken(array);
-	printf("Quotes nb : %d===========\n", nb);
-	if (nb % 2)
+	printf("Quotes nb : %d===========\n", ret);
+	if (ret)
 	{
 		syntax_error();
 		clear_ptoken(array);
