@@ -40,8 +40,10 @@ char	*treat_backslash(t_ptoken *word)
 	back = bslash_f_count(word->str);
 	if (DEBUG)
 		printf("back is : %d\n", back);
+	printf("NEXT TOKEN : %s\n", g_shell.next_token_str);
 	if (back % 2 && !g_shell.next_token_str)
 	{
+		printf("Error bslash and no next token right here\n");
 		g_shell.error = true;
 		return (NULL);
 	}
