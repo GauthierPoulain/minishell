@@ -34,6 +34,22 @@ int	count_quotes(t_ptoken *array)
 	return (count);
 }
 
+int	count_backslash(t_ptoken *array)
+{
+	int	i;
+
+	i = 0;
+	while ((array + i)->str)
+	{
+		if ((array + i)->str[0] == '\\' && !(array + i)->is_escaped)
+			(array + i)->str = treat_backslash((array + i));
+		if (!(array + i)->str)
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
 t_ptoken	*array_from_list(void)
 {
 	int				size;
@@ -80,7 +96,7 @@ t_ptoken	*parse_line(char *line)
 	nb = count_quotes(array); 
 	display_ptoken(array);
 	printf("Quotes nb : %d===========\n", nb);
-	if (count_quotes(array) % 2)
+	if (count_quotes(array) % 2 || count_backslash(array))
 	{
 		syntax_error();
 		clear_ptoken(array);
