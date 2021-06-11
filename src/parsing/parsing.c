@@ -99,7 +99,7 @@ t_ptoken	*parse_line(char *line)
 		ft_lstclear(&g_shell.tokens);
 		return (NULL);
 	}
-	nb = count_quotes(array); ;
+	nb = count_quotes(array);
 	display_ptoken(array);
 	printf("Quotes nb : %d===========\n", nb);
 	if (nb % 2)
