@@ -26,7 +26,7 @@ int	count_quotes(t_ptoken *array)
 	s_quotes = 0;
 	while ((array + i)->str)
 	{
-		if (!ft_strcmp((array + i)->str, "\"") && !(array + i)->is_escaped && !(array + i)->is_in_squotes && !(array + (i - 1))->is_in_squotes)
+		if (!ft_strcmp((array + i)->str, "\"") && !(array + i)->is_escaped && !(array + i)->is_in_squotes && (array + (i - 1))->is_in_squotes)
 			quotes++;
 		i++;
 	}
