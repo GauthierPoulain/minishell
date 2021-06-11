@@ -2,10 +2,7 @@
 
 void	chose_parsing(t_ptoken *p_token, t_list *lst)
 {
-	if (DEBUG)
-		printf("ALED OUI\n");
 	p_token->str = parse_tokens(lst->content);
-	printf("token during parsing %s\n", p_token->str);
 }
 
 void	swap_rest(t_ptoken *array, int i, int size)
@@ -26,7 +23,6 @@ int	count_quotes(t_ptoken *array)
 	count = 0;
 	while ((array + i)->str)
 	{
-		printf("During count : [%s]\n", (array + i)->str);
 		if (!ft_strcmp((array + i)->str, "\"") && !(array + i)->is_escaped)
 			count++;
 		i++;
@@ -67,10 +63,13 @@ t_ptoken	*array_from_list(void)
 		if (check_things(lst))
 		{
 			if (!(array + (i - 1))->is_escaped
-				&& get_token_at(((t_token *)lst->content)->id - 1)->type != 10
+				/*&& get_token_at(((t_token *)lst->content)->id - 1)->type != 10
 				&& get_token_at(((t_token *)lst->content)->id - 1)->type != 4
-				&& get_token_at(((t_token *)lst->content)->id - 1)->type != 6)
-				join_if_needed(array, &i, &size, lst);
+				&& get_token_at(((t_token *)lst->content)->id - 1)->type != 6*/)
+				{
+					printf("OWOWOWOWOOWOWOWOWOWO\n");
+					join_if_needed(array, &i, &size, lst);
+				}
 			else if ((array + (i - 1))->is_escaped)
 				join_if_needed(array, &i, &size, lst);
 		}

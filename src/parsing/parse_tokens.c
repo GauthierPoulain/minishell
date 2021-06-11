@@ -51,11 +51,8 @@ char	*parse_tokens(t_ptoken *word)
 
 	i = 0;
 	new = word->str;
-	printf("NEW [%s]\n", new);
 	while (new[i])
 	{
-		if (DEBUG)
-			printf("actual new [%s] and i : %d\n", new, i);
 		if (new[i] == '\\')
 		{
 			new = treat_backslash(word);

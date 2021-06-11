@@ -39,11 +39,9 @@ void	treat_array(t_ptoken *array)
 	int		size;
 
 	size = get_array_size(array);
-	printf("size %d\n", size);
 	i = 0;
 	while (i < size)
 	{
-		printf("yo\n");
 		if (!(array + i)->is_escaped && !ft_strcmp((array + i)->str, "\"")
 			&& i > 1)
 		{

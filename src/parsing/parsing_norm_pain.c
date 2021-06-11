@@ -49,7 +49,7 @@ void	display_ptoken(t_ptoken *array)
 	i = 0;
 	while ((array + i)->str)
 	{
-		printf("(%s)dquotes:[%d]squotes:[%d]\n", (array + i)->str, (array + i)->is_in_quotes, (array + i)->is_in_squotes);
+		printf("(%s)dquotes:[%d]squotes:[%d]escaped:[%d]\n", (array + i)->str, (array + i)->is_in_quotes, (array + i)->is_in_squotes, (array + i)->is_escaped);
 		i++;
 	}
 }

@@ -7,8 +7,6 @@ int	quotes_token_len(char *line, t_lexer *lexer)
 
 	len = 1;
 	i = lexer->i + 1;
-	if (DEBUG)
-		printf("quotes token\n");
 	while (line[i] == '"')
 	{
 		i++;
@@ -39,11 +37,7 @@ int	bslash_token_len(char *line, t_lexer *lexer)
 	infos.was_quotes = false;
 	infos.len = 1;
 	i = lexer->i + 1;
-	if (DEBUG)
-		printf("blash token\n[%s]\n", line + i);
 	no_room_infos(line, &i, &infos);
-	if (DEBUG)
-		printf("line bslash [%s]\n", line + i);
 	while (line[i] && line[i] == '\\')
 	{
 		i++;
@@ -58,8 +52,6 @@ int	s_quotes_len(char *line, t_lexer *lexer)
 	int	i;
 
 	len = 1;
-	if (DEBUG)
-		printf("squotes\n");
 	i = lexer->i + 1;
 	while (line[i] == '\'')
 	{
@@ -83,8 +75,6 @@ int	get_token_len(char *line, t_lexer *lexer)
 
 	print = true;
 	i = lexer->i;
-	if (print && DEBUG)
-		printf("actual char [%c] during line [%s]\n", line[i], line + i);
 	if (line[i] == '\"')
 	{
 		lexer->had_quotes = true;
@@ -107,8 +97,6 @@ int	get_token_len(char *line, t_lexer *lexer)
 
 void	token_l_error(char *line, t_lexer *lexer)
 {
-	if (DEBUG)
-		printf("tokenl\n");
 	ft_putstr_fd(STDERR_FILENO, "Syntax error tokenl\n");
 	ft_lstclear(&g_shell.tokens);
 	lexer->i = ft_strlen(line);
