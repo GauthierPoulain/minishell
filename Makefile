@@ -78,7 +78,6 @@ SRCS_LIB = \
 SRCS_MS = \
 	./src/exec/exec.c \
 	./src/exec/exec2.c \
-	./src/exec/split_commands.c \
 	./src/exec/errors.c \
 	./src/exec/fill_cmd_struct.c \
 	./src/exec/get_cmd_struct.c \
@@ -87,6 +86,7 @@ SRCS_MS = \
 	./src/exec/process_pipe.c \
 	./src/exec/utils.c \
 	./src/exec/utils2.c \
+	./src/exec/utils3.c \
 	./src/process_key.c \
 	./src/builtin_cd.c \
 	./src/builtin_echo.c \
