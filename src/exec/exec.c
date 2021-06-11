@@ -23,20 +23,6 @@ static void	subprocess_exec(t_command cmd, int pipes[2], bool read_pipe)
 	close_subprocess(errno);
 }
 
-int	child_supervisor(t_buffer *data, bool read_pipe, int pipes[2])
-{
-	int			status;
-
-	signals_listeners_to_child();
-	if (read_pipe)
-		print_buffer_in_fd(*data, pipes[1]);
-	reset_pipe_output();
-	waitpid(g_shell.child, &status, 0);
-	close(pipes[0]);
-	close(pipes[1]);
-	return (((status) & 0xff00) >> 8);
-}
-
 static int	subprocess(t_command cmd)
 {
 	int			pipes[2];
@@ -61,7 +47,7 @@ static int	subprocess(t_command cmd)
 
 int	run_command(t_command *cmd)
 {
-	int status;
+	int	status;
 
 	g_shell.need_pipe = cmd->need_pipe;
 	wait_outputmanager(*cmd);
@@ -81,20 +67,10 @@ int	run_command(t_command *cmd)
 	return (status);
 }
 
-void	run_line(t_ptoken *argv)
+static void	loop(t_list *cmds)
 {
-	t_list		*cmds;
 	t_command	*cmd;
 
-	g_shell.pipe_output.ptr = NULL;
-	g_shell.is_running = true;
-	cmds = get_commands(argv);
-	if (!cmds)
-	{
-		g_shell.last_return = syntax_error();
-		return ;
-	}
-	reset_input_mode();
 	while (cmds)
 	{
 		cmd = cmds->content;
@@ -106,6 +82,20 @@ void	run_line(t_ptoken *argv)
 		check_write_redirect(cmd, cmds);
 		cmds = cmds->next;
 	}
+}
+
+void	run_line(t_ptoken *argv)
+{
+	t_list		*cmds;
+
+	g_shell.pipe_output.ptr = NULL;
+	g_shell.is_running = true;
+	cmds = get_commands(argv);
+	reset_input_mode();
+	if (!cmds)
+		g_shell.last_return = syntax_error();
+	else
+		loop(cmds);
 	g_shell.is_running = false;
 	add_signals_listeners();
 	set_input_mode();

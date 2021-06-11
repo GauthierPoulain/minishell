@@ -3,7 +3,7 @@
 static size_t	bslash_f_count(char *word)
 {
 	int	j;
-	int i;
+	int	i;
 
 	j = 0;
 	i = 0;

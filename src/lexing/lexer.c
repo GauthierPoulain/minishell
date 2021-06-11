@@ -63,7 +63,6 @@ int	else_token_l(char *line, t_lexer *lexer)
 
 void	handle_space(char *line, t_token *token, t_lexer *lexer)
 {
-
 	int		token_l;
 	bool	trash;
 
