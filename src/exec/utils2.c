@@ -27,3 +27,30 @@ int	is_operator(char *c)
 	else
 		return (0);
 }
+
+size_t	ft_toktab_len(t_ptoken *car)
+{
+	size_t	res;
+
+	res = 0;
+	while (car && car->str)
+	{
+		car++;
+		res++;
+	}
+	return (res);
+}
+
+int	child_supervisor(t_buffer *data, bool read_pipe, int pipes[2])
+{
+	int			status;
+
+	signals_listeners_to_child();
+	if (read_pipe)
+		print_buffer_in_fd(*data, pipes[1]);
+	reset_pipe_output();
+	waitpid(g_shell.child, &status, 0);
+	close(pipes[0]);
+	close(pipes[1]);
+	return (((status) & 0xff00) >> 8);
+}

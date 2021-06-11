@@ -1,18 +1,5 @@
 #include "../../includes/minishell.h"
 
-size_t	ft_toktab_len(t_ptoken *car)
-{
-	size_t	res;
-
-	res = 0;
-	while (car && car->str)
-	{
-		car++;
-		res++;
-	}
-	return (res);
-}
-
 static t_ptoken	*toktab_add(t_ptoken *argv, t_ptoken str)
 {
 	t_ptoken	*res;
@@ -59,20 +46,6 @@ t_command	*init_command_struct(void)
 	return (cmd);
 }
 
-bool	check_struct(t_list	*lst)
-{
-	t_command	*cmd;
-
-	while (lst)
-	{
-		cmd = lst->content;
-		if (cmd->operator && ft_strcmp(cmd->operator, ";") && !lst->next)
-			return (false);
-		lst = lst->next;
-	}
-	return (true);
-}
-
 void	check_operator(t_command *actual, t_ptoken *argv, int i)
 {
 	t_ptoken	tmp;
@@ -90,6 +63,27 @@ void	check_operator(t_command *actual, t_ptoken *argv, int i)
 		actual->operator = ft_strdup((argv + i)->str);
 }
 
+static void	loop(t_command *actual, t_ptoken *argv, int *i, t_list *lst)
+{
+	printf("escaped [%s] ? %d\n", (argv + *i)->str, (argv + *i)->is_escaped);
+	if (is_operator((argv + *i)->str) && ft_strlen((argv + *i)->str)
+		== (size_t)is_operator((argv + *i)->str) && !(argv + *i)->is_escaped)
+	{
+		check_operator(actual, argv, *i);
+		ft_lstadd_back(&lst, ft_lstnew(actual));
+		actual = init_command_struct();
+	}
+	else if (!ft_strcmp("\"", (argv + *i)->str) || !ft_strcmp("\'",
+			(argv + *i)->str))
+	{
+		if ((argv + *i)->is_escaped)
+			actual->token = toktab_add(actual->token, *(argv + *i));
+	}
+	else
+		actual->token = toktab_add(actual->token, *(argv + *i));
+	*i += 1;
+}
+
 t_list	*get_commands(t_ptoken *argv)
 {
 	t_list		*lst;
@@ -100,24 +94,7 @@ t_list	*get_commands(t_ptoken *argv)
 	i = 0;
 	actual = init_command_struct();
 	while ((argv + i)->str)
-	{
-		printf("is escaped [%s] ? %d\n", (argv +i)->str ,(argv + i)->is_escaped);
-		if (is_operator((argv + i)->str) && ft_strlen((argv + i)->str)
-			== (size_t)is_operator((argv + i)->str) && !(argv + i)->is_escaped)
-		{
-			check_operator(actual, argv, i);
-			ft_lstadd_back(&lst, ft_lstnew(actual));
-			actual = init_command_struct();
-		}
-		else if (!ft_strcmp("\"", (argv + i)->str) || !ft_strcmp("\'", (argv + i)->str))
-		{
-			if ((argv + i)->is_escaped)
-				actual->token = toktab_add(actual->token, *(argv + i));
-		}
-		else
-			actual->token = toktab_add(actual->token, *(argv + i));	
-		i++;
-	}
+		loop(actual, argv, &i, lst);
 	if (actual->token)
 		ft_lstadd_back(&lst, ft_lstnew(actual));
 	if (!check_struct(lst) || !fill_cmd_structs(lst))

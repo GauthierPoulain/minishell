@@ -63,12 +63,14 @@ char	**tab_add(char **argv, char *str)
 	res = ft_calloc(sizeof(char *) * (ft_tab_len(argv) + 2));
 	save = res;
 	if (argv)
+	{
 		while (*argv)
 		{
 			*res = ft_strdup(*argv);
 			res++;
 			argv++;
 		}
+	}
 	*res = ft_strdup(str);
 	return (save);
 }
@@ -82,15 +84,28 @@ char	**get_argv(t_ptoken *argv)
 	{
 		printf("is in quotes ? %d\n", argv->is_in_quotes);
 		if (!argv->is_in_quotes)
-		{
-			if (argv->str[0] == '~' && (argv->str[1] == 0 || argv->str[1] == '/'))
-			argv->str = ft_strreplace(argv->str, "~",get_env("HOME"));
-		}
+			if (argv->str[0] == '~' && (argv->str[1] == 0
+					|| argv->str[1] == '/'))
+				argv->str = ft_strreplace(argv->str, "~", get_env("HOME"));
 		// if (!argv->squotes)
 		if (!argv->is_escaped)
-		replace_env_var(argv);
+			replace_env_var(argv);
 		res = tab_add(res, argv->str);
 		argv++;
 	}
 	return (res);
+}
+
+bool	check_struct(t_list	*lst)
+{
+	t_command	*cmd;
+
+	while (lst)
+	{
+		cmd = lst->content;
+		if (cmd->operator && ft_strcmp(cmd->operator, ";") && !lst->next)
+			return (false);
+		lst = lst->next;
+	}
+	return (true);
 }

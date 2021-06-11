@@ -33,7 +33,6 @@ char	*replace_dolls(t_ptoken *word, int *i)
 		env_value = ft_itoa(g_shell.last_return);
 	else
 		env_value = get_env(ft_strndup(word->str + *i + 1, len));
-
 	ret = ft_strjoin(ret, env_value);
 	ret = ft_strjoin(ret, word->str + (*i) + len + 1);
 	word->str = ret;
@@ -72,13 +71,11 @@ void	*ft_memmove(void *dst, const void *src, size_t len)
 char	*treat_doll(t_ptoken *word, int *i)
 {
 	int		slash;
-	char	*tmp;
 
 	if (word->str[(*i) + 1] == '\\')
 	{
-		tmp = ft_strndup(word->str, (*i) + 1);
-		tmp = ft_strjoin(tmp, word->str + (*i) + 2);
-		word->str = tmp;
+		word->str = ft_strjoin(ft_strndup(word->str, (*i) + 1),
+				word->str + (*i) + 2);
 		*i += 1;
 		*i += get_word_len(word->str, *i);
 		return (word->str);

@@ -368,5 +368,8 @@ void		swap_rest(t_ptoken *array, int i, int size);
 char		**get_argv(t_ptoken *argv);
 char		**tab_add(char **argv, char *str);
 void		clear_ptoken(t_ptoken *array);
+size_t		ft_toktab_len(t_ptoken *car);
+int			child_supervisor(t_buffer *data, bool read_pipe, int pipes[2]);
+bool		check_struct(t_list	*lst);
 
 #endif
