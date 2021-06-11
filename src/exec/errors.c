@@ -3,7 +3,14 @@
 int	commant_not_found(char *cmd)
 {
 	ft_putstr_fd(STDERR_FILENO, "minishell: command not found: ");
-	ft_putstr_fd(STDERR_FILENO, cmd);
+	if (ft_strlen(cmd) > 0)
+		ft_putstr_fd(STDERR_FILENO, cmd);
+	else
+	{
+		ft_putchar_fd(STDERR_FILENO, '\'');
+		ft_putstr_fd(STDERR_FILENO, cmd);
+		ft_putchar_fd(STDERR_FILENO, '\'');
+	}
 	ft_putstr_fd(STDERR_FILENO, "\n");
 	return (127);
 }

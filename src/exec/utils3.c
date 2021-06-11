@@ -33,3 +33,29 @@ void	check_op_omg(t_command **actual, t_ptoken *argv, int *i, t_list **lst)
 	ft_lstadd_back(lst, ft_lstnew(*actual));
 	*actual = init_command_struct();
 }
+
+void	super_check_quotes(t_command **actual, t_ptoken *argv, int *i)
+{
+	if ((*actual)->qcheck.s || (*actual)->qcheck.d)
+		(*actual)->token = toktab_add((*actual)->token, *(argv + *i));
+	if ((argv + (*i + 1))->str && (((argv + *i)->str[0] == '\''
+				&& (argv + (*i + 1))->str[0] == '\'')
+				|| ((argv + *i)->str[0] == '\"'
+			&& (argv + (*i + 1))->str[0] == '\"')))
+	{
+		if ((argv + *i)->str[0] == '\'')
+		{
+			if (!(*actual)->qcheck.s && !(*actual)->qcheck.d)
+				(*actual)->token = toktab_add((*actual)->token, *(argv + *i));
+		}
+		else if ((argv + *i)->str[0] == '\"')
+		{
+			if (!(*actual)->qcheck.s && !(*actual)->qcheck.d)
+				(*actual)->token = toktab_add((*actual)->token, *(argv + *i));
+		}
+	}
+	if ((argv + *i)->str[0] == '\'' && !(*actual)->qcheck.d)
+		(*actual)->qcheck.s = !(*actual)->qcheck.s;
+	else if ((argv + *i)->str[0] == '\"' && !(*actual)->qcheck.s)
+		(*actual)->qcheck.d = !(*actual)->qcheck.d;
+}

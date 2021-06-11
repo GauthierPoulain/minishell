@@ -1,11 +1,10 @@
 #include "../../includes/minishell.h"
 
-static t_ptoken	*toktab_add(t_ptoken *argv, t_ptoken str)
+t_ptoken	*toktab_add(t_ptoken *argv, t_ptoken str)
 {
 	t_ptoken	*res;
 	t_ptoken	*save;
 
-	printf("tab len = %zu\n", ft_toktab_len(argv) + 2);
 	res = ft_calloc(sizeof(t_ptoken) * (ft_toktab_len(argv) + 2));
 	save = res;
 	while (argv && argv->str)
@@ -21,7 +20,6 @@ static t_ptoken	*toktab_add(t_ptoken *argv, t_ptoken str)
 	res->is_in_squotes = str.is_in_squotes;
 	res->is_in_quotes = str.is_in_quotes;
 	res->str = ft_strdup(str.str);
-	// *res = *str;
 	return (save);
 }
 
@@ -43,6 +41,8 @@ t_command	*init_command_struct(void)
 	cmd->skip_exec = false;
 	cmd->file_input = false;
 	cmd->token = NULL;
+	cmd->qcheck.d = false;
+	cmd->qcheck.s = false;
 	return (cmd);
 }
 
@@ -65,7 +65,6 @@ void	check_operator(t_command *actual, t_ptoken *argv, int i)
 
 static void	loop(t_command **actual, t_ptoken *argv, int *i, t_list **lst)
 {
-	// printf("escaped [%s] ? %d\n", (argv + *i)->str, (argv + *i)->is_escaped);
 	if (is_operator((argv + *i)->str) && ft_strlen((argv + *i)->str)
 		== (size_t)is_operator((argv + *i)->str) && !(argv + *i)->is_escaped
 		&& !(argv + *i)->is_in_quotes && !(argv + *i)->is_in_squotes)
@@ -75,10 +74,11 @@ static void	loop(t_command **actual, t_ptoken *argv, int *i, t_list **lst)
 	{
 		if ((argv + *i)->is_escaped)
 			(*actual)->token = toktab_add((*actual)->token, *(argv + *i));
+		else
+			super_check_quotes(actual, argv, i);
 	}
 	else
 		(*actual)->token = toktab_add((*actual)->token, *(argv + *i));
-	// printf("token str : %s\n", actual->path);
 	*i += 1;
 }
 

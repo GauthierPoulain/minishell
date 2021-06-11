@@ -30,7 +30,7 @@ int	builtin_exit(char **argv)
 {
 	int		ret;
 
-	ret = 0;
+	ret = g_shell.last_return;
 	if (isatty(STDIN_FILENO))
 		ft_putstr("exit\n");
 	if (argv && argv[1] && *argv[1] && check_int_overflow(argv[1]))

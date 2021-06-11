@@ -28,7 +28,7 @@ static void	join_test(t_ptoken *array, int *i, int *size)
 	char	*buf;
 
 	buf = ft_strdup((array + *i)->str);
-	(array + *i)->str = NULL;
+	(array + *i)->str = ft_strdup("");
 	(array + (*i - 1))->str = ft_strjoin((array + (*i - 1))->str, buf);
 	swap_rest(array, *i + 1, *size);
 }
@@ -46,7 +46,7 @@ void	treat_array(t_ptoken *array)
 			&& i > 1)
 		{
 			printf("SWAP\n");
-			(array + i)->str = NULL;
+			(array + i)->str = ft_strdup("");
 			swap_rest(array, i + 1, size);
 			join_test(array, &i, &size);
 			display_ptoken(array);

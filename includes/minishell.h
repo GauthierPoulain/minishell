@@ -146,6 +146,12 @@ typedef struct s_ptoken
 	bool	need_join;
 }				t_ptoken;
 
+typedef struct s_qcheck
+{
+	bool	s;
+	bool	d;
+}				t_qcheck;
+
 typedef struct s_command
 {
 	char		*prog;
@@ -161,6 +167,7 @@ typedef struct s_command
 	char		*operator;
 	bool		skip_exec;
 	bool		file_input;
+	t_qcheck	qcheck;
 }				t_command;
 
 typedef struct s_minishell
@@ -377,5 +384,7 @@ void		check_op_omg(t_command **actual, t_ptoken *argv, int *i,
 				t_list **lst);
 void		check_operator(t_command *actual, t_ptoken *argv, int i);
 t_command	*init_command_struct(void);
+void		super_check_quotes(t_command **actual, t_ptoken *argv, int *i);
+t_ptoken	*toktab_add(t_ptoken *argv, t_ptoken str);
 
 #endif
