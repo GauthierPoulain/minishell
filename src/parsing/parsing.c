@@ -34,21 +34,21 @@ int	count_quotes(t_ptoken *array)
 	return (count);
 }
 
-int	count_backslash(t_ptoken *array)
-{
-	int	i;
+// int	count_backslash(t_ptoken *array)
+// {
+// 	int	i;
 
-	i = 0;
-	while ((array + i)->str)
-	{
-		if ((array + i)->str[0] == '\\' && !(array + i)->is_escaped)
-			(array + i)->str = treat_backslash((array + i));
-		if (!(array + i)->str)
-			return (1);
-		i++;
-	}
-	return (0);
-}
+// 	i = 0;
+// 	while ((array + i)->str)
+// 	{
+// 		if ((array + i)->str[0] == '\\' && !(array + i)->is_escaped)
+// 			(array + i)->str = treat_backslash(array, i);
+// 		if (!(array + i)->str)
+// 			return (1);
+// 		i++;
+// 	}
+// 	return (0);
+// }
 
 t_ptoken	*array_from_list(void)
 {
@@ -87,22 +87,24 @@ t_ptoken	*parse_line(char *line)
 {
 	t_ptoken	*array;
 	int			nb;
+	// int			ret;
 
 	get_lexer(line);
 	g_shell.error = false;
 	g_shell.is_in_quotes = false;
 	g_shell.is_in_s_quotes = false;
 	array = array_from_list();
-	nb = count_quotes(array); 
+	nb = count_quotes(array); ;
 	display_ptoken(array);
 	printf("Quotes nb : %d===========\n", nb);
-	if (count_quotes(array) % 2 || count_backslash(array))
+	// printf("blash ret : %d===========\n", ret);
+	if (count_quotes(array) % 2)
 	{
 		syntax_error();
 		clear_ptoken(array);
 		ft_lstclear(&g_shell.tokens);
 		return (NULL);
 	}
-	// treat_array(array);
+	treat_array(array);
 	return (array);
 }

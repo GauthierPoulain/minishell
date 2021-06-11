@@ -41,6 +41,9 @@ char	*treat_backslash(t_ptoken *word)
 	if (DEBUG)
 		printf("back is : %d\n", back);
 	if (back % 2 && !g_shell.next_token_str)
+	{
+		g_shell.error = true;
 		return (NULL);
-	return (bslash_filled(word, back));
+	}
+	return (bslash_filled((word), back));
 }
