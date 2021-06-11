@@ -100,7 +100,7 @@ int	get_token_len(char *line, t_lexer *lexer)
 	else if (line[i] == '>' || line[i] == '|' || line[i] == '<')
 	{
 		lexer->had_semi = true;
-		return (is_operator(line + lexer->i));
+		return (1);
 	}
 	return (else_token_l(line, lexer));
 }

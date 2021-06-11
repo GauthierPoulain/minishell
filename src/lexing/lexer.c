@@ -26,10 +26,9 @@ static int	get_token_info(t_token *token, char *line, int start, int end)
 		token->type = 5;
 	else if (token->str[0] == '\'')
 		token->type = 6;
-	else if (token->str[0] == ';')
+	else if (token->str[0] == ';' || token->str[0] == '>'
+			|| token->str[0] == '|' || token->str[0] == '<')
 		token->type = 10;
-	else if (!ft_strcmp(token->str, ">>"))
-		token->type = 11;
 	else
 		token->type = 0;
 	return (0);
