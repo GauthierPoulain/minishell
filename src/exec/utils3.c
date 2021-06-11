@@ -37,8 +37,15 @@ void	check_op_omg(t_command **actual, t_ptoken *argv, int *i, t_list **lst)
 void	super_check_quotes(t_command **actual, t_ptoken *argv, int *i)
 {
 	if ((*actual)->qcheck.s || (*actual)->qcheck.d)
+	{
+		if ((argv + *i)->str[0] == '\'' && !(*actual)->qcheck.d)
+			(*actual)->qcheck.s = !(*actual)->qcheck.s;
+		else if ((argv + *i)->str[0] == '\"' && !(*actual)->qcheck.s)
+			(*actual)->qcheck.d = !(*actual)->qcheck.d;
+	}
+	if ((*actual)->qcheck.s || (*actual)->qcheck.d)
 		(*actual)->token = toktab_add((*actual)->token, *(argv + *i));
-	if ((argv + (*i + 1))->str && (((argv + *i)->str[0] == '\''
+	else if ((argv + (*i + 1))->str && (((argv + *i)->str[0] == '\''
 				&& (argv + (*i + 1))->str[0] == '\'')
 				|| ((argv + *i)->str[0] == '\"'
 			&& (argv + (*i + 1))->str[0] == '\"')))
@@ -46,16 +53,25 @@ void	super_check_quotes(t_command **actual, t_ptoken *argv, int *i)
 		if ((argv + *i)->str[0] == '\'')
 		{
 			if (!(*actual)->qcheck.s && !(*actual)->qcheck.d)
+			{
+				(argv + *i)->str = ft_strdup("");
 				(*actual)->token = toktab_add((*actual)->token, *(argv + *i));
+			}
 		}
 		else if ((argv + *i)->str[0] == '\"')
 		{
 			if (!(*actual)->qcheck.s && !(*actual)->qcheck.d)
+			{
+				(argv + *i)->str = ft_strdup("");
 				(*actual)->token = toktab_add((*actual)->token, *(argv + *i));
+			}
 		}
 	}
-	if ((argv + *i)->str[0] == '\'' && !(*actual)->qcheck.d)
-		(*actual)->qcheck.s = !(*actual)->qcheck.s;
-	else if ((argv + *i)->str[0] == '\"' && !(*actual)->qcheck.s)
-		(*actual)->qcheck.d = !(*actual)->qcheck.d;
+	if (!(*actual)->qcheck.s && !(*actual)->qcheck.d)
+	{
+		if ((argv + *i)->str[0] == '\'' && !(*actual)->qcheck.d)
+			(*actual)->qcheck.s = !(*actual)->qcheck.s;
+		else if ((argv + *i)->str[0] == '\"' && !(*actual)->qcheck.s)
+			(*actual)->qcheck.d = !(*actual)->qcheck.d;
+	}
 }
