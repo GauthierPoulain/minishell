@@ -26,17 +26,18 @@ int	count_quotes(t_ptoken *array)
 	s_quotes = 0;
 	while ((array + i)->str)
 	{
-		if (!ft_strcmp((array + i)->str, "\"") && !(array + i)->is_escaped)
+		if (!ft_strcmp((array + i)->str, "\"") && !(array + i)->is_escaped && !(array + i)->is_in_squotes && !(array + (i - 1))->is_in_squotes)
 			quotes++;
 		i++;
 	}
 	i = 0;
 	while ((array + i)->str)
 	{
-		if (!ft_strcmp((array + i)->str, "\'") && !(array + i)->is_escaped)
+		if (!ft_strcmp((array + i)->str, "\'") && !(array + i)->is_escaped && !(array + i)->is_in_quotes)
 			s_quotes++;
 		i++;
 	}
+	printf("squotes count: %d\nquotes count: %d\n", s_quotes, quotes);
 	if (s_quotes % 2 || quotes % 2)
 		return (1);
 	return (0);
@@ -125,6 +126,7 @@ t_ptoken	*parse_line(char *line)
 		ft_lstclear(&g_shell.tokens);
 		return (NULL);
 	}
+	display_ptoken(array);
 	ret = count_quotes(array);
 	printf("Quotes nb : %d===========\n", ret);
 	if (ret)
@@ -135,7 +137,6 @@ t_ptoken	*parse_line(char *line)
 		return (NULL);
 	}
 	printf("je suis la fin\n");
-	display_ptoken(array);
 	// treat_array(array);
 	return (array);
 }
