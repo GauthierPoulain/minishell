@@ -10,6 +10,8 @@ int	do_both(t_list *lst, t_ptoken *array, int i)
 {
 	(array + i)->is_escaped = false;
 	(array + i)->need_join = false;
+	(array + i)->is_in_quotes = false;
+	(array + i)->is_in_squotes = false;
 	(array + i)->str = NULL;
 	things(lst, array, i);
 	if (g_shell.error)
@@ -22,16 +24,19 @@ int	check_things(t_list *lst)
 	if (((t_token *)lst->content)->id >= 1)
 		if (get_token_at(((t_token *)lst->content)->id - 1)->type == 3
 			&& !((t_token *)lst->content)->sp
-			&& (((t_token *)lst->content)->type == 4))
+			&& (((t_token *)lst->content)->type == 4)
+			&& ((t_token *)lst->content)->type == 6)
 				return (1);
 	if (!((t_token *)lst->content)->sp && ((t_token *)lst->content)->id >= 1
-		&& ((t_token *)lst->content)->type != 4)
+		&& ((t_token *)lst->content)->type != 4 && ((t_token *)lst->content)->type != 6)
 		return (1);
 	else if (get_token_at(((t_token *)lst->content)->id)->type == 4)
 	{
-		if (((t_token *)lst->content)->id >= 1)
+		// if (((t_token *)lst->content)->id >= 1)
 			g_shell.is_in_quotes = !g_shell.is_in_quotes;
 	}
+	else if (get_token_at(((t_token *)lst->content)->id)->type == 6)
+		g_shell.is_in_s_quotes = !g_shell.is_in_s_quotes;
 	// else if (g_shell.is_in_quotes)
 	// 	;
 	return (0);
@@ -44,7 +49,7 @@ void	display_ptoken(t_ptoken *array)
 	i = 0;
 	while ((array + i)->str)
 	{
-		printf("(%s)[%d]\n", (array + i)->str, (array + i)->is_in_quotes);
+		printf("(%s)dquotes:[%d]squotes:[%d]\n", (array + i)->str, (array + i)->is_in_quotes, (array + i)->is_in_squotes);
 		i++;
 	}
 }
