@@ -77,10 +77,7 @@ t_ptoken	*array_from_list(void)
 		if (token->type != 3)
 			g_shell.error = false;
 		if (token->type == 3)
-		{
-			printf("Oh oui bb\n");
 			(array + i)->str = treat_backslash((array + i));
-		}
 		if (token->id)
 			if ((array + (i - 1))->escapes)
 				(array + i)->is_escaped = true;
@@ -93,21 +90,6 @@ t_ptoken	*array_from_list(void)
 				g_shell.is_in_s_quotes = !g_shell.is_in_s_quotes;
 		}
 		printf("Je suis le token [%s]\n", token->str);
-		// if (do_both(lst, array, i))
-		// 	return (NULL);
-		// if (check_things(lst))
-		// {
-		// 	if (!(array + (i - 1))->is_escaped
-		// 		&& get_token_at(((t_token *)lst->content)->id - 1)->type != 10
-		// 		&& get_token_at(((t_token *)lst->content)->id - 1)->type != 4
-		// 		&& get_token_at(((t_token *)lst->content)->id - 1)->type != 6)
-		// 		{
-		// 			printf("OWOWOWOWOOWOWOWOWOWO\n");
-		// 			join_if_needed(array, &i, &size, lst);
-		// 		}
-		// 	else if ((array + (i - 1))->is_escaped)
-		// 		join_if_needed(array, &i, &size, lst);
-		// }
 		if (g_shell.is_in_quotes)
 			(array + i)->is_in_quotes = true;
 		else
@@ -144,7 +126,6 @@ t_ptoken	*parse_line(char *line)
 		return (NULL);
 	}
 	ret = count_quotes(array);
-	display_ptoken(array);
 	printf("Quotes nb : %d===========\n", ret);
 	if (ret)
 	{
@@ -153,6 +134,7 @@ t_ptoken	*parse_line(char *line)
 		ft_lstclear(&g_shell.tokens);
 		return (NULL);
 	}
+	display_ptoken(array);
 	// treat_array(array);
 	return (array);
 }
