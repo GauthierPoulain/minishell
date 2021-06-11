@@ -80,8 +80,12 @@ char	**get_argv(t_ptoken *argv)
 	res = NULL;
 	while (argv && argv->str)
 	{
-		if (!argv->is_escaped)
+		printf("is in quotes ? %d\n", argv->is_in_quotes);
+		if (!argv->is_in_quotes)
+		{
+			if (argv->str[0] == '~' && (argv->str[1] == 0 || argv->str[1] == '/'))
 			argv->str = ft_strreplace(argv->str, "~",get_env("HOME"));
+		}
 		// if (!argv->squotes)
 		if (!argv->is_escaped)
 		replace_env_var(argv);
