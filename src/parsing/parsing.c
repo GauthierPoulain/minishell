@@ -3,6 +3,7 @@
 void	chose_parsing(t_ptoken *p_token, t_list *lst)
 {
 	p_token->str = parse_tokens(lst->content);
+	// p_token->str = ((t_token *)lst->content)->str;
 }
 
 void	swap_rest(t_ptoken *array, int i, int size)
@@ -56,23 +57,35 @@ t_ptoken	*array_from_list(void)
 	init_things(&size, &i);
 	array = ft_calloc(sizeof(t_ptoken) * (size + 1));
 	lst = g_shell.tokens;
-	while (i < size && lst && g_shell.error == false)
+	while (i < size && lst)
 	{
-		if (do_both(lst, array, i))
-			return (NULL);
-		if (check_things(lst))
+		do_both(lst, array, i);
+		(array + i)->str = ((t_token *)lst->content)->str;
+		if (((t_token *)lst->content)->type != 3)
 		{
-			if (!(array + (i - 1))->is_escaped
-				&& get_token_at(((t_token *)lst->content)->id - 1)->type != 10
-				&& get_token_at(((t_token *)lst->content)->id - 1)->type != 4
-				&& get_token_at(((t_token *)lst->content)->id - 1)->type != 6)
-				{
-					printf("OWOWOWOWOOWOWOWOWOWO\n");
-					join_if_needed(array, &i, &size, lst);
-				}
-			else if ((array + (i - 1))->is_escaped)
-				join_if_needed(array, &i, &size, lst);
+			printf("yo\n");
+			g_shell.error = false;
 		}
+		if (((t_token *)lst->content)->type == 3)
+		{
+			printf("backslash\n");
+			(array + i)->str = treat_backslash((array + i));
+		}
+		// if (do_both(lst, array, i))
+		// 	return (NULL);
+		// if (check_things(lst))
+		// {
+		// 	if (!(array + (i - 1))->is_escaped
+		// 		&& get_token_at(((t_token *)lst->content)->id - 1)->type != 10
+		// 		&& get_token_at(((t_token *)lst->content)->id - 1)->type != 4
+		// 		&& get_token_at(((t_token *)lst->content)->id - 1)->type != 6)
+		// 		{
+		// 			printf("OWOWOWOWOOWOWOWOWOWO\n");
+		// 			join_if_needed(array, &i, &size, lst);
+		// 		}
+		// 	else if ((array + (i - 1))->is_escaped)
+		// 		join_if_needed(array, &i, &size, lst);
+		// }
 		if (g_shell.is_in_quotes)
 			(array + i)->is_in_quotes = true;
 		else
@@ -83,6 +96,11 @@ t_ptoken	*array_from_list(void)
 			(array + i)->is_in_squotes = false;
 		lst = lst->next;
 		i++;
+	}
+	if (g_shell.error)
+	{
+		printf("error null\n");
+		return (NULL);
 	}
 	return (array);
 }

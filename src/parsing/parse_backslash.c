@@ -38,10 +38,10 @@ char	*treat_backslash(t_ptoken *word)
 	int		back;
 
 	back = bslash_f_count(word->str);
-	if (back % 2 && !g_shell.next_token_str)
+	if (back % 2)
 	{
+		word->escapes = true;
 		g_shell.error = true;
-		return (NULL);
 	}
 	return (bslash_filled((word), back));
 }

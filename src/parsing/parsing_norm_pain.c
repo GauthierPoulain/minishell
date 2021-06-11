@@ -8,12 +8,12 @@ void	init_things(int *size, int *i)
 
 int	do_both(t_list *lst, t_ptoken *array, int i)
 {
+	(void)lst;
 	(array + i)->is_escaped = false;
 	(array + i)->need_join = false;
 	(array + i)->is_in_quotes = false;
 	(array + i)->is_in_squotes = false;
 	(array + i)->str = NULL;
-	things(lst, array, i);
 	if (g_shell.error)
 		return (1);
 	return (0);
