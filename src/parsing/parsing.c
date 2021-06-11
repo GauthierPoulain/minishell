@@ -53,23 +53,26 @@ t_ptoken	*array_from_list(void)
 	int				i;
 	t_list			*lst;
 	t_ptoken		*array;
+	t_token			*token;
 
 	init_things(&size, &i);
 	array = ft_calloc(sizeof(t_ptoken) * (size + 1));
 	lst = g_shell.tokens;
 	while (i < size && lst)
 	{
+		token = lst->content;
 		do_both(lst, array, i);
-		(array + i)->str = ((t_token *)lst->content)->str;
-		if (((t_token *)lst->content)->type != 3)
-		{
-			printf("yo\n");
+		(array + i)->str = token->str;
+		if (token->type != 3)
 			g_shell.error = false;
-		}
-		if (((t_token *)lst->content)->type == 3)
-		{
-			printf("backslash\n");
+		if (token->type == 3)
 			(array + i)->str = treat_backslash((array + i));
+		if (token->type == 4 || token->type == 6
+			|| token->type == 10)
+		{
+			if (token->id)
+				if ((array + (i - 1))->escapes)
+					(array + i)->is_escaped = true;
 		}
 		// if (do_both(lst, array, i))
 		// 	return (NULL);
