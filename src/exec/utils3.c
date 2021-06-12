@@ -57,8 +57,8 @@ void	super_check_quotes(t_command **actual, t_ptoken *argv, int *i)
 		(*actual)->token = toktab_add((*actual)->token, *(argv + *i));
 	if ((argv + (*i + 1))->str
 		&& (((argv + *i)->str[0] == '\''
-		&& (argv + (*i + 1))->str[0] == '\'')
-		|| ((argv + *i)->str[0] == '\"'
-		&& (argv + (*i + 1))->str[0] == '\"')))
+				&& (argv + (*i + 1))->str[0] == '\'')
+			|| ((argv + *i)->str[0] == '\"'
+				&& (argv + (*i + 1))->str[0] == '\"')))
 		scheck_quotes(argv, actual, i);
 }

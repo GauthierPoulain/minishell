@@ -58,10 +58,10 @@ void	join_if_needed(t_ptoken *array, int *i, int *size, t_list *lst)
 		;
 	else if (((t_token *)lst->content)->type == 4
 		&& get_token_at(((t_token *)lst->content)->id - 1)->type == 3)
-		{
-			(array + *i)->need_join = true;
-			(array + *i)->is_escaped = true;
-		}
+	{
+		(array + *i)->need_join = true;
+		(array + *i)->is_escaped = true;
+	}
 	else
 		join_no_space(array, i, size);
 }

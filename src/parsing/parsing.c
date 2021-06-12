@@ -1,11 +1,5 @@
 #include "../../includes/minishell.h"
 
-void	chose_parsing(t_ptoken *p_token, t_list *lst)
-{
-	p_token->str = parse_tokens(lst->content);
-	// p_token->str = ((t_token *)lst->content)->str;
-}
-
 void	swap_rest(t_ptoken *array, int i, int size)
 {
 	while (i < size)
@@ -26,7 +20,8 @@ int	count_quotes(t_ptoken *array)
 	s_quotes = 0;
 	while ((array + i)->str)
 	{
-		printf("sq %d, dq %d, %s\n", (array + i)->is_in_squotes, (array + i)->is_in_quotes, (array + i)->str);
+		printf("sq %d, dq %d, %s\n", (array + i)->is_in_squotes,
+			(array + i)->is_in_quotes, (array + i)->str);
 		if (!ft_strcmp((array + i)->str, "\""))
 		{
 			if (!(array + i)->is_in_squotes && !(array + i)->is_escaped)
@@ -43,22 +38,6 @@ int	count_quotes(t_ptoken *array)
 	return (s_quotes % 2 || quotes % 2);
 }
 
-// int	count_backslash(t_ptoken *array)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	while ((array + i)->str)
-// 	{
-// 		if ((array + i)->str[0] == '\\' && !(array + i)->is_escaped)
-// 			(array + i)->str = treat_backslash(array, i);
-// 		if (!(array + i)->str)
-// 			return (1);
-// 		i++;
-// 	}
-// 	return (0);
-// }
-
 t_ptoken	*array_from_list(void)
 {
 	int				size;
@@ -72,42 +51,17 @@ t_ptoken	*array_from_list(void)
 	lst = g_shell.tokens;
 	while (i < size && lst)
 	{
-		token = lst->content;
-		do_both(lst, array, i);
-		(array + i)->str = token->str;
-		(array + i)->is_in_quotes = g_shell.is_in_quotes;
-		(array + i)->is_in_squotes = g_shell.is_in_s_quotes;
-		if ((array + i)->is_in_quotes || (array + i)->is_in_squotes)
-			(array + i)->spaces = token->spaces;
-		else if (token->spaces)
-			(array + i)->spaces = 1;
-		if (token->type != 3 && (i && !(array + (i - 1))->is_in_quotes))
-			g_shell.error = false;
-		if (token->type == 3 && !g_shell.is_in_s_quotes)
-		{
-			printf("parse slash\n");
-			(array + i)->str = treat_backslash((array + i));
-			printf("after [%s]\n", (array + i)->str);
-		}
-		if (token->id)
-			if ((array + (i - 1))->escapes)
-				(array + i)->is_escaped = true;
+		token = init_ptoken(token, lst, array, i);
+		check_spaces(token, array, i);
+		error_and_bslash(token, array, i);
+		need_to_escape(token, array, i);
 		if (token->type == 4 || token->type == 6)
-		{
-			if (!g_shell.is_in_s_quotes && ((i == 0 && token->type == 4) || (token->type == 4 && !(array + (i - 1))->escapes)))
-				g_shell.is_in_quotes = !g_shell.is_in_quotes;
-			if (!g_shell.is_in_quotes && ((i == 0 && token->type == 6) || (token->type == 6 && !(array + (i - 1))->escapes)))
-				g_shell.is_in_s_quotes = !g_shell.is_in_s_quotes;
-		}
-		printf("Je suis le token [%s]\n", token->str);
+			reset_g_shell(i, token, array);
 		lst = lst->next;
 		i++;
 	}
 	if (g_shell.error)
-	{
-		printf("error null\n");
 		return (NULL);
-	}
 	return (array);
 }
 

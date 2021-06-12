@@ -4,23 +4,12 @@ void	join_no_space(t_ptoken *p_tokens, int *i, int *size)
 {
 	char	*tmp;
 
-	// printf("JOINED MA BOI\n");
 	tmp = ft_strdup((p_tokens + *i)->str);
 	(p_tokens + *i)->str = NULL;
 	gc_free((p_tokens + *i)->str);
 	(p_tokens + (*i - 1))->str = ft_strjoin((p_tokens + (*i - 1))->str, tmp);
 	*i -= 1;
 	*size -= 1;
-}
-
-void	things(t_list *lst, t_ptoken *p_tokens, int i)
-{
-	g_shell.curr_token = (t_token *)lst->content;
-	if (lst->next)
-		g_shell.next_token_str = ((t_token *)lst->next->content)->str;
-	chose_parsing(p_tokens + i, lst);
-	g_shell.curr_token = NULL;
-	g_shell.next_token_str = NULL;
 }
 
 static void	join_test(t_ptoken *array, int *i, int *size)

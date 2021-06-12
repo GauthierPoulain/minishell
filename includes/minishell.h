@@ -367,7 +367,6 @@ t_list		*split_commands(char *line);
 int			check_things(t_list *lst);
 int			do_both(t_list *lst, t_ptoken *array, int i);
 void		init_things(int *size, int *i);
-void		things(t_list *lst, t_ptoken *p_tokens, int i);
 void		display_ptoken(t_ptoken *array);
 int			get_array_size(t_ptoken *array);
 void		treat_array(t_ptoken *array);
@@ -387,5 +386,11 @@ void		check_operator(t_command *actual, t_ptoken *argv, int i);
 t_command	*init_command_struct(void);
 void		super_check_quotes(t_command **actual, t_ptoken *argv, int *i);
 t_ptoken	*toktab_add(t_ptoken *argv, t_ptoken str);
+void		reset_g_shell(int i, t_token *token, t_ptoken *array);
+void		need_to_escape(t_token *token, t_ptoken *array, int i);
+void		error_and_bslash(t_token *token, t_ptoken *array, int i);
+void		check_spaces(t_token *token, t_ptoken *array, int i);
+t_token		*init_ptoken(t_token *token, t_list *lst, \
+t_ptoken *array, int i);
 
 #endif
