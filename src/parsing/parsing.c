@@ -57,8 +57,11 @@ t_ptoken	*array_from_list(void)
 		need_to_escape(token, array, i);
 		if (token->type == 4 || token->type == 6)
 			reset_g_shell(i, token, array);
+		if (token->type == 0 && i && get_token_at(token->id - 1)->type == 3)
+			g_shell.error = false;
 		lst = lst->next;
 		i++;
+		printf("error: %d\n", g_shell.error);
 	}
 	if (g_shell.error)
 		return (NULL);
@@ -81,6 +84,7 @@ t_ptoken	*parse_line(char *line)
 		ft_lstclear(&g_shell.tokens);
 		return (NULL);
 	}
+	printf("je crash la");
 	display_ptoken(array);
 	ret = count_quotes(array);
 	if (ret)
