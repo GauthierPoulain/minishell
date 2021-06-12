@@ -51,8 +51,10 @@ void	super_check_quotes(t_command **actual, t_ptoken *argv, int *i)
 {
 	if ((argv + *i)->str[0] == '\'' && !(*actual)->qcheck.d)
 		(*actual)->qcheck.s = !(*actual)->qcheck.s;
-	if ((argv + *i)->str[0] == '\"' && !(*actual)->qcheck.s)
+	else if ((argv + *i)->str[0] == '\"' && !(*actual)->qcheck.s)
 		(*actual)->qcheck.d = !(*actual)->qcheck.d;
+	else
+		(*actual)->token = toktab_add((*actual)->token, *(argv + *i));
 	if ((argv + (*i + 1))->str
 		&& (((argv + *i)->str[0] == '\''
 		&& (argv + (*i + 1))->str[0] == '\'')

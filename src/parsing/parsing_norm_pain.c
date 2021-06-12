@@ -31,12 +31,16 @@ int	check_things(t_list *lst)
 		&& !g_shell.is_in_quotes && g_shell.trans && ((t_token *)lst->content)->id >= 1
 		/*&& ((t_token *)lst->content)->type != 4 && ((t_token *)lst->content)->type != 6*/)
 		return (1);
-	else if (get_token_at(((t_token *)lst->content)->id)->type == 4)
+	else if (get_token_at(((t_token *)lst->content)->id)->type == 4 
+		&& get_token_at(((t_token *)lst->content)->id - 1)->type == 3
+		&& g_shell.is_in_s_quotes)
 	{
 		// if (((t_token *)lst->content)->id >= 1)
 			g_shell.is_in_quotes = !g_shell.is_in_quotes;
 	}
-	else if (get_token_at(((t_token *)lst->content)->id)->type == 6)
+	else if (get_token_at(((t_token *)lst->content)->id)->type == 6
+		&& get_token_at(((t_token *)lst->content)->id - 1)->type == 3
+		&& g_shell.is_in_quotes)
 		g_shell.is_in_s_quotes = !g_shell.is_in_s_quotes;
 	// else if (g_shell.is_in_quotes)
 	// 	;

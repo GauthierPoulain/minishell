@@ -26,23 +26,39 @@ int	count_quotes(t_ptoken *array)
 	s_quotes = 0;
 	while ((array + i)->str)
 	{
-		if ((!ft_strcmp((array + i)->str, "\"") && !(array + i)->is_escaped && !(array + i)->is_in_squotes)
-			|| (i && (array + (i - 1))->is_in_squotes && !ft_strcmp((array + i)->str, "\"")))
-			quotes++;
+		if (!ft_strcmp((array + i)->str, "\""))
+		{
+			if (!(array + i)->is_in_squotes && !(array + i)->is_escaped)
+				quotes++;
+		}
+		else if (!ft_strcmp((array + i)->str, "\'"))
+		{
+			if (!(array + i)->is_in_quotes && !(array + i)->is_escaped)
+				s_quotes++;
+		}
 		i++;
 	}
-	i = 0;
-	while ((array + i)->str)
-	{
-		if ((!ft_strcmp((array + i)->str, "\'") && !(array + i)->is_escaped && !(array + i)->is_in_quotes)
-			|| (i && (array + (i - 1))->is_in_quotes && !ft_strcmp((array + i)->str, "\'")))
-			s_quotes++;
-		i++;
-	}
+	
+
+
+
+	// while ((array + i)->str)
+	// {
+	// 	if ((!ft_strcmp((array + i)->str, "\"") && !(array + i)->is_escaped && !(array + i)->is_in_squotes)
+	// 		|| (i && (array + (i - 1))->is_in_squotes && !ft_strcmp((array + i)->str, "\"")))
+	// 		quotes++;
+	// 	i++;
+	// }
+	// i = 0;
+	// while ((array + i)->str)
+	// {
+	// 	if ((!ft_strcmp((array + i)->str, "\'") && !(array + i)->is_escaped && !(array + i)->is_in_quotes)
+	// 		|| (i && (array + (i - 1))->is_in_quotes && !ft_strcmp((array + i)->str, "\'")))
+	// 		s_quotes++;
+	// 	i++;
+	// }
 	printf("squotes count: %d\nquotes count: %d\n", s_quotes, quotes);
-	if (s_quotes % 2 || quotes % 2)
-		return (1);
-	return (0);
+	return (s_quotes % 2 || quotes % 2);
 }
 
 // int	count_backslash(t_ptoken *array)
@@ -128,7 +144,7 @@ t_ptoken	*parse_line(char *line)
 	array = array_from_list();
 	if (!array)
 	{
-		syntax_error();
+		g_shell.last_return = syntax_error();
 		ft_lstclear(&g_shell.tokens);
 		return (NULL);
 	}
@@ -137,7 +153,7 @@ t_ptoken	*parse_line(char *line)
 	printf("Quotes nb : %d===========\n", ret);
 	if (ret)
 	{
-		syntax_error();
+		g_shell.last_return = syntax_error();
 		clear_ptoken(array);
 		ft_lstclear(&g_shell.tokens);
 		return (NULL);
