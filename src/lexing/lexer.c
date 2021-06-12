@@ -16,8 +16,8 @@ static int	get_token_info(t_token *token, char *line, int start, int end)
 	token->str = ft_substr(line, start, end - start);
 	if (!ft_strcmp(token->str, "-n"))
 		token->type = 1;
-	else if (token->str[0] == '$')
-		return (set_dollar_type(token, line, start));
+	// else if (token->str[0] == '$')
+	// 	return (set_dollar_type(token, line, start));
 	else if (token->str[0] == '\\')
 		token->type = 3;
 	else if (token->str[0] == '"')
@@ -26,8 +26,7 @@ static int	get_token_info(t_token *token, char *line, int start, int end)
 		token->type = 5;
 	else if (token->str[0] == '\'')
 		token->type = 6;
-	else if (token->str[0] == ';' || token->str[0] == '>'
-			|| token->str[0] == '|' || token->str[0] == '<')
+	else if (ft_ischarset(token->str[0], ";>|<"))
 		token->type = 10;
 	else
 		token->type = 0;

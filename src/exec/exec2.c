@@ -71,9 +71,8 @@ char	**get_argv(t_ptoken *argv)
 			if (argv->str[0] == '~' && (argv->str[1] == 0
 					|| argv->str[1] == '/'))
 				argv->str = ft_strreplace(argv->str, "~", get_env("HOME"));
-		// printf("is in escaped %s ? %d\n", argv->str, argv->is_escaped);
 		if (!argv->is_in_squotes && !argv->is_escaped)
-			replace_env_var(argv);
+			argv = replace_env_var(argv);
 		res = tab_add(res, argv->str);
 		argv++;
 	}

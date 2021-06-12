@@ -4,7 +4,7 @@ void	join_no_space(t_ptoken *p_tokens, int *i, int *size)
 {
 	char	*tmp;
 
-	printf("JOINED MA BOI\n");
+	// printf("JOINED MA BOI\n");
 	tmp = ft_strdup((p_tokens + *i)->str);
 	(p_tokens + *i)->str = NULL;
 	gc_free((p_tokens + *i)->str);
