@@ -38,7 +38,7 @@ int	check_things(t_list *lst)
 		&& ((t_token *)lst->content)->id > 0
 		&& get_token_at(((t_token *)lst->content)->id - 1)->type == 3)
 		g_shell.is_in_s_quotes = !g_shell.is_in_s_quotes;
-	if (!((t_token *)lst->content)->sp && !g_shell.is_in_s_quotes
+	if (!((t_token *)lst->content)->spaces && !g_shell.is_in_s_quotes
 		&& !g_shell.is_in_quotes && g_shell.trans && ((t_token *)lst->content)->id >= 1
 		/*&& ((t_token *)lst->content)->type != 4 && ((t_token *)lst->content)->type != 6*/)
 		return (1);

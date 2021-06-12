@@ -66,10 +66,10 @@ void	handle_space(char *line, t_token *token, t_lexer *lexer)
 	lexer->had_semi = false;
 	if (lexer->had_quotes)
 		lexer->had_quotes = false;
-	token->sp = false;
+	token->spaces = 0;
 	while (ft_isspace(line[lexer->i]))
 	{
-		token->sp = true;
+		token->spaces++;
 		lexer->i++;
 	}
 	token_l = get_token_len(line, lexer);
