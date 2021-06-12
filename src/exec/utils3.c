@@ -55,10 +55,33 @@ void	super_check_quotes(t_command **actual, t_ptoken *argv, int *i)
 		(*actual)->qcheck.d = !(*actual)->qcheck.d;
 	else
 		(*actual)->token = toktab_add((*actual)->token, *(argv + *i));
+	if ((argv + *i + 1)->str && (argv + *i)->spaces != 0)
+	{
+		if ((argv + *i + 1)->spaces == 0)
+		{
+			(argv + *i + 1)->spaces = 1;
+			(argv + *i + 1)->is_in_quotes = false;
+			(argv + *i + 1)->is_in_squotes = false;
+		}
+	}
 	if ((argv + (*i + 1))->str
 		&& (((argv + *i)->str[0] == '\''
 				&& (argv + (*i + 1))->str[0] == '\'')
 			|| ((argv + *i)->str[0] == '\"'
 				&& (argv + (*i + 1))->str[0] == '\"')))
 		scheck_quotes(argv, actual, i);
+}
+
+void	join_struct_wnext(t_ptoken *token)
+{
+	if (!(token + 1)->str)
+		return ;
+	(token)->str = ft_strjoin(token->str, (token + 1)->str);
+	token++;
+	(token)->str = NULL;
+	while ((token + 1)->str)
+	{
+		ft_swap(token, token + 1);
+		token++;
+	}
 }

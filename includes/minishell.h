@@ -392,5 +392,7 @@ void		error_and_bslash(t_token *token, t_ptoken *array, int i);
 void		check_spaces(t_token *token, t_ptoken *array, int i);
 t_token		*init_ptoken(t_token *token, t_list *lst, \
 t_ptoken *array, int i);
+void		join_struct_wnext(t_ptoken *token);
+bool		join_tokens(t_ptoken *token);
 
 #endif

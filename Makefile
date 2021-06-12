@@ -88,6 +88,7 @@ SRCS_MS = \
 	./src/exec/utils.c \
 	./src/exec/utils2.c \
 	./src/exec/utils3.c \
+	./src/exec/utils4.c \
 	./src/process_key.c \
 	./src/builtin_cd.c \
 	./src/builtin_echo.c \
