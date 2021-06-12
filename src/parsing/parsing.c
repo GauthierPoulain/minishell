@@ -61,7 +61,6 @@ t_ptoken	*array_from_list(void)
 			g_shell.error = false;
 		lst = lst->next;
 		i++;
-		printf("error: %d\n", g_shell.error);
 	}
 	if (g_shell.error)
 		return (NULL);

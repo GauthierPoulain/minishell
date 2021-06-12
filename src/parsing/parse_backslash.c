@@ -42,6 +42,8 @@ char	*treat_backslash(t_ptoken *word)
 	{
 		if (!word->is_in_quotes && !word->is_in_squotes)
 			word->escapes = true;
+		else
+			back++;
 		g_shell.error = true;
 	}
 	return (bslash_filled((word), back));
