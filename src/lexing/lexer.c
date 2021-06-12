@@ -16,8 +16,6 @@ static int	get_token_info(t_token *token, char *line, int start, int end)
 	token->str = ft_substr(line, start, end - start);
 	if (!ft_strcmp(token->str, "-n"))
 		token->type = 1;
-	// else if (token->str[0] == '$')
-	// 	return (set_dollar_type(token, line, start));
 	else if (token->str[0] == '\\')
 		token->type = 3;
 	else if (token->str[0] == '"')

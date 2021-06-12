@@ -22,20 +22,17 @@ int	do_both(t_list *lst, t_ptoken *array, int i)
 
 int	check_things(t_list *lst)
 {
-	if (get_token_at(((t_token *)lst->content)->id)->type == 4 
+	if (get_token_at(((t_token *)lst->content)->id)->type == 4
 		&& ((t_token *)lst->content)->id > 0
 		&& get_token_at(((t_token *)lst->content)->id - 1)->type == 3)
-	{
-		// if (((t_token *)lst->content)->id >= 1)
-			g_shell.is_in_quotes = !g_shell.is_in_quotes;
-	}
+		g_shell.is_in_quotes = !g_shell.is_in_quotes;
 	else if (get_token_at(((t_token *)lst->content)->id)->type == 6
 		&& ((t_token *)lst->content)->id > 0
 		&& get_token_at(((t_token *)lst->content)->id - 1)->type == 3)
 		g_shell.is_in_s_quotes = !g_shell.is_in_s_quotes;
 	if (!((t_token *)lst->content)->spaces && !g_shell.is_in_s_quotes
-		&& !g_shell.is_in_quotes && g_shell.trans && ((t_token *)lst->content)->id >= 1
-		/*&& ((t_token *)lst->content)->type != 4 && ((t_token *)lst->content)->type != 6*/)
+		&& !g_shell.is_in_quotes && g_shell.trans
+		&& ((t_token *)lst->content)->id >= 1)
 		return (1);
 	return (0);
 }
