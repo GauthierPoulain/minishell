@@ -2,17 +2,17 @@
 
 static size_t	bslash_f_count(char *word)
 {
-	int	j;
+	int	count;
 	int	i;
 
-	j = 0;
+	count = 0;
 	i = 0;
 	while (word[i] == '\\')
 	{
+		count++;
 		i++;
-		j++;
 	}
-	return (j);
+	return (count);
 }
 
 char	*special_trim_quotes(char *word)
@@ -40,7 +40,7 @@ char	*treat_backslash(t_ptoken *word)
 	back = bslash_f_count(word->str);
 	if (back % 2)
 	{
-		if (!word->is_in_quotes)
+		if (!word->is_in_quotes && !word->is_in_squotes)
 			word->escapes = true;
 		g_shell.error = true;
 	}

@@ -33,7 +33,7 @@ char	*bslash_filled(t_ptoken *word, int back)
 
 	(void)word;
 	r_back = back / 2;
-	// if (g_shell.is_in_quotes == false)
+	// if (!g_shell.is_in_quotes)
 		r_back++;
 	new = ft_calloc_char(r_back, '\\');
 	if (back % 4 == 1 || back % 4 == 3)
