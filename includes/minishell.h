@@ -144,6 +144,7 @@ typedef struct s_ptoken
 	bool	is_in_squotes;
 	bool	escapes;
 	bool	need_join;
+	int		spaces;
 }				t_ptoken;
 
 typedef struct s_qcheck

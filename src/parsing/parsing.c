@@ -96,6 +96,10 @@ t_ptoken	*array_from_list(void)
 		(array + i)->str = token->str;
 		(array + i)->is_in_quotes = g_shell.is_in_quotes;
 		(array + i)->is_in_squotes = g_shell.is_in_s_quotes;
+		if ((array + i)->is_in_quotes || (array + i)->is_in_squotes)
+			(array + i)->spaces = token->spaces;
+		else if (token->spaces)
+			(array + i)->spaces = 1;
 		if (token->type != 3 && (i && !(array + (i - 1))->is_in_quotes))
 			g_shell.error = false;
 		if (token->type == 3 && !g_shell.is_in_s_quotes)
