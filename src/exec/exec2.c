@@ -73,6 +73,8 @@ char	**get_argv(t_ptoken *argv)
 				argv->str = ft_strreplace(argv->str, "~", get_env("HOME"));
 		if (!argv->is_in_squotes && !argv->is_escaped)
 			argv = replace_env_var(argv);
+		while (join_tokens(argv))
+			;
 		res = tab_add(res, argv->str);
 		argv++;
 	}

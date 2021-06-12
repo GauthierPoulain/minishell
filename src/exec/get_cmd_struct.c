@@ -12,6 +12,7 @@ t_ptoken	*toktab_add(t_ptoken *argv, t_ptoken str)
 		res->is_escaped = argv->is_escaped;
 		res->is_in_squotes = argv->is_in_squotes;
 		res->is_in_quotes = argv->is_in_quotes;
+		res->spaces = argv->spaces;
 		res->str = ft_strdup(argv->str);
 		res++;
 		argv++;
@@ -19,6 +20,7 @@ t_ptoken	*toktab_add(t_ptoken *argv, t_ptoken str)
 	res->is_escaped = str.is_escaped;
 	res->is_in_squotes = str.is_in_squotes;
 	res->is_in_quotes = str.is_in_quotes;
+	res->spaces = str.spaces;
 	res->str = ft_strdup(str.str);
 	return (save);
 }
@@ -56,6 +58,7 @@ void	check_operator(t_command *actual, t_ptoken *argv, int i)
 		tmp.is_escaped = false;
 		tmp.is_in_squotes = false;
 		tmp.is_in_quotes = false;
+		tmp.spaces = 0;
 		tmp.str = ft_strdup("");
 		actual->token = toktab_add(actual->token, tmp);
 	}
