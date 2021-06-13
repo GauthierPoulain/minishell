@@ -55,6 +55,7 @@ static void	scheck_quotes(t_ptoken *argv, t_command **actual, int *i)
 
 void	super_check_quotes(t_command **actual, t_ptoken *argv, int *i)
 {
+	donccacestmavie(argv, i);
 	if ((argv + *i + 1)->str && (argv + *i)->spaces != 0
 		&& !(*actual)->qcheck.d && !(*actual)->qcheck.s)
 	{

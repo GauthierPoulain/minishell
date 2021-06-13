@@ -146,6 +146,7 @@ typedef struct s_ptoken
 	bool	need_join;
 	int		spaces;
 	int		spaces_after;
+	bool	skip_join;
 }				t_ptoken;
 
 typedef struct s_qcheck
@@ -396,5 +397,6 @@ t_token		*init_ptoken(t_token *token, t_list *lst, \
 t_ptoken *array, int i);
 void		join_struct_wnext(t_ptoken *token);
 bool		join_tokens(t_ptoken *token);
+void		donccacestmavie(t_ptoken *argv, int *i);
 
 #endif

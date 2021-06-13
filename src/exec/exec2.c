@@ -46,7 +46,7 @@ void	replace__env_var_handler(t_ptoken *token)
 {
 	while (token->str)
 	{
-		if (!(token + 1)->is_in_squotes && !(token + 1)->is_escaped)
+		if (!(token)->is_in_squotes && !(token + 1)->is_escaped)
 			token = replace_env_var(token);
 		token++;
 	}
