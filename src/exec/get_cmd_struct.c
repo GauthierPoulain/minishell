@@ -58,6 +58,7 @@ void	check_operator(t_command *actual, t_ptoken *argv, int i)
 	{
 		actual->operator = ft_strdup("noop");
 		tmp.is_escaped = false;
+		tmp.escapes = 0;
 		tmp.is_in_squotes = false;
 		tmp.is_in_quotes = false;
 		tmp.spaces = 0;

@@ -60,11 +60,23 @@ char	**tab_add(char **argv, char *str)
 	return (save);
 }
 
+void	replace__env_var_handler(t_ptoken *token)
+{
+	while (token->str)
+	{
+		printf("is in squote ? %d [%s]\n", (token)->is_in_squotes, token->str);
+		if (!token->is_in_squotes && !token->is_escaped)
+			token = replace_env_var(token);
+		token++;
+	}
+}
+
 char	**get_argv(t_ptoken *argv)
 {
 	char	**res;
 
 	res = NULL;
+	replace__env_var_handler(argv);
 	while (argv && argv->str)
 	{
 		if (!argv->is_in_quotes && !argv->is_in_squotes && !argv->is_escaped)

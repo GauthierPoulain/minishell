@@ -71,11 +71,15 @@ void	*ft_memmove(void *dst, const void *src, size_t len)
 char	*treat_doll(t_ptoken *word, int *i)
 {
 	int		slash;
-
-	// if (word + (*i - 1))
-	if (word->str[(*i) + 1] == '/')
+	
+	printf("irejgiozeg = %d %s\n", (word + (*i + 1))->escapes, (word + (*i))->str);
+	if ((word + (*i + 1))->escapes > 0)
 	{
-		*i += 1;
+		*i += get_word_len(word->str, *i) + 2;
+		return (ft_strjoin("$", word->str));
+	}
+	else if (word->str[(*i) + 1] == '/')
+	{
 		*i += get_word_len(word->str, *i);
 		return (word->str);
 	}
@@ -87,5 +91,4 @@ char	*treat_doll(t_ptoken *word, int *i)
 		else
 			return (replace_dolls(word, i));
 	}
-	return (word->str);
 }
