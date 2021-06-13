@@ -100,7 +100,7 @@ void	run_line(t_ptoken *argv)
 	g_shell.pipe_output.ptr = NULL;
 	g_shell.is_running = true;
 	cmds = get_commands(argv);
-	if (cmds->content && ((t_command *)cmds->content)->token)
+	if (cmds && cmds->content && ((t_command *)cmds->content)->token)
 		(((t_command *)cmds->content)->token)->spaces = 1;
 	reset_input_mode();
 	if (!cmds)
