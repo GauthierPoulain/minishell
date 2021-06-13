@@ -64,7 +64,7 @@ void	replace__env_var_handler(t_ptoken *token)
 {
 	while (token->str)
 	{
-		printf("is in squote ? %d [%s]\n", (token)->is_in_squotes, token->str);
+		printf("is in squote ? %d [%s]\n", token->is_in_squotes, token->str);
 		if (!token->is_in_squotes && !token->is_escaped)
 			token = replace_env_var(token);
 		token++;

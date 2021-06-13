@@ -10,7 +10,10 @@ t_ptoken	*replace_env_var(t_ptoken *token)
 	while (!token->is_in_squotes && doll)
 	{
 		doll = treat_doll(token, &i);
-		doll = ft_strchr(doll + i, '$');
+		if (i < (int)ft_strlen(doll))
+			doll = ft_strchr(doll + i, '$');
+		else
+			doll = NULL;
 	}
 	return (token);
 }
