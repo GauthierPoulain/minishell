@@ -77,9 +77,6 @@ void	join_struct_wnext(t_ptoken *token)
 {
 	if (!(token + 1)->str)
 		return ;
-	if ((token + 1)->spaces)
-		(token)->str = ft_strjoin(token->str,
-				ft_calloc_char((token + 1)->spaces + 1, ' '));
 	(token)->str = ft_strjoin(token->str, (token + 1)->str);
 	token++;
 	(token)->str = NULL;
