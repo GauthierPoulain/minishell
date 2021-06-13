@@ -4,9 +4,8 @@ static void	subprocess_exec(t_command cmd, int pipes[2], bool read_pipe)
 {
 	int	fd;
 
-	signal(SIGQUIT, close_subprocess);
-	signal(SIGINT, close_subprocess);
-	signal(SIGTERM, close_subprocess);
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
 	if (cmd.need_pipe || cmd.need_redirect)
 	{
 		fd = open("/dev/tty", O_RDWR);
@@ -60,14 +59,14 @@ int	run_command(t_command *cmd)
 		else
 			status = subprocess(*cmd);
 	}
-	reset_pipe_output();
 	if (cmd->need_pipe || cmd->need_redirect)
 		close_pipe();
+	reset_pipe_output();
 	g_shell.child = 0;
 	return (status);
 }
 
-static void	loop(t_list *cmds)
+void	loop(t_list *cmds)
 {
 	t_command	*cmd;
 	bool		nxt;

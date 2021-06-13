@@ -323,7 +323,6 @@ int			get_this_char(char **c, char **retour);
 void		cursor_op(char *op);
 void		add_signals_listeners(void);
 void		signals_listeners_to_child(void);
-void		SIGQUIT_catcher_subprocess(int code);
 void		redir_sig_to_child(int signal);
 int			builtin_exit(char **argv);
 void		close_subprocess(int code);

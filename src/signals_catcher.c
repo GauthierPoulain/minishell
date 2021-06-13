@@ -7,18 +7,16 @@ void	SIGINT_catcher(int code)
 		close_subprocess(130);
 	signal(SIGINT, SIGINT_catcher);
 	g_shell.actual_str = ft_calloc(sizeof(char *));
-	ft_putchar('\n');
+	ft_putstr("^C\n");
 	g_shell.last_return = 130;
 	g_shell.history.act_pos = 0;
 	g_shell.reader.pos = 0;
 	g_shell.reader.size = 0;
 	if (!g_shell.is_running)
 	{
-		g_shell.last_return = 1;
 		pre_prompt();
 	}
 	close_pipe();
-	add_signals_listeners();
 	set_input_mode();
 }
 

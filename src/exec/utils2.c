@@ -63,12 +63,24 @@ int	child_supervisor(t_buffer *data, bool read_pipe, int pipes[2])
 {
 	int			status;
 
-	signals_listeners_to_child();
+	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
 	if (read_pipe)
 		print_buffer_in_fd(*data, pipes[1]);
 	reset_pipe_output();
 	waitpid(g_shell.child, &status, 0);
 	close(pipes[0]);
 	close(pipes[1]);
-	return (((status) & 0xff00) >> 8);
+	if ((((signed char)(((status) & 0x7f) + 1) >> 1) > 0))
+	{
+		status = ((status) & 0x7f);
+		if (status == 2)
+			return (130);
+		else if (status == 3)
+			return (131);
+		else
+			return (status);
+	}
+	else
+		return (((status) & 0xff00) >> 8);
 }
