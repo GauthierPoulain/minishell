@@ -43,8 +43,6 @@ int	builtin_exit(char **argv)
 		ret = 1;
 	else if (argv && argv[1])
 		ret = ft_atoi(argv[1]);
-	reset_input_mode();
-	close_pipe();
-	gc_clean();
-	exit(ret);
+	close_shell(ret);
+	return (0);
 }
