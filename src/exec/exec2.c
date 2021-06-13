@@ -1,23 +1,5 @@
 #include "../../includes/minishell.h"
 
-void	get_input_part2(t_command cmd, t_buffer *res)
-{
-	int			fd;
-	int			len;
-	char		*buffer;
-
-	buffer = ft_calloc(sizeof(char) * (GNL_BUFFER_SIZE + 1));
-	fd = open(cmd.redirect_path, O_RDONLY);
-	len = 1;
-	while (len > 0)
-	{
-		len = read(fd, buffer, GNL_BUFFER_SIZE);
-		res->ptr = ft_memjoin(res->ptr, res->size, buffer, len);
-		res->size += len;
-		ft_bzero(buffer, GNL_BUFFER_SIZE + 1);
-	}
-}
-
 void	check_write_redirect(t_command *cmd, t_list *cmds)
 {
 	if (!ft_strcmp(cmd->operator, ">") || !ft_strcmp(cmd->operator, ">>"))
@@ -64,8 +46,7 @@ void	replace__env_var_handler(t_ptoken *token)
 {
 	while (token->str)
 	{
-		printf("is in squote ? %d [%s]\n", token->is_in_squotes, token->str);
-		if (!token->is_in_squotes && !token->is_escaped)
+		if (!(token + 1)->is_in_squotes && !(token + 1)->is_escaped)
 			token = replace_env_var(token);
 		token++;
 	}

@@ -49,7 +49,7 @@ void	*ft_memmove(void *dst, const void *src, size_t len)
 
 char	*treat_doll(t_ptoken *word, int *i)
 {
-	if ((word + (*i + 1))->escapes > 0)
+	if ((word + 1)->str && (*((word + 1)->str) == '\\' || (word + 1)->escapes))
 	{
 		*i += get_word_len(word->str, *i) + 2;
 		return (ft_strjoin("$", word->str));
