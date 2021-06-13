@@ -39,7 +39,10 @@ void	error_and_bslash(t_token *token, t_ptoken *array, int i)
 void	check_spaces(t_token *token, t_ptoken *array, int i)
 {
 	if ((array + i)->is_in_quotes || (array + i)->is_in_squotes)
+	{
+		(array + i - 1)->str = ft_strjoin((array + i - 1)->str, ft_calloc_char(token->spaces + 1, ' '));
 		(array + i)->spaces = token->spaces;
+	}
 	else if (token->spaces)
 		(array + i)->spaces = 1;
 }
