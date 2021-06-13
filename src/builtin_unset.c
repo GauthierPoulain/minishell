@@ -3,10 +3,7 @@
 int	builtin_unset(char **argv)
 {
 	if (!argv[1])
-	{
-		ft_putstr_fd(STDERR_FILENO, "unset: not enough arguments\n");
-		return (1);
-	}
+		return (0);
 	set_env(argv[1], NULL);
 	return (0);
 }
