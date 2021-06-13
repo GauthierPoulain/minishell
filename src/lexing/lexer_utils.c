@@ -32,7 +32,7 @@ void	display_tokens(void)
 	t_token	*token;
 
 	lst = g_shell.tokens;
-	while (lst)
+	while (DEBUG && lst)
 	{
 		token = (t_token *)lst->content;
 		printf("string [%s]\n", token->str);

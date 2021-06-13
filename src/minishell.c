@@ -77,5 +77,5 @@ int	main(int argc, char **argv, char **envp)
 	}
 	else
 		process_input(ft_strtrim_spaces(read_term()));
-	close_shell(NULL);
+	close_shell(g_shell.last_return);
 }

@@ -5,20 +5,20 @@ void	set_output(t_command cmd)
 	g_shell.saved_stdout = dup(STDOUT_FILENO);
 	g_shell.saved_stderr = dup(STDERR_FILENO);
 	if (pipe(g_shell.pipes.to_father) || pipe(g_shell.pipes.to_son))
-		close_shell("pipe error");
+		print_err("dup2 failure");
 	g_shell.outputmngr = fork();
 	if (g_shell.outputmngr < 0)
-		close_shell("fork error");
+		print_err("fork error");
 	else if (g_shell.outputmngr == 0)
 		manage_output(cmd);
 	else
 	{
 		if (cmd.listen_stdout && dup2(g_shell.pipes.to_son[1],
 				STDOUT_FILENO) == -1)
-			close_shell("dup2 failure");
+			print_err("dup2 failure");
 		if (cmd.listen_stderr && dup2(g_shell.pipes.to_son[1],
 				STDERR_FILENO) == -1)
-			close_shell("dup2 failure");
+			print_err("dup2 failure");
 	}
 }
 
@@ -26,7 +26,7 @@ void	reset_output(void)
 {
 	if (dup2(g_shell.saved_stdout, STDOUT_FILENO) == -1
 		|| dup2(g_shell.saved_stderr, STDERR_FILENO) == -1)
-		close_shell("dup2 failure");
+		print_err("dup2 failure");
 	close(g_shell.saved_stdout);
 	close(g_shell.saved_stderr);
 }

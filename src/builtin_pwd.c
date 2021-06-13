@@ -6,7 +6,7 @@ char	*get_pwd(void)
 
 	cwd = ft_calloc(sizeof(char) * PATH_MAX + 1);
 	if (!getcwd(cwd, PATH_MAX))
-		close_shell("pwd error");
+		print_err("pwd error");
 	return (ft_strjoinf1(cwd, ""));
 }
 

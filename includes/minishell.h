@@ -268,7 +268,8 @@ bool		ft_isinrange(long long value, long long min, long long max);
 
 // MINISHELL ------------------------------------------------------------------
 
-int			close_shell(char *msg);
+int			close_shell(int code);
+void		print_err(char *msg);
 void		process_input(char *line);
 int			builtin_cd(char **argv);
 int			builtin_pwd(void);

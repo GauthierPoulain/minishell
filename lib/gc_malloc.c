@@ -8,7 +8,7 @@ void	*gc_malloc(size_t size)
 	alloc = malloc(size);
 	lst = malloc(sizeof(t_list));
 	if (!alloc || !lst)
-		close_shell("malloc failure");
+		print_err("malloc failure");
 	lst->content = alloc;
 	lst->next = NULL;
 	ft_lstadd_front(&g_shell.gc, lst);

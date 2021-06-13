@@ -30,7 +30,7 @@ static int	check_err(char *path)
 		close(fd);
 	fd = open(path, O_DIRECTORY);
 	if (fd == -1)
-		return (2);
+		return (1);
 	else
 		close(fd);
 	return (0);
@@ -65,6 +65,6 @@ int	builtin_cd(char **argv)
 			cd_err(1, path);
 		else
 			replace_env();
-	}	
+	}
 	return (cd_err(err_code, path));
 }

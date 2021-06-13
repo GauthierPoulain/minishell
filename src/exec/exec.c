@@ -17,7 +17,7 @@ static void	subprocess_exec(t_command cmd, int pipes[2], bool read_pipe)
 	{
 		close(pipes[1]);
 		if (dup2(pipes[0], STDIN_FILENO) == -1)
-			close_shell("dup2 failure");
+			print_err("dup2 failure");
 	}
 	execve(cmd.path, cmd.argv, get_envp());
 	close_subprocess(errno);
@@ -32,12 +32,12 @@ static int	subprocess(t_command cmd)
 	if (cmd.file_input && !is_a_file(cmd.redirect_path))
 		return (file_not_found(cmd.redirect_path));
 	if (pipe(pipes))
-		close_shell("pipe error");
+		print_err("pipe failure");
 	data = get_multiple_input(cmd);
 	read_pipe = data->ptr != 0;
 	g_shell.child = fork();
 	if (g_shell.child < 0)
-		close_shell("fork error");
+		print_err("fork failure");
 	else if (g_shell.child == 0)
 		subprocess_exec(cmd, pipes, read_pipe);
 	else

@@ -34,7 +34,8 @@ void	treat_array(t_ptoken *array)
 		if (!(array + i)->is_escaped && !ft_strcmp((array + i)->str, "\"")
 			&& i > 1)
 		{
-			printf("SWAP\n");
+			if (DEBUG)
+				printf("SWAP\n");
 			(array + i)->str = ft_strdup("");
 			swap_rest(array, i + 1, size);
 			join_test(array, &i, &size);

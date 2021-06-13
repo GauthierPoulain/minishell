@@ -49,14 +49,13 @@ void	*ft_memmove(void *dst, const void *src, size_t len)
 
 char	*treat_doll(t_ptoken *word, int *i)
 {
-	if ((word + 1)->str && (*((word + 1)->str) == '\\' || (word + 1)->escapes))
+	if ((word + 1)->str && (!ft_strcmp(word->str, "$")))
 	{
-		*i += get_word_len(word->str, *i) + 2;
+		*i += get_word_len(word->str, *i) + 3;
 		return (ft_strjoin("$", word->str));
 	}
 	else if (word->str[(*i) + 1] == '/')
 	{
-		printf("salut %d\n", *i);
 		*i += get_word_len(word->str, *i) + 1;
 		return (word->str);
 	}

@@ -20,8 +20,6 @@ int	count_quotes(t_ptoken *array)
 	s_quotes = 0;
 	while ((array + i)->str)
 	{
-		printf("sq %d, dq %d, sp %d %s\n", (array + i)->is_in_squotes,
-			(array + i)->is_in_quotes, (array + i)->spaces, (array + i)->str);
 		if (!ft_strcmp((array + i)->str, "\""))
 		{
 			if (!(array + i)->is_in_squotes && !(array + i)->is_escaped)
@@ -34,7 +32,8 @@ int	count_quotes(t_ptoken *array)
 		}
 		i++;
 	}
-	printf("squotes count: %d\nquotes count: %d\n", s_quotes, quotes);
+	if (DEBUG)
+		printf("squotes count: %d\nquotes count: %d\n", s_quotes, quotes);
 	return (s_quotes % 2 || quotes % 2);
 }
 
@@ -83,7 +82,6 @@ t_ptoken	*parse_line(char *line)
 		ft_lstclear(&g_shell.tokens);
 		return (NULL);
 	}
-	printf("je crash la");
 	display_ptoken(array);
 	ret = count_quotes(array);
 	if (ret)

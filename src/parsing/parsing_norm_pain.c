@@ -42,7 +42,7 @@ void	display_ptoken(t_ptoken *array)
 	int	i;
 
 	i = 0;
-	while ((array + i)->str)
+	while (DEBUG && (array + i)->str)
 	{
 		printf("(%s)dquotes:[%d]squotes:[%d]escaped:[%d]escapes[%d]spaces[%d]\n",
 			(array + i)->str, (array + i)->is_in_quotes,

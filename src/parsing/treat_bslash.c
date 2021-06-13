@@ -39,7 +39,8 @@ char	*bslash_filled(t_ptoken *word, int back)
 		g_shell.trans = 1;
 	else
 		g_shell.trans = 0;
-	printf("NEW [%s]\n", new);
+	if (DEBUG)
+		printf("NEW [%s]\n", new);
 	return (new);
 }
 
