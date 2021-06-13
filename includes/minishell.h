@@ -398,5 +398,6 @@ t_ptoken *array, int i);
 void		join_struct_wnext(t_ptoken *token);
 bool		join_tokens(t_ptoken *token);
 void		donccacestmavie(t_ptoken *argv, int *i);
+void		toktab_add_p2(t_ptoken *res, t_ptoken str);
 
 #endif

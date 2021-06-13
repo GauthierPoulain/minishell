@@ -20,14 +20,7 @@ t_ptoken	*toktab_add(t_ptoken *argv, t_ptoken str)
 		res++;
 		argv++;
 	}
-	res->escapes = str.escapes;
-	res->is_escaped = str.is_escaped;
-	res->is_in_squotes = str.is_in_squotes;
-	res->is_in_quotes = str.is_in_quotes;
-	res->spaces = str.spaces;
-	res->spaces_after = str.spaces_after;
-	res->skip_join = str.skip_join;
-	res->str = ft_strdup(str.str);
+	toktab_add_p2(res, str);
 	return (save);
 }
 
