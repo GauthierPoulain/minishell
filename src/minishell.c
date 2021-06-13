@@ -4,8 +4,6 @@ t_minishell	g_shell;
 
 static void	init_shell(void)
 {
-	setbuf(stdout, NULL);
-	setbuf(stderr, NULL);
 	g_shell.gc = NULL;
 	g_shell.workdir = gc_malloc(FILENAME_MAX);
 	g_shell.last_return = 0;
