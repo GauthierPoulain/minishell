@@ -55,7 +55,6 @@ static void	scheck_quotes(t_ptoken *argv, t_command **actual, int *i)
 
 void	super_check_quotes(t_command **actual, t_ptoken *argv, int *i)
 {
-	donccacestmavie(argv, i);
 	if ((argv + *i + 1)->str && (argv + *i)->spaces != 0
 		&& !(*actual)->qcheck.d && !(*actual)->qcheck.s)
 	{
@@ -74,6 +73,7 @@ void	super_check_quotes(t_command **actual, t_ptoken *argv, int *i)
 			|| ((argv + *i)->str[0] == '\"'
 				&& (argv + (*i + 1))->str[0] == '\"')))
 		scheck_quotes(argv, actual, i);
+	donccacestmavie(argv, i);
 }
 
 void	join_struct_wnext(t_ptoken *token)
