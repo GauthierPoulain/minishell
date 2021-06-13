@@ -29,7 +29,7 @@ CFLAGS = -Wall -Wextra -Werror
 # CFLAGS += -DRELEASE
 # CFLAGS += -O3 -fno-builtin
 CFLAGS += -g
-# CFLAGS += -fsanitize=address
+CFLAGS += -fsanitize=address
 # CFLAGS += --coverage
 
 CLIBS = -ltermcap

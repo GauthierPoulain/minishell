@@ -41,6 +41,7 @@ void	check_spaces(t_token *token, t_ptoken *array, int i)
 	if ((array + i)->is_in_quotes || (array + i)->is_in_squotes)
 	{
 		(array + i)->spaces = token->spaces;
+		(array + i - 1)->spaces_after = (array + i)->spaces;
 	}
 	else if (token->spaces)
 		(array + i)->spaces = 1;
