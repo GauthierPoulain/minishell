@@ -49,21 +49,22 @@ static void	scheck_quotes(t_ptoken *argv, t_command **actual, int *i)
 
 void	super_check_quotes(t_command **actual, t_ptoken *argv, int *i)
 {
+	if ((argv + *i + 1)->str && (argv + *i)->spaces != 0
+		&& !(*actual)->qcheck.d && !(*actual)->qcheck.s)
+	{
+		if ((argv + *i + 1)->spaces == 0)
+		{
+			(argv + *i + 1)->spaces = 1;
+			(argv + *i + 1)->is_in_squotes = false;
+			(argv + *i + 1)->is_in_quotes = false;
+		}
+	}
 	if ((argv + *i)->str[0] == '\'' && !(*actual)->qcheck.d)
 		(*actual)->qcheck.s = !(*actual)->qcheck.s;
 	else if ((argv + *i)->str[0] == '\"' && !(*actual)->qcheck.s)
 		(*actual)->qcheck.d = !(*actual)->qcheck.d;
 	else
 		(*actual)->token = toktab_add((*actual)->token, *(argv + *i));
-	if ((argv + *i + 1)->str && (argv + *i)->spaces != 0)
-	{
-		if ((argv + *i + 1)->spaces == 0)
-		{
-			(argv + *i + 1)->spaces = 1;
-			(argv + *i + 1)->is_in_quotes = false;
-			(argv + *i + 1)->is_in_squotes = false;
-		}
-	}
 	if ((argv + (*i + 1))->str
 		&& (((argv + *i)->str[0] == '\''
 				&& (argv + (*i + 1))->str[0] == '\'')
@@ -76,6 +77,10 @@ void	join_struct_wnext(t_ptoken *token)
 {
 	if (!(token + 1)->str)
 		return ;
+	
+	if ((token + 1)->spaces)
+		(token)->str = ft_strjoin(token->str,
+				ft_calloc_char((token + 1)->spaces + 1, ' '));
 	(token)->str = ft_strjoin(token->str, (token + 1)->str);
 	token++;
 	(token)->str = NULL;

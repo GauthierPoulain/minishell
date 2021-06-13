@@ -14,7 +14,7 @@ void	*ft_calloc_char(size_t size, int c)
 	char	*ptr;
 	size_t	pos;
 
-	ptr = ft_calloc(size);
+	ptr = ft_calloc(size + 1);
 	if (size)
 		size--;
 	pos = 0;
