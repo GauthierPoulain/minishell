@@ -13,10 +13,12 @@ t_ptoken	*toktab_add(t_ptoken *argv, t_ptoken str)
 		res->is_in_squotes = argv->is_in_squotes;
 		res->is_in_quotes = argv->is_in_quotes;
 		res->spaces = argv->spaces;
+		res->escapes = argv->escapes;
 		res->str = ft_strdup(argv->str);
 		res++;
 		argv++;
 	}
+	res->escapes = str.escapes;
 	res->is_escaped = str.is_escaped;
 	res->is_in_squotes = str.is_in_squotes;
 	res->is_in_quotes = str.is_in_quotes;

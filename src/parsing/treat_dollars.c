@@ -72,15 +72,8 @@ char	*treat_doll(t_ptoken *word, int *i)
 {
 	int		slash;
 
-	if (word->str[(*i) + 1] == '\\')
-	{
-		word->str = ft_strjoin(ft_strndup(word->str, (*i) + 1),
-				word->str + (*i) + 2);
-		*i += 1;
-		*i += get_word_len(word->str, *i);
-		return (word->str);
-	}
-	else if (word->str[(*i) + 1] == '/')
+	// if (word + (*i - 1))
+	if (word->str[(*i) + 1] == '/')
 	{
 		*i += 1;
 		*i += get_word_len(word->str, *i);
