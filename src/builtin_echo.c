@@ -42,7 +42,7 @@ int	builtin_echo(char **str)
 		{
 			ft_putstr(str[i++]);
 			if (str[i])
-				ft_putstr(" ");
+				ft_putstr("\n");
 		}
 		ft_putstr("\n");
 	}

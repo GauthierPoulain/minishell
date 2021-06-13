@@ -60,8 +60,6 @@ void	super_check_quotes(t_command **actual, t_ptoken *argv, int *i)
 	{
 		if ((argv + *i + 1)->spaces == 0)
 			(argv + *i + 1)->spaces = -1;
-		(argv + *i + 1)->is_in_squotes = false;
-		(argv + *i + 1)->is_in_quotes = false;
 	}
 	if ((argv + *i)->str[0] == '\'' && !(*actual)->qcheck.d)
 		(*actual)->qcheck.s = !(*actual)->qcheck.s;
@@ -81,9 +79,6 @@ void	join_struct_wnext(t_ptoken *token)
 {
 	if (!(token + 1)->str)
 		return ;
-	if ((token + 1)->spaces > 0)
-		(token + 1)->str = ft_strjoin(ft_calloc_char((token + 1)->spaces, ' '),
-				(token + 1)->str);
 	(token)->str = ft_strjoin(token->str, (token + 1)->str);
 	token++;
 	(token)->str = NULL;
