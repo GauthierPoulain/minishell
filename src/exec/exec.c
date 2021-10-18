@@ -61,7 +61,6 @@ int	run_command(t_command *cmd)
 	}
 	if (cmd->need_pipe || cmd->need_redirect)
 		close_pipe();
-	reset_pipe_output();
 	g_shell.child = 0;
 	return (status);
 }
